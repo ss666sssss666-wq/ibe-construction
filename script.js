@@ -373,12 +373,47 @@ document.addEventListener('DOMContentLoaded', () => {
     setPortfolioBackgrounds();
     setEngineeringBackground();
     animateCounters();
-    initModals(); // Initialize modal functionality
+    initModals();
+    initLoader(); // Initialize loader
 
-    // Add a subtle entrance animation to the page
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-    }, 100);
+    // Add a subtle entrance animation to the page (Original opacity logic removed as loader handles it)
+    // document.body.style.opacity = '0';
+    // setTimeout(() => {
+    //     document.body.style.transition = 'opacity 0.5s ease';
+    //     document.body.style.opacity = '1';
+    // }, 100);
 });
+
+// ==========================================
+// LOADER ANIMATION
+// ==========================================
+const initLoader = () => {
+    const loader = document.getElementById('loader');
+
+    // Ensure loader is in loading state initially
+    loader.classList.add('loading');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling during load
+
+    // Wait for window load or fallback timeout
+    const finishLoad = () => {
+        setTimeout(() => {
+            loader.classList.remove('loading');
+            loader.classList.add('loaded');
+
+            // Re-enable scroll after animation matches CSS transition
+            setTimeout(() => {
+                document.body.style.overflow = '';
+                // Optional: Remove from DOM to free memory
+                // loader.remove(); 
+            }, 1200); // 1.2s matches CSS transition
+        }, 800); // Slight delay to read the logo
+    };
+
+    if (document.readyState === 'complete') {
+        finishLoad();
+    } else {
+        window.addEventListener('load', finishLoad);
+        // Fallback max wait time of 3s
+        setTimeout(finishLoad, 3000);
+    }
+};
