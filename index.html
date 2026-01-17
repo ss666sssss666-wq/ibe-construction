@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBE CONSTRUCTION : L'Excellence Structurelle</title>
+    <title>IBE CONSTRUCTION : L'Excellence</title>
     <meta name="description"
         content="Ingénierie de précision et réalisation de projets d'envergure - IBE Construction, expert en structure">
     <link rel="stylesheet" href="style.css">
@@ -18,8 +18,7 @@
     <nav class="nav-glass">
         <div class="nav-container">
             <div class="logo">
-                <span class="logo-main">IBE</span>
-                <span class="logo-sub">CONSTRUCTION</span>
+                <img src="images/logo.png" alt="IBE Construction" class="logo-image">
             </div>
             <ul class="nav-links">
                 <li><a href="#services">Services</a></li>
@@ -27,6 +26,7 @@
                 <li><a href="#projets">Projets</a></li>
                 <li><a href="#contact" class="cta-btn">Nous Contacter</a></li>
             </ul>
+
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -44,7 +44,7 @@
                     CONCEVOIR<br>
                     <span class="hero-highlight">L'AVENIR</span>
                 </h1>
-                <p class="hero-subtitle">Bâtir l'Excellence Structurelle</p>
+                <p class="hero-subtitle">Bâtir l'Excellence</p>
                 <p class="hero-description">
                     Partenaire de référence pour vos projets complexes. Nous allions ingénierie de pointe,
                     rigueur d'exécution et expertise BIM pour transformer votre vision en réalité durable.
@@ -55,69 +55,76 @@
                 <div class="wireframe-3d">
                     <svg viewBox="0 0 400 400" class="building-wireframe" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <!-- Grid pattern -->
-                            <pattern id="grid-fine" width="20" height="20" patternUnits="userSpaceOnUse">
-                                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1B263B" stroke-width="0.3"
-                                    opacity="0.15" />
+                            <pattern id="grid-fine" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(204, 148, 97, 0.1)"
+                                    stroke-width="0.5" />
                             </pattern>
                         </defs>
 
-                        <!-- Background grid -->
+                        <!-- Background Grid -->
                         <rect width="400" height="400" fill="url(#grid-fine)" />
 
-                        <!-- 3D Building Wireframe - Base -->
-                        <g class="wireframe-base">
-                            <polygon points="120,280 200,240 280,280 200,320" fill="none" stroke="#1B263B"
-                                stroke-width="1.5" opacity="0.4" />
+                        <!-- Ground Line -->
+                        <line x1="0" y1="350" x2="400" y2="350" stroke="#1a2f4b" stroke-width="2" />
+
+                        <!-- House under construction -->
+                        <g class="house-wireframe" transform="translate(50, 150)">
+                            <!-- Foundation/Ground Floor -->
+                            <line x1="0" y1="200" x2="160" y2="200" stroke="#1a2f4b" stroke-width="2" />
+                            <line x1="0" y1="200" x2="0" y2="100" stroke="#1a2f4b" stroke-width="2" />
+                            <line x1="160" y1="200" x2="160" y2="100" stroke="#1a2f4b" stroke-width="2" />
+                            <line x1="0" y1="100" x2="160" y2="100" stroke="#1a2f4b" stroke-width="2" />
+                            <!-- First floor ceiling -->
+
+                            <!-- Internal structure (appearing) -->
+                            <line x1="80" y1="200" x2="80" y2="100" stroke="#cc9461" stroke-width="1" opacity="0.5" />
+                            <line x1="0" y1="150" x2="160" y2="150" stroke="#cc9461" stroke-width="1" opacity="0.5" />
+
+                            <!-- Second Floor (partial) -->
+                            <line x1="0" y1="100" x2="0" y2="0" stroke="#1a2f4b" stroke-width="2" />
+                            <line x1="160" y1="100" x2="160" y2="40" stroke="#1a2f4b" stroke-width="2" />
+                            <!-- Incomplete wall -->
+                            <polyline points="0,0 80,-40 160,0" stroke="#cc9461" stroke-width="1.5" fill="none"
+                                class="roof-outline" /> <!-- Roof trace -->
                         </g>
 
-                        <!-- 3D Building - Ground Floor -->
-                        <g class="wireframe-floor floor-1">
-                            <line x1="120" y1="280" x2="120" y2="240" stroke="#D9480F" stroke-width="1.5" />
-                            <line x1="280" y1="280" x2="280" y2="240" stroke="#D9480F" stroke-width="1.5" />
-                            <line x1="200" y1="320" x2="200" y2="280" stroke="#D9480F" stroke-width="1.5" />
-                            <line x1="200" y1="240" x2="200" y2="200" stroke="#D9480F" stroke-width="1.5" />
-                            <polygon points="120,240 200,200 280,240 200,280" fill="none" stroke="#1B263B"
-                                stroke-width="1.5" />
-                        </g>
+                        <!-- Tower Crane -->
+                        <g transform="translate(220, 50)">
+                            <!-- Crane Base Tower -->
+                            <line x1="0" y1="300" x2="0" y2="0" stroke="#1a2f4b" stroke-width="3" />
+                            <line x1="30" y1="300" x2="30" y2="0" stroke="#1a2f4b" stroke-width="3" />
+                            <!-- Cross bracing -->
+                            <path
+                                d="M0 300 L30 270 M0 270 L30 240 M0 240 L30 210 M0 210 L30 180 M0 180 L30 150 M0 150 L30 120 M0 120 L30 90 M0 90 L30 60 M0 60 L30 30 M0 30 L30 0"
+                                stroke="#1a2f4b" stroke-width="1" opacity="0.6" />
 
-                        <!-- 3D Building - Floor 2 -->
-                        <g class="wireframe-floor floor-2">
-                            <line x1="120" y1="240" x2="120" y2="200" stroke="#1B263B" stroke-width="1.5"
-                                opacity="0.7" />
-                            <line x1="280" y1="240" x2="280" y2="200" stroke="#1B263B" stroke-width="1.5"
-                                opacity="0.7" />
-                            <line x1="200" y1="280" x2="200" y2="240" stroke="#1B263B" stroke-width="1.5"
-                                opacity="0.7" />
-                            <line x1="200" y1="200" x2="200" y2="160" stroke="#1B263B" stroke-width="1.5"
-                                opacity="0.7" />
-                            <polygon points="120,200 200,160 280,200 200,240" fill="none" stroke="#1B263B"
-                                stroke-width="1.5" opacity="0.7" />
-                        </g>
+                            <!-- Cab -->
+                            <rect x="-10" y="20" width="40" height="30" fill="#cc9461" opacity="0.9" />
 
-                        <!-- 3D Building - Floor 3 -->
-                        <g class="wireframe-floor floor-3">
-                            <line x1="120" y1="200" x2="120" y2="160" stroke="#1B263B" stroke-width="1.5"
-                                opacity="0.5" />
-                            <line x1="280" y1="200" x2="280" y2="160" stroke="#1B263B" stroke-width="1.5"
-                                opacity="0.5" />
-                            <line x1="200" y1="240" x2="200" y2="200" stroke="#1B263B" stroke-width="1.5"
-                                opacity="0.5" />
-                            <line x1="200" y1="160" x2="200" y2="120" stroke="#1B263B" stroke-width="1.5"
-                                opacity="0.5" />
-                            <polygon points="120,160 200,120 280,160 200,200" fill="none" stroke="#1B263B"
-                                stroke-width="1.5" opacity="0.5" />
-                        </g>
+                            <!-- Crane Arm & Counterweight -->
+                            <g class="crane-arm-wrapper">
+                                <!-- Counterweight arm -->
+                                <line x1="15" y1="15" x2="80" y2="15" stroke="#1a2f4b" stroke-width="4" />
+                                <rect x="60" y="5" width="20" height="20" fill="#1a2f4b" />
 
-                        <!-- Connection Points (BIM nodes) -->
-                        <circle cx="120" cy="280" r="4" fill="#D9480F" class="node-pulse node-1" />
-                        <circle cx="280" cy="280" r="4" fill="#D9480F" class="node-pulse node-2" />
-                        <circle cx="200" cy="320" r="4" fill="#D9480F" class="node-pulse node-3" />
-                        <circle cx="200" cy="240" r="4" fill="#D9480F" class="node-pulse node-4" />
-                        <circle cx="120" cy="200" r="4" fill="#1B263B" class="node-pulse node-5" />
-                        <circle cx="280" cy="200" r="4" fill="#1B263B" class="node-pulse node-6" />
-                        <circle cx="200" cy="160" r="4" fill="#1B263B" class="node-pulse node-7" />
-                        <circle cx="200" cy="120" r="4" fill="#1B263B" class="node-pulse node-8" />
+                                <!-- Jib (Main Arm) -->
+                                <line x1="15" y1="15" x2="-180" y2="15" stroke="#1a2f4b" stroke-width="3" />
+                                <line x1="15" y1="0" x2="-180" y2="15" stroke="#1a2f4b" stroke-width="1"
+                                    opacity="0.5" /> <!-- Support cable -->
+
+                                <!-- Trolley & Hook -->
+                                <g class="crane-trolley" transform="translate(-140, 15)">
+                                    <rect x="-5" y="-2" width="10" height="6" fill="#cc9461" />
+                                    <!-- Cable and Hook Group -->
+                                    <g class="crane-cable-group">
+                                        <line x1="0" y1="0" x2="0" y2="60" stroke="#cc9461" stroke-width="1.5" />
+                                        <!-- Load being lifted -->
+                                        <rect x="-10" y="60" width="20" height="15" fill="#cc9461" stroke="#1a2f4b"
+                                            stroke-width="1" />
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
                     </svg>
                 </div>
             </div>
@@ -136,7 +143,7 @@
             <div class="services-grid">
                 <div class="service-card" data-aos="fade-up" data-delay="0">
                     <div class="service-icon">
-                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1">
                             <path d="M32 8 L32 56" />
                             <path d="M12 20 L52 20" />
                             <path d="M12 36 L52 36" />
@@ -145,9 +152,9 @@
                             <line x1="52" y1="20" x2="52" y2="52" />
                             <line x1="22" y1="12" x2="22" y2="56" />
                             <line x1="42" y1="12" x2="42" y2="56" />
-                            <rect x="14" y="22" width="6" height="6" fill="#D9480F" opacity="0.3" />
-                            <rect x="34" y="22" width="6" height="6" fill="#D9480F" opacity="0.3" />
-                            <rect x="24" y="38" width="6" height="6" fill="#D9480F" opacity="0.3" />
+                            <rect x="14" y="22" width="6" height="6" fill="#D9480F" opacity="0.1" />
+                            <rect x="34" y="22" width="6" height="6" fill="#D9480F" opacity="0.1" />
+                            <rect x="24" y="38" width="6" height="6" fill="#D9480F" opacity="0.1" />
                             <circle cx="32" cy="8" r="2" fill="#D9480F" />
                             <circle cx="12" cy="20" r="2" fill="#D9480F" />
                             <circle cx="52" cy="20" r="2" fill="#D9480F" />
@@ -167,7 +174,7 @@
 
                 <div class="service-card" data-aos="fade-up" data-delay="200">
                     <div class="service-icon">
-                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1">
                             <rect x="16" y="40" width="32" height="16" rx="1" />
                             <path d="M20 40 L20 24 L32 16 L44 24 L44 40" />
                             <line x1="32" y1="16" x2="32" y2="24" />
@@ -175,7 +182,7 @@
                             <rect x="34" y="28" width="4" height="8" />
                             <rect x="26" y="46" width="4" height="6" />
                             <rect x="34" y="46" width="4" height="6" />
-                            <path d="M12 56 L52 56" stroke-width="2" />
+                            <path d="M12 56 L52 56" stroke-width="1.5" />
                             <circle cx="20" cy="24" r="2" fill="#D9480F" />
                             <circle cx="44" cy="24" r="2" fill="#D9480F" />
                             <circle cx="32" cy="16" r="2" fill="#D9480F" />
@@ -194,11 +201,11 @@
 
                 <div class="service-card" data-aos="fade-up" data-delay="400">
                     <div class="service-icon">
-                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1">
                             <circle cx="32" cy="24" r="8" />
-                            <path d="M32 32 L32 48" stroke-width="2" />
+                            <path d="M32 32 L32 48" stroke-width="1.5" />
                             <path d="M24 40 L40 40" />
-                            <path d="M20 48 L44 48" stroke-width="2" />
+                            <path d="M20 48 L44 48" stroke-width="1.5" />
                             <line x1="16" y1="24" x2="24" y2="24" />
                             <line x1="40" y1="24" x2="48" y2="24" />
                             <path d="M28 40 L28 52" opacity="0.5" />
@@ -207,8 +214,8 @@
                             <circle cx="16" cy="24" r="2" fill="#D9480F" />
                             <circle cx="48" cy="24" r="2" fill="#D9480F" />
                             <circle cx="32" cy="24" r="2" fill="#D9480F" />
-                            <path d="M26 20 C 26 18, 28 16, 30 16" stroke="#D9480F" opacity="0.6" stroke-width="1" />
-                            <path d="M38 20 C 38 18, 36 16, 34 16" stroke="#D9480F" opacity="0.6" stroke-width="1" />
+                            <path d="M26 20 C 26 18, 28 16, 30 16" stroke="#D9480F" opacity="0.5" stroke-width="0.75" />
+                            <path d="M38 20 C 38 18, 36 16, 34 16" stroke="#D9480F" opacity="0.5" stroke-width="0.75" />
                         </svg>
                     </div>
                     <h3>Génie Climatique & Fluides</h3>
@@ -226,48 +233,51 @@
     </section>
 
     <!-- Engineering DNA Section (Activated) -->
+    <!-- Engineering DNA Section (Redesigned) -->
     <section class="engineering-dna">
+        <div class="blueprint-grid"></div>
         <div class="container">
             <div class="dna-content">
-                <div class="left-col" data-aos="fade-right">
-                    <h2 class="section-title" style="text-align: left; margin-bottom: 30px;">Notre ADN</h2>
+                <div class="dna-text-card glass-panel" data-aos="fade-right">
+                    <h2 class="section-title dna-title">Notre ADN : <br><span class="highlight">L'Ingénierie Nouvelle
+                            Génération</span></h2>
                     <p class="dna-description">
-                        Chez IBE Construction, nous ne construisons pas seulement des bâtiments, nous édifions
-                        des relations de confiance. Notre méthodologie repose sur une rigueur scientifique
-                        et une transparence totale à chaque étape du projet.
+                        Plus qu'un bureau d'études, IBE est un hub d'expertise intégrée. Nous fusionnons la rigueur du
+                        calcul de structure, la maîtrise du gros œuvre et l'intelligence des fluides dans un workflow
+                        100% digital.
                     </p>
-                    <ul class="dna-features">
-                        <li>
-                            <span class="feature-number">+15</span>
-                            <span class="feature-label">Années d'Expérience Cumulée</span>
-                        </li>
-                        <li>
-                            <span class="feature-number">100%</span>
-                            <span class="feature-label">Respect des Délais & Normes</span>
-                        </li>
-                        <li>
-                            <span class="feature-number">BIM</span>
-                            <span class="feature-label">Processus Entièrement Digitalisé</span>
-                        </li>
-                    </ul>
+
+                    <div class="dna-pillars">
+                        <div class="dna-pillar">
+                            <div class="pillar-number">01</div>
+                            <div class="pillar-content">
+                                <h3>Expertise Technique Intégrée</h3>
+                                <p>Une coordination unique entre Structure, Travaux et Fluides pour une vision globale
+                                    de l'ouvrage.</p>
+                            </div>
+                        </div>
+                        <div class="dna-pillar">
+                            <div class="pillar-number">02</div>
+                            <div class="pillar-content">
+                                <h3>Rigueur & Conformité</h3>
+                                <p>100% de nos projets sont conçus selon les normes Eurocodes et RPS, garantissant une
+                                    sécurité absolue.</p>
+                            </div>
+                        </div>
+                        <div class="dna-pillar">
+                            <div class="pillar-number">03</div>
+                            <div class="pillar-content">
+                                <h3>BIM Management Natif</h3>
+                                <p>Processus entièrement digitalisé via Revit et Robot pour une détection de conflits
+                                    proactive et zéro erreur de chantier.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="dna-image-container" data-aos="fade-left">
-                    <div class="image-placeholder">
-                        <!-- Abstract Visual representing structure/growth -->
-                        <svg viewBox="0 0 400 400" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-                            <defs>
-                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#1B263B;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#2E3E5B;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <rect width="400" height="400" fill="url(#grad1)" />
-                            <path d="M0,400 L400,0" stroke="#D9480F" stroke-width="2" opacity="0.2" />
-                            <circle cx="200" cy="200" r="150" stroke="#D9480F" stroke-width="1" fill="none"
-                                opacity="0.1" />
-                            <circle cx="200" cy="200" r="100" stroke="#D9480F" stroke-width="1" fill="none"
-                                opacity="0.2" />
-                        </svg>
+
+                <div class="dna-visual" data-aos="fade-left">
+                    <div class="dna-image-wrapper">
+                        <img src="images/dna-v2.jpg" alt="Ingénieurs IBE sur site" class="dna-image">
                     </div>
                 </div>
             </div>
@@ -276,37 +286,89 @@
 
 
 
+
+    <!-- Technical Edge Section -->
+    <section class="technical-edge" id="expertise">
+        <div class="container">
+            <h2 class="section-title">Avantage Technologique</h2>
+            <div class="tech-grid">
+                <div class="tech-feature" data-aos="fade-up" data-delay="0">
+                    <div class="tech-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1">
+                            <path d="M32 4 L56 16 L56 48 L32 60 L8 48 L8 16 Z" stroke-dasharray="4 4" />
+                            <path d="M32 12 L48 20 L48 44 L32 52 L16 44 L16 20 Z" fill="rgba(217, 72, 15, 0.05)" />
+                            <path d="M32 20 L40 24 L40 40 L32 44 L24 40 L24 24 Z" stroke="#D9480F" />
+                            <line x1="32" y1="4" x2="32" y2="20" />
+                            <line x1="8" y1="16" x2="24" y2="24" />
+                            <line x1="56" y1="16" x2="40" y2="24" />
+                        </svg>
+                    </div>
+                    <h3>Workflow Full BIM</h3>
+                    <p>Modélisation 3D collaborative centralisant toutes les données du projet pour une coordination
+                        sans
+                        faille entre architectes et ingénieurs.</p>
+                </div>
+
+                <div class="tech-feature" data-aos="fade-up" data-delay="200">
+                    <div class="tech-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1">
+                            <circle cx="32" cy="32" r="24" />
+                            <circle cx="32" cy="32" r="16" stroke="#D9480F" stroke-dasharray="2 4" />
+                            <circle cx="32" cy="32" r="4" fill="#D9480F" />
+                            <line x1="32" y1="8" x2="32" y2="16" />
+                            <line x1="32" y1="48" x2="32" y2="56" />
+                            <line x1="8" y1="32" x2="16" y2="32" />
+                            <line x1="48" y1="32" x2="56" y2="32" />
+                        </svg>
+                    </div>
+                    <h3>Précision & Clash Detection</h3>
+                    <p>Anticipation des conflits géométriques avant le chantier grâce aux simulations Navisworks,
+                        réduisant les aléas de 90%.</p>
+                </div>
+
+                <div class="tech-feature" data-aos="fade-up" data-delay="400">
+                    <div class="tech-icon">
+                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1">
+                            <rect x="8" y="44" width="12" height="16" />
+                            <rect x="26" y="32" width="12" height="28" />
+                            <rect x="44" y="20" width="12" height="40" stroke="#D9480F" />
+                            <polyline points="8,40 26,28 44,16" stroke-dasharray="4 4" />
+                            <circle cx="44" cy="16" r="3" fill="#D9480F" />
+                        </svg>
+                    </div>
+                    <h3>Optimisation Structurelle</h3>
+                    <p>Analyse par éléments finis pour rationaliser la consommation de matériaux sans compromis sur la
+                        sécurité ou la durabilité.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
     <!-- Portfolio Section -->
     <section class="portfolio" id="projets">
         <div class="container">
             <h2 class="section-title">Références Majeures</h2>
             <div class="portfolio-grid">
-                <div class="portfolio-item" data-aos="zoom-in" data-delay="0">
+                <div class="portfolio-item" data-aos="zoom-in" data-delay="0" data-modal="industrial">
                     <div class="portfolio-image" id="project-1"></div>
                     <div class="portfolio-overlay">
-                        <h3>Complexe Industriel Zone Franche</h3>
-                        <p>Charpente métallique grande portée (45m)</p>
+                        <h3>Références Industrielles</h3>
+                        <p>Charpente métallique, plateformes logistiques, hangars</p>
                     </div>
                 </div>
-                <div class="portfolio-item" data-aos="zoom-in" data-delay="100">
+                <div class="portfolio-item" data-aos="zoom-in" data-delay="100" data-modal="residential">
                     <div class="portfolio-image" id="project-2"></div>
                     <div class="portfolio-overlay">
-                        <h3>Siège Social R+5</h3>
-                        <p>Structure Béton Armé & Précontraint</p>
+                        <h3>Références Résidentielles</h3>
+                        <p>Immeubles, résidences, structures béton armé</p>
                     </div>
                 </div>
-                <div class="portfolio-item" data-aos="zoom-in" data-delay="200">
+                <div class="portfolio-item" data-aos="zoom-in" data-delay="200" data-modal="medical">
                     <div class="portfolio-image" id="project-3"></div>
                     <div class="portfolio-overlay">
-                        <h3>Plateforme Logistique</h3>
-                        <p>Dallage industriel haute résistance</p>
-                    </div>
-                </div>
-                <div class="portfolio-item" data-aos="zoom-in" data-delay="300">
-                    <div class="portfolio-image" id="project-4"></div>
-                    <div class="portfolio-overlay">
-                        <h3>Centre Commercial</h3>
-                        <p>Structure mixte Acier-Béton</p>
+                        <h3>Références Médicales</h3>
+                        <p>Hôpitaux, cliniques, infrastructures de santé</p>
                     </div>
                 </div>
             </div>
@@ -334,7 +396,7 @@
                             </div>
                             <div class="info-text">
                                 <h4>Adresse</h4>
-                                <p>123 Avenue de l'Ingénierie<br>75000 Paris, France</p>
+                                <p>69 boulevard Hassan II , Mohammedia 28800</p>
                             </div>
                         </div>
 
@@ -347,7 +409,7 @@
                             </div>
                             <div class="info-text">
                                 <h4>Téléphone</h4>
-                                <p>+33 1 23 45 67 89</p>
+                                <p><a href="tel:+212663176838">+212 663-176838</a></p>
                             </div>
                         </div>
 
@@ -361,7 +423,23 @@
                             </div>
                             <div class="info-text">
                                 <h4>Email</h4>
-                                <p>contact@ibe-construction.fr</p>
+                                <p><a href="mailto:contact@ibe-construction.fr">contact@ibe-construction.fr</a></p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                            </div>
+                            <div class="info-text">
+                                <h4>Instagram</h4>
+                                <p><a href="https://www.instagram.com/ibe.construction/?igsh=dGd1cjNyajk2ZmY%3D#"
+                                        target="_blank">@ibe.construction</a></p>
                             </div>
                         </div>
                     </div>
@@ -396,13 +474,147 @@
 
             <div class="footer-bottom">
                 <div class="footer-logo">
-                    <span class="logo-main">IBE</span>
-                    <span class="logo-sub">CONSTRUCTION</span>
+                    <img src="images/footer-logo-transformed.png" alt="IBE Construction" class="logo-image">
                 </div>
                 <p class="copyright">© 2026 IBE Construction. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
+
+    <!-- Modals for Portfolio Items -->
+    <!-- Industrial Modal -->
+    <div class="modal" id="modal-industrial">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-header">
+                <h2>Références Industrielles</h2>
+                <p class="modal-subtitle">L'expertise au service de l'industrie</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Nos Réalisations</h3>
+                    <ul class="project-list">
+                        <li>
+                            <strong>Plateforme Logistique ACME - 15 000 m²</strong>
+                            <p>Conception et réalisation complète de charpente métallique avec système de stockage
+                                automatisé</p>
+                        </li>
+                        <li>
+                            <strong>Hangar Industriel Métallique - 8 000 m²</strong>
+                            <p>Structure métallique avec pont roulant de 20 tonnes, études BIM complètes</p>
+                        </li>
+                        <li>
+                            <strong>Extension Usine Automobile - 12 000 m²</strong>
+                            <p>Charpente métallique et planchers collaborants, coordination multi-lots</p>
+                        </li>
+                        <li>
+                            <strong>Centre de Distribution - 10 000 m²</strong>
+                            <p>Structure métallique optimisée avec quais de chargement intégrés</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <h3>Expertise Technique</h3>
+                    <div class="tech-badges">
+                        <span class="badge">Charpente Métallique</span>
+                        <span class="badge">Advance Steel</span>
+                        <span class="badge">Robot Structural</span>
+                        <span class="badge">Ponts Roulants</span>
+                        <span class="badge">Planchers Collaborants</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Residential Modal -->
+    <div class="modal" id="modal-residential">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-header">
+                <h2>Références Résidentielles</h2>
+                <p class="modal-subtitle">L'excellence en habitat</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Nos Réalisations</h3>
+                    <ul class="project-list">
+                        <li>
+                            <strong>Résidence Les Jardins - 120 logements</strong>
+                            <p>Immeuble R+6 en béton armé, étude parasismique complète, planification BIM</p>
+                        </li>
+                        <li>
+                            <strong>Complex Résidentiel Marina Bay - 200 unités</strong>
+                            <p>3 bâtiments R+8, structures béton armé avec parking souterrain</p>
+                        </li>
+                        <li>
+                            <strong>Villa Contemporaine de Prestige</strong>
+                            <p>Structure mixte béton/acier, conception parasismique, piscine à débordement</p>
+                        </li>
+                        <li>
+                            <strong>Immeuble Standing Centre-Ville - R+5</strong>
+                            <p>Réhabilitation lourde avec extension verticale, renforcement structurel</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <h3>Expertise Technique</h3>
+                    <div class="tech-badges">
+                        <span class="badge">Béton Armé</span>
+                        <span class="badge">Revit Structure</span>
+                        <span class="badge">Études Parasismiques</span>
+                        <span class="badge">Dalles Post-Tendues</span>
+                        <span class="badge">Fondations Profondes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medical Modal -->
+    <div class="modal" id="modal-medical">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-header">
+                <h2>Références Médicales</h2>
+                <p class="modal-subtitle">Précision et conformité sanitaire</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Nos Réalisations</h3>
+                    <ul class="project-list">
+                        <li>
+                            <strong>Hôpital Universitaire - Extension 5 000 m²</strong>
+                            <p>Bloc opératoire haute technologie avec salles blanches et systèmes CVC spécialisés</p>
+                        </li>
+                        <li>
+                            <strong>Clinique Privée Spécialisée - 3 500 m²</strong>
+                            <p>Structure béton armé R+4 avec unités de soins intensifs et imagerie médicale</p>
+                        </li>
+                        <li>
+                            <strong>Centre de Radiothérapie</strong>
+                            <p>Études structurelles spéciales avec protection radiologique, bunkers en béton lourd</p>
+                        </li>
+                        <li>
+                            <strong>Laboratoire d'Analyses Médicales - 2 000 m²</strong>
+                            <p>Installation de planchers techniques, coordination fluides médicaux</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <h3>Expertise Technique</h3>
+                    <div class="tech-badges">
+                        <span class="badge">Salles Blanches</span>
+                        <span class="badge">Revit MEP</span>
+                        <span class="badge">Protection Radiologique</span>
+                        <span class="badge">Fluides Médicaux</span>
+                        <span class="badge">Normes Sanitaires</span>
+                        <span class="badge">CVC Spécialisé</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

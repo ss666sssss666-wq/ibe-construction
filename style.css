@@ -9,9 +9,12 @@
 
 :root {
     /* Color Palette */
-    --navy-primary: #1B263B;
-    --copper-accent: #D9480F;
+    --navy-primary: #1a2f4b;
+    /* Updated to match logo Dark Blue */
+    --copper-accent: #cc9461;
+    /* Updated to match logo Bronze */
     --white: #FFFFFF;
+    --bg-color: #FFFFFF;
     --light-gray: #F5F5F5;
     --mid-gray: #E0E0E0;
     --dark-gray: #333333;
@@ -30,6 +33,26 @@
     /* Animations */
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Glass Backgrounds - Light Mode */
+    --glass-bg: #FFFFFF;
+    --glass-scrolled: #FFFFFF;
+    --glass-mobile: #FFFFFF;
+    --text-color: var(--navy-primary);
+
+    /* Hero Variables */
+    --bg-hero: linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%);
+    --grid-color: rgba(26, 47, 75, 0.03);
+    /* Updated RGB for grid */
+}
+
+
+
+:root {
+    /* Footer/Contact Light Mode (default) */
+    --footer-bg: #1B263B;
+    --footer-text: #FFFFFF;
+    --footer-text-muted: rgba(255, 255, 255, 0.7);
 }
 
 html {
@@ -39,8 +62,7 @@ html {
 
 body {
     font-family: var(--font-main);
-    color: var(--navy-primary);
-    background-color: var(--white);
+    color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -60,7 +82,7 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.75);
+    background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border-bottom: 1px solid rgba(27, 38, 59, 0.1);
@@ -68,25 +90,68 @@ body {
 }
 
 .nav-glass.scrolled {
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--glass-scrolled);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
 .nav-container {
     max-width: var(--container-max);
     margin: 0 auto;
-    padding: 20px 40px;
+    padding: 14px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+
+
+
+
 .logo {
     display: flex;
-    flex-direction: column;
-    line-height: 1;
+    align-items: center;
 }
 
+.logo-image {
+    height: 95px;
+    width: auto;
+    max-width: 300px;
+    /* Prevent it from getting too wide on mobile */
+    transition: all 0.3s var(--transition-smooth);
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.logo-image:hover {
+    transform: scale(1.02);
+}
+
+/* Footer logo styling */
+.footer-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    /* Removed card styling for badge logo */
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.footer-logo .logo-image {
+    height: 160px;
+    /* Increased size for better visibility of badge */
+    width: auto;
+    object-fit: contain;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+}
+
+
+
+/* Legacy text logo styles (kept for footer if needed) */
 .logo-main {
     font-size: 28px;
     font-weight: var(--heading-weight);
@@ -200,8 +265,8 @@ body {
     display: flex;
     align-items: center;
     position: relative;
-    padding: 140px 40px 80px;
-    background: linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%);
+    padding: 220px 40px 80px;
+    background: var(--bg-hero);
     overflow: hidden;
 }
 
@@ -212,8 +277,8 @@ body {
     right: 0;
     bottom: 0;
     background-image:
-        linear-gradient(rgba(27, 38, 59, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(27, 38, 59, 0.03) 1px, transparent 1px);
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
     background-size: 50px 50px;
     pointer-events: none;
     opacity: 0.5;
@@ -368,9 +433,10 @@ body {
     border: 1px solid var(--mid-gray);
     border-radius: 12px;
     padding: 50px 40px;
-    transition: all 0.4s var(--transition-smooth);
+    transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth), border-color 0.4s var(--transition-smooth);
     position: relative;
     overflow: hidden;
+    will-change: transform;
 }
 
 .service-card::before {
@@ -426,7 +492,8 @@ body {
 [data-aos="fade-up"] {
     opacity: 0;
     transform: translateY(40px);
-    transition: all 0.8s var(--transition-smooth);
+    transition: opacity 0.8s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+    will-change: opacity, transform;
 }
 
 [data-aos="fade-up"].aos-animate {
@@ -435,94 +502,171 @@ body {
 }
 
 /* ==========================================
-   ENGINEERING DNA SECTION
+   ENGINEERING DNA SECTION (REDESIGNED)
    ========================================== */
 .engineering-dna {
     padding: var(--section-padding) 0;
-    background: var(--light-gray);
+    background-color: var(--light-gray);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background Blueprint Grid */
+.blueprint-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(26, 47, 75, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 47, 75, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.6;
+    pointer-events: none;
 }
 
 .dna-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    grid-template-columns: 1.1fr 0.9fr;
+    /* Text takes slightly more space */
+    gap: 60px;
     align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Glassmorphism Card for Text */
+.dna-text-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 15px 40px rgba(27, 38, 59, 0.05);
+}
+
+.dna-title {
+    text-align: left;
+    margin-bottom: 24px;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.2;
+}
+
+.dna-title .highlight {
+    color: var(--copper-accent);
 }
 
 .dna-description {
     font-size: 18px;
     font-weight: var(--light-weight);
-    line-height: 1.8;
+    line-height: 1.7;
     color: var(--dark-gray);
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
-.dna-features {
-    list-style: none;
+/* Pillars List */
+.dna-pillars {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-.dna-features li {
+.dna-pillar {
     display: flex;
-    align-items: baseline;
-    gap: 20px;
+    gap: 25px;
+    align-items: flex-start;
 }
 
-.feature-number {
-    font-size: 48px;
-    font-weight: var(--heading-weight);
+.pillar-number {
+    font-family: var(--font-main);
+    font-size: 32px;
+    font-weight: 800;
+    /* Extra bold */
     color: var(--copper-accent);
     line-height: 1;
+    opacity: 0.9;
+    flex-shrink: 0;
+    padding-top: 5px;
+    /* Visual alignment with H3 */
 }
 
-.feature-label {
-    font-size: 18px;
-    font-weight: var(--body-weight);
+.pillar-content h3 {
+    font-size: 20px;
+    font-weight: var(--subheading-weight);
     color: var(--navy-primary);
+    margin-bottom: 8px;
 }
 
-.dna-image-container {
-    width: 100%;
-    height: 500px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(27, 38, 59, 0.15);
+.pillar-content p {
+    font-size: 15px;
+    color: rgba(51, 51, 51, 0.8);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Image Section */
+.dna-visual {
+    height: 100%;
+    min-height: 600px;
     position: relative;
 }
 
-.image-placeholder {
+.dna-image-wrapper {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #1B263B 0%, #2E3E5B 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+    border-radius: 20px;
     overflow: hidden;
+    box-shadow: 0 25px 50px rgba(27, 38, 59, 0.2);
+    position: relative;
 }
 
-.image-placeholder::before {
-    content: '';
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: repeating-linear-gradient(45deg,
-            transparent,
-            transparent 10px,
-            rgba(217, 72, 15, 0.1) 10px,
-            rgba(217, 72, 15, 0.1) 20px);
-    animation: slide 20s linear infinite;
+.dna-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s var(--transition-smooth);
 }
 
-@keyframes slide {
-    0% {
-        transform: translate(0, 0);
+.dna-image-wrapper:hover .dna-image {
+    transform: scale(1.03);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 992px) {
+    .dna-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
     }
 
-    100% {
-        transform: translate(50%, 50%);
+    .dna-visual {
+        min-height: 450px;
+        order: -1;
+        /* Image stacks on top for visual impact, request said "above or below", top is usually better for engagement */
+    }
+
+    .dna-text-card {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dna-title {
+        font-size: 28px;
+    }
+
+    .dna-pillar {
+        gap: 15px;
+    }
+
+    .pillar-number {
+        font-size: 28px;
+    }
+
+    .dna-visual {
+        min-height: 400px;
     }
 }
 
@@ -538,6 +682,8 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .portfolio-item {
@@ -546,7 +692,8 @@ body {
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.4s var(--transition-smooth);
+    transition: transform 0.4s var(--transition-smooth);
+    will-change: transform;
 }
 
 .portfolio-item:hover {
@@ -559,6 +706,43 @@ body {
     background: linear-gradient(135deg, #2E3E5B 0%, #1B263B 100%);
     position: relative;
     transition: transform 0.4s var(--transition-smooth);
+}
+
+/* White gradient fade on edges */
+.portfolio-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        linear-gradient(to right, rgba(255, 255, 255, 0.4) 0%, transparent 15%, transparent 85%, rgba(255, 255, 255, 0.4) 100%),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, transparent 15%, transparent 85%, rgba(255, 255, 255, 0.4) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Portfolio Images - Ensure full coverage without white space */
+.portfolio-item #project-1 {
+    background-image: url('images/industrial.jpg') !important;
+    background-size: 185% !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
+
+.portfolio-item #project-2 {
+    background-image: url('images/residential.jpg') !important;
+    background-size: 135% !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
+
+.portfolio-item #project-3 {
+    background-image: url('images/medical.jpg') !important;
+    background-size: 165% !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
 }
 
 .portfolio-item:hover .portfolio-image {
@@ -596,7 +780,8 @@ body {
 [data-aos="zoom-in"] {
     opacity: 0;
     transform: scale(0.9);
-    transition: all 0.8s var(--transition-smooth);
+    transition: opacity 0.8s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+    will-change: opacity, transform;
 }
 
 [data-aos="zoom-in"].aos-animate {
@@ -609,12 +794,12 @@ body {
    ========================================== */
 .contact {
     padding: var(--section-padding) 0 40px;
-    background: var(--navy-primary);
-    color: var(--white);
+    background: var(--footer-bg);
+    color: var(--footer-text);
 }
 
 .contact .section-title {
-    color: var(--white);
+    color: var(--footer-text);
     text-align: left;
 }
 
@@ -629,7 +814,7 @@ body {
     font-size: 18px;
     font-weight: var(--light-weight);
     line-height: 1.8;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--footer-text-muted);
     margin-bottom: 50px;
 }
 
@@ -655,14 +840,24 @@ body {
     font-size: 16px;
     font-weight: var(--subheading-weight);
     margin-bottom: 8px;
-    color: var(--white);
+    color: var(--footer-text);
 }
 
 .info-text p {
     font-size: 15px;
     font-weight: var(--light-weight);
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--footer-text-muted);
     line-height: 1.6;
+}
+
+.info-text p a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s var(--transition-smooth);
+}
+
+.info-text p a:hover {
+    color: var(--copper-accent);
 }
 
 /* Contact Form */
@@ -682,8 +877,8 @@ body {
     padding: 16px 0;
     background: transparent;
     border: none;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-    color: var(--white);
+    border-bottom: 2px solid var(--footer-text-muted);
+    color: var(--footer-text);
     font-family: var(--font-main);
     font-size: 16px;
     transition: all 0.3s var(--transition-smooth);
@@ -701,7 +896,7 @@ body {
     top: 16px;
     font-size: 16px;
     font-weight: var(--light-weight);
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--footer-text-muted);
     pointer-events: none;
     transition: all 0.3s var(--transition-smooth);
 }
@@ -727,24 +922,34 @@ body {
 /* Footer Bottom */
 .footer-bottom {
     padding-top: 40px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--footer-text-muted);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.footer-logo {
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo .logo-image {
+    height: 60px;
+    width: auto;
+}
+
 .footer-logo .logo-main {
-    color: var(--white);
+    color: var(--footer-text);
 }
 
 .footer-logo .logo-sub {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--footer-text-muted);
 }
 
 .copyright {
     font-size: 14px;
     font-weight: var(--light-weight);
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--footer-text-muted);
 }
 
 /* ==========================================
@@ -755,12 +960,23 @@ body {
         --section-padding: 80px;
     }
 
+    .logo-image {
+        height: 50px;
+        /* Reduced from 100px for better mobile proportion */
+    }
+
+    .footer-logo .logo-image {
+        height: 100px;
+        /* Slightly smaller for footer too */
+    }
+
     .nav-links {
         position: fixed;
-        top: 72px;
+        top: 80px;
+        /* Matches header height (50px logo + 28px padding + borders) */
         right: -100%;
         flex-direction: column;
-        background: rgba(255, 255, 255, 0.98);
+        background: var(--glass-mobile);
         backdrop-filter: blur(20px);
         width: 250px;
         padding: 40px;
@@ -770,6 +986,17 @@ body {
         align-items: flex-start;
     }
 
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        font-size: 18px;
+    }
+
     .nav-links.active {
         right: 0;
     }
@@ -777,6 +1004,7 @@ body {
     .hamburger {
         display: flex;
         z-index: 1001;
+        order: 3;
     }
 
     .hamburger.active span:nth-child(1) {
@@ -820,6 +1048,27 @@ body {
     .section-title {
         margin-bottom: 50px;
     }
+
+    /* Fix image cropping on mobile to show all 3 engineers */
+    .dna-image-container {
+        height: 450px;
+        /* Matching the red box height requested */
+        aspect-ratio: auto;
+    }
+
+    .dna-image {
+        object-position: center center;
+        /* Centering to attempt capturing the group */
+    }
+
+    /* Reduce spacing between DNA image and next section */
+    .engineering-dna {
+        padding-bottom: 20px;
+    }
+
+    .technical-edge {
+        padding-top: 20px;
+    }
 }
 
 @media (max-width: 640px) {
@@ -832,7 +1081,7 @@ body {
     }
 
     .hero {
-        padding: 100px 20px 60px;
+        padding: 160px 20px 60px;
     }
 
     .services-grid {
@@ -847,6 +1096,50 @@ body {
         flex-direction: column;
         gap: 20px;
         text-align: center;
+    }
+
+    /* Mobile Modal Refinements */
+    .modal {
+        padding: 10px;
+        align-items: flex-end;
+        /* Sheet-like appearance on mobile */
+    }
+
+    .modal-content {
+        max-height: 85vh;
+        border-radius: 16px 16px 0 0;
+        /* Rounded top only if acting as bottom sheet, but full rounded is fine too. Let's stick to full rounded for consistency but reducing radius */
+        border-radius: 12px;
+    }
+
+    .modal-header {
+        padding: 25px 20px 20px;
+    }
+
+    .modal-header h2 {
+        font-size: 24px;
+        padding-right: 30px;
+        /* Space for close button */
+    }
+
+    .modal-close {
+        top: 15px;
+        right: 15px;
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-section {
+        margin-bottom: 30px;
+    }
+
+    .project-list li {
+        padding: 16px;
     }
 }
 
@@ -946,6 +1239,31 @@ body {
     }
 }
 
+/* Wireframe SVG Color Adaptation */
+.wireframe-structure-stroke {
+    stroke: #1B263B;
+}
+
+.wireframe-grid-stroke {
+    stroke: #1B263B;
+}
+
+.wireframe-node-fill {
+    fill: #1B263B;
+}
+
+[data-theme="dark"] .wireframe-structure-stroke {
+    stroke: #e6f1ff;
+}
+
+[data-theme="dark"] .wireframe-grid-stroke {
+    stroke: #e6f1ff;
+}
+
+[data-theme="dark"] .wireframe-node-fill {
+    fill: #e6f1ff;
+}
+
 /* ==========================================
    SECTION INTRO & TECH TAGS
    ========================================== */
@@ -1033,8 +1351,9 @@ body {
     padding: 40px 30px;
     border-radius: 12px;
     text-align: center;
-    transition: all 0.4s var(--transition-smooth);
+    transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth), border-color 0.4s var(--transition-smooth);
     border: 1px solid var(--mid-gray);
+    will-change: transform;
 }
 
 .tech-feature:hover {
@@ -1047,6 +1366,7 @@ body {
     width: 80px;
     height: 80px;
     margin: 0 auto 24px;
+    color: var(--copper-accent);
 }
 
 .tech-feature h3 {
@@ -1131,5 +1451,380 @@ body {
     .bim-tag {
         width: 100%;
         text-align: center;
+    }
+}
+
+/* ==========================================
+   CRANE ANIMATION
+   ========================================== */
+@keyframes crane-swing {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
+}
+
+@keyframes cable-drop {
+
+    0%,
+    100% {
+        height: 80px;
+    }
+
+    50% {
+        height: 140px;
+    }
+}
+
+@keyframes block-move {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(60px);
+        opacity: 1;
+    }
+
+    51% {
+        opacity: 0;
+    }
+
+    52% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    55% {
+        opacity: 1;
+    }
+}
+
+@keyframes house-grow {
+    0% {
+        stroke-dashoffset: 100;
+        opacity: 0.3;
+    }
+
+    50% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+
+    100% {
+        stroke-dashoffset: 100;
+        opacity: 0.3;
+    }
+}
+
+.wireframe-3d svg {
+    overflow: visible;
+}
+
+.crane-arm-wrapper {
+    transform-origin: 140px 100px;
+    animation: crane-swing 8s ease-in-out infinite;
+}
+
+.crane-cable-group {
+    animation: block-move 8s ease-in-out infinite;
+}
+
+/* Specific styling for the house wireframe to make it look like it's being built */
+.house-wireframe line,
+.house-wireframe polyline {
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 200;
+    animation: house-grow 15s linear infinite;
+    /* Increased duration from 10s to 15s for smoother animation */
+}
+
+.crane-arm-wrapper {
+    transform-origin: 140px 100px;
+    animation: crane-swing 10s ease-in-out infinite;
+    /* Increased from 8s to 10s for smoother motion */
+}
+
+.crane-cable-group {
+    animation: block-move 10s ease-in-out infinite;
+    /* Increased from 8s to 10s */
+}
+
+/* Add GPU acceleration hint for wireframe */
+.wireframe-3d {
+    will-change: transform;
+}
+
+.building-wireframe {
+    will-change: transform;
+}
+
+/* ==========================================
+   MODAL STYLES
+   ========================================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(27, 38, 59, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 10000;
+    overflow-y: auto;
+    animation: fadeIn 0.3s var(--transition-smooth);
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: var(--white);
+    max-width: 800px;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideUp 0.4s var(--transition-smooth);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: var(--copper-accent);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    font-size: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s var(--transition-smooth);
+    z-index: 10;
+    line-height: 1;
+    padding: 0;
+}
+
+.modal-close:hover {
+    background: var(--navy-primary);
+    transform: rotate(90deg) scale(1.1);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--navy-primary) 0%, #2E3E5B 100%);
+    padding: 50px 40px 40px;
+    border-radius: 16px 16px 0 0;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        linear-gradient(rgba(204, 148, 97, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(204, 148, 97, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+}
+
+.modal-header h2 {
+    font-size: 32px;
+    font-weight: var(--heading-weight);
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.modal-subtitle {
+    font-size: 16px;
+    font-weight: var(--light-weight);
+    color: var(--copper-accent);
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+}
+
+.modal-body {
+    padding: 40px;
+}
+
+.modal-section {
+    margin-bottom: 40px;
+}
+
+.modal-section:last-child {
+    margin-bottom: 0;
+}
+
+.modal-section h3 {
+    font-size: 24px;
+    font-weight: var(--subheading-weight);
+    color: var(--navy-primary);
+    margin-bottom: 24px;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.modal-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--copper-accent);
+    border-radius: 2px;
+}
+
+.project-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.project-list li {
+    background: var(--light-gray);
+    padding: 24px;
+    border-radius: 12px;
+    border-left: 4px solid var(--copper-accent);
+    transition: all 0.3s var(--transition-smooth);
+}
+
+.project-list li:hover {
+    transform: translateX(8px);
+    box-shadow: 0 8px 24px rgba(27, 38, 59, 0.1);
+}
+
+.project-list strong {
+    display: block;
+    font-size: 18px;
+    font-weight: var(--subheading-weight);
+    color: var(--navy-primary);
+    margin-bottom: 8px;
+}
+
+.project-list p {
+    font-size: 15px;
+    font-weight: var(--light-weight);
+    color: var(--dark-gray);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.badge {
+    background: var(--white);
+    color: var(--copper-accent);
+    padding: 10px 20px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: var(--subheading-weight);
+    border: 2px solid var(--copper-accent);
+    transition: all 0.3s var(--transition-smooth);
+    display: inline-block;
+}
+
+.badge:hover {
+    background: var(--copper-accent);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(204, 148, 97, 0.3);
+}
+
+/* Modal Responsive */
+@media (max-width: 640px) {
+    .modal-content {
+        border-radius: 12px;
+        max-height: 95vh;
+    }
+
+    .modal-header {
+        padding: 40px 24px 30px;
+    }
+
+    .modal-header h2 {
+        font-size: 26px;
+    }
+
+    .modal-body {
+        padding: 24px;
+    }
+
+    .modal-section h3 {
+        font-size: 20px;
+    }
+
+    .project-list li {
+        padding: 20px;
+    }
+
+    .project-list strong {
+        font-size: 16px;
+    }
+
+    .project-list p {
+        font-size: 14px;
+    }
+
+    .tech-badges {
+        gap: 8px;
+    }
+
+    .badge {
+        padding: 8px 16px;
+        font-size: 12px;
     }
 }

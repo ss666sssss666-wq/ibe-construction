@@ -1,17 +1,32 @@
 // ==========================================
-// NAVIGATION SCROLL EFFECT
+// NAVIGATION SCROLL EFFECT (OPTIMIZED)
 // ==========================================
 const nav = document.querySelector('.nav-glass');
 const navLinks = document.querySelector('.nav-links');
 const hamburger = document.querySelector('.hamburger');
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
+let navTicking = false;
+let lastScrollY = 0;
+
+const updateNavOnScroll = () => {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > 100) {
         nav.classList.add('scrolled');
     } else {
         nav.classList.remove('scrolled');
     }
-});
+
+    lastScrollY = currentScrollY;
+    navTicking = false;
+};
+
+window.addEventListener('scroll', () => {
+    if (!navTicking) {
+        window.requestAnimationFrame(updateNavOnScroll);
+        navTicking = true;
+    }
+}, { passive: true });
 
 // ==========================================
 // MOBILE MENU TOGGLE
@@ -136,21 +151,30 @@ formInputs.forEach(input => {
 });
 
 // ==========================================
-// PARALLAX EFFECT ON HERO
+// PARALLAX EFFECT ON HERO (OPTIMIZED)
 // ==========================================
 const hero = document.querySelector('.hero');
 const blueprintGraphic = document.querySelector('.blueprint-graphic');
 
-window.addEventListener('scroll', () => {
+let parallaxTicking = false;
+
+const updateParallax = () => {
     const scrolled = window.pageYOffset;
     const heroBottom = hero.offsetTop + hero.offsetHeight;
 
-    if (scrolled < heroBottom) {
-        if (blueprintGraphic) {
-            blueprintGraphic.style.transform = `translateY(${scrolled * 0.3}px)`;
-        }
+    if (scrolled < heroBottom && blueprintGraphic) {
+        blueprintGraphic.style.transform = `translateY(${scrolled * 0.3}px)`;
     }
-});
+
+    parallaxTicking = false;
+};
+
+window.addEventListener('scroll', () => {
+    if (!parallaxTicking) {
+        window.requestAnimationFrame(updateParallax);
+        parallaxTicking = true;
+    }
+}, { passive: true });
 
 // ==========================================
 // DYNAMIC BACKGROUND FOR PORTFOLIO IMAGES
@@ -161,10 +185,10 @@ const setPortfolioBackgrounds = () => {
     portfolioImages.forEach((img, index) => {
         // Create a subtle pattern for each portfolio item
         const gradients = [
-            'linear-gradient(135deg, #1B263B 0%, #2E3E5B 50%, #1B263B 100%)',
-            'linear-gradient(135deg, #2E3E5B 0%, #1B263B 50%, #2E3E5B 100%)',
-            'linear-gradient(135deg, #1B263B 0%, #3A4A6B 50%, #2E3E5B 100%)',
-            'linear-gradient(135deg, #2E3E5B 0%, #3A4A6B 50%, #1B263B 100%)'
+            'linear-gradient(135deg, #1a2f4b 0%, #2E3E5B 50%, #1a2f4b 100%)',
+            'linear-gradient(135deg, #2E3E5B 0%, #1a2f4b 50%, #2E3E5B 100%)',
+            'linear-gradient(135deg, #1a2f4b 0%, #3A4A6B 50%, #2E3E5B 100%)',
+            'linear-gradient(135deg, #2E3E5B 0%, #3A4A6B 50%, #1a2f4b 100%)'
         ];
 
         img.style.background = gradients[index % gradients.length];
@@ -178,8 +202,8 @@ const setPortfolioBackgrounds = () => {
             right: 0;
             bottom: 0;
             background-image: 
-                linear-gradient(45deg, transparent 48%, rgba(217, 72, 15, 0.1) 49%, rgba(217, 72, 15, 0.1) 51%, transparent 52%),
-                linear-gradient(-45deg, transparent 48%, rgba(217, 72, 15, 0.1) 49%, rgba(217, 72, 15, 0.1) 51%, transparent 52%);
+                linear-gradient(45deg, transparent 48%, rgba(204, 148, 97, 0.1) 49%, rgba(204, 148, 97, 0.1) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(204, 148, 97, 0.1) 49%, rgba(204, 148, 97, 0.1) 51%, transparent 52%);
             background-size: 80px 80px;
             opacity: 0.5;
         `;
@@ -195,7 +219,7 @@ const setEngineeringBackground = () => {
 
     if (engineeringImage) {
         // Create structural pattern
-        engineeringImage.style.background = 'linear-gradient(135deg, #1B263B 0%, #2E3E5B 100%)';
+        engineeringImage.style.background = 'linear-gradient(135deg, #1a2f4b 0%, #2E3E5B 100%)';
 
         const pattern = document.createElement('div');
         pattern.style.cssText = `
@@ -205,8 +229,8 @@ const setEngineeringBackground = () => {
             right: 0;
             bottom: 0;
             background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(217, 72, 15, 0.15) 35px, rgba(217, 72, 15, 0.15) 36px),
-                repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(217, 72, 15, 0.15) 35px, rgba(217, 72, 15, 0.15) 36px);
+                repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(204, 148, 97, 0.15) 35px, rgba(204, 148, 97, 0.15) 36px),
+                repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(204, 148, 97, 0.15) 35px, rgba(204, 148, 97, 0.15) 36px);
         `;
         engineeringImage.appendChild(pattern);
     }
@@ -283,3 +307,78 @@ window.addEventListener('scroll', () => {
         // Already handled by individual scroll listeners above
     });
 }, { passive: true });
+
+
+// ==========================================
+// MODAL FUNCTIONALITY FOR PORTFOLIO CARDS
+// ==========================================
+const initModals = () => {
+    const portfolioItems = document.querySelectorAll('.portfolio-item[data-modal]');
+    const modals = document.querySelectorAll('.modal');
+    const closeButtons = document.querySelectorAll('.modal-close');
+
+    // Open modal when clicking portfolio item
+    portfolioItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const modalId = item.getAttribute('data-modal');
+            const modal = document.getElementById(`modal-${modalId}`);
+
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+            }
+        });
+    });
+
+    // Close modal when clicking close button
+    closeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const modal = button.closest('.modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scroll
+            }
+        });
+    });
+
+    // Close modal when clicking outside the content
+    modals.forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+
+    // Close modal with ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            modals.forEach(modal => {
+                if (modal.classList.contains('active')) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+    });
+};
+
+// ==========================================
+// INITIALIZATION
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    animateOnScroll();
+    setPortfolioBackgrounds();
+    setEngineeringBackground();
+    animateCounters();
+    initModals(); // Initialize modal functionality
+
+    // Add a subtle entrance animation to the page
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+        document.body.style.transition = 'opacity 0.5s ease';
+        document.body.style.opacity = '1';
+    }, 100);
+});
