@@ -270,87 +270,6 @@ body {
     overflow: hidden;
 }
 
-/* Infinite Scrolling Background */
-.hero-bg-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.hero-bg-slider {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-.slide-track {
-    display: flex;
-    width: calc(100vw * 4 * 2);
-    /* 4 images * 2 sets */
-    height: 100%;
-    animation: scroll 40s linear infinite;
-}
-
-.slide {
-    width: 100vw;
-    height: 100%;
-    flex-shrink: 0;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.25;
-    /* Increased visibility as requested */
-}
-
-/* White Gradient Overlays to fade into background */
-.bg-fade-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right,
-            rgba(255, 255, 255, 0.54) 0%,
-            rgba(255, 255, 255, 0.3) 15%,
-            rgba(255, 255, 255, 0.3) 85%,
-            rgba(255, 255, 255, 0.54) 100%);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.bg-fade-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 30%;
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.6) 0%, transparent 100%);
-    pointer-events: none;
-    z-index: 1;
-}
-
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(calc(-100vw * 4));
-    }
-}
-
 .grid-overlay {
     position: absolute;
     top: 0;
@@ -492,38 +411,6 @@ body {
 .services {
     padding: var(--section-padding) 0;
     background: var(--white);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Background image with white gradient overlay for readability (same style as hero) */
-.services::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background:
-        linear-gradient(to right,
-            rgba(255, 255, 255, 0.54) 0%,
-            rgba(255, 255, 255, 0.3) 15%,
-            rgba(255, 255, 255, 0.3) 85%,
-            rgba(255, 255, 255, 0.54) 100%),
-        linear-gradient(to top,
-            rgba(255, 255, 255, 0.6) 0%,
-            transparent 100%),
-        url('images/poles-expertise-bg.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 1;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.services .container {
-    position: relative;
-    z-index: 1;
 }
 
 .section-title {
@@ -624,27 +511,19 @@ body {
     overflow: hidden;
 }
 
-/* Background Blueprint Grid - Replaced with Construction Site Image */
+/* Background Blueprint Grid */
 .blueprint-grid {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* White gradient overlay on construction image (same style as hero scrolling images) */
-    background:
-        linear-gradient(to right,
-            rgba(255, 255, 255, 0.54) 0%,
-            rgba(255, 255, 255, 0.3) 15%,
-            rgba(255, 255, 255, 0.3) 85%,
-            rgba(255, 255, 255, 0.54) 100%),
-        linear-gradient(to top, rgba(255, 255, 255, 0.6) 0%, transparent 100%),
-        url('images/construction-site.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 1;
+    background-image:
+        linear-gradient(rgba(26, 47, 75, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 47, 75, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.6;
     pointer-events: none;
-    z-index: 0;
 }
 
 .dna-content {
@@ -789,115 +668,6 @@ body {
     .dna-visual {
         min-height: 400px;
     }
-}
-
-/* ==========================================
-   TECHNICAL EDGE SECTION
-   ========================================== */
-.technical-edge {
-    padding: var(--section-padding) 0;
-    background: var(--light-gray);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Background image with white gradient overlay (same style as hero) */
-.technical-edge::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* White gradient overlay on engineering open space image (same style as hero scrolling images) */
-    background:
-        linear-gradient(to right,
-            rgba(255, 255, 255, 0.54) 0%,
-            rgba(255, 255, 255, 0.3) 15%,
-            rgba(255, 255, 255, 0.3) 85%,
-            rgba(255, 255, 255, 0.54) 100%),
-        linear-gradient(to top,
-            rgba(255, 255, 255, 0.6) 0%,
-            transparent 100%),
-        url('images/technical-edge-bg.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 1;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.technical-edge .container {
-    position: relative;
-    z-index: 1;
-}
-
-.tech-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-}
-
-.tech-feature {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 12px;
-    padding: 50px 40px;
-    transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth), border-color 0.4s var(--transition-smooth);
-    position: relative;
-    overflow: hidden;
-    will-change: transform;
-}
-
-.tech-feature::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: var(--copper-accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s var(--transition-smooth);
-}
-
-.tech-feature:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 60px rgba(27, 38, 59, 0.15);
-    border-color: var(--copper-accent);
-}
-
-.tech-feature:hover::before {
-    transform: scaleX(1);
-}
-
-.tech-icon {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 30px;
-    color: var(--copper-accent);
-    transition: all 0.4s var(--transition-smooth);
-}
-
-.tech-feature:hover .tech-icon {
-    transform: scale(1.1) rotate(5deg);
-}
-
-.tech-feature h3 {
-    font-size: 24px;
-    font-weight: var(--subheading-weight);
-    margin-bottom: 16px;
-    color: var(--navy-primary);
-}
-
-.tech-feature p {
-    font-size: 16px;
-    font-weight: var(--light-weight);
-    line-height: 1.7;
-    color: var(--dark-gray);
 }
 
 /* ==========================================
@@ -1543,7 +1313,29 @@ body {
     transform: translateY(-2px);
 }
 
+/* ==========================================
+   TECHNICAL EDGE SECTION
+   ========================================== */
+.technical-edge {
+    padding: var(--section-padding) 0;
+    background: var(--light-gray);
+    position: relative;
+    overflow: hidden;
+}
 
+.technical-edge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        linear-gradient(rgba(27, 38, 59, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(27, 38, 59, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
 
 .tech-grid {
     display: grid;

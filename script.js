@@ -96,38 +96,122 @@ const animateOnScroll = () => {
 };
 
 // ==========================================
-// FORM HANDLING
+// FORM HANDLING - DISABLED (Using FormSubmit instead)
+// ==========================================
+// FormSubmit handles the form submission natively
+// ==========================================
+// AJAX FORM HANDLING
 // ==========================================
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        // Prevent default submission to stay on page (AJAX)
+        e.preventDefault();
 
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        message: document.getElementById('message').value
-    };
+        const submitBtn = contactForm.querySelector('.cta-btn');
+        const originalText = submitBtn.textContent;
 
-    // Simulate form submission
-    console.log('Form submitted:', formData);
+        // Disable button and show loading state
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Envoi en cours...';
+        submitBtn.style.opacity = '0.7';
 
-    // Show success message
-    const submitBtn = contactForm.querySelector('.cta-btn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Message Envoyé ✓';
-    submitBtn.style.background = '#27ae60';
-    submitBtn.style.borderColor = '#27ae60';
+        const formData = new FormData(contactForm);
 
-    // Reset form
+        try {
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // Show success message on button
+                submitBtn.textContent = 'Message Envoyé ✓';
+                submitBtn.style.background = '#27ae60';
+                submitBtn.style.borderColor = '#27ae60';
+                submitBtn.style.color = '#ffffff';
+                submitBtn.style.opacity = '1';
+
+                // Reset form
+                contactForm.reset();
+
+                // Clear any "has-value" classes from floating labels
+                const inputs = contactForm.querySelectorAll('input, textarea');
+                inputs.forEach(input => input.classList.remove('has-value'));
+
+                // Show toast notification
+                showToast('✅ Votre message a bien été envoyé !', 'success');
+
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = '';
+                    submitBtn.style.borderColor = '';
+                    submitBtn.style.color = '';
+                    submitBtn.disabled = false;
+                }, 5000);
+            } else {
+                throw new Error('Erreur lors de l\'envoi');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            submitBtn.textContent = 'Erreur - Réessayez';
+            submitBtn.style.background = '#e74c3c';
+            submitBtn.style.borderColor = '#e74c3c';
+            submitBtn.style.color = '#ffffff';
+            submitBtn.style.opacity = '1';
+
+            showToast('❌ Erreur lors de l\'envoi du message', 'error');
+
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.style.background = '';
+                submitBtn.style.borderColor = '';
+                submitBtn.style.color = '';
+                submitBtn.disabled = false;
+            }, 3000);
+        }
+    });
+}
+
+// Helper function for Toast notifications
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    const bgColor = type === 'success' ? '#27ae60' : '#e74c3c';
+
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${bgColor};
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-family: var(--font-main, sans-serif);
+        font-weight: 600;
+        transform: translateY(-100px);
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    `;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Animate in
     setTimeout(() => {
-        contactForm.reset();
-        submitBtn.textContent = originalText;
-        submitBtn.style.background = '';
-        submitBtn.style.borderColor = '';
-    }, 3000);
-});
+        toast.style.transform = 'translateY(0)';
+    }, 100);
+
+    // Remove after 5s
+    setTimeout(() => {
+        toast.style.transform = 'translateY(-100px)';
+        setTimeout(() => toast.remove(), 500);
+    }, 5000);
+}
+
 
 // ==========================================
 // FLOATING LABELS FOR FORM INPUTS

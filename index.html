@@ -46,6 +46,28 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="grid-overlay"></div>
+
+        <!-- Infinite Scrolling Background (New Implementation) -->
+        <div class="hero-bg-wrapper">
+            <div class="hero-bg-slider">
+                <div class="slide-track">
+                    <!-- Set 1 -->
+                    <div class="slide"><img src="images/hero-new-1.png" alt="Architecture 1"></div>
+                    <div class="slide"><img src="images/hero-new-2.png" alt="Architecture 2"></div>
+                    <div class="slide"><img src="images/hero-new-3.png" alt="Architecture 3"></div>
+                    <div class="slide"><img src="images/hero-new-4.png" alt="Architecture 4"></div>
+                    <!-- Set 2 (Duplicate for infinite scroll) -->
+                    <div class="slide"><img src="images/hero-new-1.png" alt="Architecture 1"></div>
+                    <div class="slide"><img src="images/hero-new-2.png" alt="Architecture 2"></div>
+                    <div class="slide"><img src="images/hero-new-3.png" alt="Architecture 3"></div>
+                    <div class="slide"><img src="images/hero-new-4.png" alt="Architecture 4"></div>
+                </div>
+            </div>
+            <!-- White Gradient Fades -->
+            <div class="bg-fade-overlay"></div>
+            <div class="bg-fade-bottom"></div>
+        </div>
+
         <div class="hero-content">
             <div class="hero-left">
                 <h1 class="hero-title">
@@ -431,7 +453,7 @@
                             </div>
                             <div class="info-text">
                                 <h4>Email</h4>
-                                <p><a href="mailto:contact@ibe-construction.fr">contact@ibe-construction.fr</a></p>
+                                <p><a href="mailto:ibebuilds@gmail.com">ibebuilds@gmail.com</a></p>
                             </div>
                         </div>
 
@@ -454,24 +476,30 @@
                 </div>
 
                 <div class="contact-right">
-                    <form class="contact-form" id="contactForm">
+                    <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/ibebuilds@gmail.com"
+                        method="POST" autocomplete="off">
+                        <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_subject" value="Nouveau message depuis IBE Construction">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+
                         <div class="form-group">
-                            <input type="text" id="name" required>
+                            <input type="text" id="name" name="name" required autocomplete="off">
                             <label for="name">Nom complet</label>
                         </div>
 
                         <div class="form-group">
-                            <input type="email" id="email" required>
+                            <input type="email" id="email" name="email" required autocomplete="off">
                             <label for="email">Adresse email</label>
                         </div>
 
                         <div class="form-group">
-                            <input type="tel" id="phone">
+                            <input type="tel" id="phone" name="phone" autocomplete="off">
                             <label for="phone">Téléphone (optionnel)</label>
                         </div>
 
                         <div class="form-group">
-                            <textarea id="message" rows="4" required></textarea>
+                            <textarea id="message" name="message" rows="4" required autocomplete="off"></textarea>
                             <label for="message">Votre message</label>
                         </div>
 
