@@ -516,7 +516,7 @@ body {
         url('images/poles-expertise-bg.png');
     background-size: cover;
     background-position: center;
-    opacity: 1;
+    opacity: 0.25;
     pointer-events: none;
     z-index: 0;
 }
@@ -642,7 +642,7 @@ body {
         url('images/construction-site.png');
     background-size: cover;
     background-position: center;
-    opacity: 1;
+    opacity: 0.25;
     pointer-events: none;
     z-index: 0;
 }
@@ -822,7 +822,7 @@ body {
         url('images/technical-edge-bg.png');
     background-size: cover;
     background-position: center;
-    opacity: 1;
+    opacity: 0.25;
     pointer-events: none;
     z-index: 0;
 }
