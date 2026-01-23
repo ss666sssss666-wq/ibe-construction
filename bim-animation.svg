@@ -1,0 +1,238 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Isometric Grid Pattern -->
+    <pattern id="iso-grid" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+      <path d="M 0 0 L 0 40 M 0 0 L 40 0" fill="none" stroke="rgba(204, 148, 97, 0.1)" stroke-width="0.5"/>
+    </pattern>
+    
+    <!-- Glass Material -->
+    <linearGradient id="glass-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#1a2f4b;stop-opacity:0.2" />
+    </linearGradient>
+    
+    <!-- Shadow -->
+    <radialGradient id="shadow-gradient">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- Animations -->
+    <style>
+      @keyframes rotate-building {
+        0% { transform: rotateY(0deg); }
+        100% { transform: rotateY(360deg); }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 0.8; }
+        50% { opacity: 1; }
+      }
+      
+      @keyframes float-up {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+      }
+      
+      .rotating-group {
+        animation: rotate-building 30s linear infinite;
+        transform-origin: center;
+      }
+      
+      .pulse-element {
+        animation: pulse 3s ease-in-out infinite;
+      }
+      
+      .float-element {
+        animation: float-up 4s ease-in-out infinite;
+      }
+      
+      .dimension-line {
+        stroke-dasharray: 2, 2;
+        opacity: 0.6;
+      }
+      
+      .annotation-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 6px;
+        fill: #1a2f4b;
+        opacity: 0.7;
+      }
+    </style>
+  </defs>
+  
+  <!-- Background Grid -->
+  <rect width="400" height="400" fill="url(#iso-grid)" opacity="0.3"/>
+  
+  <!-- Ground Shadow -->
+  <ellipse cx="200" cy="350" rx="120" ry="30" fill="url(#shadow-gradient)" opacity="0.4"/>
+  
+  <!-- Main Building Group (Isometric View) -->
+  <g transform="translate(200, 200)">
+    
+    <!-- Ground Floor Base -->
+    <g class="floor-base">
+      <!-- Foundation -->
+      <path d="M -60 20 L 0 -10 L 60 20 L 0 50 Z" 
+            fill="#8b8b8b" stroke="#1a2f4b" stroke-width="1" opacity="0.3"/>
+      
+      <!-- Floor Slab -->
+      <path d="M -60 15 L 0 -15 L 60 15 L 0 45 Z" 
+            fill="#d4d4d4" stroke="#1a2f4b" stroke-width="1.5"/>
+    </g>
+    
+    <!-- Structural Core (Navy - Concrete) -->
+    <g class="structural-core pulse-element">
+      <!-- Columns - Ground Floor -->
+      <g class="columns-r0">
+        <rect x="-55" y="-10" width="8" height="40" fill="#1a2f4b" stroke="#0d1a2e" stroke-width="0.5"/>
+        <rect x="-5" y="-35" width="8" height="40" fill="#1a2f4b" stroke="#0d1a2e" stroke-width="0.5"/>
+        <rect x="45" y="-10" width="8" height="40" fill="#1a2f4b" stroke="#0d1a2e" stroke-width="0.5"/>
+      </g>
+      
+      <!-- Beams - R+1 -->
+      <line x1="-51" y1="30" x2="1" y2="5" stroke="#1a2f4b" stroke-width="3"/>
+      <line x1="1" y1="5" x2="53" y2="30" stroke="#1a2f4b" stroke-width="3"/>
+      
+      <!-- Floor Slab R+1 -->
+      <path d="M -60 35 L 0 5 L 60 35 L 0 65 Z" 
+            fill="#d4d4d4" stroke="#1a2f4b" stroke-width="1" opacity="0.7"/>
+      
+      <!-- Columns - R+1 -->
+      <g class="columns-r1">
+        <rect x="-55" y="30" width="8" height="40" fill="#1a2f4b" stroke="#0d1a2e" stroke-width="0.5"/>
+        <rect x="-5" y="5" width="8" height="40" fill="#1a2f4b" stroke="#0d1a2e" stroke-width="0.5"/>
+        <rect x="45" y="30" width="8" height="40" fill="#1a2f4b" stroke="#0d1a2e" stroke-width="0.5"/>
+      </g>
+      
+      <!-- Beams - R+2 -->
+      <line x1="-51" y1="70" x2="1" y2="45" stroke="#1a2f4b" stroke-width="3"/>
+      <line x1="1" y1="45" x2="53" y2="70" stroke="#1a2f4b" stroke-width="3"/>
+      
+      <!-- Floor Slab R+2 -->
+      <path d="M -60 75 L 0 45 L 60 75 L 0 105 Z" 
+            fill="#d4d4d4" stroke="#1a2f4b" stroke-width="1" opacity="0.7"/>
+      
+      <!-- Columns - R+2 -->
+      <g class="columns-r2">
+        <rect x="-55" y="70" width="8" height="40" fill="#1a2f4b" stroke="#0d1a2e" stroke-width="0.5"/>
+        <rect x="-5" y="45" width="8" height="40" fill="#1a2f4b" stroke="#0d1a2e" stroke-width="0.5"/>
+        <rect x="45" y="70" width="8" height="40" fill="#1a2f4b" stroke="#0d1a2e" stroke-width="0.5"/>
+      </g>
+      
+      <!-- Roof Slab -->
+      <path d="M -60 115 L 0 85 L 60 115 L 0 145 Z" 
+            fill="#d4d4d4" stroke="#1a2f4b" stroke-width="1.5"/>
+    </g>
+    
+    <!-- Technical Networks (Bronze - CVC) -->
+    <g class="technical-networks float-element">
+      <!-- HVAC Ducts - R+1 -->
+      <g opacity="0.9">
+        <line x1="-40" y1="40" x2="40" y2="40" stroke="#cc9461" stroke-width="2.5"/>
+        <circle cx="-20" cy="40" r="3" fill="#cc9461"/>
+        <circle cx="20" cy="40" r="3" fill="#cc9461"/>
+        
+        <!-- Vertical Risers -->
+        <line x1="-20" y1="40" x2="-20" y2="80" stroke="#cc9461" stroke-width="2" stroke-dasharray="3,2"/>
+        <line x1="20" y1="40" x2="20" y2="80" stroke="#cc9461" stroke-width="2" stroke-dasharray="3,2"/>
+      </g>
+      
+      <!-- HVAC Ducts - R+2 -->
+      <g opacity="0.9">
+        <line x1="-40" y1="80" x2="40" y2="80" stroke="#cc9461" stroke-width="2.5"/>
+        <circle cx="-20" cy="80" r="3" fill="#cc9461"/>
+        <circle cx="20" cy="80" r="3" fill="#cc9461"/>
+      </g>
+      
+      <!-- Electrical Conduits -->
+      <g opacity="0.7">
+        <line x1="-50" y1="50" x2="50" y2="50" stroke="#ffd700" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="-50" y1="90" x2="50" y2="90" stroke="#ffd700" stroke-width="1" stroke-dasharray="2,2"/>
+      </g>
+    </g>
+    
+    <!-- Walls and Partitions (Light Gray) -->
+    <g class="walls" opacity="0.6">
+      <!-- Exterior Walls - Left Side -->
+      <path d="M -60 15 L -60 115 L 0 85 L 0 -15 Z" 
+            fill="#e0e0e0" stroke="#999" stroke-width="0.5"/>
+      
+      <!-- Exterior Walls - Right Side -->
+      <path d="M 60 15 L 60 115 L 0 85 L 0 -15 Z" 
+            fill="#f0f0f0" stroke="#999" stroke-width="0.5"/>
+      
+      <!-- Interior Partitions -->
+      <line x1="0" y1="25" x2="0" y2="105" stroke="#ccc" stroke-width="1.5" opacity="0.5"/>
+    </g>
+    
+    <!-- Glass Facade (Transparent with Reflections) -->
+    <g class="facade">
+      <!-- Front Glass Panels -->
+      <g opacity="0.4">
+        <path d="M -60 15 L 0 -15 L 0 85 L -60 115 Z" 
+              fill="url(#glass-gradient)" stroke="#1a2f4b" stroke-width="0.5"/>
+        <path d="M 0 -15 L 60 15 L 60 115 L 0 85 Z" 
+              fill="url(#glass-gradient)" stroke="#1a2f4b" stroke-width="0.5"/>
+        
+        <!-- Window Frames -->
+        <line x1="-60" y1="45" x2="0" y2="15" stroke="#1a2f4b" stroke-width="0.8"/>
+        <line x1="-60" y1="75" x2="0" y2="45" stroke="#1a2f4b" stroke-width="0.8"/>
+        <line x1="0" y1="15" x2="60" y2="45" stroke="#1a2f4b" stroke-width="0.8"/>
+        <line x1="0" y1="45" x2="60" y2="75" stroke="#1a2f4b" stroke-width="0.8"/>
+      </g>
+      
+      <!-- Glass Reflections -->
+      <path d="M -50 20 L -45 18 L -45 35 L -50 37 Z" fill="#ffffff" opacity="0.6"/>
+      <path d="M 45 20 L 50 18 L 50 35 L 45 37 Z" fill="#ffffff" opacity="0.6"/>
+    </g>
+    
+    <!-- Dimension Lines -->
+    <g class="dimensions">
+      <!-- Width Dimension -->
+      <line x1="-65" y1="120" x2="65" y2="120" class="dimension-line" stroke="#1a2f4b" stroke-width="0.5"/>
+      <line x1="-65" y1="115" x2="-65" y2="125" stroke="#1a2f4b" stroke-width="0.5"/>
+      <line x1="65" y1="115" x2="65" y2="125" stroke="#1a2f4b" stroke-width="0.5"/>
+      <text x="0" y="135" class="annotation-text" text-anchor="middle">12.00m</text>
+      
+      <!-- Height Dimension -->
+      <line x1="-70" y1="-15" x2="-70" y2="115" class="dimension-line" stroke="#1a2f4b" stroke-width="0.5"/>
+      <line x1="-75" y1="-15" x2="-65" y2="-15" stroke="#1a2f4b" stroke-width="0.5"/>
+      <line x1="-75" y1="115" x2="-65" y2="115" stroke="#1a2f4b" stroke-width="0.5"/>
+      <text x="-85" y="50" class="annotation-text" text-anchor="middle" transform="rotate(-90 -85 50)">9.50m</text>
+    </g>
+    
+    <!-- Coordinate Axes (Discrete) -->
+    <g class="axes" opacity="0.3">
+      <line x1="-80" y1="150" x2="-50" y2="150" stroke="#cc9461" stroke-width="1" marker-end="url(#arrowhead)"/>
+      <text x="-45" y="153" class="annotation-text" font-size="8">X</text>
+      
+      <line x1="-80" y1="150" x2="-80" y2="120" stroke="#1a2f4b" stroke-width="1" marker-end="url(#arrowhead)"/>
+      <text x="-78" y="115" class="annotation-text" font-size="8">Z</text>
+      
+      <line x1="-80" y1="150" x2="-95" y2="140" stroke="#999" stroke-width="1" marker-end="url(#arrowhead)"/>
+      <text x="-100" y="143" class="annotation-text" font-size="8">Y</text>
+    </g>
+    
+    <!-- Technical Annotations -->
+    <g class="annotations" opacity="0.7">
+      <text x="-70" y="-25" class="annotation-text">R+3</text>
+      <text x="-70" y="15" class="annotation-text">R+2</text>
+      <text x="-70" y="55" class="annotation-text">R+1</text>
+      <text x="-70" y="95" class="annotation-text">RDC</text>
+      
+      <circle cx="-20" cy="40" r="1.5" fill="#cc9461" class="pulse-element"/>
+      <text x="-15" y="35" class="annotation-text" font-size="5">CVC</text>
+    </g>
+    
+  </g>
+  
+  <!-- Arrow marker for axes -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#1a2f4b" opacity="0.5"/>
+    </marker>
+  </defs>
+  
+</svg>

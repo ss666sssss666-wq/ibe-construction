@@ -4,6 +4,8 @@
 const nav = document.querySelector('.nav-glass');
 const navLinks = document.querySelector('.nav-links');
 const hamburger = document.querySelector('.hamburger');
+const langSelector = document.querySelector('.lang-selector');
+const langCurrent = document.querySelector('.lang-current');
 
 let navTicking = false;
 let lastScrollY = 0;
@@ -34,6 +36,8 @@ window.addEventListener('scroll', () => {
 hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('active');
     hamburger.classList.toggle('active');
+    // Close language dropdown if opening menu
+    if (langSelector) langSelector.classList.remove('active');
 });
 
 // Close menu when clicking a link
@@ -145,6 +149,18 @@ if (contactForm) {
 
                 // Show toast notification
                 showToast('✅ Votre message a bien été envoyé !', 'success');
+
+                // Marketing Tracking: Lead Conversion
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'lead_form_submitted',
+                    'form_name': 'contact_footer',
+                    'service': formData.get('service') || 'general'
+                });
+
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead');
+                }
 
                 setTimeout(() => {
                     submitBtn.textContent = originalText;
@@ -460,12 +476,200 @@ document.addEventListener('DOMContentLoaded', () => {
     initModals();
     initLoader(); // Initialize loader
 
+    // Dynamic Year Update
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+
     // Add a subtle entrance animation to the page (Original opacity logic removed as loader handles it)
     // document.body.style.opacity = '0';
     // setTimeout(() => {
     //     document.body.style.transition = 'opacity 0.5s ease';
     //     document.body.style.opacity = '1';
     // }, 100);
+    // Custom Cursor Logic - Only for Desktop
+    const cursor = document.querySelector('.custom-cursor');
+    const cursorOutline = document.querySelector('.custom-cursor-outline');
+
+    if (cursor && cursorOutline && window.innerWidth > 1024) {
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            // Smoother outline follow
+            cursorOutline.animate({
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Hover Effect
+        const hoverElements = document.querySelectorAll('a, button, .portfolio-item, .service-card, .tech-feature, .hamburger');
+
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+                cursorOutline.classList.add('hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+                cursorOutline.classList.remove('hover');
+            });
+        });
+    }
+
+    // ==========================================
+    // LANGUAGE SWITCHER LOGIC (CLICK BASED FOR MOBILE)
+    // ==========================================
+    const langItems = document.querySelectorAll('.lang-dropdown li');
+    const activeLangText = document.getElementById('active-lang');
+
+    // Toggle dropdown on click (Robust for Mobile)
+    if (langCurrent) {
+        langCurrent.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isActive = langSelector.classList.contains('active');
+
+            // Close other menus if needed
+            if (!isActive) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+
+            if (isActive) {
+                langSelector.classList.remove('active');
+            } else {
+                langSelector.classList.add('active');
+            }
+        });
+    }
+
+    // Close dropdown when clicking elsewhere
+    document.addEventListener('click', (e) => {
+        if (langSelector && langSelector.classList.contains('active')) {
+            if (!langSelector.contains(e.target)) {
+                langSelector.classList.remove('active');
+            }
+        }
+    });
+
+    const updateContent = (lang) => {
+        const langData = translations[lang];
+        if (!langData) return;
+
+        // Update direction
+        document.documentElement.dir = langData.dir;
+        document.documentElement.lang = lang;
+
+        // Update all elements with data-i18n
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (langData[key]) {
+                if (langData[key].includes('<')) {
+                    el.innerHTML = langData[key];
+                } else {
+                    el.textContent = langData[key];
+                }
+            }
+        });
+
+        // Re-inject the current year
+        const yearSpan = document.getElementById('current-year');
+        if (yearSpan) {
+            yearSpan.textContent = new Date().getFullYear();
+        }
+
+        // Update active language text in navbar
+        activeLangText.textContent = lang.toUpperCase();
+
+        // Save preference
+        localStorage.setItem('ibe_lang', lang);
+    };
+
+    langItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const selectedLang = item.getAttribute('data-lang');
+            updateContent(selectedLang);
+            if (langSelector) langSelector.classList.remove('active');
+        });
+    });
+
+    // Default to French
+    const savedLang = localStorage.getItem('ibe_lang') || 'fr';
+    updateContent(savedLang);
+
+    // FLOATING CTA SCROLL LOGIC
+    // ==========================================
+    const floatingCta = document.querySelector('.floating-cta');
+    if (floatingCta) {
+        // Show immediately on page load
+        floatingCta.classList.add('visible');
+    }
+
+    // ==========================================
+    // SMOOTH SCROLLING (LENIS)
+    // ==========================================
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // ==========================================
+    // GSAP ANIMATIONS WITH SCROLLTRIGGER
+    // ==========================================
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Connect GSAP ScrollTrigger with Lenis
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // Parallax effect on DNA image (Subtle)
+    gsap.to('.dna-image', {
+        scrollTrigger: {
+            trigger: '.engineering-dna',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+        },
+        y: -30,
+        ease: 'none'
+    });
+
+    // Parallax on hero background (if exists)
+    const heroBg = document.querySelector('.bg-slideshow');
+    if (heroBg) {
+        gsap.to(heroBg, {
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1,
+            },
+            y: 100,
+            ease: 'none'
+        });
+    }
 });
 
 // ==========================================
@@ -474,30 +678,22 @@ document.addEventListener('DOMContentLoaded', () => {
 const initLoader = () => {
     const loader = document.getElementById('loader');
 
-    // Ensure loader is in loading state initially
-    loader.classList.add('loading');
-    document.body.style.overflow = 'hidden'; // Prevent scrolling during load
-
-    // Wait for window load or fallback timeout
-    const finishLoad = () => {
+    // Auto-open loader after a short delay or window load
+    const openLoader = () => {
         setTimeout(() => {
             loader.classList.remove('loading');
             loader.classList.add('loaded');
 
-            // Re-enable scroll after animation matches CSS transition
-            setTimeout(() => {
-                document.body.style.overflow = '';
-                // Optional: Remove from DOM to free memory
-                // loader.remove(); 
-            }, 1200); // 1.2s matches CSS transition
-        }, 800); // Slight delay to read the logo
+            // Re-enable scroll
+            document.body.style.overflow = '';
+        }, 1500); // 1.5s delay for branding visibility
     };
 
     if (document.readyState === 'complete') {
-        finishLoad();
+        openLoader();
     } else {
-        window.addEventListener('load', finishLoad);
-        // Fallback max wait time of 3s
-        setTimeout(finishLoad, 3000);
+        window.addEventListener('load', openLoader);
+        setTimeout(openLoader, 3000); // Fallback
     }
 };
+

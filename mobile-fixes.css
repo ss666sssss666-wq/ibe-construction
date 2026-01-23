@@ -1,0 +1,714 @@
+/* ==========================================
+   RESPONSIVE DESIGN - MOBILE & TABLET
+   Optimisé pour tous les appareils
+   ========================================== */
+
+/* ============================================
+   TABLETTES PAYSAGE (1024px - 1280px)
+   ============================================ */
+@media (max-width: 1280px) and (min-width: 1025px) {
+    .container {
+        padding: 0 40px;
+    }
+
+    .hero-title {
+        font-size: clamp(48px, 6vw, 64px);
+    }
+
+    .services-grid,
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================================
+   TABLETTES PORTRAIT (768px - 1024px)
+   ============================================ */
+@media (max-width: 1024px) and (min-width: 769px) {
+    :root {
+        --section-padding: 100px;
+    }
+
+    .container {
+        padding: 0 32px;
+    }
+
+    .hero {
+        padding: 160px 32px 80px;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: clamp(42px, 5.5vw, 56px);
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .tech-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .dna-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    /* Navigation mobile pour tablettes */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        flex-direction: column;
+        background: linear-gradient(135deg, #CC9461 0%, #B8845A 100%);
+        width: 400px;
+        max-width: 50%;
+        padding: 80px 50px 40px;
+        box-shadow: -10px 0 50px rgba(0, 0, 0, 0.3);
+        transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        align-items: center;
+        z-index: 1000;
+        text-align: center;
+        justify-content: flex-start;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
+/* ============================================
+   MOBILES GRANDS (481px - 768px)
+   ============================================ */
+@media (max-width: 768px) and (min-width: 481px) {
+    :root {
+        --section-padding: 80px;
+    }
+
+    .container {
+        padding: 0 24px;
+    }
+
+    .hero {
+        padding: 220px 24px 60px;
+        min-height: 85vh;
+    }
+
+    .hero-title {
+        font-size: clamp(38px, 9vw, 52px);
+    }
+
+    .hero-subtitle {
+        font-size: clamp(18px, 4vw, 24px);
+    }
+
+    .hero-description {
+        font-size: 16px;
+        max-width: 100%;
+    }
+
+    .section-title {
+        font-size: clamp(32px, 7vw, 44px);
+    }
+
+    .services-grid,
+    .tech-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .dna-pillars {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    /* Menu mobile optimisé */
+    .nav-links {
+        width: 75%;
+        max-width: 350px;
+        padding: 80px 35px 40px;
+    }
+
+    .menu-title {
+        font-size: 13px;
+        margin-bottom: 35px;
+    }
+
+    .nav-links a {
+        font-size: 19px;
+        padding: 14px 0;
+    }
+}
+
+/* ============================================
+   MOBILES STANDARDS (376px - 480px)
+   iPhone 12/13/14, Galaxy S21, etc.
+   ============================================ */
+@media (max-width: 480px) and (min-width: 376px) {
+    :root {
+        --section-padding: 70px;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    .nav-container {
+        padding: 14px 20px;
+    }
+
+    .logo-image {
+        height: 45px;
+    }
+
+    .hero {
+        padding: 280px 20px 50px;
+        min-height: 80vh;
+    }
+
+    .hero-title {
+        font-size: clamp(34px, 10vw, 48px);
+        margin-bottom: 14px;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(16px, 4.5vw, 22px);
+    }
+
+    .hero-description {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .cta-btn {
+        padding: 14px 28px;
+        font-size: 14px;
+    }
+
+    .section-title {
+        font-size: clamp(28px, 8vw, 40px);
+        margin-bottom: 40px;
+    }
+
+    /* Adaptation spécifique pour "Votre Projet Mérite Mieux" */
+    .why-ibe .section-title {
+        font-size: clamp(32px, 9vw, 44px);
+        line-height: 1.2;
+        margin-bottom: 20px;
+        letter-spacing: -0.5px;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .why-ibe .section-intro {
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+
+    /* Tableau de comparaison mobile */
+    .comparison-table {
+        margin: 30px auto 30px;
+        border-radius: 12px;
+    }
+
+    .comparison-header {
+        font-size: 13px;
+        padding: 16px 0;
+    }
+
+    .comparison-header .header-cell {
+        padding: 0 12px;
+    }
+
+    .comparison-row {
+        font-size: 13px;
+    }
+
+    .comparison-cell {
+        padding: 16px 12px;
+    }
+
+    .comparison-cell.label-cell {
+        font-size: 13px;
+    }
+
+    .comparison-value {
+        font-size: 14px;
+    }
+
+    .comparison-text {
+        font-size: 12px;
+    }
+
+    .comparison-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .section-intro {
+        font-size: 15px;
+        margin-top: -30px;
+    }
+
+    .service-card,
+    .tech-feature {
+        padding: 30px 24px;
+    }
+
+    .service-card h3,
+    .tech-feature h3 {
+        font-size: 19px;
+    }
+
+    .service-card p,
+    .tech-feature p {
+        font-size: 14px;
+    }
+
+    .portfolio-content-static h3 {
+        font-size: clamp(18px, 5vw, 22px);
+    }
+
+    .portfolio-content-static p {
+        font-size: 10px;
+    }
+
+    /* DNA Section */
+    .dna-image-container {
+        height: 400px;
+    }
+
+    .dna-pillar h3 {
+        font-size: 18px;
+    }
+
+    .dna-pillar p {
+        font-size: 14px;
+    }
+
+    /* Contact */
+    .contact-intro {
+        font-size: 16px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 15px;
+    }
+
+    /* Menu mobile */
+    .nav-links {
+        width: 85%;
+        max-width: 320px;
+        padding: 80px 30px 40px;
+    }
+
+    .menu-title {
+        font-size: 12px;
+        letter-spacing: 2.5px;
+        margin-bottom: 30px;
+    }
+
+    .nav-links a {
+        font-size: 18px;
+        padding: 13px 0;
+    }
+}
+
+/* ============================================
+   MOBILES COMPACTS (321px - 375px)
+   iPhone SE, petits Android
+   ============================================ */
+@media (max-width: 375px) and (min-width: 321px) {
+    :root {
+        --section-padding: 60px;
+    }
+
+    .container {
+        padding: 0 18px;
+    }
+
+    .nav-container {
+        padding: 12px 18px;
+    }
+
+    .logo-image {
+        height: 42px;
+    }
+
+    .hero {
+        padding: 280px 18px 45px;
+        min-height: 75vh;
+    }
+
+    .hero-title {
+        font-size: clamp(30px, 11vw, 44px);
+        margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(15px, 5vw, 20px);
+    }
+
+    .hero-description {
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    .cta-btn {
+        padding: 13px 24px;
+        font-size: 13px;
+    }
+
+    .section-title {
+        font-size: clamp(26px, 9vw, 36px);
+        margin-bottom: 35px;
+    }
+
+    /* Adaptation spécifique pour "Votre Projet Mérite Mieux" sur petits écrans */
+    .why-ibe .section-title {
+        font-size: clamp(28px, 10vw, 38px);
+        line-height: 1.15;
+        margin-bottom: 18px;
+        letter-spacing: -0.5px;
+    }
+
+    .section-intro {
+        font-size: 14px;
+        margin-top: -25px;
+    }
+
+    .service-card,
+    .tech-feature {
+        padding: 26px 20px;
+    }
+
+    .service-card h3,
+    .tech-feature h3 {
+        font-size: 18px;
+    }
+
+    .service-card p,
+    .tech-feature p {
+        font-size: 13px;
+    }
+
+    .portfolio-content-static h3 {
+        font-size: clamp(16px, 5.5vw, 20px);
+    }
+
+    .portfolio-content-static p {
+        font-size: 9px;
+    }
+
+    /* DNA Section */
+    .dna-image-container {
+        height: 350px;
+    }
+
+    .dna-pillar h3 {
+        font-size: 17px;
+    }
+
+    .dna-pillar p {
+        font-size: 13px;
+    }
+
+    /* Contact */
+    .contact-intro {
+        font-size: 15px;
+    }
+
+    .info-text h4 {
+        font-size: 15px;
+    }
+
+    .info-text p {
+        font-size: 14px;
+    }
+
+    /* Menu mobile */
+    .nav-links {
+        width: 90%;
+        max-width: 300px;
+        padding: 75px 25px 35px;
+    }
+
+    .menu-title {
+        font-size: 11px;
+        letter-spacing: 2px;
+        margin-bottom: 25px;
+    }
+
+    .nav-links li {
+        margin-bottom: 16px;
+    }
+
+    .nav-links a {
+        font-size: 17px;
+        padding: 12px 0;
+    }
+}
+
+/* ============================================
+   TRÈS PETITS MOBILES (≤320px)
+   iPhone SE (1ère gen), vieux Android
+   ============================================ */
+@media (max-width: 320px) {
+    :root {
+        --section-padding: 50px;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .nav-container {
+        padding: 10px 16px;
+    }
+
+    .logo-image {
+        height: 38px;
+    }
+
+    .hero {
+        padding: 150px 16px 40px;
+        min-height: 70vh;
+    }
+
+    .hero-title {
+        font-size: clamp(28px, 12vw, 40px);
+        margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(14px, 5.5vw, 18px);
+    }
+
+    .hero-description {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .cta-btn {
+        padding: 12px 20px;
+        font-size: 12px;
+    }
+
+    .section-title {
+        font-size: clamp(24px, 10vw, 32px);
+        margin-bottom: 30px;
+    }
+
+    .section-intro {
+        font-size: 13px;
+        margin-top: -20px;
+    }
+
+    .service-card,
+    .tech-feature {
+        padding: 24px 18px;
+    }
+
+    .service-card h3,
+    .tech-feature h3 {
+        font-size: 17px;
+    }
+
+    .service-card p,
+    .tech-feature p {
+        font-size: 12px;
+    }
+
+    .portfolio-content-static h3 {
+        font-size: clamp(15px, 6vw, 18px);
+    }
+
+    .portfolio-content-static p {
+        font-size: 8px;
+    }
+
+    /* DNA Section */
+    .dna-image-container {
+        height: 300px;
+    }
+
+    .dna-pillar h3 {
+        font-size: 16px;
+    }
+
+    .dna-pillar p {
+        font-size: 12px;
+    }
+
+    /* Contact */
+    .contact-intro {
+        font-size: 14px;
+    }
+
+    .info-text h4 {
+        font-size: 14px;
+    }
+
+    .info-text p {
+        font-size: 13px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 14px;
+        padding: 14px 0;
+    }
+
+    /* Menu mobile */
+    .nav-links {
+        width: 95%;
+        max-width: 280px;
+        padding: 70px 20px 30px;
+    }
+
+    .menu-title {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        margin-bottom: 20px;
+    }
+
+    .nav-links li {
+        margin-bottom: 14px;
+    }
+
+    .nav-links a {
+        font-size: 16px;
+        padding: 11px 0;
+    }
+
+    .footer-logo .logo-image {
+        height: 80px;
+    }
+}
+
+/* ============================================
+   ORIENTATION PAYSAGE (LANDSCAPE)
+   Pour tous les mobiles en mode horizontal
+   ============================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        padding: 120px 20px 40px;
+        min-height: auto;
+    }
+
+    .hero-title {
+        font-size: clamp(28px, 8vw, 40px);
+        margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(14px, 3.5vw, 18px);
+    }
+
+    .hero-description {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .blueprint-graphic {
+        max-width: 200px;
+    }
+
+    .nav-links {
+        padding: 60px 30px 30px;
+        overflow-y: auto;
+    }
+
+    .menu-title {
+        margin-bottom: 20px;
+    }
+
+    .nav-links li {
+        margin-bottom: 12px;
+    }
+
+    .nav-links a {
+        padding: 10px 0;
+        font-size: 16px;
+    }
+
+    :root {
+        --section-padding: 50px;
+    }
+}
+
+/* ============================================
+   FIXES SPÉCIFIQUES POUR SAFARI iOS
+   ============================================ */
+@supports (-webkit-touch-callout: none) {
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+
+    .nav-links {
+        height: -webkit-fill-available;
+    }
+
+    /* Fix pour le viewport height sur iOS */
+    .hero,
+    .nav-links {
+        height: 100dvh;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITÉ & PERFORMANCE
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Amélioration du contraste pour les malvoyants */
+@media (prefers-contrast: high) {
+    .nav-links {
+        background: linear-gradient(135deg, #B8845A 0%, #A67550 100%);
+    }
+
+    .hamburger.active span {
+        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.8));
+    }
+
+    .menu-title {
+        color: rgba(255, 255, 255, 1);
+    }
+}
