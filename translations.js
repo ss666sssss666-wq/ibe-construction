@@ -85,6 +85,19 @@ const translations = {
         form_message: 'Votre message',
         form_submit: 'Envoyer le Message',
         copyright: '© <span id="current-year"></span> IBE Construction. Tous droits réservés.',
+
+        // Team Section
+        team_title: 'Notre Équipe',
+        team_intro: 'Des experts passionnés unis par une même vision de l\'excellence.',
+        team_member_1_name: 'Dr. Ing. Structure',
+        team_member_1_role: 'Directeur Études & BIM',
+        team_member_1_desc: 'Expert en calcul de structures complexes et modélisation BIM avancée. Garant de la conformité Eurocodes.',
+        team_member_2_name: 'Fahd',
+        team_member_2_role: 'Directeur Second Œuvre',
+        team_member_2_desc: 'Spécialiste de la finition haut de gamme et de la coordination de chantier. Le souci du détail est sa signature.',
+        team_member_3_name: 'Ahmed',
+        team_member_3_role: 'Directeur CVC & Fluides',
+        team_member_3_desc: 'Ingénieur thermicien expert en efficacité énergétique et systèmes climatiques pour environnements critiques.',
     },
     en: {
         dir: 'ltr',
@@ -172,6 +185,19 @@ const translations = {
         form_message: 'Your message',
         form_submit: 'Send Message',
         copyright: '© <span id="current-year"></span> IBE Construction. All rights reserved.',
+
+        // Team Section
+        team_title: 'Our Team',
+        team_intro: 'Passionate experts united by a shared vision of excellence.',
+        team_member_1_name: 'Dr. Ing. Structure',
+        team_member_1_role: 'Director of Studies & BIM',
+        team_member_1_desc: 'Expert in complex structural analysis and advanced BIM modeling. Guarantor of Eurocode compliance.',
+        team_member_2_name: 'Fahd',
+        team_member_2_role: 'Director of Finishing Works',
+        team_member_2_desc: 'Specialist in high-end finishing and site coordination. Attention to detail is his signature.',
+        team_member_3_name: 'Ahmed',
+        team_member_3_role: 'Director of HVAC & Fluids',
+        team_member_3_desc: 'Thermal engineer expert in energy efficiency and climate systems for critical environments.',
     },
     ar: {
         dir: 'rtl',
@@ -259,5 +285,18 @@ const translations = {
         form_message: 'رسالتكم',
         form_submit: 'إرسال الرسالة',
         copyright: '© <span id="current-year"></span> IBE Construction. جميع الحقوق محفوظة.',
+
+        // Team Section
+        team_title: 'فريقنا',
+        team_intro: 'خبراء شغوفون يجمعهم رؤية واحدة للتميز.',
+        team_member_1_name: 'د. مهندس هيكلي',
+        team_member_1_role: 'مدير الدراسات و BIM',
+        team_member_1_desc: 'خبير في حساب الهياكل المعقدة ونمذجة BIM المتقدمة. ضامن الامتثال للمعايير الأوروبية.',
+        team_member_2_name: 'فهد',
+        team_member_2_role: 'مدير التشطيبات',
+        team_member_2_desc: 'متخصص في التشطيبات الراقية وتنسيق الموقع. الاهتمام بالتفاصيل هو بصمته.',
+        team_member_3_name: 'أحمد',
+        team_member_3_role: 'مدير التكييف والسوائل',
+        team_member_3_desc: 'مهندس حراري خبير في كفاءة الطاقة وأنظمة المناخ للبيئات الحرجة.',
     }
 };
