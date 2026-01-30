@@ -712,3 +712,16 @@
         color: rgba(255, 255, 255, 1);
     }
 }
+
+/* ============================================
+   FIX: ARRIERE-PLAN MOBILE (Why IBE)
+   Empêche le problème de disparition de l'image
+   due à background-attachment: fixed sur mobile
+   ============================================ */
+@media (max-width: 1024px) {
+    .why-ibe {
+        background-attachment: scroll !important;
+        background-position: center center !important;
+        background-size: cover !important;
+    }
+}
