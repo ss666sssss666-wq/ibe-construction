@@ -29,7 +29,13 @@ const CLOUDINARY_UPLOAD_PRESET = 'ibe-docs';
  * Returns { url, nom } — same interface as the old Firebase version.
  */
 async function ibeUploadDocument(uid, file, onProgress) {
-    const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`;
+    // Use 'raw' for documents (PDF, DWG, etc.) so Cloudinary serves them
+    // with the correct MIME type (application/pdf, etc.).
+    // 'auto/upload' stores everything under image/upload which breaks PDF viewers.
+    const ext = file.name.split('.').pop().toLowerCase();
+    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
+    const resourceType = imageExts.includes(ext) ? 'auto' : 'raw';
+    const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
 
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -86,15 +92,22 @@ async function ibeUploadDocument(uid, file, onProgress) {
 }
 
 /**
- * Returns the Cloudinary URL as-is (clean URL, no fl_attachment).
- * fl_attachment was removed because it forces a download and breaks
- * Google Docs Viewer ("Aucun aperçu disponible"). Files are served inline
- * by default, which allows direct viewing in the browser.
+ * Fix Cloudinary URLs for inline viewing:
+ * 1. Strip fl_attachment (forces download, breaks viewers)
+ * 2. Convert /image/upload/ → /raw/upload/ for non-image files
+ *    so Cloudinary serves the correct MIME type (application/pdf, etc.)
  */
 function cloudinaryFixUrl(url, filename) {
-    // Return the URL unchanged — keep it clean for inline viewing.
-    // The dashboard strips fl_attachment dynamically if it's present in old URLs.
-    return url || '';
+    if (!url) return '';
+    // Strip fl_attachment
+    let fixed = url.replace('/upload/fl_attachment/', '/upload/');
+    // For non-image files, convert image/upload → raw/upload
+    const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
+    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
+    if (ext && !imageExts.includes(ext)) {
+        fixed = fixed.replace('/image/upload/', '/raw/upload/');
+    }
+    return fixed;
 }
 
 

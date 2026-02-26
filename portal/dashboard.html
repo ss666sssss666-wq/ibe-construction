@@ -1108,10 +1108,17 @@
         }
 
         // Fix URL Cloudinary pour les fichiers non-image (PDF, DWG, etc.)
-        // Les anciens uploads ont /image/upload/ mais les PDFs doivent être /raw/upload/
-        // Ouvre les PDFs via Google Docs Viewer (contourne les restrictions Cloudinary)
+        // Convertit /image/upload/ → /raw/upload/ pour que Cloudinary serve
+        // le bon MIME type (application/pdf au lieu de image/)
         function fixCloudinaryUrl(url, filename) {
-            return url; // URL stored as-is from Cloudinary
+            if (!url) return '';
+            let fixed = url.replace('/upload/fl_attachment/', '/upload/');
+            const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
+            const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
+            if (ext && !imageExts.includes(ext)) {
+                fixed = fixed.replace('/image/upload/', '/raw/upload/');
+            }
+            return fixed;
         }
 
         function openDoc(rawUrl, filename) {
@@ -1122,15 +1129,14 @@
                 window.open(rawUrl, '_blank');
                 return;
             }
-            // Strip fl_attachment so Cloudinary serves the file inline (viewable),
-            // not as a forced download (which breaks Google Docs Viewer).
-            const viewableUrl = rawUrl.replace('/upload/fl_attachment/', '/upload/');
-            // Try to open directly first; fall back to Google Docs Viewer for PDFs.
+            // Fix the URL: strip fl_attachment + convert image/upload → raw/upload
+            let viewableUrl = rawUrl.replace('/upload/fl_attachment/', '/upload/');
+            viewableUrl = viewableUrl.replace('/image/upload/', '/raw/upload/');
             if (ext === 'pdf') {
                 const viewerUrl = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(viewableUrl);
                 window.open(viewerUrl, '_blank');
             } else {
-                // For DWG, XLSX, etc. — try direct download via clean URL
+                // For DWG, XLSX, etc. — open directly
                 window.open(viewableUrl, '_blank');
             }
         }
