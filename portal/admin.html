@@ -1329,8 +1329,8 @@
             document.getElementById('visitLieuInput').value = v.lieu || '';
             document.getElementById('projectSaveAlert').innerHTML = '';
 
-            // Render uploaded documents list
-            renderDocsList(uid);
+            // Start real-time listener on documents subcollection
+            startDocsListener(uid);
         }
 
         async function saveProject() {
@@ -1348,46 +1348,27 @@
             }));
 
             const updatedPct = parseInt(document.getElementById('pctRange').value);
+            const dateRaw = document.getElementById('visitDateInput').value;
+            const heureRaw = document.getElementById('visitHeureInput').value;
 
-            const docs = [];
-            document.querySelectorAll('#docsEditor .step-edit-item').forEach(row => {
-                const nom = row.querySelector('.doc-edit-name').value.trim();
-                const type = row.querySelector('.doc-edit-type').value;
-                const taille = row.querySelector('.doc-edit-size').value.trim();
-                if (nom) docs.push({
-                    nom, type, taille,
-                    date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
-                });
-            });
-
-            const dateRaw = document.getElementById('visitDateInput').value; // YYYY-MM-DD
-            const heureRaw = document.getElementById('visitHeureInput').value; // HH:MM
-
-            // Format date for display on client dashboard: "Jeudi 27 Février 2026"
             let dateDisplay = '—';
             if (dateRaw) {
                 const d = new Date(dateRaw + 'T00:00:00');
-                dateDisplay = d.toLocaleDateString('fr-FR', {
-                    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-                });
+                dateDisplay = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
                 dateDisplay = dateDisplay.charAt(0).toUpperCase() + dateDisplay.slice(1);
             }
+            let heureDisplay = heureRaw ? heureRaw.replace(':', 'h') : '—';
 
-            // Format time for display: "10h30"
-            let heureDisplay = '—';
-            if (heureRaw) {
-                heureDisplay = heureRaw.replace(':', 'h');
-            }
-
+            // Documents are now stored in a separate Firestore subcollection
+            // documents/{uid}/files — NOT in the project document.
             const data = {
                 avancement: updatedPct,
                 etapes,
-                documents: docs,
                 prochaine_visite: {
-                    dateRaw,                         // "2026-02-27" — pour recharger dans l'input
-                    date: dateDisplay,               // "Vendredi 27 Février 2026" — pour le dashboard client
-                    heureRaw,                        // "10:30" — pour recharger dans l'input
-                    heure: heureDisplay,             // "10h30" — pour le dashboard client
+                    dateRaw,
+                    date: dateDisplay,
+                    heureRaw,
+                    heure: heureDisplay,
                     lieu: document.getElementById('visitLieuInput').value
                 }
             };
@@ -1405,43 +1386,39 @@
             btn.innerHTML = '💾 Enregistrer les modifications';
         }
 
-        // ── File Upload (Drag & Drop → Firebase Storage) ────────────
+        // ── File Upload (Drag & Drop → Cloudinary) ────────────────
+        // ibeUploadDocument() gère l'upload vers Cloudinary ET la sauvegarde
+        // des métadonnées dans la sous-collection Firestore documents/{uid}/files
+        // La liste se met à jour automatiquement via le listener temps réel.
         function handleFileDrop(event) {
             event.preventDefault();
             const zone = document.getElementById('dropZone');
             zone.style.borderColor = 'var(--gray-300)';
             zone.style.background = 'var(--gray-50)';
-            const files = Array.from(event.dataTransfer.files);
-            uploadFiles(files);
+            uploadFiles(Array.from(event.dataTransfer.files));
         }
 
         function handleFileSelect(event) {
-            const files = Array.from(event.target.files);
+            uploadFiles(Array.from(event.target.files));
             event.target.value = '';
-            uploadFiles(files);
         }
 
         async function uploadFiles(files) {
             const uid = document.getElementById('projectClientSelect').value;
-            if (!uid) {
-                alert('Sélectionnez d\'abord un client.');
-                return;
-            }
+            if (!uid) { alert('Sélectionnez d\'abord un client.'); return; }
 
             const progressContainer = document.getElementById('uploadProgress');
 
             for (const file of files) {
-                // Max 50 Mo
                 if (file.size > 50 * 1024 * 1024) {
                     const errBar = document.createElement('div');
-                    errBar.style.cssText = 'background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;font-size:12px;color:#dc2626;display:flex;align-items:center;gap:8px';
+                    errBar.style.cssText = 'background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;font-size:12px;color:#dc2626';
                     errBar.innerHTML = `❌ <strong>${file.name}</strong> dépasse 50 Mo`;
                     progressContainer.appendChild(errBar);
                     setTimeout(() => errBar.remove(), 4000);
                     continue;
                 }
 
-                // Create progress bar for this file
                 const barId = 'pb_' + Date.now() + Math.random().toString(36).slice(2);
                 const barEl = document.createElement('div');
                 barEl.id = barId;
@@ -1457,38 +1434,18 @@
                 progressContainer.appendChild(barEl);
 
                 try {
-                    const result = await ibeUploadDocument(uid, file, (pct) => {
+                    // ibeUploadDocument envoie le fichier sur Cloudinary ET sauvegarde
+                    // les métadonnées dans Firestore documents/{uid}/files
+                    await ibeUploadDocument(uid, file, (pct) => {
                         document.getElementById(barId + '_pct').textContent = pct + '%';
                         document.getElementById(barId + '_fill').style.width = pct + '%';
                     });
-
-                    // Add to Firestore documents array
-                    const ext = file.name.split('.').pop().toUpperCase();
-                    const newDoc = {
-                        nom: result.nom,
-                        type: ext,
-                        taille: (file.size / 1024 < 1024
-                            ? Math.round(file.size / 1024) + ' Ko'
-                            : (file.size / 1024 / 1024).toFixed(1) + ' Mo'),
-                        date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }),
-                        url: result.url
-                    };
-
-                    // Update Firestore
-                    const currentDocs = allProjects[uid]?.documents || [];
-                    const updatedDocs = [...currentDocs, newDoc];
-                    await ibeUpdateProject(uid, { documents: updatedDocs });
-                    allProjects[uid] = { ...allProjects[uid], documents: updatedDocs };
-
-                    // Success state on bar
+                    // La liste se rafraîchit automatiquement via ibeListenDocuments
                     barEl.style.background = '#f0fdf4';
                     barEl.style.borderLeft = '3px solid #22c55e';
                     barEl.querySelector(`#${barId}_fill`).style.background = '#22c55e';
                     barEl.querySelector(`#${barId}_pct`).textContent = '✓';
-                    setTimeout(() => {
-                        barEl.remove();
-                        renderDocsList(uid);
-                    }, 2000);
+                    setTimeout(() => barEl.remove(), 2000);
 
                 } catch (err) {
                     barEl.style.background = '#fef2f2';
@@ -1499,49 +1456,51 @@
             }
         }
 
-        function renderDocsList(uid) {
+        // Listener temps réel des documents — se met à jour automatiquement
+        let unsubDocs = null;
+        function startDocsListener(uid) {
+            if (unsubDocs) unsubDocs();
+            unsubDocs = ibeListenDocuments(uid, (docs) => renderDocsList(docs));
+        }
+
+        function renderDocsList(docs) {
             const container = document.getElementById('docsEditor');
             container.innerHTML = '';
-            const docs = allProjects[uid]?.documents || [];
-            if (!docs.length) {
+            if (!docs || !docs.length) {
                 container.innerHTML = '<div style="font-size:12px;color:var(--gray-500);text-align:center;padding:12px">Aucun document — glissez des fichiers ci-dessus</div>';
                 return;
             }
-            docs.forEach((d, i) => {
+            docs.forEach((d) => {
                 const ext = d.type || '';
-                const color = ext === 'PDF' ? '#dc2626' : ext === 'DWG' || ext === 'DXF' ? '#2563eb' : '#ca8a04';
+                const color = ext === 'PDF' ? '#dc2626' : ext === 'DWG' || ext === 'DXF' ? '#2563eb' : ext === 'XLS' || ext === 'XLSX' ? '#16a34a' : '#ca8a04';
                 const row = document.createElement('div');
                 row.style.cssText = 'display:flex;align-items:center;gap:10px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:10px 14px';
                 row.innerHTML = `
                     <div style="background:${color};color:#fff;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800;min-width:36px;text-align:center">${ext}</div>
                     <div style="flex:1;min-width:0">
                         <div style="font-weight:600;font-size:13px;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.nom}</div>
-                        <div style="font-size:11px;color:var(--gray-500)">${d.date} · ${d.taille}</div>
+                        <div style="font-size:11px;color:var(--gray-500)">${d.date || ''} · ${d.taille || ''}</div>
                     </div>
-                    ${d.url ? `<button onclick="openAdminDoc('${d.url}','${d.nom}')" style="background:none;border:none;cursor:pointer;font-size:14px;padding:2px 6px" title="Ouvrir le document">👁️</button>` : ''}
-                    <button onclick="deleteDoc('${uid}', ${i})" title="Supprimer ce document"
-                        style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:14px;padding:2px 4px" title="Supprimer">🗑️</button>`;
+                    ${d.url ? `<button onclick="openAdminDoc('${d.url}','${d.nom}')"
+                        style="background:none;border:none;cursor:pointer;font-size:16px;padding:2px 6px" title="Ouvrir">👁️</button>` : ''}
+                    <button onclick="deleteDoc('${d.docId}')"
+                        style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:16px;padding:2px 4px" title="Supprimer">🗑️</button>`;
                 container.appendChild(row);
             });
         }
 
         // ── Document Viewer ──────────────────────────────────────
-        // Open all documents directly in the browser.
-        // cloudinaryFixUrl() adds fl_inline so PDFs open inline instead of
-        // downloading. Google Docs Viewer is NOT used (broken with Cloudinary).
         function openAdminDoc(rawUrl, filename) {
             if (!rawUrl) return;
-            const cleanUrl = cloudinaryFixUrl(rawUrl, filename);
-            window.open(cleanUrl, '_blank');
+            window.open(cloudinaryFixUrl(rawUrl, filename), '_blank');
         }
 
-        async function deleteDoc(uid, index) {
+        async function deleteDoc(docId) {
+            const uid = document.getElementById('projectClientSelect').value;
+            if (!uid || !docId) return;
             if (!confirm('Supprimer ce document ?')) return;
-            const docs = [...(allProjects[uid]?.documents || [])];
-            docs.splice(index, 1);
-            await ibeUpdateProject(uid, { documents: docs });
-            allProjects[uid] = { ...allProjects[uid], documents: docs };
-            renderDocsList(uid);
+            await ibeDeleteDocument(uid, docId);
+            // La liste se rafraîchit automatiquement via le listener temps réel
         }
 
         function renderThreadList() {

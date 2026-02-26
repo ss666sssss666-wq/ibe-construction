@@ -935,6 +935,7 @@
         let currentUser = null;
         let currentProfile = null;
         let unsubMessages = null;
+        let unsubDocuments = null;
 
         // ── Auth guard ──────────────────────────────────────
         auth.onAuthStateChanged(async (user) => {
@@ -1048,26 +1049,39 @@
             document.getElementById('visitTime').textContent = v.heure || '—';
             document.getElementById('visitLieu').textContent = v.lieu || '—';
 
-            // Documents
+            // Messages temps réel
+            if (unsubMessages) unsubMessages();
+            unsubMessages = ibeListenMessages(uid, renderMsgs);
+
+            // Documents temps réel depuis la sous-collection Firestore
+            // Les fichiers physiques sont dans Cloudinary, Firestore stocke seulement les URLs
+            if (unsubDocuments) unsubDocuments();
+            unsubDocuments = ibeListenDocuments(uid, renderDocs);
+
+            // Afficher le contenu
+            document.getElementById('loadingScreen').classList.add('hide');
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        // Rendu de la liste de documents (depuis sous-collection Firestore, fichiers sur Cloudinary)
+        function renderDocs(docs) {
             const docList = document.getElementById('docList');
             docList.innerHTML = '';
-            const docs = project.documents || [];
-            if (!docs.length) {
+            if (!docs || !docs.length) {
                 docList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray-500);font-size:13px">Aucun document disponible pour le moment.</div>';
+                return;
             }
             docs.forEach(d => {
-                const hasUrl = !!d.url;
                 const ext = d.type || '';
                 const color = ext === 'PDF' ? '#dc2626' : ext === 'DWG' || ext === 'DXF' ? '#2563eb' : ext === 'XLS' || ext === 'XLSX' ? '#16a34a' : '#ca8a04';
                 docList.innerHTML += `
-                    <div class="doc-item" style="cursor:${hasUrl ? 'pointer' : 'default'}"
-                        onclick="${hasUrl ? `openDoc('${d.url}', '${d.nom}')` : `fakeDownload('${d.nom}')`}">
+                    <div class="doc-item" onclick="openDoc('${d.url}', '${d.nom}')">
                         <div class="doc-icon" style="background:${color};color:#fff">${ext}</div>
                         <div style="flex:1">
                             <div class="doc-name">${d.nom}</div>
-                            <div class="doc-meta">${d.date} · ${d.taille}${hasUrl ? ' · <span style="color:var(--copper);font-weight:600">Disponible</span>' : ''}</div>
+                            <div class="doc-meta">${d.date || ''} · ${d.taille || ''} · <span style="color:var(--copper);font-weight:600">Disponible</span></div>
                         </div>
-                        <div class="doc-dl" title="${hasUrl ? 'Ouvrir le document' : 'Bientôt disponible'}">
+                        <div class="doc-dl" title="Ouvrir le document">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                                 <polyline points="7 10 12 15 17 10"/>
@@ -1076,14 +1090,6 @@
                         </div>
                     </div>`;
             });
-
-            // Messages temps réel
-            if (unsubMessages) unsubMessages();
-            unsubMessages = ibeListenMessages(uid, renderMsgs);
-
-            // Afficher le contenu
-            document.getElementById('loadingScreen').classList.add('hide');
-            document.getElementById('mainContent').style.display = 'block';
         }
 
         function renderMsgs(msgs) {
@@ -1126,6 +1132,7 @@
 
         async function doLogout() {
             if (unsubMessages) unsubMessages();
+            if (unsubDocuments) unsubDocuments();
             await ibeLogout();
             window.location.href = 'login.html';
         }

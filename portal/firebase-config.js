@@ -19,25 +19,38 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-// ── Helper Cloudinary Upload ──────────────────────────────────
+
+// ============================================================
+//  ARCHITECTURE FICHIERS :
+//  - Cloudinary : stockage physique des fichiers (PDF, DWG…)
+//  - Firestore  : uniquement utilisateurs, projets, messages
+//  - Sous-collection Firestore : documents/{uid}/files/{docId}
+//    → stocke SEULEMENT les métadonnées (nom, taille, URL Cloudinary)
+//    → aucun contenu de fichier dans Firestore
+// ============================================================
 
 const CLOUDINARY_CLOUD_NAME = 'dvko6pc6f';
 const CLOUDINARY_UPLOAD_PRESET = 'ibe-docs';
 
+// ── Upload Cloudinary + sauvegarde métadonnées ────────────────
 /**
- * Upload a file to Cloudinary (free, no Firebase Storage needed).
- * Returns { url, nom } — same interface as the old Firebase version.
+ * Upload un fichier vers Cloudinary, puis enregistre SEULEMENT
+ * ses métadonnées (nom, taille, URL) dans la sous-collection
+ * Firestore: documents/{uid}/files/{docId}
+ *
+ * Firestore ne stocke AUCUN contenu de fichier — uniquement
+ * l'URL de référence vers Cloudinary.
+ *
+ * Returns: { url, nom, docId }
  */
 async function ibeUploadDocument(uid, file, onProgress) {
-    // Use 'raw' for documents (PDF, DWG, etc.) so Cloudinary serves them
-    // with the correct MIME type (application/pdf, etc.).
-    // 'auto/upload' stores everything under image/upload which breaks PDF viewers.
     const ext = file.name.split('.').pop().toLowerCase();
     const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
     const resourceType = imageExts.includes(ext) ? 'auto' : 'raw';
-    const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
+    const apiUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
 
-    return new Promise((resolve, reject) => {
+    // 1. Upload physique vers Cloudinary
+    const cloudinaryResult = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         const formData = new FormData();
 
@@ -50,8 +63,7 @@ async function ibeUploadDocument(uid, file, onProgress) {
 
         xhr.upload.addEventListener('progress', (e) => {
             if (e.lengthComputable && onProgress) {
-                const pct = Math.round((e.loaded / e.total) * 100);
-                onProgress(pct);
+                onProgress(Math.round((e.loaded / e.total) * 100));
             }
         });
 
@@ -59,65 +71,96 @@ async function ibeUploadDocument(uid, file, onProgress) {
             if (xhr.status >= 200 && xhr.status < 300) {
                 try {
                     const data = JSON.parse(xhr.responseText);
-                    resolve({
-                        url: data.secure_url,
-                        nom: file.name
-                    });
+                    resolve({ url: data.secure_url, publicId: data.public_id });
                 } catch (e) {
                     reject(new Error('Réponse Cloudinary invalide.'));
                 }
             } else {
                 let msg = 'Erreur upload Cloudinary.';
-                try {
-                    const err = JSON.parse(xhr.responseText);
-                    msg = err.error?.message || msg;
-                } catch (_) { }
-                console.error('❌ Cloudinary upload error:', xhr.status, xhr.responseText);
+                try { msg = JSON.parse(xhr.responseText).error?.message || msg; } catch (_) { }
+                console.error('Cloudinary upload error:', xhr.status, xhr.responseText);
                 reject(new Error(msg));
             }
         });
 
-        xhr.addEventListener('error', () => {
-            reject(new Error('Erreur réseau — vérifiez votre connexion.'));
-        });
-
-        xhr.addEventListener('timeout', () => {
-            reject(new Error('Timeout — le fichier est peut-être trop volumineux.'));
-        });
-
+        xhr.addEventListener('error', () => reject(new Error('Erreur réseau.')));
+        xhr.addEventListener('timeout', () => reject(new Error('Timeout — fichier trop volumineux ?')));
         xhr.timeout = 120000;
-        xhr.open('POST', url);
+        xhr.open('POST', apiUrl);
         xhr.send(formData);
     });
+
+    // 2. Enregistrement des métadonnées UNIQUEMENT dans Firestore
+    //    Aucun contenu de fichier — juste le pointeur vers Cloudinary
+    const meta = {
+        nom: file.name,
+        type: ext.toUpperCase(),
+        taille: file.size < 1024 * 1024
+            ? Math.round(file.size / 1024) + ' Ko'
+            : (file.size / 1024 / 1024).toFixed(1) + ' Mo',
+        date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }),
+        url: cloudinaryResult.url,
+        publicId: cloudinaryResult.publicId,
+        uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    const docRef = await db.collection('documents').doc(uid).collection('files').add(meta);
+    return { url: cloudinaryResult.url, nom: file.name, docId: docRef.id };
+}
+
+// ── Listeners temps réel des documents ───────────────────────
+/**
+ * Écoute en temps réel les documents d'un client depuis la sous-collection.
+ * Le callback reçoit un tableau de { docId, nom, type, taille, date, url }
+ */
+function ibeListenDocuments(uid, callback) {
+    return db.collection('documents').doc(uid).collection('files')
+        .orderBy('uploadedAt', 'desc')
+        .onSnapshot(snap => {
+            const docs = snap.docs.map(d => ({ docId: d.id, ...d.data() }));
+            callback(docs);
+        });
 }
 
 /**
- * Fix Cloudinary URLs for inline viewing:
- * 1. Strip fl_attachment (forces download, breaks viewers)
- * 2. Convert /image/upload/ → /raw/upload/ for non-image files
- *    so Cloudinary serves the correct MIME type (application/pdf, etc.)
+ * Récupération unique des documents d'un client.
+ */
+async function ibeGetDocuments(uid) {
+    const snap = await db.collection('documents').doc(uid).collection('files')
+        .orderBy('uploadedAt', 'desc').get();
+    return snap.docs.map(d => ({ docId: d.id, ...d.data() }));
+}
+
+/**
+ * Supprime la référence d'un document de Firestore.
+ * Le fichier Cloudinary reste (suppression Cloudinary nécessite l'API secret côté serveur).
+ */
+async function ibeDeleteDocument(uid, docId) {
+    return db.collection('documents').doc(uid).collection('files').doc(docId).delete();
+}
+
+// ── Fix URL Cloudinary pour visualisation ────────────────────
+/**
+ * Nettoie une URL Cloudinary pour l'affichage inline :
+ * 1. Retire fl_attachment (force le téléchargement au lieu de l'affichage)
+ * 2. Convertit /image/upload/ → /raw/upload/ pour les non-images
+ *    afin que Cloudinary serve le bon Content-Type (application/pdf, etc.)
  *
- * NOTE: fl_inline is NOT used — it causes HTTP 400 on raw/upload resources
- * because Cloudinary transformations are not supported on raw files.
- * The browser opens PDFs natively via Content-Type: application/pdf.
+ * NOTE: fl_inline N'est PAS utilisé — il cause HTTP 400 sur les ressources raw.
+ * Le navigateur ouvre les PDFs nativement via Content-Type: application/pdf.
  */
 function cloudinaryFixUrl(url, filename) {
     if (!url) return '';
-    // Strip fl_attachment flag (forces download instead of inline)
-    let fixed = url.replace('/upload/fl_attachment/', '/upload/');
-    // Also strip fl_inline if it was accidentally added before
-    fixed = fixed.replace('/upload/fl_inline/', '/upload/');
-    // Determine if non-image (PDF, DWG, DOCX, etc.)
+    let fixed = url
+        .replace('/upload/fl_attachment/', '/upload/')
+        .replace('/upload/fl_inline/', '/upload/');
     const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
     const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
     if (ext && !imageExts.includes(ext)) {
-        // Convert image/upload → raw/upload for correct MIME type
         fixed = fixed.replace('/image/upload/', '/raw/upload/');
     }
     return fixed;
 }
-
-
 
 // ── Helpers Auth ─────────────────────────────────────────────
 
@@ -133,7 +176,7 @@ function ibeOnAuthChanged(callback) {
     return auth.onAuthStateChanged(callback);
 }
 
-// ── Helpers Firestore ────────────────────────────────────────
+// ── Helpers Firestore (utilisateurs & projets) ───────────────
 
 async function ibeGetProfile(uid) {
     const snap = await db.collection('users').doc(uid).get();
@@ -161,7 +204,7 @@ async function ibeSendMessage(uid, text, senderName, isAdmin) {
         .add({
             de: senderName,
             texte: text,
-            moi: !isAdmin,   // "moi" = côté client
+            moi: !isAdmin,
             isAdmin: !!isAdmin,
             ts: firebase.firestore.FieldValue.serverTimestamp(),
             heure: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
@@ -171,11 +214,8 @@ async function ibeSendMessage(uid, text, senderName, isAdmin) {
 // ── Admin helpers ────────────────────────────────────────────
 
 async function ibeIsAdmin(uid) {
-    // 1. Check if current user email matches the specific admin email
     const user = auth.currentUser;
     if (user && user.email === 'admin@ibe-construction.com') return true;
-
-    // 2. Fallback to Firestore check
     const snap = await db.collection('admins').doc(uid).get();
     return snap.exists;
 }
@@ -197,9 +237,6 @@ async function ibeUpdateProject(uid, data) {
 }
 
 async function ibeCreateClient(email, password, profileData, projectData) {
-    // Créer le compte Auth via Admin SDK n'est pas possible côté client.
-    // On utilise une Cloud Function ou on crée manuellement via la console Firebase.
-    // → Cette fonction sert à créer le profil Firestore pour un UID existant.
     const { uid } = profileData;
     await db.collection('users').doc(uid).set(profileData);
     await db.collection('projects').doc(uid).set(projectData);
