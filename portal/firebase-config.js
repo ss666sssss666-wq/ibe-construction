@@ -46,8 +46,8 @@ const CLOUDINARY_UPLOAD_PRESET = 'ibe-docs';
 async function ibeUploadDocument(uid, file, onProgress) {
     const ext = file.name.split('.').pop().toLowerCase();
     const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
-    // Using 'auto' for PDFs and images often results in better public access headers
-    const resourceType = (imageExts.includes(ext) || ext === 'pdf') ? 'auto' : 'raw';
+    // Forcer 'raw' pour les PDFs pour garantir le type MIME application/pdf et l'URL /raw/upload
+    const resourceType = imageExts.includes(ext) ? 'auto' : 'raw';
     const apiUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
 
     // 1. Upload physique vers Cloudinary
@@ -158,6 +158,9 @@ function cloudinaryFixUrl(url, filename) {
         .replace('/upload/fl_inline/', '/upload/');
     const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
     const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
+
+    // Si ce n'est pas une image, on s'assure que c'est bien une URL /raw/upload
+    // pour que Cloudinary serve le fichier tel quel.
     if (ext && !imageExts.includes(ext)) {
         fixed = fixed.replace('/image/upload/', '/raw/upload/');
     }
