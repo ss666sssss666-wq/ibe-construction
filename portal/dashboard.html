@@ -1107,38 +1107,14 @@
             await ibeSendMessage(currentUser.uid, text, currentProfile.nom || 'Client', false);
         }
 
-        // Fix URL Cloudinary pour les fichiers non-image (PDF, DWG, etc.)
-        // Convertit /image/upload/ → /raw/upload/ pour que Cloudinary serve
-        // le bon MIME type (application/pdf au lieu de image/)
-        function fixCloudinaryUrl(url, filename) {
-            if (!url) return '';
-            let fixed = url.replace('/upload/fl_attachment/', '/upload/');
-            const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
-            const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
-            if (ext && !imageExts.includes(ext)) {
-                fixed = fixed.replace('/image/upload/', '/raw/upload/');
-            }
-            return fixed;
-        }
-
+        // Open documents directly in the browser.
+        // Google Docs Viewer does NOT work with Cloudinary (Google's servers
+        // cannot access Cloudinary files). Browsers have built-in PDF viewers.
         function openDoc(rawUrl, filename) {
             if (!rawUrl) return;
-            const ext = (filename || rawUrl).split('.').pop().split('?')[0].toLowerCase();
-            const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
-            if (imageExts.includes(ext)) {
-                window.open(rawUrl, '_blank');
-                return;
-            }
-            // Fix the URL: strip fl_attachment + convert image/upload → raw/upload
-            let viewableUrl = rawUrl.replace('/upload/fl_attachment/', '/upload/');
-            viewableUrl = viewableUrl.replace('/image/upload/', '/raw/upload/');
-            if (ext === 'pdf') {
-                const viewerUrl = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(viewableUrl);
-                window.open(viewerUrl, '_blank');
-            } else {
-                // For DWG, XLSX, etc. — open directly
-                window.open(viewableUrl, '_blank');
-            }
+            // Strip fl_attachment if present (forces download instead of inline view)
+            const cleanUrl = rawUrl.replace('/upload/fl_attachment/', '/upload/');
+            window.open(cleanUrl, '_blank');
         }
 
         function fakeDownload(name) {

@@ -1526,28 +1526,15 @@
         }
 
         // ── Document Viewer ──────────────────────────────────────
-        // Fix Cloudinary URLs for proper PDF viewing:
-        // 1. Strip fl_attachment (forces download → breaks viewers)
-        // 2. Convert /image/upload/ → /raw/upload/ for non-image files
-        //    so Cloudinary serves correct MIME type (application/pdf)
+        // Open all documents directly in the browser.
+        // Google Docs Viewer does NOT work with Cloudinary because
+        // Google's servers cannot access Cloudinary files (auth/CORS).
+        // Modern browsers have built-in PDF viewers — just open directly.
         function openAdminDoc(rawUrl, filename) {
             if (!rawUrl) return;
-            const ext = (filename || rawUrl).split('.').pop().split('?')[0].toLowerCase();
-            const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
-            if (imageExts.includes(ext)) {
-                window.open(rawUrl, '_blank');
-                return;
-            }
-            // Fix the URL: strip fl_attachment + convert image/upload → raw/upload
-            let viewableUrl = rawUrl.replace('/upload/fl_attachment/', '/upload/');
-            viewableUrl = viewableUrl.replace('/image/upload/', '/raw/upload/');
-            if (ext === 'pdf') {
-                const viewerUrl = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(viewableUrl);
-                window.open(viewerUrl, '_blank');
-            } else {
-                // DWG, XLSX, etc. — open directly
-                window.open(viewableUrl, '_blank');
-            }
+            // Strip fl_attachment if present (forces download instead of inline view)
+            const cleanUrl = rawUrl.replace('/upload/fl_attachment/', '/upload/');
+            window.open(cleanUrl, '_blank');
         }
 
         async function deleteDoc(uid, index) {
