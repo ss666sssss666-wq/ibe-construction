@@ -1527,13 +1527,11 @@
 
         // ── Document Viewer ──────────────────────────────────────
         // Open all documents directly in the browser.
-        // Google Docs Viewer does NOT work with Cloudinary because
-        // Google's servers cannot access Cloudinary files (auth/CORS).
-        // Modern browsers have built-in PDF viewers — just open directly.
+        // cloudinaryFixUrl() adds fl_inline so PDFs open inline instead of
+        // downloading. Google Docs Viewer is NOT used (broken with Cloudinary).
         function openAdminDoc(rawUrl, filename) {
             if (!rawUrl) return;
-            // Strip fl_attachment if present (forces download instead of inline view)
-            const cleanUrl = rawUrl.replace('/upload/fl_attachment/', '/upload/');
+            const cleanUrl = cloudinaryFixUrl(rawUrl, filename);
             window.open(cleanUrl, '_blank');
         }
 

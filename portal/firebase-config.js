@@ -94,18 +94,23 @@ async function ibeUploadDocument(uid, file, onProgress) {
 /**
  * Fix Cloudinary URLs for inline viewing:
  * 1. Strip fl_attachment (forces download, breaks viewers)
- * 2. Convert /image/upload/ → /raw/upload/ for non-image files
+ * 2. Add fl_inline to force inline viewing (Content-Disposition: inline)
+ * 3. Convert /image/upload/ → /raw/upload/ for non-image files
  *    so Cloudinary serves the correct MIME type (application/pdf, etc.)
  */
 function cloudinaryFixUrl(url, filename) {
     if (!url) return '';
-    // Strip fl_attachment
+    // Strip fl_attachment flag
     let fixed = url.replace('/upload/fl_attachment/', '/upload/');
-    // For non-image files, convert image/upload → raw/upload
+    // Determine if non-image (PDF, DWG, DOCX, etc.)
     const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
     const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
     if (ext && !imageExts.includes(ext)) {
+        // Convert image/upload → raw/upload for correct MIME type
         fixed = fixed.replace('/image/upload/', '/raw/upload/');
+        // Add fl_inline so Cloudinary serves with Content-Disposition: inline
+        // This allows PDFs to open in the browser viewer instead of downloading
+        fixed = fixed.replace('/upload/', '/upload/fl_inline/');
     }
     return fixed;
 }
