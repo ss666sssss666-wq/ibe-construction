@@ -1526,18 +1526,24 @@
         }
 
         // ── Document Viewer ──────────────────────────────────────
-        // Ouvre les PDFs via Google Docs Viewer (contourne les restrictions Cloudinary)
-        // Pour les images, ouvre directement l'URL Cloudinary.
-        function openAdminDoc(url, filename) {
-            if (!url) return;
-            const ext = (filename || url).split('.').pop().split('?')[0].toLowerCase();
+        // Strip fl_attachment so Cloudinary serves the file INLINE (viewable).
+        // fl_attachment forces a download → Google Docs Viewer fails with "Aucun aperçu disponible".
+        function openAdminDoc(rawUrl, filename) {
+            if (!rawUrl) return;
+            const ext = (filename || rawUrl).split('.').pop().split('?')[0].toLowerCase();
             const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
             if (imageExts.includes(ext)) {
-                window.open(url, '_blank');
-            } else {
-                // Google Docs Viewer can render PDFs, DWG previews, etc.
-                const viewerUrl = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(url);
+                window.open(rawUrl, '_blank');
+                return;
+            }
+            // Remove fl_attachment so the file is served inline, not as a forced download.
+            const viewableUrl = rawUrl.replace('/upload/fl_attachment/', '/upload/');
+            if (ext === 'pdf') {
+                const viewerUrl = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(viewableUrl);
                 window.open(viewerUrl, '_blank');
+            } else {
+                // DWG, XLSX, etc. — open directly
+                window.open(viewableUrl, '_blank');
             }
         }
 
