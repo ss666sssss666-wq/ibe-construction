@@ -46,7 +46,8 @@ const CLOUDINARY_UPLOAD_PRESET = 'ibe-docs';
 async function ibeUploadDocument(uid, file, onProgress) {
     const ext = file.name.split('.').pop().toLowerCase();
     const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
-    const resourceType = imageExts.includes(ext) ? 'auto' : 'raw';
+    // Using 'auto' for PDFs and images often results in better public access headers
+    const resourceType = (imageExts.includes(ext) || ext === 'pdf') ? 'auto' : 'raw';
     const apiUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
 
     // 1. Upload physique vers Cloudinary
@@ -57,6 +58,11 @@ async function ibeUploadDocument(uid, file, onProgress) {
         formData.append('file', file);
         formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
         formData.append('folder', `ibe-documents/${uid}`);
+
+        // CRITICAL FIX FOR 401: Explicitly set public access
+        formData.append('access_mode', 'public');
+        formData.append('type', 'upload');
+
         const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
         const safeName = Date.now() + '_' + nameWithoutExt.replace(/[^a-zA-Z0-9_-]/g, '_');
         formData.append('public_id', safeName);
