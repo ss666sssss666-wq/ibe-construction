@@ -123,21 +123,23 @@ html.lenis {
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    /* Glass Backgrounds - Light Mode */
-    --glass-bg: #FFFFFF;
-    --glass-scrolled: #FFFFFF;
-    --glass-mobile: #FFFFFF;
+    /* Startup Identity Tokens */
+    --startup-bronze: #cc9461;
+    --startup-dark-glow: rgba(204, 148, 97, 0.15);
+    --startup-navy: #0f172a;
+    /* Deeper, more "product" navy */
+
+    /* Glass Backgrounds - Tech Mode */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-scrolled: rgba(255, 255, 255, 0.85);
+    --glass-mobile: rgba(255, 255, 255, 0.95);
     --text-color: var(--navy-primary);
 
     /* Hero Variables */
-    --bg-hero: linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%);
-    --grid-color: rgba(26, 47, 75, 0.03);
-    /* Updated RGB for grid */
-}
+    --bg-hero: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    --grid-color: rgba(204, 148, 97, 0.05);
+    /* Bronze-tinted grid */
 
-
-
-:root {
     /* Footer/Contact Light Mode (default) */
     --footer-bg: #1B263B;
     --footer-text: #FFFFFF;
@@ -269,6 +271,43 @@ body {
     gap: 20px;
 }
 
+/* ==========================================
+   PORTAL / CLIENT SPACE BUTTON
+   ========================================== */
+.portal-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--white);
+    background: var(--navy-primary);
+    border: 2px solid var(--navy-primary);
+    text-decoration: none;
+    transition: all 0.3s var(--transition-smooth);
+    white-space: nowrap;
+}
+
+.portal-btn:hover {
+    background: var(--copper-accent);
+    border-color: var(--copper-accent);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(204, 148, 97, 0.35);
+}
+
+.portal-btn svg {
+    flex-shrink: 0;
+    transition: transform 0.3s var(--transition-smooth);
+}
+
+.portal-btn:hover svg {
+    transform: scale(1.15);
+}
+
 .nav-links a {
     text-decoration: none;
     color: var(--navy-primary);
@@ -352,6 +391,71 @@ body {
 .cta-btn:not(.primary):hover {
     background: var(--navy-primary);
     color: var(--white);
+}
+
+/* Calculator Button Glow Effect */
+#openCalculator {
+    position: relative;
+    background: var(--copper-accent);
+    color: var(--white);
+    border-color: var(--copper-accent);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+#openCalculator::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #cc9461, #d4a574, #cc9461, #b8845a);
+    background-size: 300% 300%;
+    border-radius: 8px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: gradientShift 3s ease infinite;
+}
+
+#openCalculator:hover::before {
+    opacity: 1;
+}
+
+#openCalculator:hover {
+    background: var(--copper-accent);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(204, 148, 97, 0.6),
+        0 0 40px rgba(204, 148, 97, 0.4),
+        0 10px 30px rgba(204, 148, 97, 0.3);
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(204, 148, 97, 0.4),
+            0 0 20px rgba(204, 148, 97, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(204, 148, 97, 0.6),
+            0 0 40px rgba(204, 148, 97, 0.4),
+            0 0 60px rgba(204, 148, 97, 0.2);
+    }
+}
+
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 /* ==========================================
@@ -698,133 +802,12 @@ body {
     color: var(--dark-gray);
 }
 
-/* ==========================================
-   PARTICLE BUILDING ANIMATION
-   ========================================== */
 
-/* Building parts - Initially hidden, revealed progressively */
-.build-part {
-    opacity: 0;
-    transform-origin: center;
-}
 
-.build-part.part-0 {
-    animation: buildReveal 1s ease-out 0s forwards;
-}
 
-.build-part.part-1 {
-    animation: buildReveal 1s ease-out 0.5s forwards;
-}
 
-.build-part.part-2 {
-    animation: buildReveal 1s ease-out 1s forwards;
-}
 
-.build-part.part-3 {
-    animation: buildReveal 1s ease-out 1.5s forwards;
-}
 
-.build-part.part-4 {
-    animation: buildReveal 1s ease-out 2s forwards;
-}
-
-.build-part.part-5 {
-    animation: buildReveal 1s ease-out 2.3s forwards;
-}
-
-@keyframes buildReveal {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Floating particles - Navy */
-.particle {
-    animation: particleFloat 4s ease-in-out infinite;
-}
-
-.particle.p1 {
-    animation-delay: 0s;
-    animation-duration: 3.5s;
-}
-
-.particle.p2 {
-    animation-delay: 0.2s;
-    animation-duration: 4s;
-}
-
-.particle.p3 {
-    animation-delay: 0.4s;
-    animation-duration: 3.8s;
-}
-
-.particle.p4 {
-    animation-delay: 0.6s;
-    animation-duration: 4.2s;
-}
-
-.particle.p5 {
-    animation-delay: 0.8s;
-    animation-duration: 3.6s;
-}
-
-.particle.p6 {
-    animation-delay: 1s;
-    animation-duration: 4.1s;
-}
-
-.particle.p7 {
-    animation-delay: 1.2s;
-    animation-duration: 3.9s;
-}
-
-.particle.p8 {
-    animation-delay: 1.4s;
-    animation-duration: 4.3s;
-}
-
-.particle.p9 {
-    animation-delay: 1.6s;
-    animation-duration: 3.7s;
-}
-
-.particle.p10 {
-    animation-delay: 1.8s;
-    animation-duration: 4s;
-}
-
-.particle.p11 {
-    animation-delay: 2s;
-    animation-duration: 3.8s;
-}
-
-.particle.p12 {
-    animation-delay: 2.2s;
-    animation-duration: 4.2s;
-}
-
-.particle.p13 {
-    animation-delay: 2.4s;
-    animation-duration: 3.6s;
-}
-
-.particle.p14 {
-    animation-delay: 2.6s;
-    animation-duration: 4.1s;
-}
-
-.particle.p15 {
-    animation-delay: 2.8s;
-    animation-duration: 3.9s;
-}
-
-/* Copper particles */
 .particle.pc1 {
     animation-delay: 0.1s;
     animation-duration: 3.7s;
@@ -875,13 +858,6 @@ body {
     animation-duration: 4.1s;
 }
 
-@keyframes particleFloat {
-
-    0%,
-    100% {
-        transform: translate(0, 0);
-        opacity: 0.6;
-    }
 
     25% {
         transform: translate(10px, -15px);
@@ -899,32 +875,6 @@ body {
     }
 }
 
-/* Connection lines - Pulse effect */
-.conn-line {
-    stroke-dasharray: 200;
-    stroke-dashoffset: 200;
-    animation: lineDraw 3s ease-in-out infinite;
-}
-
-.conn-line.cl1 {
-    animation-delay: 0s;
-}
-
-.conn-line.cl2 {
-    animation-delay: 1s;
-}
-
-.conn-line.cl3 {
-    animation-delay: 2s;
-}
-
-@keyframes lineDraw {
-
-    0%,
-    100% {
-        stroke-dashoffset: 200;
-        opacity: 0;
-    }
 
     50% {
         stroke-dashoffset: 0;
@@ -932,47 +882,13 @@ body {
     }
 }
 
-/* Particle SVG container */
-.particle-svg {
-    overflow: visible;
-}
 
-/* Building structure - Subtle pulse */
-.building-structure {
-    animation: buildingPulse 6s ease-in-out infinite;
-}
-
-@keyframes buildingPulse {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
 
     50% {
         opacity: 0.95;
     }
 }
 
-/* Three.js Canvas Styling */
-#three-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    cursor: grab;
-}
-
-#three-canvas:active {
-    cursor: grabbing;
-}
-
-/* BIM 3D Model Styling */
-.bim-model {
-    width: 100%;
-    height: 100%;
-    max-width: 500px;
-    max-height: 500px;
-}
 
 /* Animation on scroll */
 [data-aos="fade-up"] {
@@ -1809,15 +1725,7 @@ body {
     }
 }
 
-/* ==========================================
-   3D WIREFRAME BUILDING ANIMATION
-   ========================================== */
-.wireframe-3d {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    filter: drop-shadow(0 20px 60px rgba(27, 38, 59, 0.2));
-}
+
 
 .building-wireframe {
     width: 100%;
@@ -1904,6 +1812,9 @@ body {
         transform: translateY(0);
     }
 }
+
+
+
 
 /* ==========================================
    TEAM SECTION
@@ -2093,121 +2004,9 @@ body {
 }
 
 
-
-.tech-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 40px;
-    margin-bottom: 60px;
-    position: relative;
-    z-index: 1;
-}
-
-.tech-feature {
-    background: var(--white);
-    padding: 40px 30px;
-    border-radius: 12px;
-    text-align: center;
-    transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth), border-color 0.4s var(--transition-smooth);
-    border: 1px solid var(--mid-gray);
-    will-change: transform;
-}
-
-.tech-feature:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(217, 72, 15, 0.15);
-    border-color: var(--copper-accent);
-}
-
-.tech-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 24px;
-    color: var(--copper-accent);
-}
-
-.tech-feature h3 {
-    font-size: 22px;
-    font-weight: var(--subheading-weight);
-    color: var(--navy-primary);
-    margin-bottom: 16px;
-}
-
-.tech-feature p {
-    font-size: 16px;
-    font-weight: var(--light-weight);
-    line-height: 1.7;
-    color: var(--dark-gray);
-}
-
-/* BIM Visual Tags */
-.bim-visual {
-    margin-top: 40px;
-    padding: 60px 40px;
-    background: linear-gradient(135deg, rgba(27, 38, 59, 0.05) 0%, rgba(217, 72, 15, 0.05) 100%);
-    border-radius: 16px;
-    border: 2px dashed rgba(217, 72, 15, 0.3);
-    position: relative;
-    z-index: 1;
-}
-
-.bim-logos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-.bim-tag {
-    background: var(--white);
-    color: var(--navy-primary);
-    padding: 16px 32px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: var(--subheading-weight);
-    border: 2px solid var(--copper-accent);
-    box-shadow: 0 4px 12px rgba(217, 72, 15, 0.15);
-    transition: all 0.3s var(--transition-smooth);
-    position: relative;
-}
-
-.bim-tag::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, var(--copper-accent), var(--navy-primary));
-    border-radius: 8px;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s var(--transition-smooth);
-}
-
-.bim-tag:hover {
-    transform: scale(1.05);
-    color: var(--white);
-}
-
-.bim-tag:hover::before {
-    opacity: 1;
-}
-
-/* Responsive refinements for technical edge */
 @media (max-width: 640px) {
     .tech-grid {
         grid-template-columns: 1fr;
-    }
-
-    .bim-logos {
-        flex-direction: column;
-    }
-
-    .bim-tag {
-        width: 100%;
-        text-align: center;
     }
 }
 
@@ -2304,24 +2103,14 @@ body {
     /* Increased duration from 10s to 15s for smoother animation */
 }
 
+/* GPU acceleration for crane wireframe */
 .crane-arm-wrapper {
     transform-origin: 140px 100px;
     animation: crane-swing 10s ease-in-out infinite;
-    /* Increased from 8s to 10s for smoother motion */
 }
 
 .crane-cable-group {
     animation: block-move 10s ease-in-out infinite;
-    /* Increased from 8s to 10s */
-}
-
-/* Add GPU acceleration hint for wireframe */
-.wireframe-3d {
-    will-change: transform;
-}
-
-.building-wireframe {
-    will-change: transform;
 }
 
 /* ==========================================
@@ -2820,9 +2609,10 @@ body {
 }
 
 .comparison-header .header-cell.highlight {
-    background: linear-gradient(135deg, var(--copper-accent) 0%, #d4a574 100%);
-    color: var(--navy-primary);
-    font-weight: var(--bold-weight);
+    background: linear-gradient(135deg, var(--startup-bronze) 0%, #b8845a 100%);
+    color: var(--startup-navy);
+    font-weight: 800;
+    box-shadow: 0 -10px 20px rgba(204, 148, 97, 0.2);
 }
 
 .comparison-row {
@@ -2833,9 +2623,8 @@ body {
 }
 
 .comparison-row:hover {
-    background-color: #f8f9fa;
-    transform: scale(1.01);
-    box-shadow: 0 4px 12px rgba(26, 47, 75, 0.05);
+    background-color: rgba(204, 148, 97, 0.03);
+    transform: scale(1.005);
 }
 
 .comparison-row:last-child {
@@ -3111,69 +2900,201 @@ body {
     }
 }
 
+
+
 /* ==========================================
-   FLOATING ACTION BUTTON (STICKY CTA)
+   STARTUP VISION SECTION
+   ========================================== */
+.startup-vision {
+    position: relative;
+    padding: var(--section-padding) 0;
+    background: var(--startup-navy);
+    color: var(--white);
+    overflow: hidden;
+}
+
+.vision-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 700px;
+}
+
+.vision-image-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.vision-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+    filter: brightness(0.8) contrast(1.2);
+}
+
+.vision-overlay-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, var(--startup-navy) 80%);
+    pointer-events: none;
+}
+
+.vision-content-layer {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.vision-card {
+    max-width: 800px;
+    padding: 60px;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(204, 148, 97, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5), 0 0 50px var(--startup-dark-glow);
+}
+
+.vision-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background: var(--startup-bronze);
+    color: var(--startup-navy);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 2px;
+    border-radius: 100px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 20px var(--startup-bronze);
+}
+
+.vision-title {
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1.1;
+    margin-bottom: 30px;
+    color: var(--white);
+}
+
+.vision-title .highlight {
+    color: var(--startup-bronze);
+    background: none;
+    -webkit-text-fill-color: var(--startup-bronze);
+}
+
+.vision-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 50px;
+}
+
+.vision-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 40px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--startup-bronze);
+}
+
+.stat-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .vision-card {
+        padding: 40px 25px;
+    }
+
+    .stat-item {
+        align-items: center;
+        text-align: center;
+    }
+
+    .vision-stats {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+/* ==========================================
+   WHATSAPP FLOATING BUTTON
    ========================================== */
 .floating-cta {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 25px;
+    right: 25px;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #CC9461 0%, #B8845A 100%);
-    /* Bronze gradient instead of WhatsApp green */
+    background-color: #25d366;
+    color: white;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 15px rgba(184, 132, 90, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    opacity: 0;
-    transform: translateY(20px) scale(0.9);
-    visibility: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-decoration: none;
 }
 
-.floating-cta.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    visibility: visible;
+.floating-cta:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    background-color: #22bf5b;
 }
 
 .floating-cta svg {
-    width: 30px;
-    height: 30px;
-    color: white;
-    fill: white;
+    width: 32px;
+    height: 32px;
 }
 
-.floating-cta:hover {
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 8px 25px rgba(184, 132, 90, 0.6);
+/* Pulse effect for visibility */
+.floating-cta::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #25d366;
+    z-index: -1;
+    animation: whatsapp-pulse 2s infinite;
 }
 
-/* Optional: Add a pulse animation for attention */
-@keyframes pulse-bronze {
+@keyframes whatsapp-pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(204, 148, 97, 0.7);
-    }
-
-    70% {
-        box-shadow: 0 0 0 15px rgba(204, 148, 97, 0);
+        transform: scale(1);
+        opacity: 0.5;
     }
 
     100% {
-        box-shadow: 0 0 0 0 rgba(204, 148, 97, 0);
+        transform: scale(1.5);
+        opacity: 0;
     }
 }
 
-.floating-cta:hover {
-    animation: pulse-bronze 2s infinite;
-}
-
-/* Adjust for mobile */
 @media (max-width: 768px) {
     .floating-cta {
         bottom: 20px;

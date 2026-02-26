@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — IBE Construction</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --navy: #1a2f4b;
+            --navy-light: #243d5f;
+            --copper: #cc9461;
+            --copper-dark: #b07d4e;
+            --copper-light: rgba(204, 148, 97, .12);
+            --white: #fff;
+            --bg: #f0f4f8;
+            --gray-100: #f8fafc;
+            --gray-200: #eef2f7;
+            --gray-300: #e2e8f0;
+            --gray-500: #64748b;
+            --gray-700: #334155;
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow-sm: 0 2px 8px rgba(27, 47, 75, .08);
+            --shadow: 0 8px 32px rgba(27, 47, 75, .12);
+            --radius: 14px;
+            --sidebar: 240px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--navy);
+            display: flex
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar);
+            background: var(--navy);
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100
+        }
+
+        .sidebar-logo {
+            padding: 20px 20px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        .sidebar-logo img {
+            height: 42px;
+            width: auto;
+            object-fit: contain
+        }
+
+        .sidebar-badge {
+            display: inline-block;
+            background: #92400e;
+            color: #fef3c7;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin-top: 6px;
+            text-transform: uppercase
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+            overflow-y: auto
+        }
+
+        .nav-section {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .3);
+            padding: 0 8px;
+            margin: 16px 0 6px
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: rgba(255, 255, 255, .65);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .2s;
+            margin-bottom: 2px;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-family: 'Inter', sans-serif
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .07);
+            color: #fff
+        }
+
+        .nav-item.active {
+            background: rgba(204, 148, 97, .15);
+            color: var(--copper)
+        }
+
+        .nav-item svg {
+            flex-shrink: 0;
+            opacity: .8
+        }
+
+        .sidebar-bottom {
+            padding: 16px 12px;
+            border-top: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        .btn-logout-side {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: rgba(255, 255, 255, .5);
+            font-size: 13px;
+            cursor: pointer;
+            transition: color .2s;
+            border: none;
+            background: none;
+            width: 100%;
+            font-family: 'Inter', sans-serif
+        }
+
+        .btn-logout-side:hover {
+            color: #fff
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: var(--sidebar);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0
+        }
+
+        .topbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0 28px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50
+        }
+
+        .topbar-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy)
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .admin-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-700)
+        }
+
+        .content {
+            padding: 28px;
+            flex: 1
+        }
+
+        /* SECTION */
+        .section {
+            display: none
+        }
+
+        .section.active {
+            display: block
+        }
+
+        /* STATS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm)
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 4px
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            margin-bottom: 8px
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--navy)
+        }
+
+        /* TABLE */
+        .table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        .table th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            padding: 0 12px 12px
+        }
+
+        .table td {
+            padding: 12px;
+            border-top: 1px solid var(--gray-200);
+            font-size: 13px;
+            color: var(--gray-700);
+            vertical-align: middle
+        }
+
+        .table tr:hover td {
+            background: var(--gray-100)
+        }
+
+        .table td:first-child,
+        .table th:first-child {
+            padding-left: 0
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700
+        }
+
+        .badge.green {
+            background: rgba(16, 185, 129, .1);
+            color: #059669
+        }
+
+        .badge.blue {
+            background: rgba(59, 130, 246, .1);
+            color: #2563eb
+        }
+
+        .badge.orange {
+            background: var(--copper-light);
+            color: var(--copper-dark)
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            transition: all .2s
+        }
+
+        .btn-navy {
+            background: var(--navy);
+            color: #fff
+        }
+
+        .btn-navy:hover {
+            background: var(--navy-light)
+        }
+
+        .btn-copper {
+            background: var(--copper);
+            color: #fff
+        }
+
+        .btn-copper:hover {
+            background: var(--copper-dark)
+        }
+
+        .btn-ghost {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200)
+        }
+
+        .btn-ghost:hover {
+            background: var(--gray-200)
+        }
+
+        .btn-danger {
+            background: #fff1f1;
+            color: var(--danger);
+            border: 1px solid #fecaca
+        }
+
+        .btn-danger:hover {
+            background: var(--danger);
+            color: #fff
+        }
+
+        /* FORM */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        .form-group-a {
+            display: flex;
+            flex-direction: column;
+            gap: 5px
+        }
+
+        .form-group-a label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: var(--gray-500)
+        }
+
+        .form-group-a input,
+        .form-group-a select,
+        .form-group-a textarea {
+            padding: 10px 12px;
+            border: 1.5px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            color: var(--navy);
+            outline: none;
+            transition: border-color .2s;
+            background: var(--white)
+        }
+
+        .form-group-a input:focus,
+        .form-group-a select:focus,
+        .form-group-a textarea:focus {
+            border-color: var(--copper)
+        }
+
+        .form-group-a textarea {
+            resize: vertical;
+            min-height: 80px
+        }
+
+        .form-full {
+            grid-column: span 2
+        }
+
+        /* PROGRESS EDIT */
+        .progress-edit {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .progress-edit input[type=range] {
+            flex: 1;
+            accent-color: var(--copper)
+        }
+
+        .progress-val {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--copper);
+            min-width: 48px
+        }
+
+        /* STEPS EDIT */
+        .step-edit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--gray-100);
+            margin-bottom: 6px
+        }
+
+        .step-edit-item input[type=checkbox] {
+            accent-color: var(--success);
+            width: 16px;
+            height: 16px;
+            cursor: pointer
+        }
+
+        .step-edit-name {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--navy)
+        }
+
+        .step-edit-date {
+            width: 130px;
+            padding: 5px 8px;
+            border: 1.5px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            outline: none
+        }
+
+        .step-edit-date:focus {
+            border-color: var(--copper)
+        }
+
+        /* MESSAGES ADMIN */
+        .msg-thread {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 14px
+        }
+
+        .msg-thread::-webkit-scrollbar {
+            width: 4px
+        }
+
+        .msg-thread::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 99px
+        }
+
+        .msg-a {
+            max-width: 80%
+        }
+
+        .msg-a.admin {
+            align-self: flex-end
+        }
+
+        .msg-a-meta {
+            font-size: 10px;
+            color: var(--gray-500);
+            margin-bottom: 3px
+        }
+
+        .msg-a.admin .msg-a-meta {
+            text-align: right
+        }
+
+        .msg-a-bubble {
+            padding: 9px 13px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--navy)
+        }
+
+        .msg-a:not(.admin) .msg-a-bubble {
+            background: var(--gray-100);
+            border-bottom-left-radius: 4px
+        }
+
+        .msg-a.admin .msg-a-bubble {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            color: #fff;
+            border-bottom-right-radius: 4px
+        }
+
+        /* EMPTY */
+        .empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray-500);
+            font-size: 13px
+        }
+
+        .empty-icon {
+            font-size: 36px;
+            margin-bottom: 8px
+        }
+
+        /* ALERTS */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #15803d
+        }
+
+        .alert-err {
+            background: #fff1f1;
+            border: 1px solid #fecaca;
+            color: #b91c1c
+        }
+
+        /* LOADING */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--navy);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: opacity .4s
+        }
+
+        .loading-screen.hide {
+            opacity: 0;
+            pointer-events: none
+        }
+
+        /* TOOL MODAL */
+        .tool-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .tool-modal.active {
+            display: flex
+        }
+
+        .tool-modal-card {
+            background: #fff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 450px;
+            padding: 32px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
+            text-align: center
+        }
+
+        .loading-screen.hide {
+            opacity: 0;
+            pointer-events: none
+        }
+
+        @keyframes spinBig {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255, 255, 255, .15);
+            border-top-color: var(--copper);
+            border-radius: 50%;
+            animation: spinBig .8s linear infinite;
+            margin-bottom: 16px
+        }
+
+        .loading-text {
+            color: rgba(255, 255, 255, .6);
+            font-size: 14px
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .modal-overlay.open {
+            display: flex
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 32px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 20px
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--gray-100);
+            border: none;
+            border-radius: 8px;
+            padding: 6px;
+            cursor: pointer;
+            color: var(--gray-500)
+        }
+
+        .modal-close:hover {
+            color: var(--navy)
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, .3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                transform: translateX(-100%)
+            }
+
+            .main {
+                margin-left: 0
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOADING -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Chargement du portail admin…</div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="../images/logo.png" alt="IBE Construction">
+            <div class="sidebar-badge">Administration</div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">Tableau de bord</div>
+            <button class="nav-item active" onclick="showSection('overview')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                </svg>
+                Vue d'ensemble
+            </button>
+            <div class="nav-section">Gestion</div>
+            <button class="nav-item" onclick="showSection('clients')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                Clients
+            </button>
+            <button class="nav-item" onclick="showSection('projects')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Projets
+            </button>
+            <button class="nav-item" onclick="showSection('messages')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                Messagerie
+                <span id="unreadBadge"
+                    style="margin-left:auto;background:var(--danger);color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 7px;display:none"></span>
+            </button>
+            <div class="nav-section">Paramètres</div>
+            <button class="nav-item" onclick="showSection('newclient')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                </svg>
+                Nouveau client
+            </button>
+        </nav>
+        <div class="sidebar-bottom">
+            <div id="adminChipSide" style="display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:8px">
+                <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--copper),var(--copper-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff"
+                    id="adminAvatar">A</div>
+                <div>
+                    <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.85)" id="adminEmail">admin</div>
+                    <div style="font-size:10px;color:rgba(255,255,255,.4)">Administrateur</div>
+                </div>
+            </div>
+            <button class="btn-logout-side" onclick="doLogout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+                </svg>
+                Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+        <div class="topbar">
+            <div class="topbar-title" id="topbarTitle">Vue d'ensemble</div>
+            <div class="topbar-right">
+                <button class="btn btn-ghost" onclick="openRepairModal()"
+                    style="font-size:12px;color:var(--danger);margin-right:8px">
+                    🔧 Réparer un UID
+                </button>
+                <button class="btn btn-ghost" onclick="seedTestData()"
+                    style="font-size:12px;color:var(--copper);margin-right:8px">
+                    ✨ Générer données de test
+                </button>
+                <a href="login.html" target="_blank" class="btn btn-ghost" style="font-size:12px">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                    Portail client
+                </a>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- ═══ OVERVIEW ═══ -->
+            <div id="sec-overview" class="section active">
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value" id="statClients">—</div>
+                        <div class="stat-label">Clients actifs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏗️</div>
+                        <div class="stat-value" id="statProjects">—</div>
+                        <div class="stat-label">Projets en cours</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💬</div>
+                        <div class="stat-value" id="statMsgs">—</div>
+                        <div class="stat-label">Messages total</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-value" id="statAvg">—</div>
+                        <div class="stat-label">Avancement moyen</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Activité récente — Clients</div>
+                        <button class="btn btn-copper" onclick="showSection('newclient')">+ Nouveau client</button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Projet</th>
+                                <th>Avancement</th>
+                                <th>Chargé</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="overviewTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══ CLIENTS ═══ -->
+            <div id="sec-clients" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Tous les clients</div>
+                        <button class="btn btn-copper" onclick="showSection('newclient')">+ Nouveau client</button>
+                    </div>
+                    <input id="clientSearch" placeholder="🔍 Rechercher un client…" oninput="filterClients()"
+                        style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-300);border-radius:8px;font-size:13px;font-family:inherit;outline:none;margin-bottom:16px;color:var(--navy)">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Projet</th>
+                                <th>Chargé</th>
+                                <th>Avancement</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══ PROJECTS ═══ -->
+            <div id="sec-projects" class="section">
+                <div class="card" id="projectEditorCard">
+                    <div class="card-header">
+                        <div class="card-title">Modifier un projet</div>
+                    </div>
+                    <div class="form-group-a" style="margin-bottom:16px">
+                        <label>Sélectionner le client</label>
+                        <select id="projectClientSelect" onchange="loadProjectEditor()">
+                            <option value="">— Choisir un client —</option>
+                        </select>
+                    </div>
+                    <div id="projectEditorBody" style="display:none">
+                        <div style="margin-bottom:20px">
+                            <label
+                                style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-500);display:block;margin-bottom:8px">Avancement
+                                global</label>
+                            <div class="progress-edit">
+                                <input type="range" id="pctRange" min="0" max="100" value="0"
+                                    oninput="document.getElementById('pctVal').textContent=this.value+'%'">
+                                <div class="progress-val" id="pctVal">0%</div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom:20px">
+                            <label
+                                style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-500);display:block;margin-bottom:8px">Étapes
+                                du projet</label>
+                            <div id="stepsEditor"></div>
+                        </div>
+                        <div style="margin-bottom:20px">
+                            <label
+                                style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-500);display:block;margin-bottom:8px">Documents
+                                du projet</label>
+
+                            <!-- Drag & Drop Zone -->
+                            <div id="dropZone"
+                                style="border:2px dashed var(--gray-300);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--gray-50);margin-bottom:12px;position:relative"
+                                onclick="document.getElementById('fileInput').click()"
+                                ondragover="event.preventDefault();this.style.borderColor='var(--copper)';this.style.background='#fff7ed'"
+                                ondragleave="this.style.borderColor='var(--gray-300)';this.style.background='var(--gray-50)'"
+                                ondrop="handleFileDrop(event)">
+                                <div style="font-size:32px;margin-bottom:8px">📂</div>
+                                <div style="font-weight:600;color:var(--navy);margin-bottom:4px;font-size:14px">Glissez
+                                    vos fichiers ici</div>
+                                <div style="font-size:12px;color:var(--gray-500)">PDF, DWG, DXF, XLSX, DOC — max 50 Mo
+                                </div>
+                                <div style="font-size:11px;color:var(--copper);margin-top:6px;font-weight:600">ou
+                                    cliquez pour sélectionner</div>
+                                <input type="file" id="fileInput" multiple
+                                    accept=".pdf,.dwg,.dxf,.xlsx,.doc,.docx,.jpg,.png" style="display:none"
+                                    onchange="handleFileSelect(event)">
+                            </div>
+
+                            <!-- Upload progress list -->
+                            <div id="uploadProgress"
+                                style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
+
+                            <!-- Existing docs list -->
+                            <div id="docsEditor" style="display:flex;flex-direction:column;gap:8px;margin-bottom:4px">
+                            </div>
+                        </div>
+                        <div class="form-grid" style="margin-bottom:20px">
+                            <div class="form-group-a">
+                                <label>Prochaine visite — Date</label>
+                                <input type="date" id="visitDateInput" style="cursor:pointer"
+                                    title="Sélectionnez une date">
+                            </div>
+                            <div class="form-group-a">
+                                <label>Prochaine visite — Heure</label>
+                                <input type="time" id="visitHeureInput" style="cursor:pointer"
+                                    title="Sélectionnez une heure">
+                            </div>
+                            <div class="form-group-a form-full">
+                                <label>Lieu de la visite</label>
+                                <input type="text" id="visitLieuInput"
+                                    placeholder="Ex : Chantier — Bd Zerktouni, Casablanca">
+                            </div>
+                        </div>
+                        <div id="projectSaveAlert"></div>
+                        <button class="btn btn-navy" onclick="saveProject()" id="saveProjectBtn">💾 Enregistrer les
+                            modifications</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ MESSAGES ═══ -->
+            <div id="sec-messages" class="section">
+                <div style="display:grid;grid-template-columns:280px 1fr;gap:20px;min-height:500px">
+                    <!-- Thread list -->
+                    <div class="card" style="padding:16px">
+                        <div class="card-title" style="margin-bottom:12px">Conversations</div>
+                        <div id="threadList" style="display:flex;flex-direction:column;gap:4px"></div>
+                    </div>
+                    <!-- Active thread -->
+                    <div class="card">
+                        <div id="msgHeader" class="card-header"
+                            style="border-bottom:1px solid var(--gray-200);padding-bottom:16px;margin-bottom:16px">
+                            <div class="card-title" id="msgThreadTitle">Sélectionnez une conversation</div>
+                        </div>
+                        <div class="msg-thread" id="msgThreadBody"></div>
+                        <div style="display:flex;gap:8px" id="msgInputArea">
+                            <input type="text" id="adminMsgInput" placeholder="Répondre en tant qu'IBE…"
+                                style="flex:1;padding:10px 14px;border:1.5px solid var(--gray-300);border-radius:8px;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s"
+                                onfocus="this.style.borderColor='var(--copper)'"
+                                onblur="this.style.borderColor='var(--gray-300)'"
+                                onkeydown="if(event.key==='Enter')sendAdminMsg()">
+                            <button class="btn btn-navy" onclick="sendAdminMsg()">Envoyer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ NEW CLIENT ═══ -->
+            <div id="sec-newclient" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Créer un nouveau compte client</div>
+                    </div>
+
+                    <div
+                        style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 16px;font-size:13px;color:#92400e;margin-bottom:20px;line-height:1.6">
+                        ⚠️ <strong>Étape 1 :</strong> Créez d'abord le compte dans <a
+                            href="https://console.firebase.google.com" target="_blank"
+                            style="color:#b45309;font-weight:700">Firebase Console → Authentication</a> avec l'email et
+                        le mot de passe du client.<br>
+                        <strong>Étape 2 :</strong> Copiez l'UID généré et collez-le ci-dessous. Ce formulaire crée les
+                        données Firestore liées à cet UID.
+                    </div>
+
+                    <div id="newClientAlert"></div>
+
+                    <div class="form-grid">
+                        <div class="form-group-a form-full">
+                            <label>UID Firebase (depuis la console Auth)</label>
+                            <input type="text" id="nc-uid" placeholder="Ex : abc123XYZ...">
+                        </div>
+                        <div class="form-group-a">
+                            <label>Nom complet du client</label>
+                            <input type="text" id="nc-nom" placeholder="Ex : Mohammed Al-Fassi">
+                        </div>
+                        <div class="form-group-a">
+                            <label>Email</label>
+                            <input type="email" id="nc-email" placeholder="client@example.ma">
+                        </div>
+                        <div class="form-group-a">
+                            <label>Chargé de projet</label>
+                            <input type="text" id="nc-charge" placeholder="Ex : Fahd Benali">
+                        </div>
+                        <div class="form-group-a">
+                            <label>Tél. chargé</label>
+                            <input type="text" id="nc-tel" placeholder="+212 6 00 11 22 33">
+                        </div>
+                        <div class="form-group-a form-full"
+                            style="border-top:1px solid var(--gray-200);padding-top:16px;margin-top:4px">
+                            <label
+                                style="font-size:13px;font-weight:700;color:var(--navy);text-transform:none;letter-spacing:0">📋
+                                Informations du projet</label>
+                        </div>
+                        <div class="form-group-a form-full">
+                            <label>Titre du projet</label>
+                            <input type="text" id="nc-titre" placeholder="Ex : Villa Al-Fassi — Casablanca">
+                        </div>
+                        <div class="form-group-a">
+                            <label>Type</label>
+                            <select id="nc-type">
+                                <option>Résidentiel</option>
+                                <option>Commercial</option>
+                                <option>Industriel</option>
+                                <option>Médical</option>
+                                <option>Institutionnel</option>
+                            </select>
+                        </div>
+                        <div class="form-group-a">
+                            <label>Surface</label>
+                            <input type="text" id="nc-surface" placeholder="Ex : 320 m²">
+                        </div>
+                        <div class="form-group-a">
+                            <label>Date de démarrage</label>
+                            <input type="text" id="nc-debut" placeholder="Ex : 10 Janvier 2026">
+                        </div>
+                        <div class="form-group-a">
+                            <label>Livraison prévue</label>
+                            <input type="text" id="nc-livraison" placeholder="Ex : 15 Octobre 2026">
+                        </div>
+                    </div>
+
+                    <div style="margin-top:20px">
+                        <button class="btn btn-copper" onclick="createClient()" id="createClientBtn"
+                            style="padding:12px 24px;font-size:14px">
+                            ✅ Créer le compte client
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+
+    <script>
+        // ── State ──────────────────────────────────────────────────
+        let allClients = [];
+        let allProjects = {};
+        let currentMsgClientUid = null;
+        let unsubMsgs = null;
+        let adminProfile = null;
+
+        // ── Auth guard ──────────────────────────────────────────────
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) { window.location.href = 'admin-login.html'; return; }
+            const isAdmin = await ibeIsAdmin(user.uid);
+            if (!isAdmin) { await ibeLogout(); window.location.href = 'admin-login.html'; return; }
+            adminProfile = user;
+            document.getElementById('adminEmail').textContent = user.email.split('@')[0];
+            document.getElementById('adminAvatar').textContent = user.email[0].toUpperCase();
+            await loadAdminData();
+            document.getElementById('loadingScreen').classList.add('hide');
+        });
+
+        // ── Load all data ───────────────────────────────────────────
+        async function loadAdminData() {
+            allClients = await ibeGetAllClients();
+            allProjects = await ibeGetAllProjects();
+
+            renderOverview();
+            renderClientsTable();
+            populateProjectSelect();
+            renderThreadList();
+            updateTotalMsgs();
+        }
+
+        async function updateTotalMsgs() {
+            let total = 0;
+            for (const c of allClients) {
+                const snap = await db.collection('messages').doc(c.uid).collection('thread').get();
+                total += snap.size;
+            }
+            document.getElementById('statMsgs').textContent = total;
+        }
+
+        // ── Navigation ──────────────────────────────────────────────
+        const SECTION_TITLES = {
+            overview: 'Vue d\'ensemble', clients: 'Clients',
+            projects: 'Projets', messages: 'Messagerie', newclient: 'Nouveau client'
+        };
+
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('sec-' + id).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(id)) btn.classList.add('active');
+            });
+            document.getElementById('topbarTitle').textContent = SECTION_TITLES[id] || id;
+        }
+
+        // ── Overview ────────────────────────────────────────────────
+        function renderOverview() {
+            document.getElementById('statClients').textContent = allClients.length;
+            document.getElementById('statProjects').textContent = Object.keys(allProjects).length;
+            const avgArr = Object.values(allProjects).map(p => p.avancement || 0);
+            document.getElementById('statAvg').textContent = avgArr.length ? Math.round(avgArr.reduce((a, b) => a + b, 0) / avgArr.length) + '%' : '—';
+
+            // Count total messages
+            let totalMsgs = 0;
+            const tbody = document.getElementById('overviewTableBody');
+            tbody.innerHTML = '';
+
+            if (allClients.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--gray-500)">
+                    <div style="font-size:24px;margin-bottom:10px">🏙️</div>
+                    <strong>Aucun client pour le moment.</strong><br>
+                    Cliquez sur "Nouveau client" dans le menu pour commencer.
+                </td></tr>`;
+            } else {
+                allClients.forEach(c => {
+                    const proj = allProjects[c.uid] || {};
+                    const pct = proj.avancement || 0;
+                    tbody.innerHTML += `<tr>
+          <td><strong>${c.nom || '—'}</strong></td>
+          <td>${proj.titre || '—'}</td>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="flex:1;height:6px;background:var(--gray-200);border-radius:99px;overflow:hidden">
+                <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--navy),var(--copper));border-radius:99px"></div>
+              </div>
+              <span style="font-size:12px;font-weight:700;color:var(--copper)">${pct}%</span>
+            </div>
+          </td>
+          <td>${c.charge || '—'}</td>
+          <td>
+            <button class="btn btn-ghost" onclick="editProject('${c.uid}')">Modifier</button>
+            <button class="btn btn-ghost" style="margin-left:4px" onclick="openMessages('${c.uid}')">Messages</button>
+            <button class="btn btn-danger" style="margin-left:4px;padding:5px 8px;font-size:12px" onclick="deleteClient('${c.uid}','${c.nom || ''}')" title="Supprimer">🗑️</button>
+          </td>
+        </tr>`;
+                });
+            }
+            document.getElementById('statMsgs').textContent = '0';
+        }
+
+        // ── Clients ─────────────────────────────────────────────────
+        function renderClientsTable(filter = '') {
+            const tbody = document.getElementById('clientsTableBody');
+            tbody.innerHTML = '';
+            const filtered = allClients.filter(c =>
+                !filter || c.nom?.toLowerCase().includes(filter) || c.email?.toLowerCase().includes(filter)
+            );
+            if (!filtered.length) {
+                tbody.innerHTML = '<tr><td colspan="6"><div class="empty"><div class="empty-icon">👥</div>Aucun client trouvé</div></td></tr>';
+                return;
+            }
+            filtered.forEach(c => {
+                const proj = allProjects[c.uid] || {};
+                const pct = proj.avancement || 0;
+                tbody.innerHTML += `<tr>
+      <td><strong>${c.nom || '—'}</strong></td>
+      <td style="color:var(--gray-500)">${c.email || '—'}</td>
+      <td>${proj.titre || '—'}</td>
+      <td>${c.charge || '—'}</td>
+      <td>
+        <span class="badge ${pct >= 80 ? 'green' : pct >= 40 ? 'blue' : 'orange'}">${pct}%</span>
+      </td>
+      <td>
+        <button class="btn btn-ghost" onclick="editProject('${c.uid}')">✏️ Projet</button>
+        <button class="btn btn-ghost" style="margin-left:4px" onclick="openMessages('${c.uid}')">💬 Message</button>
+        <button class="btn btn-danger" style="margin-left:4px;padding:5px 8px;font-size:12px" onclick="deleteClient('${c.uid}','${c.nom || ''}')" title="Supprimer">🗑️</button>
+      </td>
+    </tr>`;
+            });
+        }
+
+        function filterClients() {
+            renderClientsTable(document.getElementById('clientSearch').value.trim().toLowerCase());
+        }
+
+        // ── Delete client ────────────────────────────────────────────
+        async function deleteClient(uid, nom) {
+            if (!confirm(`⚠️ Supprimer le client "${nom}" ?\n\nCela supprimera définitivement :\n• Son profil\n• Son projet\n• Ses messages\n\nCette action est irréversible.`)) return;
+
+            try {
+                const batch = db.batch();
+                batch.delete(db.collection('users').doc(uid));
+                batch.delete(db.collection('projects').doc(uid));
+                // Try to delete messages subcollection root doc
+                batch.delete(db.collection('messages').doc(uid));
+                await batch.commit();
+
+                // Remove from local state
+                allClients = allClients.filter(c => c.uid !== uid);
+                delete allProjects[uid];
+
+                // Re-render
+                renderOverview();
+                renderClientsTable(document.getElementById('clientSearch')?.value?.trim()?.toLowerCase() || '');
+                populateProjectSelect();
+                renderThreadList();
+
+                // Toast
+                const toast = document.createElement('div');
+                toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1a2f4b;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:9999;display:flex;align-items:center;gap:8px';
+                toast.innerHTML = `🗑️ Client <strong>${nom}</strong> supprimé avec succès.`;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3500);
+            } catch (e) {
+                alert('Erreur lors de la suppression : ' + e.message);
+            }
+        }
+
+        // ── Project editor ──────────────────────────────────────────
+        function populateProjectSelect() {
+            const sel = document.getElementById('projectClientSelect');
+            sel.innerHTML = '<option value="">— Choisir un client —</option>';
+            allClients.forEach(c => {
+                sel.innerHTML += `<option value="${c.uid}">${c.nom} — ${allProjects[c.uid]?.titre || 'Sans projet'}</option>`;
+            });
+        }
+
+        function editProject(uid) {
+            showSection('projects');
+            document.getElementById('projectClientSelect').value = uid;
+            loadProjectEditor();
+        }
+
+        function loadProjectEditor() {
+            const uid = document.getElementById('projectClientSelect').value;
+            const body = document.getElementById('projectEditorBody');
+            if (!uid) { body.style.display = 'none'; return; }
+            body.style.display = 'block';
+            const proj = allProjects[uid] || {};
+
+            document.getElementById('pctRange').value = proj.avancement || 0;
+            document.getElementById('pctVal').textContent = (proj.avancement || 0) + '%';
+
+            const stepsEditor = document.getElementById('stepsEditor');
+            stepsEditor.innerHTML = '';
+            (proj.etapes || []).forEach((e, i) => {
+                stepsEditor.innerHTML += `<div class="step-edit-item">
+      <input type="checkbox" id="step-${i}" ${e.done ? 'checked' : ''}>
+      <span class="step-edit-name">${e.nom}</span>
+      <input type="text" class="step-edit-date" id="stepdate-${i}" value="${e.date || ''}">
+    </div>`;
+            });
+
+            const v = proj.prochaine_visite || {};
+            // visitDateInput is type=date, needs YYYY-MM-DD format
+            document.getElementById('visitDateInput').value = v.dateRaw || '';
+            // visitHeureInput is type=time, needs HH:MM format  
+            document.getElementById('visitHeureInput').value = v.heureRaw || v.heure || '';
+            document.getElementById('visitLieuInput').value = v.lieu || '';
+            document.getElementById('projectSaveAlert').innerHTML = '';
+
+            // Render uploaded documents list
+            renderDocsList(uid);
+        }
+
+        async function saveProject() {
+            const uid = document.getElementById('projectClientSelect').value;
+            if (!uid) return;
+            const btn = document.getElementById('saveProjectBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Enregistrement…';
+
+            const proj = allProjects[uid] || {};
+            const etapes = (proj.etapes || []).map((e, i) => ({
+                ...e,
+                done: document.getElementById('step-' + i)?.checked || false,
+                date: document.getElementById('stepdate-' + i)?.value || e.date
+            }));
+
+            const updatedPct = parseInt(document.getElementById('pctRange').value);
+
+            const docs = [];
+            document.querySelectorAll('#docsEditor .step-edit-item').forEach(row => {
+                const nom = row.querySelector('.doc-edit-name').value.trim();
+                const type = row.querySelector('.doc-edit-type').value;
+                const taille = row.querySelector('.doc-edit-size').value.trim();
+                if (nom) docs.push({
+                    nom, type, taille,
+                    date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
+                });
+            });
+
+            const dateRaw = document.getElementById('visitDateInput').value; // YYYY-MM-DD
+            const heureRaw = document.getElementById('visitHeureInput').value; // HH:MM
+
+            // Format date for display on client dashboard: "Jeudi 27 Février 2026"
+            let dateDisplay = '—';
+            if (dateRaw) {
+                const d = new Date(dateRaw + 'T00:00:00');
+                dateDisplay = d.toLocaleDateString('fr-FR', {
+                    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+                });
+                dateDisplay = dateDisplay.charAt(0).toUpperCase() + dateDisplay.slice(1);
+            }
+
+            // Format time for display: "10h30"
+            let heureDisplay = '—';
+            if (heureRaw) {
+                heureDisplay = heureRaw.replace(':', 'h');
+            }
+
+            const data = {
+                avancement: updatedPct,
+                etapes,
+                documents: docs,
+                prochaine_visite: {
+                    dateRaw,                         // "2026-02-27" — pour recharger dans l'input
+                    date: dateDisplay,               // "Vendredi 27 Février 2026" — pour le dashboard client
+                    heureRaw,                        // "10:30" — pour recharger dans l'input
+                    heure: heureDisplay,             // "10h30" — pour le dashboard client
+                    lieu: document.getElementById('visitLieuInput').value
+                }
+            };
+
+            try {
+                await ibeUpdateProject(uid, data);
+                allProjects[uid] = { ...allProjects[uid], ...data };
+                document.getElementById('projectSaveAlert').innerHTML = '<div class="alert alert-success">✅ Projet mis à jour avec succès !</div>';
+                renderOverview();
+                renderClientsTable();
+            } catch (e) {
+                document.getElementById('projectSaveAlert').innerHTML = '<div class="alert alert-err">❌ Erreur : ' + e.message + '</div>';
+            }
+            btn.disabled = false;
+            btn.innerHTML = '💾 Enregistrer les modifications';
+        }
+
+        // ── File Upload (Drag & Drop → Firebase Storage) ────────────
+        function handleFileDrop(event) {
+            event.preventDefault();
+            const zone = document.getElementById('dropZone');
+            zone.style.borderColor = 'var(--gray-300)';
+            zone.style.background = 'var(--gray-50)';
+            const files = Array.from(event.dataTransfer.files);
+            uploadFiles(files);
+        }
+
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            event.target.value = '';
+            uploadFiles(files);
+        }
+
+        async function uploadFiles(files) {
+            const uid = document.getElementById('projectClientSelect').value;
+            if (!uid) {
+                alert('Sélectionnez d\'abord un client.');
+                return;
+            }
+
+            const progressContainer = document.getElementById('uploadProgress');
+
+            for (const file of files) {
+                // Max 50 Mo
+                if (file.size > 50 * 1024 * 1024) {
+                    const errBar = document.createElement('div');
+                    errBar.style.cssText = 'background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;font-size:12px;color:#dc2626;display:flex;align-items:center;gap:8px';
+                    errBar.innerHTML = `❌ <strong>${file.name}</strong> dépasse 50 Mo`;
+                    progressContainer.appendChild(errBar);
+                    setTimeout(() => errBar.remove(), 4000);
+                    continue;
+                }
+
+                // Create progress bar for this file
+                const barId = 'pb_' + Date.now() + Math.random().toString(36).slice(2);
+                const barEl = document.createElement('div');
+                barEl.id = barId;
+                barEl.style.cssText = 'background:var(--gray-100);border-radius:8px;padding:10px 14px;font-size:12px';
+                barEl.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                        <span style="font-weight:600;color:var(--navy)">⬆️ ${file.name}</span>
+                        <span id="${barId}_pct" style="color:var(--copper);font-weight:700">0%</span>
+                    </div>
+                    <div style="height:4px;background:var(--gray-300);border-radius:99px;overflow:hidden">
+                        <div id="${barId}_fill" style="height:100%;width:0%;background:linear-gradient(90deg,var(--navy),var(--copper));border-radius:99px;transition:width .3s"></div>
+                    </div>`;
+                progressContainer.appendChild(barEl);
+
+                try {
+                    const result = await ibeUploadDocument(uid, file, (pct) => {
+                        document.getElementById(barId + '_pct').textContent = pct + '%';
+                        document.getElementById(barId + '_fill').style.width = pct + '%';
+                    });
+
+                    // Add to Firestore documents array
+                    const ext = file.name.split('.').pop().toUpperCase();
+                    const newDoc = {
+                        nom: result.nom,
+                        type: ext,
+                        taille: (file.size / 1024 < 1024
+                            ? Math.round(file.size / 1024) + ' Ko'
+                            : (file.size / 1024 / 1024).toFixed(1) + ' Mo'),
+                        date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }),
+                        url: result.url
+                    };
+
+                    // Update Firestore
+                    const currentDocs = allProjects[uid]?.documents || [];
+                    const updatedDocs = [...currentDocs, newDoc];
+                    await ibeUpdateProject(uid, { documents: updatedDocs });
+                    allProjects[uid] = { ...allProjects[uid], documents: updatedDocs };
+
+                    // Success state on bar
+                    barEl.style.background = '#f0fdf4';
+                    barEl.style.borderLeft = '3px solid #22c55e';
+                    barEl.querySelector(`#${barId}_fill`).style.background = '#22c55e';
+                    barEl.querySelector(`#${barId}_pct`).textContent = '✓';
+                    setTimeout(() => {
+                        barEl.remove();
+                        renderDocsList(uid);
+                    }, 2000);
+
+                } catch (err) {
+                    barEl.style.background = '#fef2f2';
+                    barEl.style.borderLeft = '3px solid #dc2626';
+                    barEl.innerHTML = `<span style="color:#dc2626">❌ Erreur upload ${file.name}: ${err.message}</span>`;
+                    setTimeout(() => barEl.remove(), 5000);
+                }
+            }
+        }
+
+        function renderDocsList(uid) {
+            const container = document.getElementById('docsEditor');
+            container.innerHTML = '';
+            const docs = allProjects[uid]?.documents || [];
+            if (!docs.length) {
+                container.innerHTML = '<div style="font-size:12px;color:var(--gray-500);text-align:center;padding:12px">Aucun document — glissez des fichiers ci-dessus</div>';
+                return;
+            }
+            docs.forEach((d, i) => {
+                const ext = d.type || '';
+                const color = ext === 'PDF' ? '#dc2626' : ext === 'DWG' || ext === 'DXF' ? '#2563eb' : '#ca8a04';
+                const row = document.createElement('div');
+                row.style.cssText = 'display:flex;align-items:center;gap:10px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:10px 14px';
+                row.innerHTML = `
+                    <div style="background:${color};color:#fff;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800;min-width:36px;text-align:center">${ext}</div>
+                    <div style="flex:1;min-width:0">
+                        <div style="font-weight:600;font-size:13px;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.nom}</div>
+                        <div style="font-size:11px;color:var(--gray-500)">${d.date} · ${d.taille}</div>
+                    </div>
+                    ${d.url ? `<button onclick="openAdminDoc('${d.url}','${d.nom}')" style="background:none;border:none;cursor:pointer;font-size:14px;padding:2px 6px" title="Ouvrir le document">👁️</button>` : ''}
+                    <button onclick="deleteDoc('${uid}', ${i})" title="Supprimer ce document"
+                        style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:14px;padding:2px 4px" title="Supprimer">🗑️</button>`;
+                container.appendChild(row);
+            });
+        }
+
+        // ── Document Viewer ──────────────────────────────────────
+        // Ouvre les PDFs via Google Docs Viewer (contourne les restrictions Cloudinary)
+        // Pour les images, ouvre directement l'URL Cloudinary.
+        function openAdminDoc(url, filename) {
+            if (!url) return;
+            const ext = (filename || url).split('.').pop().split('?')[0].toLowerCase();
+            const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
+            if (imageExts.includes(ext)) {
+                window.open(url, '_blank');
+            } else {
+                // Google Docs Viewer can render PDFs, DWG previews, etc.
+                const viewerUrl = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(url);
+                window.open(viewerUrl, '_blank');
+            }
+        }
+
+        async function deleteDoc(uid, index) {
+            if (!confirm('Supprimer ce document ?')) return;
+            const docs = [...(allProjects[uid]?.documents || [])];
+            docs.splice(index, 1);
+            await ibeUpdateProject(uid, { documents: docs });
+            allProjects[uid] = { ...allProjects[uid], documents: docs };
+            renderDocsList(uid);
+        }
+
+        function renderThreadList() {
+            const list = document.getElementById('threadList');
+            list.innerHTML = '';
+            if (!allClients.length) {
+                list.innerHTML = '<div class="empty">Aucun client</div>';
+                return;
+            }
+            allClients.forEach(c => {
+                const div = document.createElement('button');
+                div.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:none;border:none;width:100%;text-align:left;cursor:pointer;transition:background .2s;font-family:inherit';
+                div.onmouseenter = () => div.style.background = 'var(--gray-100)';
+                div.onmouseleave = () => { if (currentMsgClientUid !== c.uid) div.style.background = 'none'; }
+                div.innerHTML = `
+      <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--navy),var(--navy-light));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;flex-shrink:0">${(c.nom || '?')[0]}</div>
+      <div style="min-width:0"><div style="font-size:12px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.nom || '—'}</div><div style="font-size:11px;color:var(--gray-500)">${allProjects[c.uid]?.titre || '—'}</div></div>`;
+                div.onclick = () => openMessages(c.uid, div);
+                div.id = 'thread-btn-' + c.uid;
+                list.appendChild(div);
+            });
+        }
+
+        function openMessages(uid, btnEl) {
+            if (unsubMsgs) unsubMsgs();
+            currentMsgClientUid = uid;
+            showSection('messages');
+            const client = allClients.find(c => c.uid === uid);
+            document.getElementById('msgThreadTitle').textContent = client?.nom || uid;
+
+            document.querySelectorAll('[id^="thread-btn-"]').forEach(b => b.style.background = 'none');
+            const btn = document.getElementById('thread-btn-' + uid);
+            if (btn) btn.style.background = 'var(--gray-100)';
+
+            unsubMsgs = ibeListenMessages(uid, (msgs) => {
+                const body = document.getElementById('msgThreadBody');
+                body.innerHTML = '';
+                msgs.forEach(m => {
+                    body.innerHTML += `<div class="msg-a${m.isAdmin ? ' admin' : ''}">
+        <div class="msg-a-meta">${m.isAdmin ? '' : `<strong>${m.de}</strong> · `}${m.heure}</div>
+        <div class="msg-a-bubble">${m.texte}</div>
+      </div>`;
+                });
+                body.scrollTop = body.scrollHeight;
+            });
+        }
+
+        async function sendAdminMsg() {
+            if (!currentMsgClientUid) return;
+            const input = document.getElementById('adminMsgInput');
+            const text = input.value.trim();
+            if (!text) return;
+            input.value = '';
+            const client = allClients.find(c => c.uid === currentMsgClientUid);
+            await ibeSendMessage(currentMsgClientUid, text, client?.charge || 'IBE Construction', true);
+        }
+
+        // ── New client ──────────────────────────────────────────────
+        async function createClient() {
+            const uid = document.getElementById('nc-uid').value.trim();
+            const nom = document.getElementById('nc-nom').value.trim();
+            const email = document.getElementById('nc-email').value.trim();
+            const charge = document.getElementById('nc-charge').value.trim();
+            const tel = document.getElementById('nc-tel').value.trim();
+            const titre = document.getElementById('nc-titre').value.trim();
+            const type = document.getElementById('nc-type').value;
+            const surface = document.getElementById('nc-surface').value.trim();
+            const debut = document.getElementById('nc-debut').value.trim();
+            const livraison = document.getElementById('nc-livraison').value.trim();
+            const alertEl = document.getElementById('newClientAlert');
+
+            if (!uid || !nom || !email || !titre) {
+                alertEl.innerHTML = '<div class="alert alert-err">⚠️ Veuillez remplir tous les champs obligatoires (UID, nom, email, titre).</div>';
+                return;
+            }
+
+            const btn = document.getElementById('createClientBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Création…';
+
+            try {
+                const profileData = { uid, nom, email, charge, tel_charge: tel };
+                const projectData = {
+                    titre, type, surface, debut,
+                    livraison_prevue: livraison,
+                    avancement: 0,
+                    etapes: [
+                        { nom: 'Études & Plans', done: false, date: '—' },
+                        { nom: 'Permis de construire', done: false, date: '—' },
+                        { nom: 'Gros œuvre', done: false, date: '—' },
+                        { nom: 'Second œuvre', done: false, date: '—' },
+                        { nom: 'CVC & Fluides', done: false, date: '—' },
+                        { nom: 'Finitions & Livraison', done: false, date: '—' }
+                    ],
+                    documents: [],
+                    prochaine_visite: { date: '—', heure: '—', lieu: '—' }
+                };
+                await ibeCreateClient(null, null, profileData, projectData);
+                alertEl.innerHTML = '<div class="alert alert-success">✅ Profil Firestore créé avec succès pour ' + nom + ' !</div>';
+                // Refresh data
+                allClients = await ibeGetAllClients();
+                allProjects[uid] = projectData;
+                renderOverview();
+                renderClientsTable();
+                populateProjectSelect();
+                renderThreadList();
+                // Reset form
+                ['nc-uid', 'nc-nom', 'nc-email', 'nc-charge', 'nc-tel', 'nc-titre', 'nc-surface', 'nc-debut', 'nc-livraison'].forEach(id => document.getElementById(id).value = '');
+            } catch (e) {
+                alertEl.innerHTML = '<div class="alert alert-err">❌ Erreur : ' + e.message + '</div>';
+            }
+            btn.disabled = false;
+            btn.innerHTML = '✅ Créer le compte client';
+        }
+
+        // ── Logout ──────────────────────────────────────────────────
+        async function doLogout() {
+            if (unsubMsgs) unsubMsgs();
+            await ibeLogout();
+            window.location.href = 'admin-login.html';
+        }
+
+        async function seedTestData() {
+            if (!confirm("Voulez-vous créer des données de test pour peupler le panel ?")) return;
+            const testUid = "test-client-" + Math.floor(Math.random() * 1000);
+            const profile = {
+                uid: testUid,
+                nom: "Client Démo IBE",
+                email: "demo@ibe.ma",
+                tel: "+212 6 00 00 00 00",
+                charge: "Équipe IBE",
+                tel_charge: "+212 6 63 17 68 38",
+                date_inscription: new Date().toLocaleDateString('fr-FR')
+            };
+            const project = {
+                titre: "Villa Moderne Marrakech",
+                type: "Résidentiel",
+                surface: "450 m²",
+                debut: "15 Janvier 2026",
+                livraison_prevue: "20 Décembre 2026",
+                avancement: 35,
+                etapes: [
+                    { nom: "Fondations", date: "20 Janvier 2026", done: true },
+                    { nom: "Gros Œuvre", date: "15 Février 2026", done: true },
+                    { nom: "Second Œuvre", date: "En cours", done: false },
+                    { nom: "Finitions", date: "Septembre 2026", done: false }
+                ],
+                documents: [
+                    { nom: "Plan Architectural.pdf", type: "PDF", taille: "4.2 MB", date: "15/01/2026" },
+                    { nom: "Devis Estimatif.xlsx", type: "XLS", taille: "1.2 MB", date: "16/01/2026" }
+                ],
+                prochaine_visite: { date: "12 Mars 2026", heure: "10:30", lieu: "Chantier A1" }
+            };
+            try {
+                await ibeCreateClient(profile.email, null, profile, project);
+                alert("Données de test créées ! Le panel va se rafraîchir.");
+                location.reload();
+            } catch (e) {
+                alert("Erreur lors de la création : " + e.message);
+            }
+        }
+
+        function openRepairModal() {
+            document.getElementById('repairModal').classList.add('active');
+            document.getElementById('repairStatus').innerHTML = '';
+        }
+
+        function closeRepairModal() {
+            document.getElementById('repairModal').classList.remove('active');
+        }
+
+        async function doRepair() {
+            const oldInput = document.getElementById('repair-old').value.trim();
+            const newUid = document.getElementById('repair-new').value.trim();
+            const statusEl = document.getElementById('repairStatus');
+
+            if (!oldInput || !newUid) {
+                statusEl.innerHTML = '<div class="alert alert-err">⚠️ Veuillez remplir les deux champs.</div>';
+                return;
+            }
+
+            if (oldInput === newUid) {
+                statusEl.innerHTML = '<div class="alert alert-err">⚠️ L\'ancien et le nouvel UID sont identiques.</div>';
+                return;
+            }
+
+            const btn = document.getElementById('repairBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Recherche…';
+            statusEl.innerHTML = '';
+
+            try {
+                let profileData = null;
+                let projectData = null;
+                let oldDocId = null;
+
+                // 1. Try direct doc ID lookup
+                const profileDocById = await db.collection('users').doc(oldInput).get();
+                if (profileDocById.exists) {
+                    profileData = profileDocById.data();
+                    oldDocId = oldInput;
+                    const projDoc = await db.collection('projects').doc(oldInput).get();
+                    projectData = projDoc.exists ? projDoc.data() : {};
+                    statusEl.innerHTML = '<div style="font-size:12px;color:var(--success);margin-bottom:4px">✅ Trouvé par ID direct</div>';
+                } else {
+                    // 2. Search by nom field
+                    btn.innerHTML = '<span class="spinner"></span> Recherche par nom…';
+                    const nomSnap = await db.collection('users').where('nom', '==', oldInput).limit(1).get();
+                    if (!nomSnap.empty) {
+                        const doc = nomSnap.docs[0];
+                        profileData = doc.data();
+                        oldDocId = doc.id;
+                        const projDoc = await db.collection('projects').doc(oldDocId).get();
+                        projectData = projDoc.exists ? projDoc.data() : {};
+                        statusEl.innerHTML = `<div style="font-size:12px;color:var(--success);margin-bottom:4px">✅ Trouvé par nom (ID Firestore: <code>${oldDocId}</code>)</div>`;
+                    } else {
+                        // 3. Search by email field
+                        const emailSnap = await db.collection('users').where('email', '==', oldInput).limit(1).get();
+                        if (!emailSnap.empty) {
+                            const doc = emailSnap.docs[0];
+                            profileData = doc.data();
+                            oldDocId = doc.id;
+                            const projDoc = await db.collection('projects').doc(oldDocId).get();
+                            projectData = projDoc.exists ? projDoc.data() : {};
+                            statusEl.innerHTML = `<div style="font-size:12px;color:var(--success);margin-bottom:4px">✅ Trouvé par email (ID Firestore: <code>${oldDocId}</code>)</div>`;
+                        }
+                    }
+                }
+
+                if (!profileData) {
+                    statusEl.innerHTML = `<div class="alert alert-err">❌ Aucun client trouvé avec "<strong>${oldInput}</strong>".<br><small>Essayez le nom exact, l'email, ou l'UID Firestore.</small></div>`;
+                    btn.disabled = false;
+                    btn.innerHTML = '🔧 Lancer la réparation';
+                    return;
+                }
+
+                // Write new docs then delete old ones atomically
+                btn.innerHTML = '<span class="spinner"></span> Copie en cours…';
+                statusEl.innerHTML += '<div style="font-size:12px;color:var(--copper);margin-bottom:4px">⏳ Copie des données vers le nouvel UID…</div>';
+
+                const batch = db.batch();
+                batch.set(db.collection('users').doc(newUid), { ...profileData, uid: newUid });
+                batch.set(db.collection('projects').doc(newUid), projectData);
+                // Always delete old doc to avoid cloning
+                if (oldDocId && oldDocId !== newUid) {
+                    batch.delete(db.collection('users').doc(oldDocId));
+                    batch.delete(db.collection('projects').doc(oldDocId));
+                }
+                await batch.commit();
+
+                statusEl.innerHTML = '<div class="alert alert-success">✅ Réparation effectuée ! Rechargement…</div>';
+                setTimeout(() => location.reload(), 1500);
+
+            } catch (e) {
+                statusEl.innerHTML = `<div class="alert alert-err">❌ Erreur : ${e.message}</div>`;
+                btn.disabled = false;
+                btn.innerHTML = '🔧 Lancer la réparation';
+            }
+        }
+    </script>
+    <!-- REPAIR MODAL -->
+    <div id="repairModal" class="tool-modal">
+        <div class="tool-modal-card">
+            <h3 style="margin-bottom:8px">🔧 Réparation d'UID</h3>
+            <p style="font-size:12px;color:var(--gray-500);margin-bottom:16px;line-height:1.6">
+                Entrez le <strong>nom</strong>, <strong>email</strong> ou <strong>ancien ID Firestore</strong> du
+                client,
+                puis le <strong>nouveau UID Firebase</strong> affiché sur son dashboard.
+            </p>
+
+            <div id="repairStatus" style="margin-bottom:8px"></div>
+
+            <div class="form-group-a" style="text-align:left">
+                <label>Ancien ID / Nom / Email du client</label>
+                <input type="text" id="repair-old" placeholder="Ex: mahmoud ou mahmoud@email.com">
+                <small style="color:var(--gray-500);font-size:11px;margin-top:4px;display:block">
+                    💡 Recherche par ID Firestore, nom ou email
+                </small>
+            </div>
+
+            <div class="form-group-a" style="text-align:left;margin-top:16px">
+                <label style="color:var(--copper)">Nouvel UID Firebase (depuis le dashboard client)</label>
+                <input type="text" id="repair-new" placeholder="XAsuN2vSPpV7hLB6sII...">
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:24px">
+                <button class="btn btn-ghost" onclick="closeRepairModal()" style="flex:1">Annuler</button>
+                <button class="btn btn-navy" id="repairBtn" onclick="doRepair()" style="flex:1">🔧 Lancer la
+                    réparation</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

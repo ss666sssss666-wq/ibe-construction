@@ -100,10 +100,6 @@ const animateOnScroll = () => {
 };
 
 // ==========================================
-// FORM HANDLING - DISABLED (Using FormSubmit instead)
-// ==========================================
-// FormSubmit handles the form submission natively
-// ==========================================
 // AJAX FORM HANDLING
 // ==========================================
 const contactForm = document.getElementById('contactForm');
@@ -277,218 +273,194 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ==========================================
-// DYNAMIC BACKGROUND FOR PORTFOLIO IMAGES
-// ==========================================
-const setPortfolioBackgrounds = () => {
-    const portfolioImages = document.querySelectorAll('.portfolio-image');
-
-    portfolioImages.forEach((img, index) => {
-        // Create a subtle pattern for each portfolio item
-        const gradients = [
-            'linear-gradient(135deg, #1a2f4b 0%, #2E3E5B 50%, #1a2f4b 100%)',
-            'linear-gradient(135deg, #2E3E5B 0%, #1a2f4b 50%, #2E3E5B 100%)',
-            'linear-gradient(135deg, #1a2f4b 0%, #3A4A6B 50%, #2E3E5B 100%)',
-            'linear-gradient(135deg, #2E3E5B 0%, #3A4A6B 50%, #1a2f4b 100%)'
-        ];
-
-        img.style.background = gradients[index % gradients.length];
-
-        // Add animated lines overlay
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                linear-gradient(45deg, transparent 48%, rgba(204, 148, 97, 0.1) 49%, rgba(204, 148, 97, 0.1) 51%, transparent 52%),
-                linear-gradient(-45deg, transparent 48%, rgba(204, 148, 97, 0.1) 49%, rgba(204, 148, 97, 0.1) 51%, transparent 52%);
-            background-size: 80px 80px;
-            opacity: 0.5;
-        `;
-        img.appendChild(overlay);
-    });
-};
-
-// ==========================================
-// ENGINEERING DNA IMAGE BACKGROUND
-// ==========================================
-const setEngineeringBackground = () => {
-    const engineeringImage = document.getElementById('engineering-image');
-
-    if (engineeringImage) {
-        // Create structural pattern
-        engineeringImage.style.background = 'linear-gradient(135deg, #1a2f4b 0%, #2E3E5B 100%)';
-
-        const pattern = document.createElement('div');
-        pattern.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(204, 148, 97, 0.15) 35px, rgba(204, 148, 97, 0.15) 36px),
-                repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(204, 148, 97, 0.15) 35px, rgba(204, 148, 97, 0.15) 36px);
-        `;
-        engineeringImage.appendChild(pattern);
-    }
-};
-
-// ==========================================
 // COUNTER ANIMATION FOR DNA FEATURES
 // ==========================================
 const animateCounters = () => {
-    const counters = document.querySelectorAll('.feature-number');
+    // Select all potential counters
+    const counterElements = document.querySelectorAll('.stat-number, .pillar-number');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = entry.target;
-                const finalValue = target.textContent;
+    counterElements.forEach(el => {
+        const targetValue = parseInt(el.getAttribute('data-target')) || parseInt(el.textContent.match(/\d+/));
+        if (isNaN(targetValue)) return;
 
-                // Only animate numbers
-                if (finalValue.match(/\d+/)) {
-                    const number = parseInt(finalValue.match(/\d+/)[0]);
-                    const suffix = finalValue.replace(/\d+/, '');
-                    let current = 0;
-                    const increment = number / 50;
-                    const duration = 2000;
-                    const stepTime = duration / 50;
+        const prefix = el.getAttribute('data-prefix') || '';
+        const suffix = el.getAttribute('data-suffix') || '';
+        const isPillar = el.classList.contains('pillar-number');
 
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= number) {
-                            target.textContent = number + suffix;
-                            clearInterval(timer);
-                        } else {
-                            target.textContent = Math.floor(current) + suffix;
-                        }
-                    }, stepTime);
+        // Initial state
+        el.textContent = isPillar && targetValue < 10 ? `${prefix}00${suffix}` : `${prefix}0${suffix}`;
 
-                    observer.unobserve(target);
+        gsap.to(el, {
+            scrollTrigger: {
+                trigger: el,
+                start: 'top 90%', // Start when bottom of element hits 90% of viewport
+                toggleActions: 'play none none none' // Play once
+            },
+            duration: 2,
+            innerHTML: targetValue,
+            snap: { innerHTML: 1 }, // Ensure integers
+            ease: 'power2.out',
+            onUpdate: function () {
+                let val = Math.floor(this.targets()[0].innerHTML);
+                let displayVal = val;
+                if (isPillar && val < 10) {
+                    displayVal = `0${val}`;
                 }
+                el.textContent = `${prefix}${displayVal}${suffix}`;
             }
         });
-    }, { threshold: 0.5 });
-
-    counters.forEach(counter => observer.observe(counter));
+    });
 };
 
 // ==========================================
-// INITIALIZATION
+// ==========================================
+// INITIALIZATION & CORE LOGIC
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Basic UI Layout
     animateOnScroll();
-    setPortfolioBackgrounds();
-    setEngineeringBackground();
-    animateCounters();
+    initLoader();
 
-    // Add a subtle entrance animation to the page
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-    }, 100);
-});
+    // update year
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
-// ==========================================
-// PERFORMANCE: DEBOUNCE SCROLL EVENTS
-// ==========================================
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-    if (scrollTimeout) {
-        window.cancelAnimationFrame(scrollTimeout);
-    }
+    // 2. Modals & Filters
+    const initModals = () => {
+        const portfolioItems = document.querySelectorAll('.portfolio-item[data-modal]');
+        const modals = document.querySelectorAll('.modal');
+        const closeBtn = document.querySelectorAll('.modal-close');
 
-    scrollTimeout = window.requestAnimationFrame(() => {
-        // Scroll-dependent animations run here
-        // Already handled by individual scroll listeners above
-    });
-}, { passive: true });
-
-
-// ==========================================
-// MODAL FUNCTIONALITY FOR PORTFOLIO CARDS
-// ==========================================
-const initModals = () => {
-    const portfolioItems = document.querySelectorAll('.portfolio-item[data-modal]');
-    const modals = document.querySelectorAll('.modal');
-    const closeButtons = document.querySelectorAll('.modal-close');
-
-    // Open modal when clicking portfolio item
-    portfolioItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const modalId = item.getAttribute('data-modal');
-            const modal = document.getElementById(`modal-${modalId}`);
-
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent background scroll
-            }
+        portfolioItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const modalId = item.getAttribute('data-modal');
+                const modal = document.getElementById(`modal-${modalId}`);
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
         });
-    });
 
-    // Close modal when clicking close button
-    closeButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const modal = button.closest('.modal');
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = ''; // Restore scroll
-            }
-        });
-    });
-
-    // Close modal when clicking outside the content
-    modals.forEach(modal => {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    });
-
-    // Close modal with ESC key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            modals.forEach(modal => {
-                if (modal.classList.contains('active')) {
+        closeBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const modal = btn.closest('.modal');
+                if (modal) {
                     modal.classList.remove('active');
                     document.body.style.overflow = '';
                 }
             });
-        }
-    });
-};
+        });
+    };
 
-// ==========================================
-// INITIALIZATION
-// ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    animateOnScroll();
-    setPortfolioBackgrounds();
-    setEngineeringBackground();
-    animateCounters();
+    const initPortfolioFilters = () => {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const val = btn.getAttribute('data-filter');
+                portfolioItems.forEach(item => {
+                    const cat = item.getAttribute('data-modal');
+                    if (val === 'all' || cat === val) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    };
+
     initModals();
-    initLoader(); // Initialize loader
+    initPortfolioFilters();
 
-    // Dynamic Year Update
-    const yearSpan = document.getElementById('current-year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
+    // 3. Language Switcher
+    const langItems = document.querySelectorAll('.lang-dropdown li');
+    const activeLangText = document.getElementById('active-lang');
+
+    const updateContent = (lang) => {
+        const langData = translations[lang];
+        if (!langData) return;
+
+        document.documentElement.dir = langData.dir || 'ltr';
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (langData[key]) {
+                if (langData[key].includes('<')) {
+                    el.innerHTML = langData[key];
+                } else {
+                    el.textContent = langData[key];
+                }
+            }
+        });
+
+        if (activeLangText) activeLangText.textContent = lang.toUpperCase();
+        localStorage.setItem('ibe_lang', lang);
+
+        // RE-TRIGGER COUNTERS FOR NEW CONTENT
+        setTimeout(animateCounters, 100);
+    };
+
+    langItems.forEach(item => {
+        item.addEventListener('click', () => {
+            updateContent(item.getAttribute('data-lang'));
+            if (langSelector) langSelector.classList.remove('active');
+        });
+    });
+
+    if (langCurrent && langSelector) {
+        langCurrent.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            langSelector.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!langSelector.contains(e.target)) {
+                langSelector.classList.remove('active');
+            }
+        });
     }
 
-    // Add a subtle entrance animation to the page (Original opacity logic removed as loader handles it)
-    // document.body.style.opacity = '0';
-    // setTimeout(() => {
-    //     document.body.style.transition = 'opacity 0.5s ease';
-    //     document.body.style.opacity = '1';
-    // }, 100);
-    // Custom Cursor Logic - Only for Desktop
+    const savedLang = localStorage.getItem('ibe_lang') || 'fr';
+    updateContent(savedLang);
+
+    // 4. Smooth Scrolling (Lenis)
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // 5. GSAP & Parallas
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    gsap.to('.dna-image', {
+        scrollTrigger: {
+            trigger: '.engineering-dna',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+        },
+        y: -30,
+        ease: 'none'
+    });
+
+    // 6. Custom Cursor & Hover Effects
     const cursor = document.querySelector('.custom-cursor');
     const cursorOutline = document.querySelector('.custom-cursor-outline');
 
@@ -496,17 +468,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-
-            // Smoother outline follow
             cursorOutline.animate({
                 left: `${e.clientX}px`,
                 top: `${e.clientY}px`
             }, { duration: 500, fill: "forwards" });
         });
 
-        // Hover Effect
-        const hoverElements = document.querySelectorAll('a, button, .portfolio-item, .service-card, .tech-feature, .hamburger');
-
+        const hoverElements = document.querySelectorAll('a, button, .portfolio-item, .service-card, .tech-feature, .hamburger, .lang-current');
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.classList.add('hover');
@@ -519,157 +487,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==========================================
-    // LANGUAGE SWITCHER LOGIC (CLICK BASED FOR MOBILE)
-    // ==========================================
-    const langItems = document.querySelectorAll('.lang-dropdown li');
-    const activeLangText = document.getElementById('active-lang');
-
-    // Toggle dropdown on click (Robust for Mobile)
-    if (langCurrent) {
-        langCurrent.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const isActive = langSelector.classList.contains('active');
-
-            // Close other menus if needed
-            if (!isActive) {
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-            }
-
-            if (isActive) {
-                langSelector.classList.remove('active');
-            } else {
-                langSelector.classList.add('active');
-            }
-        });
-    }
-
-    // Close dropdown when clicking elsewhere
-    document.addEventListener('click', (e) => {
-        if (langSelector && langSelector.classList.contains('active')) {
-            if (!langSelector.contains(e.target)) {
-                langSelector.classList.remove('active');
-            }
-        }
-    });
-
-    const updateContent = (lang) => {
-        const langData = translations[lang];
-        if (!langData) return;
-
-        // Update direction
-        document.documentElement.dir = langData.dir;
-        document.documentElement.lang = lang;
-
-        // Update all elements with data-i18n
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (langData[key]) {
-                if (langData[key].includes('<')) {
-                    el.innerHTML = langData[key];
-                } else {
-                    el.textContent = langData[key];
-                }
-            }
-        });
-
-        // Re-inject the current year
-        const yearSpan = document.getElementById('current-year');
-        if (yearSpan) {
-            yearSpan.textContent = new Date().getFullYear();
-        }
-
-        // Update active language text in navbar
-        activeLangText.textContent = lang.toUpperCase();
-
-        // Save preference
-        localStorage.setItem('ibe_lang', lang);
-    };
-
-    langItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const selectedLang = item.getAttribute('data-lang');
-            updateContent(selectedLang);
-            if (langSelector) langSelector.classList.remove('active');
-        });
-    });
-
-    // Default to French
-    const savedLang = localStorage.getItem('ibe_lang') || 'fr';
-    updateContent(savedLang);
-
-    // FLOATING CTA SCROLL LOGIC
-    // ==========================================
-    const floatingCta = document.querySelector('.floating-cta');
-    if (floatingCta) {
-        // Show immediately on page load
-        floatingCta.classList.add('visible');
-    }
-
-    // ==========================================
-    // SMOOTH SCROLLING (LENIS)
-    // ==========================================
-    const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'vertical',
-        gestureDirection: 'vertical',
-        smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: false,
-        touchMultiplier: 2,
-    });
-
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    // ==========================================
-    // GSAP ANIMATIONS WITH SCROLLTRIGGER
-    // ==========================================
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Connect GSAP ScrollTrigger with Lenis
-    lenis.on('scroll', ScrollTrigger.update);
-
-    gsap.ticker.add((time) => {
-        lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-
-    // Parallax effect on DNA image (Subtle)
-    gsap.to('.dna-image', {
-        scrollTrigger: {
-            trigger: '.engineering-dna',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1,
-        },
-        y: -30,
-        ease: 'none'
-    });
-
-    // Parallax on hero background (if exists)
-    const heroBg = document.querySelector('.bg-slideshow');
-    if (heroBg) {
-        gsap.to(heroBg, {
-            scrollTrigger: {
-                trigger: '.hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: 1,
-            },
-            y: 100,
-            ease: 'none'
-        });
-    }
+    // Initial Trigger for counters
+    animateCounters();
 });
 
 // ==========================================
@@ -677,23 +496,21 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 const initLoader = () => {
     const loader = document.getElementById('loader');
+    if (!loader) return;
 
-    // Auto-open loader after a short delay or window load
     const openLoader = () => {
         setTimeout(() => {
             loader.classList.remove('loading');
             loader.classList.add('loaded');
-
-            // Re-enable scroll
             document.body.style.overflow = '';
-        }, 1500); // 1.5s delay for branding visibility
+        }, 1500);
     };
 
     if (document.readyState === 'complete') {
         openLoader();
     } else {
         window.addEventListener('load', openLoader);
-        setTimeout(openLoader, 3000); // Fallback
+        setTimeout(openLoader, 3000);
     }
 };
 

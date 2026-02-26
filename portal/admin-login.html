@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration — IBE Construction</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --navy: #1a2f4b;
+            --copper: #cc9461;
+            --copper-light: rgba(204, 148, 97, .12);
+            --white: #fff;
+            --gray-100: #f0f4f8;
+            --gray-300: #e2e8f0;
+            --gray-500: #64748b;
+            --gray-700: #334155;
+            --shadow: 0 25px 60px rgba(27, 47, 75, .18);
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background grid */
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(204, 148, 97, .04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(204, 148, 97, .04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(204, 148, 97, .08) 0%, transparent 60%);
+            animation: pulseGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: .7
+            }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 420px;
+            padding: 52px 44px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--copper), var(--navy));
+        }
+
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 28px;
+        }
+
+        .logo-wrapper img {
+            height: 56px;
+            width: auto;
+            object-fit: contain
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 4px;
+            letter-spacing: -.5px;
+        }
+
+        .card-sub {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 32px
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 18px
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-300);
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            color: var(--navy);
+            background: var(--white);
+            outline: none;
+            transition: border-color .25s, box-shadow .25s;
+        }
+
+        .form-group input:focus {
+            border-color: #92400e;
+            box-shadow: 0 0 0 3px rgba(146, 64, 14, .12);
+        }
+
+        .form-group input.error {
+            border-color: var(--error)
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: var(--gray-500);
+            pointer-events: none;
+            transition: all .25s;
+            background: var(--white);
+            padding: 0 4px;
+        }
+
+        .form-group input:focus+label,
+        .form-group input:not(:placeholder-shown)+label {
+            top: 0;
+            font-size: 12px;
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .btn-login:hover:not(:disabled) {
+            background: #92400e;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(146, 64, 14, .25);
+        }
+
+        .btn-login:disabled {
+            opacity: .7;
+            cursor: not-allowed;
+            transform: none
+        }
+
+        .error-banner {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            background: #fff1f1;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #b91c1c;
+            margin-bottom: 16px;
+        }
+
+        .error-banner.show {
+            display: flex
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .back-link:hover {
+            color: var(--navy)
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255, 255, 255, .3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0)
+            }
+
+            20%,
+            60% {
+                transform: translateX(-8px)
+            }
+
+            40%,
+            80% {
+                transform: translateX(8px)
+            }
+        }
+
+        @media(max-width:480px) {
+            .card {
+                padding: 36px 24px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card" id="loginCard">
+        <div class="logo-wrapper">
+            <img src="../images/logo.png" alt="IBE Construction">
+        </div>
+
+        <div class="badge">
+            🔐 Administration IBE
+        </div>
+
+        <h1 class="card-title">Accès équipe</h1>
+        <p class="card-sub">Portail réservé aux collaborateurs IBE Construction.</p>
+
+        <div class="error-banner" id="errorBanner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"
+                style="flex-shrink:0">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M15 9l-6 6M9 9l6 6" />
+            </svg>
+            <span id="errorMsg">Identifiants incorrects.</span>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <input type="email" id="email" placeholder=" " required autocomplete="email">
+                <label for="email">Email administrateur</label>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder=" " required autocomplete="current-password">
+                <label for="password">Mot de passe</label>
+            </div>
+            <button type="submit" class="btn-login" id="loginBtn">
+                Accéder au portail →
+            </button>
+        </form>
+
+        <a href="login.html" class="back-link">← Portail client</a>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <script>
+        // Si déjà connecté et admin → aller au dashboard admin
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const isAdmin = await ibeIsAdmin(user.uid);
+                if (isAdmin) window.location.href = 'admin.html';
+            }
+        });
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            const err = document.getElementById('errorBanner');
+            const errMsg = document.getElementById('errorMsg');
+
+            err.classList.remove('show');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Vérification…';
+
+            try {
+                const cred = await ibeLogin(email, pass);
+                const isAdmin = await ibeIsAdmin(cred.user.uid);
+
+                if (!isAdmin) {
+                    await ibeLogout();
+                    throw { code: 'not-admin' };
+                }
+
+                window.location.href = 'admin.html';
+            } catch (error) {
+                btn.disabled = false;
+                btn.innerHTML = 'Accéder au portail →';
+                err.classList.add('show');
+
+                if (error.code === 'not-admin') {
+                    errMsg.textContent = 'Ce compte n\'a pas les droits administrateur.';
+                } else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                    errMsg.textContent = 'Email ou mot de passe incorrect.';
+                } else {
+                    errMsg.textContent = 'Erreur de connexion. Vérifiez votre réseau.';
+                }
+
+                const card = document.getElementById('loginCard');
+                card.style.animation = 'none';
+                card.offsetHeight;
+                card.style.animation = 'shake .4s ease';
+            }
+        }
+    </script>
+</body>
+
+</html>
