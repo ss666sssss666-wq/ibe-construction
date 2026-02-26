@@ -94,23 +94,25 @@ async function ibeUploadDocument(uid, file, onProgress) {
 /**
  * Fix Cloudinary URLs for inline viewing:
  * 1. Strip fl_attachment (forces download, breaks viewers)
- * 2. Add fl_inline to force inline viewing (Content-Disposition: inline)
- * 3. Convert /image/upload/ → /raw/upload/ for non-image files
+ * 2. Convert /image/upload/ → /raw/upload/ for non-image files
  *    so Cloudinary serves the correct MIME type (application/pdf, etc.)
+ *
+ * NOTE: fl_inline is NOT used — it causes HTTP 400 on raw/upload resources
+ * because Cloudinary transformations are not supported on raw files.
+ * The browser opens PDFs natively via Content-Type: application/pdf.
  */
 function cloudinaryFixUrl(url, filename) {
     if (!url) return '';
-    // Strip fl_attachment flag
+    // Strip fl_attachment flag (forces download instead of inline)
     let fixed = url.replace('/upload/fl_attachment/', '/upload/');
+    // Also strip fl_inline if it was accidentally added before
+    fixed = fixed.replace('/upload/fl_inline/', '/upload/');
     // Determine if non-image (PDF, DWG, DOCX, etc.)
     const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
     const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
     if (ext && !imageExts.includes(ext)) {
         // Convert image/upload → raw/upload for correct MIME type
         fixed = fixed.replace('/image/upload/', '/raw/upload/');
-        // Add fl_inline so Cloudinary serves with Content-Disposition: inline
-        // This allows PDFs to open in the browser viewer instead of downloading
-        fixed = fixed.replace('/upload/', '/upload/fl_inline/');
     }
     return fixed;
 }
