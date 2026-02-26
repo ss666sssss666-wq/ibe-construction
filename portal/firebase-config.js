@@ -59,10 +59,6 @@ async function ibeUploadDocument(uid, file, onProgress) {
         formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
         formData.append('folder', `ibe-documents/${uid}`);
 
-        // CRITICAL FIX FOR 401: Explicitly set public access
-        formData.append('access_mode', 'public');
-        formData.append('type', 'upload');
-
         const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
         const safeName = Date.now() + '_' + nameWithoutExt.replace(/[^a-zA-Z0-9_-]/g, '_');
         formData.append('public_id', safeName);
