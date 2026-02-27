@@ -45,12 +45,10 @@ const CLOUDINARY_UPLOAD_PRESET = 'ibe-docs';
  */
 async function ibeUploadDocument(uid, file, onProgress) {
     const ext = file.name.split('.').pop().toLowerCase();
-    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico', 'pdf'];
-    // Utiliser 'image' pour les PDFs permet un affichage public plus simple dans le navigateur
-    const resourceType = imageExts.includes(ext) ? 'image' : 'raw';
+    // NEW: Forcer les PDF en 'raw' pour éviter les erreurs de distribution 401
+    // Cloudinary restreint souvent l'affichage des PDF en tant qu'images (resource_type: image)
+    const resourceType = ext === 'pdf' ? 'raw' : 'auto';
     const apiUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
-
-    // 1. Upload physique vers Cloudinary
     const cloudinaryResult = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         const formData = new FormData();
@@ -62,6 +60,7 @@ async function ibeUploadDocument(uid, file, onProgress) {
         const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
         const safeName = Date.now() + '_' + nameWithoutExt.replace(/[^a-zA-Z0-9_-]/g, '_');
         formData.append('public_id', safeName);
+        // On retire 'access_mode' pour éviter que Cloudinary demande une signature (401) sur un preset unsigned
 
         xhr.upload.addEventListener('progress', (e) => {
             if (e.lengthComputable && onProgress) {
@@ -151,20 +150,28 @@ async function ibeDeleteDocument(uid, docId) {
  * NOTE: fl_inline N'est PAS utilisé — il cause HTTP 400 sur les ressources raw.
  * Le navigateur ouvre les PDFs nativement via Content-Type: application/pdf.
  */
-function cloudinaryFixUrl(url, filename) {
+function cloudinaryFixUrl(url, filename, forceDownload = false) {
     if (!url) return '';
     let fixed = url
         .replace('/upload/fl_attachment/', '/upload/')
         .replace('/upload/fl_inline/', '/upload/');
-    const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
-    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico', 'pdf'];
 
-    // Si c'est une image (ou PDF), on s'assure d'utiliser /image/upload/
-    // Sinon on force /raw/upload/ pour les fichiers binaires (DWG, XLSX, etc)
-    if (ext && !imageExts.includes(ext)) {
+    const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
+    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
+    // PDF retiré de la liste des images — il doit être traité comme raw
+
+    // Si c'est un PDF ou un autre fichier binaire → /raw/upload/
+    if (ext === 'pdf' || (ext && !imageExts.includes(ext))) {
         fixed = fixed.replace('/image/upload/', '/raw/upload/');
+        // PAS de fl_attachment pour les ressources raw (ça cause 401)
+        // Le navigateur téléchargera automatiquement les fichiers raw
     } else {
+        // Vraies images
         fixed = fixed.replace('/raw/upload/', '/image/upload/');
+        // fl_attachment uniquement pour les images (si téléchargement demandé)
+        if (forceDownload) {
+            fixed = fixed.replace('/upload/', '/upload/fl_attachment/');
+        }
     }
     return fixed;
 }

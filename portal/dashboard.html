@@ -1081,8 +1081,9 @@
                             <div class="doc-name">${d.nom}</div>
                             <div class="doc-meta">${d.date || ''} · ${d.taille || ''} · <span style="color:var(--copper);font-weight:600">Disponible</span></div>
                         </div>
-                        <div class="doc-dl" title="Ouvrir le document">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <div class="doc-dl" title="Télécharger">
+                            <span style="font-size:11px;font-weight:700;margin-right:4px">Télécharger</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="18">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                                 <polyline points="7 10 12 15 17 10"/>
                                 <line x1="12" y1="15" x2="12" y2="3"/>
@@ -1118,7 +1119,8 @@
         // viewer instead of downloading. Google Docs Viewer is NOT used here.
         function openDoc(rawUrl, filename) {
             if (!rawUrl) return;
-            const cleanUrl = cloudinaryFixUrl(rawUrl, filename);
+            // On force le téléchargement avec le 3ème paramètre à true
+            const cleanUrl = cloudinaryFixUrl(rawUrl, filename, true);
             window.open(cleanUrl, '_blank');
         }
 

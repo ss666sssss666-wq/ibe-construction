@@ -1482,9 +1482,16 @@
                         <div style="font-size:11px;color:var(--gray-500)">${d.date || ''} · ${d.taille || ''}</div>
                     </div>
                     ${d.url ? `<button onclick="openAdminDoc('${d.url}','${d.nom}')"
-                        style="background:none;border:none;cursor:pointer;font-size:16px;padding:2px 6px" title="Ouvrir">👁️</button>` : ''}
+                        style="background:none;border:1px solid var(--copper);color:var(--copper);border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;padding:4px 8px;display:flex;align-items:center;gap:4px" title="Télécharger">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Télécharger
+                    </button>` : ''}
                     <button onclick="deleteDoc('${d.docId}')"
-                        style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:16px;padding:2px 4px" title="Supprimer">🗑️</button>`;
+                        style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:16px;padding:2px 4px;margin-left:4px" title="Supprimer">🗑️</button>`;
                 container.appendChild(row);
             });
         }
@@ -1492,7 +1499,8 @@
         // ── Document Viewer ──────────────────────────────────────
         function openAdminDoc(rawUrl, filename) {
             if (!rawUrl) return;
-            window.open(cloudinaryFixUrl(rawUrl, filename), '_blank');
+            // On force le téléchargement en passant true au 3ème argument
+            window.open(cloudinaryFixUrl(rawUrl, filename, true), '_blank');
         }
 
         async function deleteDoc(docId) {
