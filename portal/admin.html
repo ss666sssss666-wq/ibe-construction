@@ -1404,6 +1404,18 @@
                                 <div id="planningPhasesList" style="display:flex;flex-direction:column;gap:8px">
                                     <!-- Injected by JS -->
                                 </div>
+
+                                <div id="projectGanttPreview" class="gantt-section"
+                                    style="margin-top:16px; display:none; padding:12px; border-radius:12px; box-shadow:none; background:rgba(26,47,75,0.03)">
+                                    <div class="gantt-container">
+                                        <div class="gantt-grid" id="miniGanttGrid"
+                                            style="grid-template-columns:100px 1fr; min-width:400px">
+                                            <div class="gantt-timeline-header" id="miniGanttHeader"
+                                                style="margin-bottom:8px"></div>
+                                            <div id="miniGanttRows" style="display:contents"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div style="margin-bottom:20px">
@@ -2102,6 +2114,64 @@
             }
         }
 
+        function updateGanttPreview() {
+            const rows = document.getElementById('miniGanttRows');
+            const header = document.getElementById('miniGanttHeader');
+            const container = document.getElementById('projectGanttPreview');
+            if (!rows || !header || !container) return;
+            rows.innerHTML = '';
+            header.innerHTML = '';
+
+            const phases = ['etude', 'gros_oeuvre', 'electricite', 'finitions', 'cvc'];
+            const data = [];
+            phases.forEach(id => {
+                const startEl = document.getElementById('plan-start-' + id);
+                const endEl = document.getElementById('plan-end-' + id);
+                const labelEl = document.getElementById('plan-label-' + id);
+                if (startEl && endEl && startEl.value && endEl.value) {
+                    data.push({ id, label: labelEl.value, start: new Date(startEl.value), end: new Date(endEl.value) });
+                }
+            });
+
+            if (!data.length) {
+                container.style.display = 'none';
+                return;
+            }
+            container.style.display = 'block';
+
+            const minDate = new Date(Math.min(...data.map(d => d.start)));
+            const maxDate = new Date(Math.max(...data.map(d => d.end)));
+            minDate.setMonth(minDate.getMonth() - 1);
+            maxDate.setMonth(maxDate.getMonth() + 2);
+
+            const totalDays = (maxDate - minDate) / (1000 * 60 * 60 * 24);
+
+            // Header
+            let curr = new Date(minDate);
+            while (curr < maxDate) {
+                const monthLabel = curr.toLocaleDateString('fr-FR', { month: 'short' });
+                header.innerHTML += `<div class="gantt-month">${monthLabel}</div>`;
+                curr.setMonth(curr.getMonth() + 1);
+            }
+
+            // Rows
+            data.forEach(d => {
+                const left = ((d.start - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+                const width = ((d.end - d.start) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+
+                rows.innerHTML += `
+					<div class="gantt-row">
+						<div class="gantt-label" style="font-size:9px; height:24px; border:none">${d.label}</div>
+						<div class="gantt-track" style="height:24px; border:none; background:rgba(26,47,75,0.02); margin-bottom:2px">
+							<div class="gantt-bar phase-${d.id}" style="left:${left}%; width:${width}%; height:16px; top:4px; font-size:8px; box-shadow:none">
+								${d.label}
+							</div>
+						</div>
+					</div>
+				`;
+            });
+        }
+
         // ── Overview ────────────────────────────────────────────────
         function renderOverview() {
             document.getElementById('statClients').textContent = allClients.length;
@@ -2425,12 +2495,14 @@
                 planningList.innerHTML += `
 					<div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px;align-items:center;background:#fff;padding:8px 12px;border-radius:8px;border:1px solid var(--gray-200)">
 						<div style="font-size:13px;font-weight:600;color:var(--navy)">${phase.label}</div>
-						<input type="date" id="plan-start-${id}" value="${phase.start || ''}" style="padding:6px;border:1px solid var(--gray-300);border-radius:6px;font-size:12px">
-						<input type="date" id="plan-end-${id}" value="${phase.end || ''}" style="padding:6px;border:1px solid var(--gray-300);border-radius:6px;font-size:12px">
+						<input type="date" id="plan-start-${id}" value="${phase.start || ''}" oninput="updateGanttPreview()" style="padding:6px;border:1px solid var(--gray-300);border-radius:6px;font-size:12px">
+						<input type="date" id="plan-end-${id}" value="${phase.end || ''}" oninput="updateGanttPreview()" style="padding:6px;border:1px solid var(--gray-300);border-radius:6px;font-size:12px">
 						<input type="hidden" id="plan-label-${id}" value="${phase.label}">
 					</div>
 				`;
             });
+
+            updateGanttPreview();
 
             const v = proj.prochaine_visite || {};
             // visitDateInput is type=date, needs YYYY-MM-DD format
