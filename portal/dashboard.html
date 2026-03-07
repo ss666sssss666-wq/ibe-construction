@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Projet — IBE Construction</title>
     <link rel="icon" type="image/png" href="../images/favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
         *,
@@ -16,7 +14,8 @@
         *::after {
             margin: 0;
             padding: 0;
-            box-sizing: border-box
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent
         }
 
         :root {
@@ -24,263 +23,486 @@
             --navy-light: #243d5f;
             --copper: #cc9461;
             --copper-dark: #b07d4e;
-            --copper-light: rgba(204, 148, 97, .12);
-            --white: #fff;
-            --bg: #f0f4f8;
-            --gray-100: #f8fafc;
-            --gray-200: #eef2f7;
-            --gray-300: #e2e8f0;
-            --gray-500: #64748b;
-            --gray-700: #334155;
+            --copper-light: #fff7ed;
             --success: #10b981;
-            --success-light: rgba(16, 185, 129, .1);
-            --shadow-sm: 0 2px 8px rgba(27, 47, 75, .08);
-            --shadow: 0 8px 32px rgba(27, 47, 75, .12);
-            --radius: 16px;
-            --radius-sm: 10px;
+            --success-light: #d1fae5;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --warn: #f59e0b;
+            --warn-light: #fef3c7;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --white: #fff;
+            --radius: 14px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, .08);
+            --tab-h: 72px;
         }
 
+        .bronze-icon {
+            color: var(--copper);
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.5px;
+        }
+
+        html,
         body {
+            height: 100%;
+            background: var(--gray-50);
             font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            min-height: 100vh;
-            color: var(--navy)
+            color: var(--navy);
+            overflow: hidden
         }
 
-        /* TOPBAR */
+        /* ── LOADING ── */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--navy);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity .4s
+        }
+
+        .loading-screen.hide {
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .loading-spinner {
+            width: 52px;
+            height: 52px;
+            border: 4px solid rgba(255, 255, 255, .15);
+            border-top-color: var(--copper);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+            margin-bottom: 18px
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .loading-text {
+            color: rgba(255, 255, 255, .55);
+            font-size: 14px
+        }
+
+        /* ── ERROR ── */
+        .error-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--gray-50);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 9998;
+            text-align: center
+        }
+
+        .error-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 36px 28px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: var(--shadow)
+        }
+
+        .error-icon {
+            font-size: 52px;
+            margin-bottom: 16px
+        }
+
+        .error-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 10px
+        }
+
+        .error-desc {
+            font-size: 14px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: 20px
+        }
+
+        .uid-box {
+            background: var(--gray-100);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .uid-code {
+            flex: 1;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--navy);
+            overflow-wrap: anywhere;
+            text-align: left
+        }
+
+        .btn-copy {
+            padding: 8px 14px;
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        /* ── APP SHELL ── */
+        .app {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+
+        /* ── TOPBAR ── */
         .topbar {
             background: var(--navy);
-            padding: 0 32px;
+            padding: 14px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 64px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, .2);
+            flex-shrink: 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .25)
         }
 
-        .topbar-logo img {
-            height: 44px;
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .topbar-logo {
+            height: 36px;
             width: auto;
             object-fit: contain
         }
 
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 20px
-        }
-
-        .topbar-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: rgba(255, 255, 255, .9)
-        }
-
-        .avatar {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--copper), var(--copper-dark));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .topbar-info h1 {
             font-size: 14px;
             font-weight: 700;
             color: #fff;
-            flex-shrink: 0;
+            line-height: 1.2
         }
 
-        .user-name {
-            font-size: 14px;
-            font-weight: 600
-        }
-
-        .user-role {
+        .topbar-info p {
             font-size: 11px;
             color: rgba(255, 255, 255, .5);
             margin-top: 1px
         }
 
-        .btn-logout {
+        .topbar-right {
             display: flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, .08);
-            color: rgba(255, 255, 255, .75);
-            border: 1px solid rgba(255, 255, 255, .12);
-            padding: 7px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all .2s;
-            font-family: 'Inter', sans-serif;
-            text-decoration: none;
+            gap: 10px
         }
 
-        .btn-logout:hover {
-            background: rgba(255, 255, 255, .15);
+        .avatar-btn {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--copper), var(--copper-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 800;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            flex-shrink: 0
+        }
+
+        .btn-admin-fs {
+            background: var(--copper);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 7px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            display: none
+        }
+
+        /* ── PROGRESS BANNER ── */
+        .progress-banner {
+            background: linear-gradient(135deg, var(--navy-light), var(--navy));
+            padding: 16px 18px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .progress-circle-wrap {
+            position: relative;
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0
+        }
+
+        .progress-circle {
+            transform: rotate(-90deg)
+        }
+
+        .pct-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 900;
             color: #fff
         }
 
-        .btn-site {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: rgba(255, 255, 255, .6);
+        .progress-banner-text h2 {
             font-size: 13px;
-            text-decoration: none;
-            transition: color .2s;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 3px
         }
 
-        .btn-site:hover {
+        .progress-banner-text p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .55)
+        }
+
+        .progress-bar-thin {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 99px;
+            overflow: hidden;
+            margin-top: 6px
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--copper), #f0b975);
+            border-radius: 99px;
+            transition: width 1.2s cubic-bezier(.4, 0, .2, 1)
+        }
+
+        /* ── VISIT BANNER ── */
+        .visit-banner {
+            background: linear-gradient(90deg, var(--copper), var(--copper-dark));
+            margin: 12px 16px;
+            border-radius: 14px;
+            padding: 14px 18px;
+            display: none;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            flex-shrink: 0
+        }
+
+        .visit-banner.show {
+            display: flex
+        }
+
+        .visit-banner-icon {
+            font-size: 28px;
+            flex-shrink: 0
+        }
+
+        .visit-banner h3 {
+            font-size: 13px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 2px
+        }
+
+        .visit-banner p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .8)
+        }
+
+        .visit-banner-arrow {
+            margin-left: auto;
+            color: rgba(255, 255, 255, .7);
+            font-size: 18px
+        }
+
+        /* ── TABS CONTENT ── */
+        .tabs-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative
+        }
+
+        .tab-panel {
+            position: absolute;
+            inset: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 16px 16px calc(var(--tab-h) + 16px);
+            display: none;
+            -webkit-overflow-scrolling: touch
+        }
+
+        .tab-panel.active {
+            display: block
+        }
+
+        .tab-panel::-webkit-scrollbar {
+            display: none
+        }
+
+        /* ── BOTTOM NAV ── */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--tab-h);
+            background: #fff;
+            display: flex;
+            border-top: 1px solid var(--gray-200);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, .08);
+            z-index: 100;
+            padding-bottom: env(safe-area-inset-bottom)
+        }
+
+        .nav-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 4px;
+            transition: all .2s;
+            position: relative
+        }
+
+        .nav-btn svg {
+            width: 24px;
+            height: 24px;
+            transition: all .2s;
+            color: var(--gray-400)
+        }
+
+        .nav-btn span {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--gray-400);
+            transition: all .2s;
+            letter-spacing: .2px
+        }
+
+        .nav-btn.active svg {
             color: var(--copper)
         }
 
-        /* LAYOUT */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 32px 24px
+        .nav-btn.active span {
+            color: var(--copper)
         }
 
-        /* PAGE HEADER */
-        .page-header {
-            margin-bottom: 28px
+        .nav-btn.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: var(--copper);
+            border-radius: 0 0 4px 4px
         }
 
-        .page-header h1 {
-            font-size: 24px;
+        .nav-badge {
+            position: absolute;
+            top: 6px;
+            right: calc(50% - 18px);
+            background: var(--danger);
+            color: #fff;
+            font-size: 9px;
             font-weight: 800;
-            color: var(--navy);
-            letter-spacing: -.5px;
+            padding: 1px 5px;
+            border-radius: 99px;
+            min-width: 16px;
+            text-align: center;
+            display: none
         }
 
-        .page-header p {
-            font-size: 14px;
-            color: var(--gray-500);
-            margin-top: 4px
+        .nav-badge.show {
+            display: block
         }
 
-        .badge-type {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: var(--copper-light);
-            color: var(--copper);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        /* GRID */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px
-        }
-
-        .col-span-2 {
-            grid-column: span 2
-        }
-
-        @media(max-width:768px) {
-            .grid {
-                grid-template-columns: 1fr
-            }
-
-            .col-span-2 {
-                grid-column: span 1
-            }
-
-            .topbar {
-                padding: 0 16px
-            }
-        }
-
-        /* CARDS */
+        /* ── CARDS ── */
         .card {
-            background: var(--white);
+            background: #fff;
             border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-200);
-            padding: 24px;
-            position: relative;
-            overflow: hidden;
-            animation: fadeUp .5s ease both;
-        }
-
-        .card:nth-child(2) {
-            animation-delay: .1s
-        }
-
-        .card:nth-child(3) {
-            animation-delay: .15s
-        }
-
-        .card:nth-child(4) {
-            animation-delay: .2s
-        }
-
-        .card:nth-child(5) {
-            animation-delay: .25s
-        }
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0)
-            }
+            box-shadow: var(--shadow);
+            padding: 18px;
+            margin-bottom: 14px;
+            border: 1px solid var(--gray-200)
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 20px
+            gap: 10px;
+            margin-bottom: 16px
         }
 
         .card-icon {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            font-size: 18px;
+            flex-shrink: 0
         }
 
         .card-icon.copper {
-            background: var(--copper-light);
-            color: var(--copper)
+            background: var(--copper-light)
         }
 
         .card-icon.navy {
-            background: rgba(26, 47, 75, .08);
-            color: var(--navy)
+            background: rgba(26, 47, 75, .08)
         }
 
         .card-icon.green {
-            background: var(--success-light);
-            color: var(--success)
+            background: var(--success-light)
+        }
+
+        .card-icon.warn {
+            background: var(--warn-light)
         }
 
         .card-title {
             font-size: 15px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--navy)
         }
 
@@ -290,853 +512,1529 @@
             margin-top: 1px
         }
 
-        /* INFOS PROJET */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px
-        }
-
-        .info-item label {
+        /* ── SECTION TITLE ── */
+        .section-title {
             font-size: 11px;
-            font-weight: 600;
-            letter-spacing: .5px;
-            text-transform: uppercase;
-            color: var(--gray-500);
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        .info-item span {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--navy)
-        }
-
-        /* PROGRESS */
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 8px
-        }
-
-        .progress-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--gray-700)
-        }
-
-        .progress-pct {
-            font-size: 26px;
             font-weight: 800;
-            color: var(--copper)
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--gray-400);
+            margin-bottom: 10px;
+            margin-top: 4px
         }
 
-        .progress-bar {
-            height: 10px;
-            background: var(--gray-200);
-            border-radius: 99px;
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--navy), var(--copper));
-            border-radius: 99px;
-            transition: width 1.2s cubic-bezier(.4, 0, .2, 1);
-            width: 0;
-        }
-
-        /* ÉTAPES */
-        .steps {
+        /* ── STEPS (Mon Chantier) ── */
+        .steps-list {
             display: flex;
             flex-direction: column;
             gap: 0
         }
 
-        .step {
+        .step-item {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 10px 0;
+            gap: 14px;
+            align-items: stretch;
+            padding: 0;
             position: relative
         }
 
-        .step:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            left: 15px;
-            top: 36px;
-            bottom: 0;
-            width: 2px;
-            background: var(--gray-200);
-        }
-
-        .step.done:not(:last-child)::after {
-            background: var(--success)
+        .step-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            width: 36px;
+            flex-shrink: 0
         }
 
         .step-dot {
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
             flex-shrink: 0;
-            font-size: 12px;
-            border: 2px solid var(--gray-300);
-            background: var(--white);
-            z-index: 1;
+            border: 2px solid var(--gray-200);
+            background: #fff;
+            color: var(--gray-400);
+            z-index: 1
         }
 
-        .step.done .step-dot {
+        .step-dot.done {
             background: var(--success);
             border-color: var(--success);
             color: #fff
         }
 
-        .step.active .step-dot {
+        .step-dot.active {
             background: var(--copper);
             border-color: var(--copper);
             color: #fff;
-            box-shadow: 0 0 0 4px rgba(204, 148, 97, .2)
+            box-shadow: 0 0 0 5px rgba(204, 148, 97, .2)
         }
 
-        .step-info {
+        .step-line {
             flex: 1;
-            padding-top: 4px
+            width: 2px;
+            background: var(--gray-200);
+            margin: 0 auto
+        }
+
+        .step-line.done {
+            background: var(--success)
+        }
+
+        .step-content {
+            flex: 1;
+            padding-bottom: 18px
         }
 
         .step-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--navy)
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 3px
         }
 
-        .step.done .step-name {
+        .step-name.done {
+            color: var(--gray-400);
+            text-decoration: line-through;
+            font-weight: 500
+        }
+
+        .step-name.active {
+            color: var(--copper)
+        }
+
+        .step-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-size: 10px;
+            font-weight: 700
+        }
+
+        .step-tag.done {
+            background: var(--success-light);
             color: var(--success)
+        }
+
+        .step-tag.active {
+            background: var(--copper-light);
+            color: var(--copper-dark)
+        }
+
+        .step-tag.pending {
+            background: var(--gray-100);
+            color: var(--gray-400)
         }
 
         .step-date {
             font-size: 11px;
-            color: var(--gray-500);
-            margin-top: 2px
+            color: var(--gray-400);
+            margin-top: 3px
         }
 
-        /* DOCUMENTS */
-        .doc-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px
+        /* ── PROJECT INFO ── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
         }
 
-        .doc-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            background: var(--gray-100);
-            transition: background .2s;
-            cursor: pointer;
+        .info-cell {
+            background: var(--gray-50);
+            border-radius: 10px;
+            padding: 12px
         }
 
-        .doc-item:hover {
-            background: var(--copper-light)
-        }
-
-        .doc-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: var(--navy);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .info-cell label {
             font-size: 10px;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-
-        .doc-icon.xls {
-            background: #10793b
-        }
-
-        .doc-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--navy);
-            flex: 1
-        }
-
-        .doc-meta {
-            font-size: 11px;
-            color: var(--gray-500);
-            margin-top: 1px
-        }
-
-        .doc-dl {
-            color: var(--copper);
-            flex-shrink: 0;
-            opacity: .7
-        }
-
-        .doc-item:hover .doc-dl {
-            opacity: 1
-        }
-
-        /* MESSAGES */
-        .msg-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 16px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-
-        .msg-list::-webkit-scrollbar {
-            width: 4px
-        }
-
-        .msg-list::-webkit-scrollbar-thumb {
-            background: var(--gray-300);
-            border-radius: 99px
-        }
-
-        .msg {
-            max-width: 85%
-        }
-
-        .msg.me {
-            align-self: flex-end
-        }
-
-        .msg-meta {
-            font-size: 11px;
-            color: var(--gray-500);
-            margin-bottom: 4px
-        }
-
-        .msg.me .msg-meta {
-            text-align: right
-        }
-
-        .msg-bubble {
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 13px;
-            line-height: 1.5;
-            color: var(--navy);
-        }
-
-        .msg:not(.me) .msg-bubble {
-            background: var(--gray-100);
-            border-bottom-left-radius: 4px
-        }
-
-        .msg.me .msg-bubble {
-            background: var(--copper-light);
-            border-bottom-right-radius: 4px
-        }
-
-        .msg-input {
-            display: flex;
-            gap: 8px
-        }
-
-        .msg-input input {
-            flex: 1;
-            padding: 10px 14px;
-            border: 2px solid var(--gray-300);
-            border-radius: 8px;
-            font-size: 13px;
-            font-family: 'Inter', sans-serif;
-            color: var(--navy);
-            outline: none;
-            transition: border-color .2s;
-        }
-
-        .msg-input input:focus {
-            border-color: var(--copper)
-        }
-
-        .msg-send {
-            padding: 10px 16px;
-            background: var(--navy);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background .2s;
-            font-family: 'Inter', sans-serif;
-            flex-shrink: 0;
-        }
-
-        .msg-send:hover {
-            background: var(--copper)
-        }
-
-        /* VISITE */
-        .visit-card {
-            background: linear-gradient(135deg, var(--navy), var(--navy-light));
-            border-radius: 12px;
-            padding: 20px;
-            color: #fff;
-        }
-
-        .visit-title {
-            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 1px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, .6);
-            margin-bottom: 12px;
-        }
-
-        .visit-date {
-            font-size: 20px;
-            font-weight: 800;
+            color: var(--gray-400);
+            letter-spacing: .5px;
+            display: block;
             margin-bottom: 4px
         }
 
-        .visit-time {
+        .info-cell span {
             font-size: 14px;
-            color: var(--copper);
-            font-weight: 600;
-            margin-bottom: 8px
+            font-weight: 700;
+            color: var(--navy)
         }
 
-        .visit-lieu {
-            font-size: 12px;
-            color: rgba(255, 255, 255, .6);
-            display: flex;
-            align-items: center;
-            gap: 6px
-        }
-
-        /* MANAGER */
-        .manager-card {
+        /* ── MANAGER ── */
+        .manager-row {
             display: flex;
             align-items: center;
             gap: 14px;
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            border-radius: 12px;
             padding: 16px;
-            background: var(--gray-100);
-            border-radius: 12px
+            margin-bottom: 14px
         }
 
-        .manager-avatar {
+        .manager-av {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            background: var(--copper);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            color: #fff;
-            flex-shrink: 0;
+            font-size: 20px;
+            flex-shrink: 0
         }
 
         .manager-name {
             font-size: 15px;
             font-weight: 700;
-            color: var(--navy)
+            color: #fff
         }
 
         .manager-role {
+            font-size: 11px;
+            color: rgba(255, 255, 255, .5);
+            margin: 2px 0 6px
+        }
+
+        .manager-tel {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-size: 12px;
+            font-weight: 600
+        }
+
+        /* ── VISIT DETAIL ── */
+        .visit-detail-card {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 14px;
+            text-align: center
+        }
+
+        .visit-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 10px
+        }
+
+        .visit-date-big {
+            font-size: 26px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 4px
+        }
+
+        .visit-time-big {
+            font-size: 16px;
+            color: var(--copper);
+            font-weight: 700;
+            margin-bottom: 12px
+        }
+
+        .visit-lieu-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, .7)
+        }
+
+        /* ── INVOICES ── */
+        .invoice-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--gray-100)
+        }
+
+        .invoice-item:last-child {
+            border-bottom: none
+        }
+
+        .invoice-num {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 3px
+        }
+
+        .invoice-lib {
+            font-size: 12px;
+            color: var(--gray-500)
+        }
+
+        .invoice-amount {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--navy);
+            text-align: right;
+            margin-bottom: 5px
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase
+        }
+
+        .status-pill.payee {
+            background: var(--success-light);
+            color: var(--success)
+        }
+
+        .status-pill.attente {
+            background: var(--warn-light);
+            color: var(--warn)
+        }
+
+        .status-pill.retard {
+            background: var(--danger-light);
+            color: var(--danger)
+        }
+
+        /* ── BUDGET ── */
+        .budget-item {
+            margin-bottom: 14px
+        }
+
+        .budget-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 5px
+        }
+
+        .budget-labels {
+            color: var(--navy)
+        }
+
+        .budget-amounts {
+            color: var(--gray-400)
+        }
+
+        .budget-bar {
+            height: 10px;
+            background: var(--gray-200);
+            border-radius: 99px;
+            overflow: hidden;
+            display: flex
+        }
+
+        .budget-bar-fill {
+            height: 100%;
+            background: var(--navy);
+            border-radius: 99px;
+            transition: width .6s ease
+        }
+
+        .budget-bar-over {
+            height: 100%;
+            background: var(--danger);
+            transition: width .6s ease
+        }
+
+        .budget-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--gray-50);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-top: 4px
+        }
+
+        .budget-total-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy)
+        }
+
+        .budget-total-val {
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--copper)
+        }
+
+        /* ── PLUS-VALUES ── */
+        .pv-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 1px solid var(--gray-200)
+        }
+
+        .pv-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 3px
+        }
+
+        .pv-desc {
+            font-size: 11px;
+            color: var(--gray-500)
+        }
+
+        .pv-right {
+            text-align: right
+        }
+
+        .pv-price {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--copper);
+            margin-bottom: 4px
+        }
+
+        .pv-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 99px
+        }
+
+        .pv-badge.chosen {
+            background: var(--success-light);
+            color: var(--success)
+        }
+
+        .pv-badge.proposed {
+            background: var(--gray-100);
+            color: var(--gray-500)
+        }
+
+        /* ── GALLERY ── */
+        .album-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            margin-bottom: 14px;
+            scrollbar-width: none
+        }
+
+        .album-tabs::-webkit-scrollbar {
+            display: none
+        }
+
+        .album-tab {
+            padding: 8px 18px;
+            border-radius: 99px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 2px solid var(--gray-300);
+            color: var(--gray-500);
+            background: #fff;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all .2s;
+            flex-shrink: 0
+        }
+
+        .album-tab:hover {
+            border-color: var(--copper);
+            color: var(--copper)
+        }
+
+        .album-tab.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: #fff
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px
+        }
+
+        .photo-card {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--gray-100);
+            cursor: pointer;
+            position: relative
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .3s
+        }
+
+        .photo-card:active img {
+            transform: scale(1.05)
+        }
+
+        .photo-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .7), transparent);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 14px 6px 5px;
+            pointer-events: none
+        }
+
+        .gallery-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-400)
+        }
+
+        .gallery-empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px
+        }
+
+        /* ── DOCUMENTS ── */
+        .doc-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all .15s;
+            -webkit-tap-highlight-color: rgba(204, 148, 97, .1)
+        }
+
+        .doc-item:active {
+            background: var(--copper-light);
+            border-color: var(--copper)
+        }
+
+        .doc-badge {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0
+        }
+
+        .doc-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 3px
+        }
+
+        .doc-meta {
+            font-size: 11px;
+            color: var(--gray-400)
+        }
+
+        .doc-arrow {
+            margin-left: auto;
+            color: var(--gray-300);
+            font-size: 18px
+        }
+
+        /* ── MESSAGES ── */
+        .msg-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-bottom: 80px
+        }
+
+        .msg-bubble-wrap {
+            display: flex;
+            flex-direction: column
+        }
+
+        .msg-bubble-wrap.me {
+            align-items: flex-end
+        }
+
+        .msg-meta {
+            font-size: 10px;
+            color: var(--gray-400);
+            margin-bottom: 4px;
+            padding: 0 4px
+        }
+
+        .msg-bubble {
+            max-width: 78%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word
+        }
+
+        .msg-bubble-wrap:not(.me) .msg-bubble {
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-bottom-left-radius: 4px;
+            color: var(--navy)
+        }
+
+        .msg-bubble-wrap.me .msg-bubble {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            color: #fff;
+            border-bottom-right-radius: 4px
+        }
+
+        .msg-sender {
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--copper);
+            margin-bottom: 3px
+        }
+
+        .msg-input-fixed {
+            position: fixed;
+            bottom: var(--tab-h);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid var(--gray-200);
+            padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 99
+        }
+
+        .msg-input-field {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 99px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            color: var(--navy)
+        }
+
+        .msg-input-field:focus {
+            border-color: var(--copper)
+        }
+
+        .msg-send-btn {
+            width: 44px;
+            height: 44px;
+            background: var(--navy);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background .2s
+        }
+
+        .msg-send-btn:active {
+            background: var(--copper)
+        }
+
+        .msg-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-400)
+        }
+
+        .msg-empty-icon {
+            font-size: 52px;
+            margin-bottom: 14px
+        }
+
+        .msg-empty p {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--gray-500)
+        }
+
+        .msg-empty small {
+            font-size: 12px
+        }
+
+        /* ── LIGHTBOX ── */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .93);
+            z-index: 9000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .lightbox.active {
+            display: flex
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: calc(100vh - 100px);
+            border-radius: 10px;
+            object-fit: contain
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        /* ── EMPTY ── */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--gray-400)
+        }
+
+        .empty-state .icon {
+            font-size: 52px;
+            margin-bottom: 14px
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            font-weight: 600;
             color: var(--gray-500);
             margin-bottom: 6px
         }
 
-        .manager-tel {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: var(--copper);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .manager-tel:hover {
-            text-decoration: underline
-        }
-
-        /* LOADING */
-        .loading-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--navy);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            transition: opacity .4s;
-        }
-
-        .loading-screen.hide {
-            opacity: 0;
-            pointer-events: none
-        }
-
-        @keyframes spinBig {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        .loading-spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(255, 255, 255, .15);
-            border-top-color: var(--copper);
-            border-radius: 50%;
-            animation: spinBig .8s linear infinite;
-            margin-bottom: 16px;
-        }
-
-        .loading-text {
-            color: rgba(255, 255, 255, .6);
-            font-size: 14px
+        .empty-state small {
+            font-size: 12px
         }
     </style>
 </head>
 
 <body>
-    <!-- Error overlay (hidden by default) -->
-    <div id="errorScreen"
-        style="display:none;position:fixed;inset:0;background:var(--bg);z-index:999;padding:40px;align-items:center;justify-content:center;text-align:center">
-        <div class="card" style="max-width:500px">
-            <div style="font-size:48px;margin-bottom:20px">🚧</div>
-            <h2 style="color:var(--navy);margin-bottom:12px">Configuration incomplète</h2>
-            <p style="color:var(--gray-500);margin-bottom:24px;line-height:1.6">
-                Votre compte est créé, mais vos données de projet n'ont pas encore été liées.
-            </p>
-            <div
-                style="background:var(--gray-100);padding:16px;border-radius:10px;margin-bottom:24px;text-align:left;border:1px dashed var(--gray-300)">
-                <label
-                    style="font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;display:block;margin-bottom:8px">Votre
-                    code unique (UID)</label>
-                <div style="display:flex;gap:10px;align-items:center">
-                    <code id="displayUid"
-                        style="flex:1;background:var(--white);padding:8px;border-radius:4px;font-weight:700;color:var(--navy);font-size:12px;overflow-wrap:anywhere">...</code>
-                    <button class="btn btn-ghost"
-                        onclick="navigator.clipboard.writeText(document.getElementById('displayUid').textContent); alert('Code copié !')"
-                        style="padding:6px 12px;font-size:12px">Copier</button>
-                </div>
-            </div>
-            <p style="font-size:13px;color:var(--gray-700)">
-                <strong>Action requise :</strong> Transmettez ce code à l'administrateur ou utilisez-le dans le Panel
-                Admin pour activer cet espace.
-            </p>
-        </div>
-    </div>
 
-    <!-- Loading overlay -->
+    <!-- LOADING -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-spinner"></div>
         <div class="loading-text">Chargement de votre espace…</div>
     </div>
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-        <a href="../index.html">
-            <img src="../images/logo.png" alt="IBE Construction" style="height:44px;width:auto;object-fit:contain">
-        </a>
-        <div class="topbar-right">
-            <a href="../index.html" class="btn-site">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
-                    <path d="M3 12L12 3l9 9" />
-                    <path d="M9 21V12h6v9" />
+    <!-- ERROR -->
+    <div class="error-screen" id="errorScreen">
+        <div class="error-card">
+            <div class="error-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" style="width:48px;height:48px;color:var(--copper)">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
-                Site
-            </a>
-            <div class="topbar-user">
-                <div class="avatar" id="avatarInitials">?</div>
-                <div>
-                    <div class="user-name" id="topbarName">…</div>
-                    <div class="user-role">Client IBE</div>
-                </div>
             </div>
-            <button class="btn-logout" id="adminFailSafeBtn"
-                style="display:none;background:var(--copper);color:#fff;border-color:var(--copper);margin-right:10px"
-                onclick="window.location.href='admin.html'">
-                🛡️ Panel Admin
-            </button>
-            <button class="btn-logout" onclick="doLogout()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
-                </svg>
-                Déconnexion
-            </button>
-        </div>
-    </header>
-
-    <!-- CONTENT -->
-    <div class="container" id="mainContent" style="display:none">
-
-        <!-- Header projet -->
-        <div class="page-header">
-            <div class="badge-type" id="badgeType">— PROJET —</div>
-            <h1 id="projectTitle">Chargement…</h1>
-            <p id="projectSub">Bienvenue dans votre espace client IBE Construction</p>
-        </div>
-
-        <div class="grid">
-
-            <!-- Avancement -->
-            <div class="card col-span-2">
-                <div class="card-header">
-                    <div class="card-icon copper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
-                            height="20">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="card-title">Avancement du projet</div>
-                        <div class="card-sub" id="datesInfo">…</div>
-                    </div>
-                </div>
-                <div class="progress-header">
-                    <span class="progress-label">Progression globale</span>
-                    <span class="progress-pct" id="pctDisplay">0%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="steps" id="stepsList"></div>
+            <div class="error-title">Espace pas encore activé</div>
+            <div class="error-desc">Votre compte est créé. Envoyez votre code à l'équipe IBE pour activer votre espace.
             </div>
-
-            <!-- Infos projet -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon navy">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
-                            height="20">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                            <polyline points="9 22 9 12 15 12 15 22" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="card-title">Détails du projet</div>
-                    </div>
-                </div>
-                <div class="info-grid" id="infoGrid"></div>
-                <div style="margin-top:20px">
-                    <div class="card-title" style="font-size:13px;margin-bottom:12px">Votre chargé de projet</div>
-                    <div class="manager-card">
-                        <div class="manager-avatar">👷</div>
-                        <div>
-                            <div class="manager-name" id="managerName">…</div>
-                            <div class="manager-role">Chargé de projet IBE</div>
-                            <a href="#" class="manager-tel" id="managerTel">…</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="uid-box">
+                <div class="uid-code" id="displayUid">…</div>
+                <button class="btn-copy"
+                    onclick="navigator.clipboard.writeText(document.getElementById('displayUid').textContent);this.textContent='Copié ✓'">Copier</button>
             </div>
-
-            <!-- Prochaine visite -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon green">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
-                            height="20">
-                            <rect x="3" y="4" width="18" height="18" rx="2" />
-                            <line x1="16" y1="2" x2="16" y2="6" />
-                            <line x1="8" y1="2" x2="8" y2="6" />
-                            <line x1="3" y1="10" x2="21" y2="10" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="card-title">Prochaine visite</div>
-                        <div class="card-sub">Rendez-vous programmé</div>
-                    </div>
-                </div>
-                <div class="visit-card">
-                    <div class="visit-title">📅 Date &amp; Heure</div>
-                    <div class="visit-date" id="visitDate">—</div>
-                    <div class="visit-time" id="visitTime">—</div>
-                    <div class="visit-lieu">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13"
-                            height="13">
-                            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" />
-                            <circle cx="12" cy="10" r="3" />
-                        </svg>
-                        <span id="visitLieu">—</span>
-                    </div>
-                </div>
-                <p style="font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.5">
-                    Votre chargé de projet vous contactera la veille pour confirmer.
-                </p>
-            </div>
-
-            <!-- Documents -->
-            <div class="card col-span-2">
-                <div class="card-header">
-                    <div class="card-icon copper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
-                            height="20">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                            <polyline points="14 2 14 8 20 8" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="card-title">Mes documents</div>
-                        <div class="card-sub">Plans, devis, permis et rapports</div>
-                    </div>
-                </div>
-                <div class="doc-list" id="docList"></div>
-            </div>
-
-            <!-- Messages -->
-            <div class="card col-span-2">
-                <div class="card-header">
-                    <div class="card-icon navy">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
-                            height="20">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="card-title">Messagerie</div>
-                        <div class="card-sub">Échanges avec votre équipe IBE</div>
-                    </div>
-                </div>
-                <div class="msg-list" id="msgList"></div>
-                <div class="msg-input">
-                    <input type="text" id="msgInput" placeholder="Écrire un message…"
-                        onkeydown="if(event.key==='Enter')sendMsg()">
-                    <button class="msg-send" onclick="sendMsg()">Envoyer</button>
-                </div>
-            </div>
-
+            <p style="font-size:12px;color:var(--gray-500)">Contactez votre chargé de projet IBE avec ce code.</p>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <img id="lightboxImg" src="" alt="Photo">
+    </div>
+
+    <!-- APP -->
+    <div class="app" id="appShell" style="display:none">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <a href="../index.html"><img src="../images/logo.png" alt="IBE" class="topbar-logo"></a>
+                <div class="topbar-info">
+                    <h1 id="topbarProjectName">Mon Projet</h1>
+                    <p id="topbarClientName">Client IBE</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="btn-admin-fs" id="adminFailSafeBtn" onclick="window.location.href='admin.html'">🛡️
+                    Admin</button>
+                <div class="avatar-btn" id="avatarBtn" title="Déconnexion" onclick="doLogout()">?</div>
+            </div>
+        </header>
+
+        <!-- PROGRESS BANNER -->
+        <div class="progress-banner" id="progressBanner">
+            <div class="progress-circle-wrap">
+                <svg class="progress-circle" width="56" height="56" viewBox="0 0 56 56">
+                    <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="5" />
+                    <circle cx="28" cy="28" r="22" fill="none" stroke="#cc9461" stroke-width="5" stroke-linecap="round"
+                        stroke-dasharray="138.2" stroke-dashoffset="138.2" id="progressCircle" />
+                </svg>
+                <div class="pct-label" id="pctLabel">0%</div>
+            </div>
+            <div class="progress-banner-text" style="flex:1">
+                <h2 id="bannerTitle">Avancement du chantier</h2>
+                <div class="progress-bar-thin">
+                    <div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div>
+                </div>
+                <p id="bannerSub">Chargement…</p>
+            </div>
+        </div>
+
+        <!-- VISIT BANNER -->
+        <div class="visit-banner" id="visitBanner" onclick="showTab('chantier')">
+            <div class="visit-banner-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="bronze-icon" style="width:28px;height:28px;color:#fff">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+            </div>
+            <div>
+                <h3 id="visitBannerDate">Prochaine visite</h3>
+                <p id="visitBannerSub">Appuyez pour voir les détails</p>
+            </div>
+            <div class="visit-banner-arrow">›</div>
+        </div>
+
+        <!-- TABS CONTENT -->
+        <div class="tabs-content">
+
+            <!-- ═══ ONGLET 1 — MON CHANTIER ═══ -->
+            <div class="tab-panel active" id="panel-chantier">
+
+                <!-- Étapes -->
+                <div class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" class="bronze-icon"
+                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    Étapes du chantier
+                </div>
+                <div class="card" style="padding:18px 16px">
+                    <div class="steps-list" id="stepsList"></div>
+                </div>
+
+                <!-- Prochaine visite -->
+                <div class="section-title" id="visitSectionTitle" style="display:none">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" class="bronze-icon"
+                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Prochaine visite
+                </div>
+                <div class="visit-detail-card" id="visitDetailCard" style="display:none">
+                    <div class="visit-label">Rendez-vous programmé</div>
+                    <div class="visit-date-big" id="visitDate">—</div>
+                    <div class="visit-time-big" id="visitTime">—</div>
+                    <div class="visit-lieu-row">📍 <span id="visitLieu">—</span></div>
+                    <p style="font-size:11px;color:rgba(255,255,255,.5);margin-top:12px">Votre chargé de projet vous
+                        contactera la veille pour confirmer.</p>
+                </div>
+
+                <!-- Infos projet -->
+                <div class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" class="bronze-icon"
+                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    Informations du projet
+                </div>
+                <div class="card">
+                    <div class="info-grid" id="infoGrid"></div>
+                </div>
+
+                <!-- Chargé de projet -->
+                <div class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" class="bronze-icon"
+                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Votre contact IBE
+                </div>
+                <div class="manager-row">
+                    <div class="manager-av">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;color:#fff">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div style="flex:1">
+                        <div class="manager-name" id="managerName">—</div>
+                        <div class="manager-role">Chargé de projet IBE</div>
+                        <a class="manager-tel" id="managerTel" href="#">📞 Appeler</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ═══ ONGLET 2 — FINANCES ═══ -->
+            <div class="tab-panel" id="panel-finance">
+
+                <!-- Factures -->
+                <div class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" class="bronze-icon"
+                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
+                        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                    </svg>
+                    Mes factures
+                </div>
+                <div class="card" id="invoicesCard">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            style="width:40px;height:40px;color:var(--gray-300)">
+                            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                            <line x1="2" y1="10" x2="22" y2="10"></line>
+                        </svg>
+                    </div>
+                    <p>Chargement…</p>
+                </div>
+
+                <!-- Budget -->
+                <div class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" class="bronze-icon"
+                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    Répartition du budget
+                </div>
+                <div class="card" id="budgetCard">
+                    <div class="empty-state">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                style="width:40px;height:40px;color:var(--gray-300)">
+                                <line x1="18" y1="20" x2="18" y2="10"></line>
+                                <line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line>
+                            </svg>
+                        </div>
+                        <p>Chargement…</p>
+                    </div>
+                </div>
+
+                <!-- Plus-Values -->
+                <div class="section-title" id="pvSectionTitle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" class="bronze-icon"
+                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                        </polygon>
+                    </svg>
+                    Options Premium
+                </div>
+                <div id="pvCard">
+                    <div class="empty-state">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                style="width:40px;height:40px;color:var(--gray-300)">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                </polygon>
+                            </svg>
+                        </div>
+                        <p>Chargement…</p>
+                    </div>
+                </div>
+                <div
+                    style="background:var(--copper-light);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--copper-dark);display:flex;gap:10px;align-items:center">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span>Contactez votre chargé de projet pour ajouter une option à votre projet.</span>
+                </div>
+
+            </div>
+
+            <!-- ═══ ONGLET 3 — PHOTOS ═══ -->
+            <div class="tab-panel" id="panel-photos">
+                <div class="album-tabs" id="albumTabs"></div>
+                <div class="photo-grid" id="photoGrid">
+                    <div class="gallery-empty" style="grid-column:1/-1">
+                        <div class="gallery-empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                style="width:48px;height:48px;color:var(--gray-300)">
+                                <path
+                                    d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                                </path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
+                        </div>
+                        <p style="font-size:14px;color:var(--gray-500);font-weight:600">Chargement des photos…</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ ONGLET 4 — DOCUMENTS ═══ -->
+            <div class="tab-panel" id="panel-docs">
+                <div class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" class="bronze-icon"
+                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    Mes documents
+                </div>
+                <div id="docsList">
+                    <div class="empty-state">
+                        <div class="icon">📄</div>
+                        <p>Chargement…</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ ONGLET 5 — MESSAGES ═══ -->
+            <div class="tab-panel" id="panel-messages">
+                <div class="msg-container" id="msgContainer">
+                    <div class="msg-empty">
+                        <div class="msg-empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                style="width:52px;height:52px;color:var(--gray-300)">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <p>Aucun message pour l'instant</p>
+                        <small>Envoyez un message à votre équipe IBE</small>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /tabs-content -->
+
+        <!-- MSG INPUT (only visible on messages tab) -->
+        <div class="msg-input-fixed" id="msgInputBar" style="display:none">
+            <input class="msg-input-field" id="msgInput" type="text" placeholder="Écrire un message…"
+                onkeydown="if(event.key==='Enter')sendMsg()">
+            <button class="msg-send-btn" onclick="sendMsg()">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- BOTTOM NAV -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" id="nav-chantier" onclick="showTab('chantier')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                <span>Chantier</span>
+            </button>
+            <button class="nav-btn" id="nav-finance" onclick="showTab('finance')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                    <line x1="2" y1="10" x2="22" y2="10" />
+                </svg>
+                <span>Finances</span>
+            </button>
+            <button class="nav-btn" id="nav-photos" onclick="showTab('photos')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <span>Photos</span>
+            </button>
+            <button class="nav-btn" id="nav-docs" onclick="showTab('docs')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                </svg>
+                <span>Documents</span>
+            </button>
+            <button class="nav-btn" id="nav-messages" onclick="showTab('messages')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                <span>Messages</span>
+                <span class="nav-badge" id="msgBadge">0</span>
+            </button>
+        </nav>
+
+    </div><!-- /app -->
+
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
-
     <script>
-        let currentUser = null;
-        let currentProfile = null;
-        let unsubMessages = null;
-        let unsubDocuments = null;
+        // ── STATE ──
+        let currentUser = null, currentProfile = null;
+        let unsubMessages = null, unsubDocuments = null;
+        let allPhotos = [], allDocs_ = [];
+        let currentAlbum = 'Tous';
+        let isOnMessages = false;
 
-        // ── Auth guard ──────────────────────────────────────
-        auth.onAuthStateChanged(async (user) => {
+        // ── NAVIGATION ──
+        function showTab(tab) {
+            ['chantier', 'finance', 'photos', 'docs', 'messages'].forEach(t => {
+                document.getElementById('panel-' + t).classList.toggle('active', t === tab);
+                document.getElementById('nav-' + t).classList.toggle('active', t === tab);
+            });
+            isOnMessages = (tab === 'messages');
+            document.getElementById('msgInputBar').style.display = isOnMessages ? 'flex' : 'none';
+            if (isOnMessages) {
+                document.getElementById('msgBadge').classList.remove('show');
+                setTimeout(() => { const c = document.getElementById('msgContainer'); if (c) c.scrollTop = c.scrollHeight; }, 100);
+            }
+        }
+
+        // ── AUTH ──
+        auth.onAuthStateChanged(async user => {
             try {
-                if (!user) {
-                    window.location.href = 'login.html';
-                    return;
-                }
-
-                // Vérifier que ce n'est pas un admin (par email ou Firestore)
+                if (!user) { window.location.href = 'login.html'; return; }
                 const email = user.email.toLowerCase();
                 const isAdmin = (email === 'admin@ibe-construction.com') || await ibeIsAdmin(user.uid);
                 if (isAdmin) {
-                    document.getElementById('adminFailSafeBtn').style.display = 'flex';
-                    window.location.href = 'admin.html';
-                    return;
+                    document.getElementById('adminFailSafeBtn').style.display = 'block';
+                    window.location.href = 'admin.html'; return;
                 }
-
                 currentUser = user;
                 await loadDashboard(user.uid);
             } catch (err) {
-                console.error("Auth Guard Error:", err);
                 document.getElementById('loadingScreen').style.display = 'none';
-                document.getElementById('errorScreen').style.display = 'flex';
-                document.getElementById('displayUid').textContent = "Erreur technique : " + err.message;
+                const es = document.getElementById('errorScreen');
+                es.style.display = 'flex';
+                document.getElementById('displayUid').textContent = 'Erreur: ' + err.message;
             }
         });
 
+        // ── LOAD DASHBOARD ──
         async function loadDashboard(uid) {
-            const [profile, project] = await Promise.all([
-                ibeGetProfile(uid),
-                ibeGetProject(uid)
-            ]);
-
+            const [profile, project] = await Promise.all([ibeGetProfile(uid), ibeGetProject(uid)]);
             if (!profile || !project) {
                 document.getElementById('loadingScreen').style.display = 'none';
-                document.getElementById('errorScreen').style.display = 'flex';
+                const es = document.getElementById('errorScreen');
+                es.style.display = 'flex';
                 document.getElementById('displayUid').textContent = uid;
-                console.error('Data missing for UID:', uid);
                 return;
             }
-
             currentProfile = profile;
 
             // Topbar
-            document.getElementById('topbarName').textContent = profile.nom;
-            document.getElementById('avatarInitials').textContent =
-                profile.nom.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+            document.getElementById('topbarProjectName').textContent = project.titre || 'Mon Projet';
+            document.getElementById('topbarClientName').textContent = profile.nom || 'Client';
+            const initials = (profile.nom || 'C').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+            document.getElementById('avatarBtn').textContent = initials;
 
-            // Header projet
-            document.getElementById('projectTitle').textContent = project.titre;
-            document.getElementById('badgeType').textContent = (project.type || 'Projet').toUpperCase();
-            document.getElementById('projectSub').textContent =
-                `Démarrage : ${project.debut} · Livraison prévue : ${project.livraison_prevue}`;
-
-            // Avancement
-            document.getElementById('datesInfo').textContent =
-                `Démarré le ${project.debut} · Livraison prévue le ${project.livraison_prevue}`;
-
+            // Progress banner
             const pct = project.avancement || 0;
-            document.getElementById('pctDisplay').textContent = pct + '%';
+            document.getElementById('pctLabel').textContent = pct + '%';
+            document.getElementById('progressBarFill').style.width = pct + '%';
+            document.getElementById('bannerTitle').textContent = project.titre || 'Avancement du chantier';
+            const livraison = project.livraison_prevue ? `Livraison prévue : ${project.livraison_prevue}` : '';
+            document.getElementById('bannerSub').textContent = livraison;
+            // Circle
+            const circumference = 2 * Math.PI * 22;
+            const offset = circumference - (pct / 100) * circumference;
             setTimeout(() => {
-                document.getElementById('progressFill').style.width = pct + '%';
+                const circle = document.getElementById('progressCircle');
+                if (circle) { circle.style.transition = 'stroke-dashoffset 1.2s ease'; circle.style.strokeDashoffset = offset; }
             }, 300);
 
-            // Étapes
-            const stepsList = document.getElementById('stepsList');
-            stepsList.innerHTML = '';
-            const etapes = project.etapes || [];
-            const doneCount = etapes.filter(e => e.done).length;
-            etapes.forEach((e, i) => {
-                const isActive = !e.done && (i === doneCount);
-                const div = document.createElement('div');
-                div.className = 'step' + (e.done ? ' done' : '') + (isActive ? ' active' : '');
-                div.innerHTML = `
-                    <div class="step-dot">
-                        ${e.done
-                        ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>`
-                        : isActive
-                            ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="12" height="12"><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>`
-                            : `<span style="font-size:11px;color:var(--gray-500)">${i + 1}</span>`
-                    }
-                    </div>
-                    <div class="step-info">
-                        <div class="step-name">${e.nom}${isActive ? ' <span style="font-size:11px;color:var(--copper);font-weight:600">— En cours</span>' : ''}</div>
-                        <div class="step-date">${e.date}</div>
-                    </div>`;
-                stepsList.appendChild(div);
-            });
+            // Visit banner
+            const v = project.prochaine_visite || {};
+            if (v.date) {
+                document.getElementById('visitBanner').classList.add('show');
+                document.getElementById('visitBannerDate').textContent = v.date + (v.heure ? ' à ' + v.heure : '');
+                document.getElementById('visitBannerSub').textContent = v.lieu || 'Voir les détails';
+                // Visit detail in chantier tab
+                document.getElementById('visitSectionTitle').style.display = 'block';
+                document.getElementById('visitDetailCard').style.display = 'block';
+                document.getElementById('visitDate').textContent = v.date;
+                document.getElementById('visitTime').textContent = v.heure || '—';
+                document.getElementById('visitLieu').textContent = v.lieu || '—';
+            }
 
-            // Infos projet
+            // Steps
+            renderSteps(project.etapes || []);
+
+            // Info grid
             const infoGrid = document.getElementById('infoGrid');
-            infoGrid.innerHTML = '';
-            [
+            infoGrid.innerHTML = [
                 { label: 'Type', val: project.type },
                 { label: 'Surface', val: project.surface },
-                { label: 'Début des travaux', val: project.debut },
-                { label: 'Livraison prévue', val: project.livraison_prevue },
-            ].forEach(i => {
-                infoGrid.innerHTML += `<div class="info-item"><label>${i.label}</label><span>${i.val || '—'}</span></div>`;
-            });
+                { label: 'Début', val: project.debut },
+                { label: 'Livraison', val: project.livraison_prevue }
+            ].map(i => `<div class="info-cell"><label>${i.label}</label><span>${i.val || '—'}</span></div>`).join('');
 
-            document.getElementById('managerName').textContent = profile.charge || '—';
+            // Manager
+            document.getElementById('managerName').textContent = profile.charge || 'Équipe IBE';
             const tel = profile.tel_charge || '';
-            document.getElementById('managerTel').textContent = tel;
-            document.getElementById('managerTel').href = 'tel:' + tel.replace(/\s/g, '');
+            if (tel) {
+                document.getElementById('managerTel').textContent = tel;
+                document.getElementById('managerTel').href = 'tel:' + tel.replace(/\s/g, '');
+            }
 
-            // Visite
-            const v = project.prochaine_visite || {};
-            document.getElementById('visitDate').textContent = v.date || '—';
-            document.getElementById('visitTime').textContent = v.heure || '—';
-            document.getElementById('visitLieu').textContent = v.lieu || '—';
+            // Real-time
+            unsubMessages = ibeListenMessages(uid, renderMessages);
+            unsubDocuments = ibeListenDocuments(uid, renderDocsAndPhotos);
 
-            // Messages temps réel
-            if (unsubMessages) unsubMessages();
-            unsubMessages = ibeListenMessages(uid, renderMsgs);
+            // Finance
+            loadFinance(uid);
 
-            // Documents temps réel depuis la sous-collection Firestore
-            // Les fichiers physiques sont dans Cloudinary, Firestore stocke seulement les URLs
-            if (unsubDocuments) unsubDocuments();
-            unsubDocuments = ibeListenDocuments(uid, renderDocs);
-
-            // Afficher le contenu
+            // Show app
             document.getElementById('loadingScreen').classList.add('hide');
-            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('appShell').style.display = 'flex';
         }
 
-        // Rendu de la liste de documents (depuis sous-collection Firestore, fichiers sur Cloudinary)
-        function renderDocs(docs) {
-            const docList = document.getElementById('docList');
-            docList.innerHTML = '';
-            if (!docs || !docs.length) {
-                docList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray-500);font-size:13px">Aucun document disponible pour le moment.</div>';
+        // ── STEPS ──
+        function renderSteps(etapes) {
+            const list = document.getElementById('stepsList');
+            const doneCount = etapes.filter(e => e.done).length;
+            list.innerHTML = etapes.map((e, i) => {
+                const done = e.done;
+                const active = !done && i === doneCount;
+                const dotClass = done ? 'done' : active ? 'active' : '';
+                const nameClass = done ? 'done' : active ? 'active' : '';
+                const tag = done ? '<span class="step-tag done">✓ Terminé</span>' : active ? '<span class="step-tag active">⚡ En cours</span>' : '<span class="step-tag pending">En attente</span>';
+                const isLast = i === etapes.length - 1;
+                return `
+      <div class="step-item">
+        <div class="step-left">
+          <div class="step-dot ${dotClass}">${done ? '✓' : (active ? '⚡' : i + 1)}</div>
+          ${!isLast ? `<div class="step-line ${done ? 'done' : ''}"></div>` : ''}
+        </div>
+        <div class="step-content">
+          <div class="step-name ${nameClass}">${e.nom}</div>
+          ${tag}
+          ${e.date ? `<div class="step-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:middle;margin-right:4px">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>${e.date}</div>` : ''}
+        </div>
+      </div>`;
+            }).join('');
+        }
+
+        // ── FINANCE ──
+        async function loadFinance(uid) {
+            try {
+                const [invoices, budget, pvs] = await Promise.all([ibeGetInvoices(uid), ibeGetBudget(uid), ibeGetPlusValues(uid)]);
+                renderInvoices(invoices || []);
+                renderBudget(budget || {});
+                renderPlusValues(pvs || []);
+            } catch (e) { console.error('Finance error:', e); }
+        }
+
+        function renderInvoices(items) {
+            const c = document.getElementById('invoicesCard');
+            if (!items.length) {
+                c.innerHTML = `<div class="empty-state">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:var(--gray-300)">
+                            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                            <line x1="2" y1="10" x2="22" y2="10"></line>
+                        </svg>
+                    </div>
+                    <p>Aucune facture émise</p>
+                    <small>Vos factures apparaîtront ici</small>
+                </div>`;
                 return;
             }
-            docs.forEach(d => {
-                const ext = d.type || '';
-                const color = ext === 'PDF' ? '#dc2626' : ext === 'DWG' || ext === 'DXF' ? '#2563eb' : ext === 'XLS' || ext === 'XLSX' ? '#16a34a' : '#ca8a04';
-                docList.innerHTML += `
-                    <div class="doc-item" onclick="openDoc('${d.url}', '${d.nom}')">
-                        <div class="doc-icon" style="background:${color};color:#fff">${ext}</div>
-                        <div style="flex:1">
-                            <div class="doc-name">${d.nom}</div>
-                            <div class="doc-meta">${d.date || ''} · ${d.taille || ''} · <span style="color:var(--copper);font-weight:600">Disponible</span></div>
-                        </div>
-                        <div class="doc-dl" title="Télécharger">
-                            <span style="font-size:11px;font-weight:700;margin-right:4px">Télécharger</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="18">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="7 10 12 15 17 10"/>
-                                <line x1="12" y1="15" x2="12" y2="3"/>
-                            </svg>
-                        </div>
-                    </div>`;
-            });
+            c.innerHTML = items.map(inv => {
+                const overdue = inv.statut === 'attente' && new Date(inv.echeance) < new Date();
+                const cls = inv.statut === 'payee' ? 'payee' : (overdue ? 'retard' : 'attente');
+                const label = inv.statut === 'payee' ? '✅ PAYÉE' : (overdue ? '🔴 EN RETARD' : '🟡 EN ATTENTE');
+                return `<div class="invoice-item">
+        <div>
+          <div class="invoice-num">${inv.num || 'Facture'}</div>
+          <div class="invoice-lib">${inv.libelle || ''}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="invoice-amount">${Number(inv.montant || 0).toLocaleString('fr-MA')} MAD</div>
+          <span class="status-pill ${cls}">${label}</span>
+        </div>
+      </div>`;
+            }).join('');
         }
 
-        function renderMsgs(msgs) {
-            const msgList = document.getElementById('msgList');
-            msgList.innerHTML = '';
-            msgs.forEach(m => {
-                msgList.innerHTML += `
-                    <div class="msg${m.moi ? ' me' : ''}">
-                        <div class="msg-meta">${m.moi ? '' : `<strong>${m.de}</strong> · `}${m.heure}</div>
-                        <div class="msg-bubble">${m.texte}</div>
-                    </div>`;
-            });
-            msgList.scrollTop = msgList.scrollHeight;
+        function renderBudget(data) {
+            const c = document.getElementById('budgetCard');
+            const cats = [
+                { id: 'structure', label: 'Gros Œuvre' },
+                { id: 'second', label: 'Second Œuvre' },
+                { id: 'finition', label: 'Finitions' },
+                { id: 'equipement', label: 'Équipements' }
+            ];
+            let totalPrevu = 0, totalReel = 0;
+            const rows = cats.map(cat => {
+                const prevu = data[cat.id + '_prevu'] || 0;
+                const reel = data[cat.id + '_reel'] || 0;
+                if (!prevu && !reel) return '';
+                totalPrevu += prevu; totalReel += reel;
+                const pct = prevu > 0 ? Math.min(reel / prevu * 100, 100) : 0;
+                const over = reel > prevu && prevu > 0 ? Math.min((reel - prevu) / prevu * 100, 100) : 0;
+                return `<div class="budget-item">
+        <div class="budget-row">
+          <span class="budget-labels">${cat.label}</span>
+          <span class="budget-amounts">${reel.toLocaleString('fr-MA')} / ${prevu.toLocaleString('fr-MA')} MAD</span>
+        </div>
+        <div class="budget-bar">
+          <div class="budget-bar-fill" style="width:${pct}%"></div>
+          <div class="budget-bar-over" style="width:${over}%"></div>
+        </div>
+      </div>`;
+            }).join('');
+            c.innerHTML = rows || `<div class="empty-state">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:var(--gray-300)">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                </div>
+                <p>Aucune donnée budget</p>
+            </div>`;
+            if (totalPrevu > 0) {
+                c.innerHTML += `<div class="budget-total-row"><span class="budget-total-label">Total dépensé</span><span class="budget-total-val">${totalReel.toLocaleString('fr-MA')} MAD</span></div>`;
+            }
+        }
+
+        function renderPlusValues(items) {
+            const c = document.getElementById('pvCard');
+            if (!items.length) {
+                c.innerHTML = `<div class="empty-state">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:var(--gray-300)">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    </div>
+                    <p>Aucune option proposée</p>
+                    <small>Les options premium apparaîtront ici</small>
+                </div>`;
+                return;
+            }
+            c.innerHTML = items.map(it => `
+      <div class="pv-item">
+        <div style="flex:1">
+          <div class="pv-title">${it.titre}</div>
+          ${it.desc ? `<div class="pv-desc">${it.desc}</div>` : ''}
+        </div>
+        <div class="pv-right">
+          <div class="pv-price">+ ${Number(it.prix || 0).toLocaleString('fr-MA')} MAD</div>
+          <span class="pv-badge ${it.active ? 'chosen' : 'proposed'}">${it.active ? '✅ CHOISI' : '💡 PROPOSÉ'}</span>
+        </div>
+      </div>`).join('');
+        }
+
+        // ── DOCS & PHOTOS ──
+        function renderDocsAndPhotos(docs) {
+            allDocs_ = docs || [];
+            const imgExts = ['JPG', 'JPEG', 'PNG', 'WEBP', 'GIF', 'BMP'];
+            const photos = allDocs_.filter(d => imgExts.includes((d.type || '').toUpperCase()) && d.category);
+            const techDocs = allDocs_.filter(d => !imgExts.includes((d.type || '').toUpperCase()));
+            allPhotos = photos;
+
+            // Build album tabs
+            const albums = ['Tous', ...new Set(photos.map(p => p.category).filter(Boolean))];
+            const tabsEl = document.getElementById('albumTabs');
+            tabsEl.innerHTML = albums.map(a =>
+                `<button class="album-tab ${a === currentAlbum ? 'active' : ''}" onclick="filterPhotos('${a}', this)">${a}</button>`
+            ).join('');
+
+            // Show photos
+            filterPhotos(currentAlbum, null);
+
+            // Docs list
+            const docsEl = document.getElementById('docsList');
+            if (!techDocs.length) {
+                docsEl.innerHTML = `<div class="empty-state">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:var(--gray-300)">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </div>
+                    <p>Aucun document disponible</p>
+                    <small>Vos plans et documents apparaîtront ici</small>
+                </div>`;
+            } else {
+                const colors = { PDF: '#dc2626', DWG: '#2563eb', DXF: '#2563eb', XLS: '#16a34a', XLSX: '#16a34a', DOC: '#2563eb', DOCX: '#2563eb' };
+                docsEl.innerHTML = techDocs.map(d => {
+                    const ext = (d.type || 'DOC').toUpperCase();
+                    const color = colors[ext] || '#ca8a04';
+                    return `<div class="doc-item" onclick="openDoc('${d.url}','${d.nom}')">
+          <div class="doc-badge" style="background:${color}">${ext}</div>
+          <div>
+            <div class="doc-name">${d.nom}</div>
+            <div class="doc-meta">${d.date || ''} ${d.category ? '· ' + d.category : ''}</div>
+          </div>
+          <div class="doc-arrow">›</div>
+        </div>`;
+                }).join('');
+            }
+        }
+
+        function filterPhotos(album, btnEl) {
+            currentAlbum = album;
+            if (btnEl) {
+                document.querySelectorAll('.album-tab').forEach(t => t.classList.remove('active'));
+                btnEl.classList.add('active');
+            }
+            const filtered = album === 'Tous' ? allPhotos : allPhotos.filter(p => p.category === album);
+            const grid = document.getElementById('photoGrid');
+            if (!filtered.length) {
+                grid.innerHTML = `<div class="gallery-empty" style="grid-column:1/-1">
+                    <div class="gallery-empty-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:48px;height:48px;color:var(--gray-300)">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                    </div>
+                    <p style="font-size:14px;color:var(--gray-500);font-weight:600">${album === 'Tous' ? 'Aucune photo de chantier' : 'Aucune photo dans cet album'}</p>
+                </div>`;
+                return;
+            }
+            grid.innerHTML = filtered.map(p => `
+      <div class="photo-card" onclick="openLightbox('${p.url}')">
+        <img src="${p.url}" loading="lazy" alt="${p.nom}">
+        <div class="photo-label">${p.category}</div>
+      </div>`).join('');
+        }
+
+        // ── MESSAGES ──
+        function renderMessages(msgs) {
+            const c = document.getElementById('msgContainer');
+            if (!msgs || !msgs.length) {
+                c.innerHTML = `<div class="msg-empty">
+                    <div class="msg-empty-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:52px;height:52px;color:var(--gray-300)">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <p>Aucun message</p>
+                    <small>Envoyez un message à votre équipe IBE</small>
+                </div>`;
+                return;
+            }
+            c.innerHTML = msgs.map(m => `
+      <div class="msg-bubble-wrap ${m.moi ? 'me' : ''}">
+        <div class="msg-meta">${m.moi ? '' : `<span class="msg-sender">${m.de} · </span>`}${m.heure}</div>
+        <div class="msg-bubble">${m.texte}</div>
+      </div>`).join('');
+            c.scrollTop = c.scrollHeight;
+            if (!isOnMessages) {
+                const badge = document.getElementById('msgBadge');
+                badge.classList.add('show');
+            }
         }
 
         async function sendMsg() {
             const input = document.getElementById('msgInput');
-            const text = input.value.trim();
+            const text = (input.value || '').trim();
             if (!text || !currentUser) return;
             input.value = '';
-            await ibeSendMessage(currentUser.uid, text, currentProfile.nom || 'Client', false);
+            await ibeSendMessage(currentUser.uid, text, currentProfile?.nom || 'Client', false);
         }
 
-        // Open documents directly in the browser.
-        // Uses cloudinaryFixUrl() to add fl_inline so PDFs open in the browser
-        // viewer instead of downloading. Google Docs Viewer is NOT used here.
-        function openDoc(rawUrl, filename) {
-            if (!rawUrl) return;
-            // On force le téléchargement avec le 3ème paramètre à true
-            const cleanUrl = cloudinaryFixUrl(rawUrl, filename, true);
-            window.open(cleanUrl, '_blank');
+        // ── LIGHTBOX ──
+        function openLightbox(url) {
+            document.getElementById('lightboxImg').src = url;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
         }
 
-        function fakeDownload(name) {
-            const toast = document.createElement('div');
-            toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1a2f4b;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:9999';
-            toast.innerHTML = `📄 ${name} — disponible bientôt`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+        // ── OPEN DOC ──
+        function openDoc(url, name) {
+            if (!url) return;
+            window.open(typeof cloudinaryFixUrl === 'function' ? cloudinaryFixUrl(url, name, true) : url, '_blank');
         }
 
+        // ── LOGOUT ──
         async function doLogout() {
-            if (unsubMessages) unsubMessages();
-            if (unsubDocuments) unsubDocuments();
-            await ibeLogout();
-            window.location.href = 'login.html';
+            if (confirm('Voulez-vous vous déconnecter ?')) {
+                if (unsubMessages) unsubMessages();
+                if (unsubDocuments) unsubDocuments();
+                await ibeLogout();
+                window.location.href = 'login.html';
+            }
         }
     </script>
 </body>

@@ -38,6 +38,13 @@
             --sidebar: 240px;
         }
 
+        .bronze-icon {
+            color: var(--copper);
+            width: 20px;
+            height: 20px;
+            stroke-width: 2px;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
@@ -722,6 +729,208 @@
             animation: spin .7s linear infinite
         }
 
+        /* HISTORY LOG */
+        .log-row {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--gray-200);
+            transition: background .15s
+        }
+
+        .log-row:hover {
+            background: var(--gray-50)
+        }
+
+        .log-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-top: 5px;
+            flex-shrink: 0
+        }
+
+        .log-action {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--navy);
+            margin-bottom: 2px
+        }
+
+        .log-detail {
+            font-size: 12px;
+            color: var(--gray-500);
+            line-height: 1.4
+        }
+
+        .log-time {
+            font-size: 11px;
+            color: var(--gray-400);
+            white-space: nowrap;
+            margin-left: auto;
+            flex-shrink: 0
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap
+        }
+
+        .filter-bar select,
+        .filter-bar input {
+            padding: 9px 12px;
+            border: 1.5px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            background: var(--white)
+        }
+
+        .filter-bar select:focus,
+        .filter-bar input:focus {
+            border-color: var(--copper)
+        }
+
+        /* SUBCONTRACTORS */
+        .spec-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700
+        }
+
+        .spec-badge.maconnerie {
+            background: #fef3c7;
+            color: #92400e
+        }
+
+        .spec-badge.electricite {
+            background: #dbeafe;
+            color: #1e40af
+        }
+
+        .spec-badge.plomberie {
+            background: #e0e7ff;
+            color: #3730a3
+        }
+
+        .spec-badge.peinture {
+            background: #fce7f3;
+            color: #9d174d
+        }
+
+        .spec-badge.carrelage {
+            background: #ccfbf1;
+            color: #065f46
+        }
+
+        .spec-badge.cvc {
+            background: #fee2e2;
+            color: #991b1b
+        }
+
+        .spec-badge.menuiserie {
+            background: #fef9c3;
+            color: #854d0e
+        }
+
+        .spec-badge.etancheite {
+            background: #e0f2fe;
+            color: #075985
+        }
+
+        .spec-badge.autre {
+            background: var(--gray-100);
+            color: var(--gray-600)
+        }
+
+        /* FINANCE STYLES */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase
+        }
+
+        .status-badge.payee {
+            background: #dcfce7;
+            color: #166534
+        }
+
+        .status-badge.attente {
+            background: #fef9c3;
+            color: #854d0e
+        }
+
+        .status-badge.retard {
+            background: #fee2e2;
+            color: #991b1b
+        }
+
+        .budget-bar-container {
+            height: 24px;
+            background: var(--gray-100);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            margin-bottom: 8px;
+            position: relative
+        }
+
+        .budget-bar-real {
+            height: 100%;
+            background: var(--navy);
+            transition: width .5s ease
+        }
+
+        .budget-bar-over {
+            height: 100%;
+            background: var(--danger);
+            transition: width .5s ease
+        }
+
+        .budget-marker {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--copper);
+            z-index: 2
+        }
+
+        .marge-card {
+            border-left: 4px solid var(--copper);
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .marge-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--navy)
+        }
+
+        .spec-badge.etancheite {
+            background: #e0f2fe;
+            color: #075985
+        }
+
+        .spec-badge.autre {
+            background: var(--gray-100);
+            color: var(--gray-600)
+        }
+
         @media(max-width:900px) {
             .sidebar {
                 transform: translateX(-100%)
@@ -750,70 +959,130 @@
     <aside class="sidebar">
         <div class="sidebar-logo">
             <img src="../images/logo.png" alt="IBE Construction">
-            <div class="sidebar-badge">Administration</div>
-        </div>
-        <nav class="sidebar-nav">
-            <div class="nav-section">Tableau de bord</div>
-            <button class="nav-item active" onclick="showSection('overview')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                    <rect x="3" y="3" width="7" height="7" />
-                    <rect x="14" y="3" width="7" height="7" />
-                    <rect x="14" y="14" width="7" height="7" />
-                    <rect x="3" y="14" width="7" height="7" />
+            <div class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"
+                    style="margin-right:6px">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
-                Vue d'ensemble
-            </button>
-            <div class="nav-section">Gestion</div>
-            <button class="nav-item" onclick="showSection('clients')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-                Clients
-            </button>
-            <button class="nav-item" onclick="showSection('projects')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-                Projets
-            </button>
-            <button class="nav-item" onclick="showSection('messages')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-                Messagerie
-                <span id="unreadBadge"
-                    style="margin-left:auto;background:var(--danger);color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 7px;display:none"></span>
-            </button>
-            <div class="nav-section">Paramètres</div>
-            <button class="nav-item" onclick="showSection('newclient')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="16" />
-                    <line x1="8" y1="12" x2="16" y2="12" />
-                </svg>
-                Nouveau client
-            </button>
-        </nav>
-        <div class="sidebar-bottom">
-            <div id="adminChipSide" style="display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:8px">
-                <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--copper),var(--copper-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff"
-                    id="adminAvatar">A</div>
-                <div>
-                    <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.85)" id="adminEmail">admin</div>
-                    <div style="font-size:10px;color:rgba(255,255,255,.4)">Administrateur</div>
-                </div>
+                Administration IBE
             </div>
-            <button class="btn-logout-side" onclick="doLogout()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
-                </svg>
-                Déconnexion
-            </button>
-        </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Tableau de bord</div>
+                <button class="nav-item active" onclick="showSection('overview')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    Vue d'ensemble
+                </button>
+                <div class="nav-section">Gestion</div>
+                <button class="nav-item" onclick="showSection('clients')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    Clients
+                </button>
+                <button class="nav-item" onclick="showSection('projects')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    Projets
+                </button>
+                <button class="nav-item" onclick="showSection('messages')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                    Messagerie
+                    <span id="unreadBadge"
+                        style="margin-left:auto;background:var(--danger);color:#fff;border-radius:99px;font-size:10px;font-weight:700;padding:1px 7px;display:none"></span>
+                </button>
+                <button class="nav-item" onclick="showSection('gallery')" id="nav-gallery">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    Galerie Photos
+                </button>
+                <button class="nav-item" onclick="showSection('historique')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    Historique
+                </button>
+                <button class="nav-item" onclick="showSection('subcontractors')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path
+                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                    </svg>
+                    Sous-Traitants
+                </button>
+                <div class="nav-section">Finance</div>
+                <button class="nav-item" onclick="showSection('invoices')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <rect x="2" y="4" width="20" height="16" rx="2" />
+                        <line x1="12" y1="8" x2="12" y2="16" />
+                        <line x1="8" y1="12" x2="16" y2="12" />
+                    </svg>
+                    Factures
+                </button>
+                <button class="nav-item" onclick="showSection('budget')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M12 20v-6M6 20V10M18 20V4" />
+                    </svg>
+                    Budget
+                </button>
+                <button class="nav-item" onclick="showSection('marge')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                        <polyline points="17 6 23 6 23 12" />
+                    </svg>
+                    Marge & Rentabilité
+                </button>
+                <button class="nav-item" onclick="showSection('plusvalues')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="16" />
+                        <polyline points="16 12 12 8 8 12" />
+                    </svg>
+                    Plus-Values Premium
+                </button>
+                <div class="nav-section">Paramètres</div>
+                <button class="nav-item" onclick="showSection('newclient')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="16" />
+                        <line x1="8" y1="12" x2="16" y2="12" />
+                    </svg>
+                    Nouveau client
+                </button>
+            </nav>
+            <div class="sidebar-bottom">
+                <div id="adminChipSide"
+                    style="display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:8px">
+                    <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--copper),var(--copper-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff"
+                        id="adminAvatar">A</div>
+                    <div>
+                        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.85)" id="adminEmail">admin
+                        </div>
+                        <div style="font-size:10px;color:rgba(255,255,255,.4)">Administrateur</div>
+                    </div>
+                </div>
+                <button class="btn-logout-side" onclick="doLogout()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+                    </svg>
+                    Déconnexion
+                </button>
+            </div>
     </aside>
 
     <!-- MAIN -->
@@ -823,11 +1092,25 @@
             <div class="topbar-right">
                 <button class="btn btn-ghost" onclick="openRepairModal()"
                     style="font-size:12px;color:var(--danger);margin-right:8px">
-                    🔧 Réparer un UID
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"
+                        style="width:14px;height:14px;margin-right:4px;display:inline-block;vertical-align:middle">
+                        <path
+                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
+                        </path>
+                    </svg>
+                    Réparer un UID
                 </button>
                 <button class="btn btn-ghost" onclick="seedTestData()"
                     style="font-size:12px;color:var(--copper);margin-right:8px">
-                    ✨ Générer données de test
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"
+                        style="width:14px;height:14px;margin-right:4px;display:inline-block;vertical-align:middle">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                        </polygon>
+                    </svg>
+                    Générer données de test
                 </button>
                 <a href="login.html" target="_blank" class="btn btn-ghost" style="font-size:12px">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
@@ -846,22 +1129,48 @@
             <div id="sec-overview" class="section active">
                 <div class="stats-grid" id="statsGrid">
                     <div class="stat-card">
-                        <div class="stat-icon">👥</div>
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--copper)" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
                         <div class="stat-value" id="statClients">—</div>
                         <div class="stat-label">Clients actifs</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">🏗️</div>
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--copper)" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                <line x1="9" y1="21" x2="9" y2="9"></line>
+                            </svg>
+                        </div>
                         <div class="stat-value" id="statProjects">—</div>
                         <div class="stat-label">Projets en cours</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">💬</div>
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--copper)" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
                         <div class="stat-value" id="statMsgs">—</div>
                         <div class="stat-label">Messages total</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">📈</div>
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--copper)" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                <polyline points="17 6 23 6 23 12"></polyline>
+                            </svg>
+                        </div>
                         <div class="stat-value" id="statAvg">—</div>
                         <div class="stat-label">Avancement moyen</div>
                     </div>
@@ -893,7 +1202,7 @@
                         <div class="card-title">Tous les clients</div>
                         <button class="btn btn-copper" onclick="showSection('newclient')">+ Nouveau client</button>
                     </div>
-                    <input id="clientSearch" placeholder="🔍 Rechercher un client…" oninput="filterClients()"
+                    <input id="clientSearch" placeholder="Rechercher un client…" oninput="filterClients()"
                         style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-300);border-radius:8px;font-size:13px;font-family:inherit;outline:none;margin-bottom:16px;color:var(--navy)">
                     <table class="table">
                         <thead>
@@ -943,7 +1252,21 @@
                         <div style="margin-bottom:20px">
                             <label
                                 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-500);display:block;margin-bottom:8px">Documents
-                                du projet</label>
+                                & Photos du projet</label>
+
+                            <!-- Category Selection -->
+                            <div style="margin-bottom:12px">
+                                <label
+                                    style="font-size:12px;color:var(--gray-700);font-weight:600;display:block;margin-bottom:4px">Catégorie
+                                    (pour les photos)</label>
+                                <select id="uploadCategory"
+                                    style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-300);border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:var(--white)">
+                                    <option value="">— Document (Général) —</option>
+                                    <option value="Gros œuvre">Gros œuvre</option>
+                                    <option value="Électricité">Électricité / Plomberie</option>
+                                    <option value="Finitions">Finitions / Déco</option>
+                                </select>
+                            </div>
 
                             <!-- Drag & Drop Zone -->
                             <div id="dropZone"
@@ -952,15 +1275,23 @@
                                 ondragover="event.preventDefault();this.style.borderColor='var(--copper)';this.style.background='#fff7ed'"
                                 ondragleave="this.style.borderColor='var(--gray-300)';this.style.background='var(--gray-50)'"
                                 ondrop="handleFileDrop(event)">
-                                <div style="font-size:32px;margin-bottom:8px">📂</div>
+                                <div style="font-size:32px;margin-bottom:8px">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--copper)" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        style="width:48px;height:48px;margin: 0 auto">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
                                 <div style="font-weight:600;color:var(--navy);margin-bottom:4px;font-size:14px">Glissez
-                                    vos fichiers ici</div>
-                                <div style="font-size:12px;color:var(--gray-500)">PDF, DWG, DXF, XLSX, DOC — max 50 Mo
+                                    vos fichiers ou photos ici</div>
+                                <div style="font-size:12px;color:var(--gray-500)">JPG, PNG, PDF, DWG, XLSX — max 50 Mo
                                 </div>
                                 <div style="font-size:11px;color:var(--copper);margin-top:6px;font-weight:600">ou
                                     cliquez pour sélectionner</div>
                                 <input type="file" id="fileInput" multiple
-                                    accept=".pdf,.dwg,.dxf,.xlsx,.doc,.docx,.jpg,.png" style="display:none"
+                                    accept=".pdf,.dwg,.dxf,.xlsx,.doc,.docx,.jpg,.jpeg,.png,.webp" style="display:none"
                                     onchange="handleFileSelect(event)">
                             </div>
 
@@ -969,7 +1300,22 @@
                                 style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
 
                             <!-- Existing docs list -->
-                            <div id="docsEditor" style="display:flex;flex-direction:column;gap:8px;margin-bottom:4px">
+                            <div style="margin-top:16px">
+                                <label
+                                    style="font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;display:block;margin-bottom:8px">Documents
+                                    techniques</label>
+                                <div id="docsEditor"
+                                    style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
+                            </div>
+
+                            <!-- Photo Gallery -->
+                            <div style="margin-top:16px">
+                                <label
+                                    style="font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;display:block;margin-bottom:8px">Galerie
+                                    Photos</label>
+                                <div id="photoGalleryAdmin"
+                                    style="display:grid;grid-template-columns:repeat(auto-fill, minmax(100px, 1fr));gap:10px">
+                                </div>
                             </div>
                         </div>
                         <div class="form-grid" style="margin-bottom:20px">
@@ -983,7 +1329,11 @@
                                 <input type="time" id="visitHeureInput" style="cursor:pointer"
                                     title="Sélectionnez une heure">
                             </div>
-                            <div class="form-group-a form-full">
+                            <div class="form-group-a">
+                                <label style="color:var(--copper)">Montant du contrat (HT MAD)</label>
+                                <input type="number" id="edit-contrat" placeholder="Ex: 500000">
+                            </div>
+                            <div class="form-group-a">
                                 <label>Lieu de la visite</label>
                                 <input type="text" id="visitLieuInput"
                                     placeholder="Ex : Chantier — Bd Zerktouni, Casablanca">
@@ -996,117 +1346,411 @@
                 </div>
             </div>
 
-            <!-- ═══ MESSAGES ═══ -->
-            <div id="sec-messages" class="section">
-                <div style="display:grid;grid-template-columns:280px 1fr;gap:20px;min-height:500px">
-                    <!-- Thread list -->
-                    <div class="card" style="padding:16px">
-                        <div class="card-title" style="margin-bottom:12px">Conversations</div>
-                        <div id="threadList" style="display:flex;flex-direction:column;gap:4px"></div>
-                    </div>
-                    <!-- Active thread -->
-                    <div class="card">
-                        <div id="msgHeader" class="card-header"
-                            style="border-bottom:1px solid var(--gray-200);padding-bottom:16px;margin-bottom:16px">
-                            <div class="card-title" id="msgThreadTitle">Sélectionnez une conversation</div>
-                        </div>
-                        <div class="msg-thread" id="msgThreadBody"></div>
-                        <div style="display:flex;gap:8px" id="msgInputArea">
-                            <input type="text" id="adminMsgInput" placeholder="Répondre en tant qu'IBE…"
-                                style="flex:1;padding:10px 14px;border:1.5px solid var(--gray-300);border-radius:8px;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s"
-                                onfocus="this.style.borderColor='var(--copper)'"
-                                onblur="this.style.borderColor='var(--gray-300)'"
-                                onkeydown="if(event.key==='Enter')sendAdminMsg()">
-                            <button class="btn btn-navy" onclick="sendAdminMsg()">Envoyer</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ NEW CLIENT ═══ -->
-            <div id="sec-newclient" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Créer un nouveau compte client</div>
-                    </div>
-
-                    <div
-                        style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 16px;font-size:13px;color:#92400e;margin-bottom:20px;line-height:1.6">
-                        ⚠️ <strong>Étape 1 :</strong> Créez d'abord le compte dans <a
-                            href="https://console.firebase.google.com" target="_blank"
-                            style="color:#b45309;font-weight:700">Firebase Console → Authentication</a> avec l'email et
-                        le mot de passe du client.<br>
-                        <strong>Étape 2 :</strong> Copiez l'UID généré et collez-le ci-dessous. Ce formulaire crée les
-                        données Firestore liées à cet UID.
-                    </div>
-
-                    <div id="newClientAlert"></div>
-
-                    <div class="form-grid">
-                        <div class="form-group-a form-full">
-                            <label>UID Firebase (depuis la console Auth)</label>
-                            <input type="text" id="nc-uid" placeholder="Ex : abc123XYZ...">
-                        </div>
-                        <div class="form-group-a">
-                            <label>Nom complet du client</label>
-                            <input type="text" id="nc-nom" placeholder="Ex : Mohammed Al-Fassi">
-                        </div>
-                        <div class="form-group-a">
-                            <label>Email</label>
-                            <input type="email" id="nc-email" placeholder="client@example.ma">
-                        </div>
-                        <div class="form-group-a">
-                            <label>Chargé de projet</label>
-                            <input type="text" id="nc-charge" placeholder="Ex : Fahd Benali">
-                        </div>
-                        <div class="form-group-a">
-                            <label>Tél. chargé</label>
-                            <input type="text" id="nc-tel" placeholder="+212 6 00 11 22 33">
-                        </div>
-                        <div class="form-group-a form-full"
-                            style="border-top:1px solid var(--gray-200);padding-top:16px;margin-top:4px">
+            <!-- ═══ GALERIE PHOTOS ═══ -->
+            <div id="sec-gallery" class="section">
+                <div class="card" style="margin-bottom:24px">
+                    <div style="display:flex;gap:16px;align-items:flex-end">
+                        <div style="flex:1">
                             <label
-                                style="font-size:13px;font-weight:700;color:var(--navy);text-transform:none;letter-spacing:0">📋
-                                Informations du projet</label>
-                        </div>
-                        <div class="form-group-a form-full">
-                            <label>Titre du projet</label>
-                            <input type="text" id="nc-titre" placeholder="Ex : Villa Al-Fassi — Casablanca">
-                        </div>
-                        <div class="form-group-a">
-                            <label>Type</label>
-                            <select id="nc-type">
-                                <option>Résidentiel</option>
-                                <option>Commercial</option>
-                                <option>Industriel</option>
-                                <option>Médical</option>
-                                <option>Institutionnel</option>
+                                style="font-size:12px;font-weight:700;color:var(--gray-500);text-transform:uppercase;display:block;margin-bottom:8px">Sélectionner
+                                un client</label>
+                            <select id="galleryClientSelect" onchange="loadGalleryForClient(this.value)"
+                                style="width:100%;padding:11px;border:1.5px solid var(--gray-300);border-radius:10px;outline:none;font-family:inherit">
+                                <option value="">— Choisir un client —</option>
                             </select>
                         </div>
-                        <div class="form-group-a">
-                            <label>Surface</label>
-                            <input type="text" id="nc-surface" placeholder="Ex : 320 m²">
-                        </div>
-                        <div class="form-group-a">
-                            <label>Date de démarrage</label>
-                            <input type="text" id="nc-debut" placeholder="Ex : 10 Janvier 2026">
-                        </div>
-                        <div class="form-group-a">
-                            <label>Livraison prévue</label>
-                            <input type="text" id="nc-livraison" placeholder="Ex : 15 Octobre 2026">
-                        </div>
-                    </div>
-
-                    <div style="margin-top:20px">
-                        <button class="btn btn-copper" onclick="createClient()" id="createClientBtn"
-                            style="padding:12px 24px;font-size:14px">
-                            ✅ Créer le compte client
+                        <button onclick="openCreateAlbumModal()" class="btn btn-navy"
+                            style="height:44px;display:flex;align-items:center;gap:8px">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    style="width:16px;height:16px;display:inline-block;vertical-align:middle">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </span> Créer un Album
                         </button>
                     </div>
                 </div>
+
+                <div id="galleryContent" style="display:none">
+                    <!-- Album navigation -->
+                    <div id="albumTabs"
+                        style="display:flex;gap:10px;margin-bottom:24px;overflow-x:auto;padding-bottom:10px">
+                        <!-- Injected by JS -->
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:20px">
+                        <!-- Left: Upload & Management -->
+                        <div class="card">
+                            <h3
+                                style="font-size:15px;color:var(--navy);font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="bronze-icon">
+                                    <path
+                                        d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                                    </path>
+                                    <circle cx="12" cy="13" r="4"></circle>
+                                </svg>
+                                Ajouter des photos
+                            </h3>
+
+                            <div id="activeAlbumTitle"
+                                style="margin-bottom:16px;padding:12px;background:var(--gray-50);border-radius:8px;border:1px solid var(--gray-200);font-weight:600;color:var(--copper);font-size:13px">
+                                Album actif : <span id="currentAlbumName">...</span>
+                            </div>
+
+                            <div id="galleryDropZone"
+                                style="border:2px dashed var(--gray-300);border-radius:12px;padding:40px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--gray-50);margin-bottom:16px"
+                                onclick="document.getElementById('galleryFileInput').click()"
+                                ondragover="event.preventDefault();this.style.borderColor='var(--copper)';this.style.background='#fff7ed'"
+                                ondragleave="this.style.borderColor='var(--gray-300)';this.style.background='var(--gray-50)'"
+                                ondrop="handleGalleryFileDrop(event)">
+                                <div style="font-size:40px;margin-bottom:12px">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--copper)" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        style="width:64px;height:64px;margin: 0 auto">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                </div>
+                                drum
+                                <div style="font-weight:600;color:var(--navy);margin-bottom:4px;font-size:14px">Glissez
+                                    vos photos ici</div>
+                                <div style="font-size:12px;color:var(--gray-500)">JPG, PNG, WEBP — max 50 Mo</div>
+                                <input type="file" id="galleryFileInput" multiple accept=".jpg,.jpeg,.png,.webp"
+                                    style="display:none" onchange="handleGalleryFileSelect(event)">
+                            </div>
+
+                            <div id="galleryUploadProgress" style="display:flex;flex-direction:column;gap:8px"></div>
+                        </div>
+
+                        <!-- Right: Photo Grid -->
+                        <div class="card">
+                            <h3 style="font-size:15px;color:var(--navy);font-weight:700;margin-bottom:16px">Photos de
+                                l'album</h3>
+                            <div id="photoGrid"
+                                style="display:grid;grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));gap:12px">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="galleryEmptyState" class="card"
+                    style="text-align:center;padding:60px 40px;color:var(--gray-500)">
+                    <div style="font-size:48px;margin-bottom:16px">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gray-300)" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            style="width:64px;height:64px;margin: 0 auto">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <p style="font-size:15px;font-weight:600">Sélectionnez un client pour gérer sa galerie</p>
+                </div>
             </div>
 
-        </div><!-- /content -->
+            <!-- ═══ HISTORIQUE ═══ -->
+            <div id="sec-historique" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--copper)" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:8px">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            Journal des Modifications
+                        </div>
+                    </div>
+                    <div class="filter-bar">
+                        <select id="historyFilterAction" onchange="filterHistory()">
+                            <option value="">Toutes les actions</option>
+                            <option value="Projet modifié">📝 Projet modifié</option>
+                            <option value="Client créé">👤 Client créé</option>
+                            <option value="Client supprimé">🗑️ Client supprimé</option>
+                            <option value="Document ajouté">📄 Document ajouté</option>
+                            <option value="Photo ajoutée">🖼️ Photo ajoutée</option>
+                            <option value="Message envoyé">💬 Message envoyé</option>
+                            <option value="Sous-traitant">🔨 Sous-traitant</option>
+                        </select>
+                        <input type="text" id="historySearch" placeholder="🔍 Rechercher…" oninput="filterHistory()"
+                            style="flex:1;min-width:200px">
+                    </div>
+                    <div id="historyLog"
+                        style="border:1px solid var(--gray-200);border-radius:10px;overflow:hidden;max-height:600px;overflow-y:auto">
+                        <div class="empty">
+                            <div class="empty-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gray-300)" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    style="width:36px;height:36px;margin: 0 auto 8px">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                            </div>Chargement…
+                        </div>
+                    </div>
+                    <div style="text-align:center;margin-top:16px">
+                        <button class="btn btn-ghost" id="loadMoreHistoryBtn" onclick="loadMoreHistory()"
+                            style="display:none">⬇️ Charger plus</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ SOUS-TRAITANTS ═══ -->
+            <div id="sec-subcontractors" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--copper)" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:8px">
+                                <path
+                                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
+                                </path>
+                            </svg>
+                            Répertoire des Sous-Traitants
+                        </div>
+                        <button class="btn btn-copper" onclick="openSubModal()">+ Ajouter un sous-traitant</button>
+                    </div>
+                    <input id="subSearch" placeholder="Rechercher un artisan…" oninput="filterSubs()"
+                        style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-300);border-radius:8px;font-size:13px;font-family:inherit;outline:none;margin-bottom:16px;color:var(--navy)">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Spécialité</th>
+                                <th>Téléphone</th>
+                                <th>Email</th>
+                                <th>Assurance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ═══ FACTURES ═══ -->
+        <div id="sec-invoices" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🧾 Gestion des Factures</div>
+                    <div style="display:flex;gap:10px">
+                        <select id="invoiceClientFilter" class="form-control" onchange="loadClientInvoices()"
+                            style="width:200px">
+                            <option value="">Sélectionner un client...</option>
+                        </select>
+                        <button class="btn btn-copper" onclick="openInvoiceModal()">+ Nouvelle Facture</button>
+                    </div>
+                </div>
+                <div id="invoiceList" style="margin-top:16px">
+                    <div class="empty">Sélectionnez un client pour voir ses factures.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ BUDGET ═══ -->
+        <div id="sec-budget" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Suivi Budget Prévu vs Réel</div>
+                    <select id="budgetClientFilter" class="form-control" onchange="loadClientBudget()"
+                        style="width:200px">
+                        <option value="">Sélectionner un client...</option>
+                    </select>
+                </div>
+                <div id="budgetView" style="margin-top:20px;display:none">
+                    <div class="stats-grid" style="margin-bottom:24px">
+                        <div class="stat-card">
+                            <div class="stat-label">Budget Global Prévu</div>
+                            <div class="stat-value" id="val-budget-prevu">0 MAD</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Dépensé à ce jour</div>
+                            <div class="stat-value" id="val-budget-reel">0 MAD</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Reste à dépenser</div>
+                            <div class="stat-value" id="val-budget-reste">0 MAD</div>
+                        </div>
+                    </div>
+                    <div id="budgetBars"></div>
+                    <button class="btn btn-ghost" onclick="openBudgetModal()" style="margin-top:16px">⚙️ Ajuster le
+                        budget</button>
+                </div>
+                <div id="budgetEmpty" class="empty">Sélectionnez un client pour voir son budget.</div>
+            </div>
+        </div>
+
+        <div id="sec-marge" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💰 Pilotage de la Rentabilité Global</div>
+                </div>
+                <div class="stats-grid" style="margin-bottom:24px">
+                    <div class="stat-card">
+                        <div class="stat-label">CA Contracté (Total HT)</div>
+                        <div class="stat-value" id="total-contracted" style="font-size:18px">0 MAD</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">CA Encaissé (Factures Payées)</div>
+                        <div class="stat-value" id="total-facture" style="font-size:18px">0 MAD</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Dépenses Réelles (Budget)</div>
+                        <div class="stat-value" id="total-st" style="font-size:18px">0 MAD</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Marge Nette Prévisionnelle</div>
+                        <div class="stat-value" id="total-marge" style="color:var(--success);font-size:18px">0 MAD</div>
+                    </div>
+                </div>
+
+                <div class="card-title" style="margin-bottom:16px;font-size:14px">Détails par Projet</div>
+                <div id="margeProjectList"></div>
+            </div>
+        </div>
+
+        <!-- ═══ PLUS-VALUES ═══ -->
+        <div id="sec-plusvalues" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">✨ Calculateur de Plus-Values Premium</div>
+                    <div style="display:flex;gap:10px">
+                        <select id="pvClientFilter" class="form-control" onchange="loadClientPlusValues()"
+                            style="width:200px">
+                            <option value="">Sélectionner un client...</option>
+                        </select>
+                        <button class="btn btn-navy" onclick="openPVModal()">+ Ajouter une Option</button>
+                    </div>
+                </div>
+                <div id="pvList" style="margin-top:16px">
+                    <div class="empty">Sélectionnez un client pour gérer ses options premium.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ MESSAGES ═══ -->
+        <div id="sec-messages" class="section">
+            <div style="display:grid;grid-template-columns:280px 1fr;gap:20px;min-height:500px">
+                <!-- Thread list -->
+                <div class="card" style="padding:16px">
+                    <div class="card-title" style="margin-bottom:12px">Conversations</div>
+                    <div id="threadList" style="display:flex;flex-direction:column;gap:4px"></div>
+                </div>
+                <!-- Active thread -->
+                <div class="card">
+                    <div id="msgHeader" class="card-header"
+                        style="border-bottom:1px solid var(--gray-200);padding-bottom:16px;margin-bottom:16px">
+                        <div class="card-title" id="msgThreadTitle">Sélectionnez une conversation</div>
+                    </div>
+                    <div class="msg-thread" id="msgThreadBody"></div>
+                    <div style="display:flex;gap:8px" id="msgInputArea">
+                        <input type="text" id="adminMsgInput" placeholder="Répondre en tant qu'IBE…"
+                            style="flex:1;padding:10px 14px;border:1.5px solid var(--gray-300);border-radius:8px;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s"
+                            onfocus="this.style.borderColor='var(--copper)'"
+                            onblur="this.style.borderColor='var(--gray-300)'"
+                            onkeydown="if(event.key==='Enter')sendAdminMsg()">
+                        <button class="btn btn-navy" onclick="sendAdminMsg()">Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ NEW CLIENT ═══ -->
+        <div id="sec-newclient" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Créer un nouveau compte client</div>
+                </div>
+
+                <div
+                    style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 16px;font-size:13px;color:#92400e;margin-bottom:20px;line-height:1.6">
+                    ⚠️ <strong>Étape 1 :</strong> Créez d'abord le compte dans <a
+                        href="https://console.firebase.google.com" target="_blank"
+                        style="color:#b45309;font-weight:700">Firebase Console → Authentication</a> avec l'email et
+                    le mot de passe du client.<br>
+                    <strong>Étape 2 :</strong> Copiez l'UID généré et collez-le ci-dessous. Ce formulaire crée les
+                    données Firestore liées à cet UID.
+                </div>
+
+                <div id="newClientAlert"></div>
+
+                <div class="form-grid">
+                    <div class="form-group-a form-full">
+                        <label>UID Firebase (depuis la console Auth)</label>
+                        <input type="text" id="nc-uid" placeholder="Ex : abc123XYZ...">
+                    </div>
+                    <div class="form-group-a">
+                        <label>Nom complet du client</label>
+                        <input type="text" id="nc-nom" placeholder="Ex : Mohammed Al-Fassi">
+                    </div>
+                    <div class="form-group-a">
+                        <label>Email</label>
+                        <input type="email" id="nc-email" placeholder="client@example.ma">
+                    </div>
+                    <div class="form-group-a">
+                        <label>Chargé de projet</label>
+                        <input type="text" id="nc-charge" placeholder="Ex : Fahd Benali">
+                    </div>
+                    <div class="form-group-a">
+                        <label>Tél. chargé</label>
+                        <input type="text" id="nc-tel" placeholder="+212 6 00 11 22 33">
+                    </div>
+                    <div class="form-group-a form-full"
+                        style="border-top:1px solid var(--gray-200);padding-top:16px;margin-top:4px">
+                        <label
+                            style="font-size:13px;font-weight:700;color:var(--navy);text-transform:none;letter-spacing:0">📋
+                            Informations du projet</label>
+                    </div>
+                    <div class="form-group-a form-full">
+                        <label>Titre du projet</label>
+                        <input type="text" id="nc-titre" placeholder="Ex : Villa Al-Fassi — Casablanca">
+                    </div>
+                    <div class="form-group-a">
+                        <label>Type</label>
+                        <select id="nc-type">
+                            <option>Résidentiel</option>
+                            <option>Commercial</option>
+                            <option>Industriel</option>
+                            <option>Médical</option>
+                            <option>Institutionnel</option>
+                        </select>
+                    </div>
+                    <div class="form-group-a">
+                        <label>Surface</label>
+                        <input type="text" id="nc-surface" placeholder="Ex : 320 m²">
+                    </div>
+                    <div class="form-group-a">
+                        <label>Date de démarrage</label>
+                        <input type="text" id="nc-debut" placeholder="Ex : 10 Janvier 2026">
+                    </div>
+                    <div class="form-group-a">
+                        <label>Livraison prévue</label>
+                        <input type="text" id="nc-livraison" placeholder="Ex : 15 Octobre 2026">
+                    </div>
+                    <div class="form-group-a">
+                        <label style="color:var(--copper)">Montant total du contrat (HT MAD)</label>
+                        <input type="number" id="nc-contrat" placeholder="Ex : 250000">
+                    </div>
+                </div>
+
+                <div style="margin-top:20px">
+                    <button class="btn btn-copper" onclick="createClient()" id="createClientBtn"
+                        style="padding:12px 24px;font-size:14px">
+                        ✅ Créer le compte client
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /content -->
     </div><!-- /main -->
 
     <!-- Firebase SDK -->
@@ -1160,7 +1804,11 @@
         // ── Navigation ──────────────────────────────────────────────
         const SECTION_TITLES = {
             overview: 'Vue d\'ensemble', clients: 'Clients',
-            projects: 'Projets', messages: 'Messagerie', newclient: 'Nouveau client'
+            projects: 'Projets', gallery: 'Galerie Photos', messages: 'Messagerie',
+            historique: 'Historique', subcontractors: 'Sous-Traitants',
+            invoices: 'Factures', budget: 'Budget', marge: 'Marge & Rentabilité',
+            plusvalues: 'Plus-Values Premium',
+            newclient: 'Nouveau client'
         };
 
         function showSection(id) {
@@ -1171,6 +1819,14 @@
                 if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(id)) btn.classList.add('active');
             });
             document.getElementById('topbarTitle').textContent = SECTION_TITLES[id] || id;
+
+            if (id === 'gallery') loadGallery();
+            if (id === 'historique') loadHistoryLog();
+            if (id === 'subcontractors') loadSubcontractors();
+            if (id === 'invoices') prepareInvoiceSection();
+            if (id === 'budget') prepareBudgetSection();
+            if (id === 'marge') loadMarginData();
+            if (id === 'plusvalues') preparePVSection();
         }
 
         // ── Overview ────────────────────────────────────────────────
@@ -1275,6 +1931,7 @@
                 populateProjectSelect();
                 renderThreadList();
 
+                ibeLogActivity('Client supprimé', `${nom}`, uid).catch(() => { });
                 // Toast
                 const toast = document.createElement('div');
                 toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1a2f4b;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:9999;display:flex;align-items:center;gap:8px';
@@ -1284,6 +1941,166 @@
             } catch (e) {
                 alert('Erreur lors de la suppression : ' + e.message);
             }
+        }
+
+        // ── Galerie & Albums Logic ─────────────────────────────
+        let currentGalleryUid = null;
+        let currentAlbum = 'Général';
+        let unsubGallery = null;
+
+        async function loadGallery() {
+            const select = document.getElementById('galleryClientSelect');
+            if (select.options.length <= 1) {
+                // allClients is already loaded by loadAdminData
+                allClients.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.uid;
+                    opt.textContent = `${c.nom} — ${c.uid.slice(0, 6)}`;
+                    select.appendChild(opt);
+                });
+            }
+        }
+
+        async function loadGalleryForClient(uid) {
+            currentGalleryUid = uid;
+            if (!uid) {
+                document.getElementById('galleryContent').style.display = 'none';
+                document.getElementById('galleryEmptyState').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('galleryEmptyState').style.display = 'none';
+            document.getElementById('galleryContent').style.display = 'block';
+
+            // Get albums from project metadata
+            const project = allProjects[uid] || await ibeGetProject(uid);
+            const albums = project.albums || ['Général', 'Gros œuvre', 'Électricité', 'Finitions'];
+            renderAlbumTabs(albums);
+
+            if (!albums.includes(currentAlbum)) currentAlbum = albums[0];
+            switchAlbum(currentAlbum);
+
+            if (unsubGallery) unsubGallery();
+            unsubGallery = ibeListenDocuments(uid, (docs) => renderGalleryPhotos(docs));
+        }
+
+        function renderAlbumTabs(albums) {
+            const container = document.getElementById('albumTabs');
+            container.innerHTML = '';
+            albums.forEach(a => {
+                const tab = document.createElement('div');
+                tab.style.cssText = 'padding:10px 20px;background:var(--gray-100);border:1.5px solid var(--gray-300);border-radius:99px;cursor:pointer;font-weight:600;font-size:13px;white-space:nowrap;transition:all .2s;color:var(--gray-600)';
+                tab.textContent = a;
+                tab.id = 'tab_' + a.replace(/\s+/g, '_');
+                if (a === currentAlbum) {
+                    tab.style.background = 'var(--navy)';
+                    tab.style.borderColor = 'var(--navy)';
+                    tab.style.color = '#fff';
+                }
+                tab.onclick = () => switchAlbum(a);
+                container.appendChild(tab);
+            });
+        }
+
+        function switchAlbum(name) {
+            currentAlbum = name;
+            document.getElementById('currentAlbumName').textContent = name;
+            document.querySelectorAll('#albumTabs > div').forEach(t => {
+                t.style.background = 'var(--gray-100)';
+                t.style.borderColor = 'var(--gray-300)';
+                t.style.color = 'var(--gray-600)';
+            });
+            const activeTab = document.getElementById('tab_' + name.replace(/\s+/g, '_'));
+            if (activeTab) {
+                activeTab.style.background = 'var(--navy)';
+                activeTab.style.borderColor = 'var(--navy)';
+                activeTab.style.color = '#fff';
+            }
+            // Real-time listener already updates, but we need to re-render to filter by currentAlbum
+            // ibeListenDocuments is already running, renderGalleryPhotos filters by currentAlbum
+            // So we just need to manually trigger a re-render or wait for next update.
+            // Let's force a one-time fetch to be snappy.
+            db.collection('documents').doc(currentGalleryUid).collection('files').get().then(snap => {
+                const docs = snap.docs.map(d => ({ docId: d.id, ...d.data() }));
+                renderGalleryPhotos(docs);
+            });
+        }
+
+        async function openCreateAlbumModal() {
+            if (!currentGalleryUid) { alert('Sélectionnez d\'abord un client.'); return; }
+            const name = prompt('Nom du nouvel album :');
+            if (!name || name.trim() === '') return;
+
+            const project = allProjects[currentGalleryUid] || await ibeGetProject(currentGalleryUid);
+            const albums = project.albums || ['Général', 'Gros œuvre', 'Électricité', 'Finitions'];
+            if (albums.includes(name)) { alert('Cet album existe déjà.'); return; }
+
+            albums.push(name);
+            await ibeUpdateProject(currentGalleryUid, { albums: albums });
+            allProjects[currentGalleryUid].albums = albums; // Update cache
+            renderAlbumTabs(albums);
+            switchAlbum(name);
+        }
+
+        function handleGalleryFileSelect(e) { uploadGalleryFiles(e.target.files); }
+        function handleGalleryFileDrop(e) {
+            e.preventDefault();
+            document.getElementById('galleryDropZone').style.borderColor = 'var(--gray-300)';
+            document.getElementById('galleryDropZone').style.background = 'var(--gray-50)';
+            uploadGalleryFiles(e.dataTransfer.files);
+        }
+
+        async function uploadGalleryFiles(files) {
+            if (!currentGalleryUid) return;
+            const progressContainer = document.getElementById('galleryUploadProgress');
+
+            for (const file of files) {
+                const barId = 'gpb_' + Math.random().toString(36).slice(2);
+                const barEl = document.createElement('div');
+                barEl.style.cssText = 'background:var(--gray-100);border-radius:8px;padding:8px 12px;font-size:12px;border:1px solid var(--gray-200)';
+                barEl.innerHTML = `<span id="${barId}_pct" style="font-weight:700;color:var(--copper)">0%</span> Envoi de <strong>${file.name}</strong>...`;
+                progressContainer.appendChild(barEl);
+
+                try {
+                    await ibeUploadDocument(currentGalleryUid, file, (pct) => {
+                        document.getElementById(barId + '_pct').textContent = pct + '%';
+                    }, currentAlbum);
+                    barEl.style.background = '#f0fdf4';
+                    barEl.style.borderColor = '#22c55e';
+                    barEl.innerHTML = `✓ <strong>${file.name}</strong> ajouté à l'album <strong>${currentAlbum}</strong>`;
+                    setTimeout(() => barEl.remove(), 2500);
+                } catch (err) {
+                    barEl.style.background = '#fef2f2';
+                    barEl.style.borderColor = '#dc2626';
+                    barEl.innerHTML = `❌ <strong>${file.name}</strong> : ${err.message}`;
+                    setTimeout(() => barEl.remove(), 5000);
+                }
+            }
+        }
+
+        function renderGalleryPhotos(docs) {
+            const grid = document.getElementById('photoGrid');
+            grid.innerHTML = '';
+
+            const photos = (docs || []).filter(d => d.category === currentAlbum);
+
+            if (!photos.length) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-400);font-size:13px">Aucune photo dans cet album</div>';
+                return;
+            }
+
+            photos.forEach(p => {
+                const item = document.createElement('div');
+                item.style.cssText = 'position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--gray-100);border:1px solid var(--gray-200);cursor:pointer;transition:transform .2s';
+                item.onmouseover = () => item.style.transform = 'scale(1.02)';
+                item.onmouseout = () => item.style.transform = 'scale(1)';
+                item.innerHTML = `
+                    <img src="${p.url}" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+                    <button onclick="deleteDoc('${p.docId}')" style="position:absolute;top:5px;right:5px;background:rgba(255,255,255,0.9);border:none;border-radius:5px;padding:4px;cursor:pointer;font-size:12px;box-shadow:0 2px 4px rgba(0,0,0,0.1)">🗑️</button>
+                `;
+                item.onclick = (e) => { if (e.target.tagName !== 'BUTTON') window.open(p.url, '_blank'); };
+                grid.appendChild(item);
+            });
         }
 
         // ── Project editor ──────────────────────────────────────────
@@ -1327,6 +2144,7 @@
             // visitHeureInput is type=time, needs HH:MM format  
             document.getElementById('visitHeureInput').value = v.heureRaw || v.heure || '';
             document.getElementById('visitLieuInput').value = v.lieu || '';
+            document.getElementById('edit-contrat').value = proj.contrat_ht || 0;
             document.getElementById('projectSaveAlert').innerHTML = '';
 
             // Start real-time listener on documents subcollection
@@ -1348,6 +2166,7 @@
             }));
 
             const updatedPct = parseInt(document.getElementById('pctRange').value);
+            const contratHt = parseFloat(document.getElementById('edit-contrat')?.value) || 0;
             const dateRaw = document.getElementById('visitDateInput').value;
             const heureRaw = document.getElementById('visitHeureInput').value;
 
@@ -1363,6 +2182,7 @@
             // documents/{uid}/files — NOT in the project document.
             const data = {
                 avancement: updatedPct,
+                contrat_ht: contratHt,
                 etapes,
                 prochaine_visite: {
                     dateRaw,
@@ -1379,6 +2199,8 @@
                 document.getElementById('projectSaveAlert').innerHTML = '<div class="alert alert-success">✅ Projet mis à jour avec succès !</div>';
                 renderOverview();
                 renderClientsTable();
+                const clientName = allClients.find(c => c.uid === uid)?.nom || uid;
+                ibeLogActivity('Projet modifié', `Avancement: ${updatedPct}% — ${clientName}`, uid).catch(() => { });
             } catch (e) {
                 document.getElementById('projectSaveAlert').innerHTML = '<div class="alert alert-err">❌ Erreur : ' + e.message + '</div>';
             }
@@ -1408,6 +2230,7 @@
             if (!uid) { alert('Sélectionnez d\'abord un client.'); return; }
 
             const progressContainer = document.getElementById('uploadProgress');
+            const category = document.getElementById('uploadCategory').value;
 
             for (const file of files) {
                 if (file.size > 50 * 1024 * 1024) {
@@ -1439,8 +2262,9 @@
                     await ibeUploadDocument(uid, file, (pct) => {
                         document.getElementById(barId + '_pct').textContent = pct + '%';
                         document.getElementById(barId + '_fill').style.width = pct + '%';
-                    });
-                    // La liste se rafraîchit automatiquement via ibeListenDocuments
+                    }, category);
+                    const clientName2 = allClients.find(c => c.uid === uid)?.nom || uid;
+                    ibeLogActivity('Document ajouté', `${file.name} — ${clientName2}`, uid).catch(() => { });
                     barEl.style.background = '#f0fdf4';
                     barEl.style.borderLeft = '3px solid #22c55e';
                     barEl.querySelector(`#${barId}_fill`).style.background = '#22c55e';
@@ -1465,35 +2289,68 @@
 
         function renderDocsList(docs) {
             const container = document.getElementById('docsEditor');
+            const gallery = document.getElementById('photoGalleryAdmin');
             container.innerHTML = '';
+            gallery.innerHTML = '';
+
             if (!docs || !docs.length) {
-                container.innerHTML = '<div style="font-size:12px;color:var(--gray-500);text-align:center;padding:12px">Aucun document — glissez des fichiers ci-dessus</div>';
+                container.innerHTML = '<div style="font-size:12px;color:var(--gray-500);text-align:center;padding:12px">Aucun document technique</div>';
+                gallery.innerHTML = '<div style="font-size:12px;color:var(--gray-500);text-align:center;padding:12px;grid-column:1/-1">Aucune photo</div>';
                 return;
             }
+
+            const imgExts = ['JPG', 'JPEG', 'PNG', 'GF', 'WEBP', 'BMP'];
+
             docs.forEach((d) => {
-                const ext = d.type || '';
-                const color = ext === 'PDF' ? '#dc2626' : ext === 'DWG' || ext === 'DXF' ? '#2563eb' : ext === 'XLS' || ext === 'XLSX' ? '#16a34a' : '#ca8a04';
-                const row = document.createElement('div');
-                row.style.cssText = 'display:flex;align-items:center;gap:10px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:10px 14px';
-                row.innerHTML = `
-                    <div style="background:${color};color:#fff;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800;min-width:36px;text-align:center">${ext}</div>
-                    <div style="flex:1;min-width:0">
-                        <div style="font-weight:600;font-size:13px;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.nom}</div>
-                        <div style="font-size:11px;color:var(--gray-500)">${d.date || ''} · ${d.taille || ''}</div>
-                    </div>
-                    ${d.url ? `<button onclick="openAdminDoc('${d.url}','${d.nom}')"
-                        style="background:none;border:1px solid var(--copper);color:var(--copper);border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;padding:4px 8px;display:flex;align-items:center;gap:4px" title="Télécharger">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                            <polyline points="7 10 12 15 17 10"/>
-                            <line x1="12" y1="15" x2="12" y2="3"/>
-                        </svg>
-                        Télécharger
-                    </button>` : ''}
-                    <button onclick="deleteDoc('${d.docId}')"
-                        style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:16px;padding:2px 4px;margin-left:4px" title="Supprimer">🗑️</button>`;
-                container.appendChild(row);
+                const ext = (d.type || '').toUpperCase();
+                const isImg = imgExts.includes(ext);
+
+                if (isImg && d.category) {
+                    // C'est une photo catégorisée -> Galerie
+                    const photo = document.createElement('div');
+                    photo.style.cssText = 'position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--gray-100);border:1px solid var(--gray-200)';
+                    photo.innerHTML = `
+                        <img src="${d.url}" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+                        <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.6);color:#fff;font-size:9px;padding:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                            ${d.category}
+                        </div>
+                        <button onclick="deleteDoc('${d.docId}')" style="position:absolute;top:4px;right:4px;background:rgba(255,255,255,0.9);border:none;border-radius:4px;padding:2px;cursor:pointer;font-size:12px;line-height:1">🗑️</button>
+                    `;
+                    photo.onclick = (e) => {
+                        if (e.target.tagName !== 'BUTTON') window.open(d.url, '_blank');
+                    };
+                    gallery.appendChild(photo);
+                } else {
+                    // C'est un document ou une photo non catégorisée -> Liste docs
+                    const color = ext === 'PDF' ? '#dc2626' : ext === 'DWG' || ext === 'DXF' ? '#2563eb' : ext === 'XLS' || ext === 'XLSX' ? '#16a34a' : '#ca8a04';
+                    const row = document.createElement('div');
+                    row.style.cssText = 'display:flex;align-items:center;gap:10px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:10px 14px';
+                    row.innerHTML = `
+                        <div style="background:${color};color:#fff;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800;min-width:36px;text-align:center">${ext}</div>
+                        <div style="flex:1;min-width:0">
+                            <div style="font-weight:600;font-size:13px;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.nom}</div>
+                            <div style="font-size:11px;color:var(--gray-500)">${d.date || ''} · ${d.taille || ''} ${d.category ? `· 🏷️ ${d.category}` : ''}</div>
+                        </div>
+                        <button onclick="openAdminDoc('${d.url}','${d.nom}')"
+                            style="background:none;border:1px solid var(--copper);color:var(--copper);border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;padding:4px 8px;display:flex;align-items:center;gap:4px">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                        </button>
+                        <button onclick="deleteDoc('${d.docId}')"
+                            style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:16px;padding:2px 4px;margin-left:4px">🗑️</button>`;
+                    container.appendChild(row);
+                }
             });
+
+            if (gallery.innerHTML === '') {
+                gallery.innerHTML = '<div style="font-size:12px;color:var(--gray-500);text-align:center;padding:12px;grid-column:1/-1">Aucune photo catégorisée</div>';
+            }
+            if (container.innerHTML === '') {
+                container.innerHTML = '<div style="font-size:12px;color:var(--gray-500);text-align:center;padding:12px">Aucun document technique</div>';
+            }
         }
 
         // ── Document Viewer ──────────────────────────────────────
@@ -1578,6 +2435,7 @@
             const surface = document.getElementById('nc-surface').value.trim();
             const debut = document.getElementById('nc-debut').value.trim();
             const livraison = document.getElementById('nc-livraison').value.trim();
+            const contratHt = parseFloat(document.getElementById('nc-contrat').value) || 0;
             const alertEl = document.getElementById('newClientAlert');
 
             if (!uid || !nom || !email || !titre) {
@@ -1590,10 +2448,11 @@
             btn.innerHTML = '<span class="spinner"></span> Création…';
 
             try {
-                const profileData = { uid, nom, email, charge, tel_charge: tel };
+                const profileData = { uid, nom, email, charge, tel_charge: tel, contrat_ht: contratHt };
                 const projectData = {
                     titre, type, surface, debut,
                     livraison_prevue: livraison,
+                    contrat_ht: contratHt,
                     avancement: 0,
                     etapes: [
                         { nom: 'Études & Plans', done: false, date: '—' },
@@ -1608,6 +2467,7 @@
                 };
                 await ibeCreateClient(null, null, profileData, projectData);
                 alertEl.innerHTML = '<div class="alert alert-success">✅ Profil Firestore créé avec succès pour ' + nom + ' !</div>';
+                ibeLogActivity('Client créé', `${nom} — ${titre}`, uid).catch(() => { });
                 // Refresh data
                 allClients = await ibeGetAllClients();
                 allProjects[uid] = projectData;
@@ -1768,6 +2628,555 @@
                 btn.innerHTML = '🔧 Lancer la réparation';
             }
         }
+
+        // ── Historique des Modifications ──────────────────────────
+        let allHistoryLogs = [];
+        let historyLimit = 50;
+
+        async function loadHistoryLog() {
+            allHistoryLogs = await ibeGetActivityLog(historyLimit);
+            renderHistoryRows(allHistoryLogs);
+            document.getElementById('loadMoreHistoryBtn').style.display = allHistoryLogs.length >= historyLimit ? 'inline-flex' : 'none';
+        }
+
+        async function loadMoreHistory() {
+            historyLimit += 50;
+            await loadHistoryLog();
+        }
+
+        const LOG_COLORS = {
+            'Projet modifié': '#3b82f6',
+            'Client créé': '#22c55e',
+            'Client supprimé': '#ef4444',
+            'Document ajouté': '#f59e0b',
+            'Photo ajoutée': '#8b5cf6',
+            'Message envoyé': '#06b6d4',
+            'Sous-traitant': '#ec4899'
+        };
+
+        function renderHistoryRows(logs) {
+            const container = document.getElementById('historyLog');
+            if (!logs || !logs.length) {
+                container.innerHTML = '<div class="empty"><div class="empty-icon">📋</div>Aucune activité enregistrée pour le moment.</div>';
+                return;
+            }
+            container.innerHTML = logs.map(l => {
+                const color = LOG_COLORS[l.action] || '#94a3b8';
+                return `<div class="log-row">
+                    <div class="log-dot" style="background:${color}"></div>
+                    <div style="flex:1;min-width:0">
+                        <div class="log-action">${l.action}</div>
+                        <div class="log-detail">${l.details || '—'}</div>
+                    </div>
+                    <div class="log-time">${l.date || ''} · ${l.heure || ''}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function filterHistory() {
+            const action = document.getElementById('historyFilterAction').value;
+            const search = document.getElementById('historySearch').value.toLowerCase();
+            const filtered = allHistoryLogs.filter(l => {
+                if (action && l.action !== action) return false;
+                if (search && !(l.action + ' ' + (l.details || '')).toLowerCase().includes(search)) return false;
+                return true;
+            });
+            renderHistoryRows(filtered);
+        }
+
+        // ── Gestion des Sous-Traitants ───────────────────────────
+        let allSubs = [];
+        let editingSubId = null;
+
+        const SPEC_CLASSES = {
+            'Maçonnerie': 'maconnerie', 'Électricité': 'electricite',
+            'Plomberie': 'plomberie', 'Peinture': 'peinture',
+            'Carrelage': 'carrelage', 'CVC': 'cvc',
+            'Menuiserie': 'menuiserie', 'Étanchéité': 'etancheite'
+        };
+
+        async function loadSubcontractors() {
+            allSubs = await ibeGetSubcontractors();
+            renderSubsTable(allSubs);
+        }
+
+        function renderSubsTable(subs) {
+            const tbody = document.getElementById('subsTableBody');
+            if (!subs || !subs.length) {
+                tbody.innerHTML = '<tr><td colspan="6"><div class="empty"><div class="empty-icon">🔨</div>Aucun sous-traitant enregistré</div></td></tr>';
+                return;
+            }
+            tbody.innerHTML = subs.map(s => {
+                const cls = SPEC_CLASSES[s.specialite] || 'autre';
+                return `<tr>
+                    <td><strong>${s.nom || '—'}</strong></td>
+                    <td><span class="spec-badge ${cls}">${s.specialite || '—'}</span></td>
+                    <td>${s.telephone || '—'}</td>
+                    <td style="color:var(--gray-500)">${s.email || '—'}</td>
+                    <td style="font-size:12px">${s.assurance || '—'}</td>
+                    <td>
+                        <button class="btn btn-ghost" onclick="editSub('${s.id}')">✏️</button>
+                        <button class="btn btn-danger" style="margin-left:4px;padding:5px 8px" onclick="deleteSub('${s.id}','${(s.nom || '').replace(/'/g, "\\'")}')">🗑️</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function filterSubs() {
+            const q = document.getElementById('subSearch').value.toLowerCase();
+            const filtered = allSubs.filter(s =>
+                !q || (s.nom + ' ' + s.specialite + ' ' + s.email + ' ' + s.telephone).toLowerCase().includes(q)
+            );
+            renderSubsTable(filtered);
+        }
+
+        function openSubModal(sub = null) {
+            editingSubId = sub ? sub.id : null;
+            document.getElementById('subModalTitle').textContent = sub ? 'Modifier le sous-traitant' : 'Ajouter un sous-traitant';
+            document.getElementById('sub-nom').value = sub?.nom || '';
+            document.getElementById('sub-spec').value = sub?.specialite || 'Maçonnerie';
+            document.getElementById('sub-tel').value = sub?.telephone || '';
+            document.getElementById('sub-email').value = sub?.email || '';
+            document.getElementById('sub-assurance').value = sub?.assurance || '';
+            document.getElementById('sub-note').value = sub?.note || '';
+            document.getElementById('subModal').classList.add('open');
+        }
+
+        function closeSubModal() {
+            document.getElementById('subModal').classList.remove('open');
+            editingSubId = null;
+        }
+
+        async function saveSubcontractor() {
+            const data = {
+                nom: document.getElementById('sub-nom').value.trim(),
+                specialite: document.getElementById('sub-spec').value,
+                telephone: document.getElementById('sub-tel').value.trim(),
+                email: document.getElementById('sub-email').value.trim(),
+                assurance: document.getElementById('sub-assurance').value.trim(),
+                note: document.getElementById('sub-note').value.trim()
+            };
+            if (!data.nom) { alert('Le nom est obligatoire.'); return; }
+
+            const btn = document.getElementById('saveSubBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Enregistrement…';
+
+            try {
+                if (editingSubId) {
+                    await ibeUpdateSubcontractor(editingSubId, data);
+                    ibeLogActivity('Sous-traitant', `Modifié: ${data.nom} (${data.specialite})`).catch(() => { });
+                } else {
+                    await ibeAddSubcontractor(data);
+                    ibeLogActivity('Sous-traitant', `Ajouté: ${data.nom} (${data.specialite})`).catch(() => { });
+                }
+                closeSubModal();
+                await loadSubcontractors();
+            } catch (e) {
+                alert('Erreur : ' + e.message);
+            }
+            btn.disabled = false;
+            btn.innerHTML = '💾 Enregistrer';
+        }
+
+        function editSub(id) {
+            const sub = allSubs.find(s => s.id === id);
+            if (sub) openSubModal(sub);
+        }
+
+        async function deleteSub(id, nom) {
+            if (!confirm(`Supprimer le sous-traitant "${nom}" ?`)) return;
+            try {
+                await ibeDeleteSubcontractor(id);
+                ibeLogActivity('Sous-traitant', `Supprimé: ${nom}`).catch(() => { });
+                await loadSubcontractors();
+            } catch (e) {
+                alert('Erreur : ' + e.message);
+            }
+        }
+
+        // ── Gestion des Factures ─────────────────────────────────────
+        let currentInvoiceClient = null;
+        let editingInvoiceId = null;
+
+        function prepareInvoiceSection() {
+            const select = document.getElementById('invoiceClientFilter');
+            select.innerHTML = '<option value="">Sélectionner un client...</option>' +
+                allClients.map(c => `<option value="${c.uid}">${c.nom}</option>`).join('');
+            document.getElementById('invoiceList').innerHTML = '<div class="empty">Sélectionnez un client.</div>';
+        }
+
+        async function loadClientInvoices() {
+            const uid = document.getElementById('invoiceClientFilter').value;
+            currentInvoiceClient = uid;
+            const container = document.getElementById('invoiceList');
+            if (!uid) {
+                container.innerHTML = '<div class="empty">Sélectionnez un client.</div>';
+                return;
+            }
+            container.innerHTML = '<div class="empty"><span class="spinner"></span> Chargement...</div>';
+            const invoices = await ibeGetInvoices(uid);
+            renderInvoicesTable(invoices);
+        }
+
+        function renderInvoicesTable(invoices) {
+            const container = document.getElementById('invoiceList');
+            if (!invoices.length) {
+                container.innerHTML = '<div class="empty">Aucune facture pour ce client.</div>';
+                return;
+            }
+            container.innerHTML = `<table class="table">
+                <thead>
+                    <tr>
+                        <th>N° Facture</th>
+                        <th>Désignation</th>
+                        <th>Montant HT</th>
+                        <th>Date</th>
+                        <th>Échéance</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${invoices.map(inv => {
+                const isOverdue = inv.statut === 'attente' && new Date(inv.echeance) < new Date();
+                const statusCls = isOverdue ? 'retard' : (inv.statut === 'payee' ? 'payee' : 'attente');
+                const statusTxt = isOverdue ? 'EN RETARD' : (inv.statut === 'payee' ? 'PAYÉE' : 'EN ATTENTE');
+                return `<tr>
+                            <td><strong>${inv.num || 'F-000'}</strong></td>
+                            <td>${inv.libelle || '—'}</td>
+                            <td>${Number(inv.montant).toLocaleString('fr-MA')} MAD</td>
+                            <td style="font-size:12px">${inv.date || '—'}</td>
+                            <td style="font-size:12px">${inv.echeance || '—'}</td>
+                            <td><span class="status-badge ${statusCls}">${statusTxt}</span></td>
+                            <td>
+                                <button class="btn btn-ghost" onclick="editInvoice('${inv.id}')">✏️</button>
+                                <button class="btn btn-danger" style="margin-left:4px" onclick="deleteInvoice('${inv.id}')">🗑️</button>
+                            </td>
+                        </tr>`;
+            }).join('')}
+                </tbody>
+            </table>`;
+        }
+
+        function openInvoiceModal(inv = null) {
+            if (!currentInvoiceClient) { alert('Veuillez d\'abord sélectionner un client.'); return; }
+            editingInvoiceId = inv ? inv.id : null;
+            document.getElementById('invoiceModalTitle').textContent = inv ? 'Modifier Facture' : 'Nouvelle Facture';
+            document.getElementById('inv-num').value = inv?.num || `F-${Date.now().toString().slice(-6)}`;
+            document.getElementById('inv-libelle').value = inv?.libelle || '';
+            document.getElementById('inv-montant').value = inv?.montant || '';
+            document.getElementById('inv-date').value = inv?.date || new Date().toISOString().split('T')[0];
+            document.getElementById('inv-echeance').value = inv?.echeance || '';
+            document.getElementById('inv-statut').value = inv?.statut || 'attente';
+            document.getElementById('invoiceModal').classList.add('open');
+        }
+
+        function closeInvoiceModal() {
+            document.getElementById('invoiceModal').classList.remove('open');
+            editingInvoiceId = null;
+        }
+
+        async function saveInvoice() {
+            const data = {
+                num: document.getElementById('inv-num').value.trim(),
+                libelle: document.getElementById('inv-libelle').value.trim(),
+                montant: parseFloat(document.getElementById('inv-montant').value),
+                date: document.getElementById('inv-date').value,
+                echeance: document.getElementById('inv-echeance').value,
+                statut: document.getElementById('inv-statut').value
+            };
+            if (!data.num || !data.montant) { alert('Numéro et montant obligatoires.'); return; }
+
+            const btn = document.getElementById('saveInvoiceBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>...';
+
+            try {
+                if (editingInvoiceId) {
+                    await ibeUpdateInvoice(currentInvoiceClient, editingInvoiceId, data);
+                    ibeLogActivity('Facture', `Modifiée: ${data.num} (${data.montant} MAD)`, currentInvoiceClient).catch(() => { });
+                } else {
+                    await ibeAddInvoice(currentInvoiceClient, data);
+                    ibeLogActivity('Facture', `Créée: ${data.num} (${data.montant} MAD)`, currentInvoiceClient).catch(() => { });
+                }
+                closeInvoiceModal();
+                loadClientInvoices();
+            } catch (e) { alert('Erreur : ' + e.message); }
+            btn.disabled = false; btn.innerHTML = '💾 Enregistrer';
+        }
+
+        async function editInvoice(id) {
+            const invoices = await ibeGetInvoices(currentInvoiceClient);
+            const inv = invoices.find(i => i.id === id);
+            if (inv) openInvoiceModal(inv);
+        }
+
+        async function deleteInvoice(id) {
+            if (!confirm('Supprimer cette facture ?')) return;
+            try {
+                await ibeDeleteInvoice(currentInvoiceClient, id);
+                ibeLogActivity('Facture', `Supprimée`, currentInvoiceClient).catch(() => { });
+                loadClientInvoices();
+            } catch (e) { alert('Erreur : ' + e.message); }
+        }
+
+        // ── Suivi Budget ─────────────────────────────────────────────
+        function prepareBudgetSection() {
+            const select = document.getElementById('budgetClientFilter');
+            select.innerHTML = '<option value="">Sélectionner un client...</option>' +
+                allClients.map(c => `<option value="${c.uid}">${c.nom}</option>`).join('');
+            document.getElementById('budgetView').style.display = 'none';
+            document.getElementById('budgetEmpty').style.display = 'block';
+        }
+
+        async function loadClientBudget() {
+            const uid = document.getElementById('budgetClientFilter').value;
+            if (!uid) { prepareBudgetSection(); return; }
+            document.getElementById('budgetView').style.display = 'block';
+            document.getElementById('budgetEmpty').style.display = 'none';
+            const budgetData = await ibeGetBudget(uid);
+            renderBudgetView(budgetData);
+        }
+
+        function renderBudgetView(data) {
+            if (!data) {
+                document.getElementById('budgetBars').innerHTML = '<div class="empty">Aucune donnée budget configurée.</div>';
+                return;
+            }
+            const categories = [
+                { id: 'structure', label: 'Gros Œuvre' },
+                { id: 'second', label: 'Second Œuvre' },
+                { id: 'finition', label: 'Finitions' },
+                { id: 'equipement', label: 'Équipements & CVC' }
+            ];
+            let totalPrevu = 0, totalReel = 0;
+            document.getElementById('budgetBars').innerHTML = categories.map(cat => {
+                const prevu = data[cat.id + '_prevu'] || 0;
+                const reel = data[cat.id + '_reel'] || 0;
+                totalPrevu += prevu; totalReel += reel;
+                const pct = prevu > 0 ? (Math.min(reel, prevu) / prevu * 100) : 0;
+                const overPct = (reel > prevu && prevu > 0) ? (Math.min(reel - prevu, prevu) / prevu * 100) : 0;
+                return `<div style="margin-bottom:20px">
+                    <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:4px">
+                        <span>${cat.label}</span>
+                        <span>${reel.toLocaleString('fr-MA')} / ${prevu.toLocaleString('fr-MA')} MAD</span>
+                    </div>
+                    <div class="budget-bar-container">
+                        <div class="budget-bar-real" style="width:${pct}%"></div>
+                        <div class="budget-bar-over" style="width:${overPct}%;background:${reel > prevu ? '#fecaca' : ''}"></div>
+                        <div class="budget-marker" style="left:100%"></div>
+                    </div>
+                </div>`;
+            }).join('');
+            document.getElementById('val-budget-prevu').textContent = totalPrevu.toLocaleString('fr-MA') + ' MAD';
+            document.getElementById('val-budget-reel').textContent = totalReel.toLocaleString('fr-MA') + ' MAD';
+            document.getElementById('val-budget-reste').textContent = Math.max(0, totalPrevu - totalReel).toLocaleString('fr-MA') + ' MAD';
+        }
+
+        function openBudgetModal() {
+            const uid = document.getElementById('budgetClientFilter').value;
+            if (!uid) return;
+            ibeGetBudget(uid).then(data => {
+                const ids = ['structure_prevu', 'structure_reel', 'second_prevu', 'second_reel', 'finition_prevu', 'finition_reel', 'equipement_prevu', 'equipement_reel'];
+                ids.forEach(id => document.getElementById('bgt-' + id).value = data ? (data[id] || 0) : 0);
+                document.getElementById('budgetModal').classList.add('open');
+            });
+        }
+
+        async function saveBudget() {
+            const uid = document.getElementById('budgetClientFilter').value;
+            const ids = ['structure_prevu', 'structure_reel', 'second_prevu', 'second_reel', 'finition_prevu', 'finition_reel', 'equipement_prevu', 'equipement_reel'];
+            const data = {};
+            ids.forEach(id => data[id] = parseFloat(document.getElementById('bgt-' + id).value) || 0);
+            await ibeUpdateBudget(uid, data);
+            ibeLogActivity('Budget', 'Mis à jour', uid).catch(() => { });
+            document.getElementById('budgetModal').classList.remove('open');
+            loadClientBudget();
+        }
+
+        function closeBudgetModal() { document.getElementById('budgetModal').classList.remove('open'); }
+
+        // ── Marge & Rentabilité ─────────────────────────────────────
+        async function loadMarginData() {
+            const container = document.getElementById('margeProjectList');
+            container.innerHTML = '<div class="empty"><span class="spinner"></span> Calcul en cours...</div>';
+
+            let globalContracted = 0, globalInvoiced = 0, globalExpenses = 0;
+            let html = '<div style="display:grid;gap:16px">';
+
+            for (const client of allClients) {
+                const proj = allProjects[client.uid] || {};
+                const contratHT = proj.contrat_ht || 0;
+                globalContracted += contratHT;
+
+                // 1. Factures payées (CA Encaissé)
+                const invs = await ibeGetInvoices(client.uid);
+                const paidCA = invs.filter(i => i.statut === 'payee').reduce((sum, i) => sum + (i.montant || 0), 0);
+                globalInvoiced += paidCA;
+
+                // 2. Dépenses (Budget Réel)
+                const bgt = await ibeGetBudget(client.uid);
+                const totalExpenses = bgt ? (
+                    (bgt.structure_reel || 0) +
+                    (bgt.second_reel || 0) +
+                    (bgt.finition_reel || 0) +
+                    (bgt.equipement_reel || 0)
+                ) : 0;
+                globalExpenses += totalExpenses;
+
+                // 3. Marge prévisionnelle sur ce projet
+                const margin = contratHT - totalExpenses;
+                const marginPct = contratHT > 0 ? (margin / contratHT * 100).toFixed(1) : 0;
+
+                // 4. Avancement financier (Encaissé / Contracté)
+                const financialProgress = contratHT > 0 ? (paidCA / contratHT * 100).toFixed(0) : 0;
+
+                html += `
+                <div class="card" style="padding:16px;border:1px solid var(--gray-200);box-shadow:none;background:var(--gray-50)">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+                        <div>
+                            <div style="font-weight:700;font-size:15px;color:var(--navy)">${client.nom}</div>
+                            <div style="font-size:11px;color:var(--gray-500)">Projet: ${proj.titre || '—'}</div>
+                        </div>
+                        <div style="text-align:right">
+                            <div style="font-size:16px;font-weight:800;color:${margin < 0 ? 'var(--danger)' : 'var(--success)'}">
+                                ${margin.toLocaleString('fr-MA')} MAD
+                            </div>
+                            <div style="font-size:11px;font-weight:700;color:var(--gray-400)">Marge: ${marginPct}%</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;background:white;padding:12px;border-radius:8px;border:1px solid var(--gray-200)">
+                        <div>
+                            <div style="font-size:10px;text-transform:uppercase;color:var(--gray-400);font-weight:700;margin-bottom:2px">Contrat HT</div>
+                            <div style="font-size:13px;font-weight:700">${contratHT.toLocaleString('fr-MA')} MAD</div>
+                        </div>
+                        <div>
+                            <div style="font-size:10px;text-transform:uppercase;color:var(--gray-400);font-weight:700;margin-bottom:2px">Dépenses</div>
+                            <div style="font-size:13px;font-weight:700">${totalExpenses.toLocaleString('fr-MA')} MAD</div>
+                        </div>
+                        <div>
+                            <div style="font-size:10px;text-transform:uppercase;color:var(--gray-400);font-weight:700;margin-bottom:2px">Encaissé</div>
+                            <div style="font-size:13px;font-weight:700;color:var(--copper)">${paidCA.toLocaleString('fr-MA')} MAD (${financialProgress}%)</div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+
+            document.getElementById('total-contracted').textContent = globalContracted.toLocaleString('fr-MA') + ' MAD';
+            document.getElementById('total-facture').textContent = globalInvoiced.toLocaleString('fr-MA') + ' MAD';
+            document.getElementById('total-st').textContent = globalExpenses.toLocaleString('fr-MA') + ' MAD';
+            document.getElementById('total-marge').textContent = (globalContracted - globalExpenses).toLocaleString('fr-MA') + ' MAD';
+        }
+
+        // ── Calculateur de Plus-Values ──────────────────────────────
+        let currentPVClient = null;
+        let editingPVId = null;
+
+        function preparePVSection() {
+            const select = document.getElementById('pvClientFilter');
+            select.innerHTML = '<option value="">Sélectionner un client...</option>' +
+                allClients.map(c => `<option value="${c.uid}">${c.nom}</option>`).join('');
+            document.getElementById('pvList').innerHTML = '<div class="empty">Sélectionnez un client.</div>';
+        }
+
+        async function loadClientPlusValues() {
+            const uid = document.getElementById('pvClientFilter').value;
+            currentPVClient = uid;
+            const container = document.getElementById('pvList');
+            if (!uid) { container.innerHTML = '<div class="empty">Sélectionnez un client.</div>'; return; }
+            container.innerHTML = '<div class="empty"><span class="spinner"></span> Chargement...</div>';
+            const items = await ibeGetPlusValues(uid);
+            renderPVTable(items);
+        }
+
+        function renderPVTable(items) {
+            const container = document.getElementById('pvList');
+            if (!items.length) {
+                container.innerHTML = '<div class="empty">Aucune option premium définie pour ce client.</div>';
+                return;
+            }
+            container.innerHTML = `
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Option / Matériau</th>
+                            <th>Description</th>
+                            <th>Surcoût (MAD)</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${items.map(it => `
+                            <tr>
+                                <td><strong>${it.titre}</strong></td>
+                                <td style="font-size:12px">${it.desc || '—'}</td>
+                                <td>+ ${Number(it.prix).toLocaleString('fr-MA')} MAD</td>
+                                <td><span class="status-badge ${it.active ? 'payee' : 'attente'}">${it.active ? 'CHOISI' : 'PROPOSÉ'}</span></td>
+                                <td>
+                                    <button class="btn btn-ghost" onclick="editPV('${it.id}')">✏️</button>
+                                    <button class="btn btn-danger" style="margin-left:4px" onclick="deletePV('${it.id}')">🗑️</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function openPVModal(item = null) {
+            if (!currentPVClient) { alert('Sélectionnez d\'abord un client.'); return; }
+            editingPVId = item ? item.id : null;
+            document.getElementById('pv-titre').value = item?.titre || '';
+            document.getElementById('pv-desc').value = item?.desc || '';
+            document.getElementById('pv-prix').value = item?.prix || '';
+            document.getElementById('pv-active').checked = item?.active || false;
+            document.getElementById('pvModal').classList.add('open');
+        }
+
+        function closePVModal() { document.getElementById('pvModal').classList.remove('open'); }
+
+        async function savePV() {
+            const data = {
+                titre: document.getElementById('pv-titre').value.trim(),
+                desc: document.getElementById('pv-desc').value.trim(),
+                prix: parseFloat(document.getElementById('pv-prix').value) || 0,
+                active: document.getElementById('pv-active').checked
+            };
+            if (!data.titre || !data.prix) { alert('Titre et prix requis.'); return; }
+
+            try {
+                if (editingPVId) {
+                    await ibeUpdatePlusValue(currentPVClient, editingPVId, data);
+                    ibeLogActivity('Plus-Value', `Modifiée: ${data.titre}`, currentPVClient).catch(() => { });
+                } else {
+                    await ibeAddPlusValue(currentPVClient, data);
+                    ibeLogActivity('Plus-Value', `ajoutée: ${data.titre}`, currentPVClient).catch(() => { });
+                }
+                closePVModal();
+                loadClientPlusValues();
+            } catch (e) { alert('Erreur : ' + e.message); }
+        }
+
+        async function editPV(id) {
+            const items = await ibeGetPlusValues(currentPVClient);
+            const item = items.find(i => i.id === id);
+            if (item) openPVModal(item);
+        }
+
+        async function deletePV(id) {
+            if (!confirm('Supprimer cette option ?')) return;
+            try {
+                await ibeDeletePlusValue(currentPVClient, id);
+                ibeLogActivity('Plus-Value', `Supprimée`, currentPVClient).catch(() => { });
+                loadClientPlusValues();
+            } catch (e) { alert('Erreur : ' + e.message); }
+        }
     </script>
     <!-- REPAIR MODAL -->
     <div id="repairModal" class="tool-modal">
@@ -1801,6 +3210,160 @@
             </div>
         </div>
     </div>
+
+    <!-- SUBCONTRACTOR MODAL -->
+    <div id="subModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeSubModal()">✕</button>
+            <div class="modal-title" id="subModalTitle">Ajouter un sous-traitant</div>
+            <div class="form-grid">
+                <div class="form-group-a">
+                    <label>Nom complet</label>
+                    <input type="text" id="sub-nom" placeholder="Ex : Ahmed El-Khadir">
+                </div>
+                <div class="form-group-a">
+                    <label>Spécialité</label>
+                    <select id="sub-spec">
+                        <option>Maçonnerie</option>
+                        <option>Électricité</option>
+                        <option>Plomberie</option>
+                        <option>Peinture</option>
+                        <option>Carrelage</option>
+                        <option>CVC</option>
+                        <option>Menuiserie</option>
+                        <option>Étanchéité</option>
+                        <option>Autre</option>
+                    </select>
+                </div>
+                <div class="form-group-a">
+                    <label>Téléphone</label>
+                    <input type="text" id="sub-tel" placeholder="+212 6 XX XX XX XX">
+                </div>
+                <div class="form-group-a">
+                    <label>Email</label>
+                    <input type="email" id="sub-email" placeholder="artisan@email.com">
+                </div>
+                <div class="form-group-a form-full">
+                    <label>N° Assurance Décennale</label>
+                    <input type="text" id="sub-assurance" placeholder="N° police d'assurance">
+                </div>
+                <div class="form-group-a form-full">
+                    <label>Notes</label>
+                    <textarea id="sub-note" rows="3" placeholder="Remarques, spécialités détaillées…"
+                        style="width:100%;padding:10px;border:1.5px solid var(--gray-300);border-radius:8px;font-family:inherit;font-size:13px;resize:vertical;outline:none"></textarea>
+                </div>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:10px">
+                <button class="btn btn-ghost" onclick="closeSubModal()" style="flex:1">Annuler</button>
+                <button class="btn btn-copper" id="saveSubBtn" onclick="saveSubcontractor()" style="flex:1">💾
+                    Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INVOICE MODAL -->
+    <div id="invoiceModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeInvoiceModal()">✕</button>
+            <div class="modal-title" id="invoiceModalTitle">Nouvelle Facture</div>
+            <div class="form-grid">
+                <div class="form-group-a">
+                    <label>N° Facture</label>
+                    <input type="text" id="inv-num">
+                </div>
+                <div class="form-group-a">
+                    <label>Statut</label>
+                    <select id="inv-statut">
+                        <option value="attente">En attente</option>
+                        <option value="payee">Payée</option>
+                    </select>
+                </div>
+                <div class="form-group-a form-full">
+                    <label>Désignation / Libellé</label>
+                    <input type="text" id="inv-libelle" placeholder="Ex: Acompte 30% après fondations">
+                </div>
+                <div class="form-group-a">
+                    <label>Montant HT (MAD)</label>
+                    <input type="number" id="inv-montant" placeholder="0">
+                </div>
+                <div class="form-group-a">
+                    <label>Date facture</label>
+                    <input type="date" id="inv-date">
+                </div>
+                <div class="form-group-a">
+                    <label>Date échéance</label>
+                    <input type="date" id="inv-echeance">
+                </div>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:10px">
+                <button class="btn btn-ghost" onclick="closeInvoiceModal()" style="flex:1">Annuler</button>
+                <button class="btn btn-copper" id="saveInvoiceBtn" onclick="saveInvoice()" style="flex:1">💾
+                    Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUDGET MODAL -->
+    <div id="budgetModal" class="modal-overlay">
+        <div class="modal" style="max-width:600px">
+            <button class="modal-close" onclick="closeBudgetModal()">✕</button>
+            <div class="modal-title">⚙️ Ajuster le Budget du Projet</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+                <div>
+                    <h4 style="margin-bottom:10px;font-size:13px;color:var(--copper)">PRÉVU (DEVIS)</h4>
+                    <div class="form-group-a"><label>Gros Œuvre</label><input type="number" id="bgt-structure_prevu">
+                    </div>
+                    <div class="form-group-a"><label>Second Œuvre</label><input type="number" id="bgt-second_prevu">
+                    </div>
+                    <div class="form-group-a"><label>Finitions</label><input type="number" id="bgt-finition_prevu">
+                    </div>
+                    <div class="form-group-a"><label>Équipements</label><input type="number" id="bgt-equipement_prevu">
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom:10px;font-size:13px;color:var(--navy)">RÉEL (DÉPENSÉ)</h4>
+                    <div class="form-group-a"><label>&nbsp;</label><input type="number" id="bgt-structure_reel"></div>
+                    <div class="form-group-a"><label>&nbsp;</label><input type="number" id="bgt-second_reel"></div>
+                    <div class="form-group-a"><label>&nbsp;</label><input type="number" id="bgt-finition_reel"></div>
+                    <div class="form-group-a"><label>&nbsp;</label><input type="number" id="bgt-equipement_reel"></div>
+                </div>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:10px">
+                <button class="btn btn-ghost" onclick="closeBudgetModal()" style="flex:1">Annuler</button>
+                <button class="btn btn-navy" onclick="saveBudget()" style="flex:1">💾 Enregistrer Budget</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PLUS-VALUE MODAL -->
+    <div id="pvModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closePVModal()">✕</button>
+            <div class="modal-title">✨ Option Premium / Plus-Value</div>
+            <div class="form-group-a">
+                <label>Nom de l'option (Titre)</label>
+                <input type="text" id="pv-titre" placeholder="Ex: Marbre au lieu de carrelage">
+            </div>
+            <div class="form-group-a">
+                <label>Description détaillée</label>
+                <textarea id="pv-desc" rows="2" placeholder="Détails sur le matériau, la surface..."></textarea>
+            </div>
+            <div class="form-group-a">
+                <label>Surcoût estimation (HT MAD)</label>
+                <input type="number" id="pv-prix" placeholder="0">
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin:15px 0">
+                <input type="checkbox" id="pv-active">
+                <label for="pv-active" style="margin:0;font-size:13px;font-weight:700">Validé par le client (active
+                    l'impact budget)</label>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:10px">
+                <button class="btn btn-ghost" onclick="closePVModal()" style="flex:1">Annuler</button>
+                <button class="btn btn-navy" onclick="savePV()" style="flex:1">💾 Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

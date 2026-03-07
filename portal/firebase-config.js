@@ -43,7 +43,7 @@ const CLOUDINARY_UPLOAD_PRESET = 'ibe-docs';
  *
  * Returns: { url, nom, docId }
  */
-async function ibeUploadDocument(uid, file, onProgress) {
+async function ibeUploadDocument(uid, file, onProgress, category = null) {
     const ext = file.name.split('.').pop().toLowerCase();
     // NEW: Forcer les PDF en 'raw' pour éviter les erreurs de distribution 401
     // Cloudinary restreint souvent l'affichage des PDF en tant qu'images (resource_type: image)
@@ -104,6 +104,10 @@ async function ibeUploadDocument(uid, file, onProgress) {
         publicId: cloudinaryResult.publicId,
         uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
     };
+
+    if (category) {
+        meta.category = category;
+    }
 
     const docRef = await db.collection('documents').doc(uid).collection('files').add(meta);
     return { url: cloudinaryResult.url, nom: file.name, docId: docRef.id };
@@ -254,4 +258,117 @@ async function ibeCreateClient(email, password, profileData, projectData) {
     const { uid } = profileData;
     await db.collection('users').doc(uid).set(profileData);
     await db.collection('projects').doc(uid).set(projectData);
+}
+
+// ── Historique des Modifications (Audit Log) ─────────────────
+
+/**
+ * Enregistre une action dans le journal d'activité.
+ * Collection Firestore : activity_log
+ */
+async function ibeLogActivity(action, details, clientUid = null) {
+    const user = auth.currentUser;
+    return db.collection('activity_log').add({
+        action,
+        details,
+        clientUid: clientUid || null,
+        adminEmail: user ? user.email : 'système',
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        heure: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+        date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
+    });
+}
+
+/**
+ * Récupère le journal d'activité, trié par date décroissante.
+ * @param {number} limit — nombre max d'entrées (défaut 50)
+ */
+async function ibeGetActivityLog(limit = 50) {
+    const snap = await db.collection('activity_log')
+        .orderBy('timestamp', 'desc')
+        .limit(limit)
+        .get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// ── Gestion des Sous-Traitants ───────────────────────────────
+
+async function ibeAddSubcontractor(data) {
+    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    return db.collection('subcontractors').add(data);
+}
+
+async function ibeGetSubcontractors() {
+    const snap = await db.collection('subcontractors').orderBy('createdAt', 'desc').get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function ibeUpdateSubcontractor(id, data) {
+    return db.collection('subcontractors').doc(id).update(data);
+}
+
+async function ibeDeleteSubcontractor(id) {
+    return db.collection('subcontractors').doc(id).delete();
+}
+
+// ── Gestion des Factures ─────────────────────────────────────
+
+async function ibeAddInvoice(uid, data) {
+    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    return db.collection('invoices').doc(uid).collection('items').add(data);
+}
+
+function ibeListenInvoices(uid, callback) {
+    return db.collection('invoices').doc(uid).collection('items')
+        .orderBy('createdAt', 'desc')
+        .onSnapshot(snap => {
+            const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            callback(items);
+        });
+}
+
+async function ibeGetInvoices(uid) {
+    const snap = await db.collection('invoices').doc(uid).collection('items')
+        .orderBy('createdAt', 'desc').get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function ibeUpdateInvoice(uid, invoiceId, data) {
+    return db.collection('invoices').doc(uid).collection('items').doc(invoiceId).update(data);
+}
+
+async function ibeDeleteInvoice(uid, invoiceId) {
+    return db.collection('invoices').doc(uid).collection('items').doc(invoiceId).delete();
+}
+
+// ── Suivi Budget ─────────────────────────────────────────────
+
+async function ibeGetBudget(uid) {
+    const snap = await db.collection('budgets').doc(uid).get();
+    return snap.exists ? snap.data() : null;
+}
+
+async function ibeUpdateBudget(uid, data) {
+    return db.collection('budgets').doc(uid).set(data, { merge: true });
+}
+
+// ── Calculateur de Plus-Values ────────────────────────────────
+
+async function ibeAddPlusValue(uid, data) {
+    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    return db.collection('plus_values').doc(uid).collection('items').add(data);
+}
+
+async function ibeGetPlusValues(uid) {
+    const snap = await db.collection('plus_values').doc(uid).collection('items')
+        .orderBy('createdAt', 'desc').get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function ibeDeletePlusValue(uid, pvId) {
+    return db.collection('plus_values').doc(uid).collection('items').doc(pvId).delete();
+}
+
+async function ibeUpdatePlusValue(uid, pvId, data) {
+    return db.collection('plus_values').doc(uid).collection('items').doc(pvId).update(data);
 }

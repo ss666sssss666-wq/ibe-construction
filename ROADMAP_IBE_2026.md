@@ -1,8 +1,9 @@
 # 🏗️ ROADMAP IBE CONSTRUCTION
-## Plan Stratégique 2026-2027
+## Plan Stratégique 2026-2027 — Version 2.0
 
 **Date de création** : 21 Janvier 2026  
-**Version** : 1.0  
+**Dernière mise à jour** : 7 Mars 2026  
+**Version** : 2.0  
 **Équipe fondatrice** : 3 associés
 
 ---
@@ -13,7 +14,7 @@
 
 | Associé | Rôle | Expertise |
 |---------|------|-----------|
-| **Associé 1** | Directeur Études & BIM | Ingénierie structure, Revit, Robot, Calculs Eurocode |
+| **Tarik Ben Moussa** | Directeur Études & BIM | Ingénierie structure, Revit, Robot, Calculs Eurocode |
 | **Fahd** | Directeur Second Œuvre | Réalisation, Finitions, Gestion de chantier |
 | **Ahmed** | Directeur CVC & Fluides | Climatisation, HVAC, Optimisation énergétique |
 
@@ -23,6 +24,7 @@
 - ✅ Études de structure (BIM, calculs)
 - ✅ Réalisation second œuvre (finitions)
 - ✅ CVC/Climatisation (fluides, confort)
+- ✅ **Portail Client Digital** (suivi en temps réel)
 
 **= Un seul interlocuteur, de l'étude à la livraison**
 
@@ -42,6 +44,8 @@
 | **Délais** | ⚠️ Dépendances multiples | ✅ Maîtrisés |
 | **Responsabilité** | ❌ Diluée entre acteurs | ✅ Unique et claire |
 | **Prix** | $$$ (3 marges cumulées) | $$ (1 seule marge) |
+| **Suivi digital** | ❌ Aucun | ✅ Portail client temps réel |
+| **Transparence budget** | ❌ Opaque | ✅ Suivi prévu vs réel |
 
 ### Cibles Prioritaires
 
@@ -52,55 +56,92 @@
 
 ---
 
-## 📅 PHASE 1 : LANCEMENT (Mois 1-2)
+## ✅ BILAN — CE QUI EST FAIT (Janvier-Février 2026)
 
-### Objectif
-Avoir une présence digitale professionnelle et crédible
+### Site Web Vitrine — ✅ EN PRODUCTION
 
-### Actions Site Web
+| Fonctionnalité | Statut |
+|---------------|--------|
+| Site web moderne (Design Bronze/Navy) | ✅ Live |
+| Responsive mobile parfait | ✅ Live |
+| Multilingue (FR/EN/AR) | ✅ Live |
+| Animations GSAP + smooth scroll | ✅ Live |
+| Bouton WhatsApp flottant | ✅ Live |
+| Chatbot IA intégré | ✅ Live |
+| Calculateur de devis interactif | ✅ Live |
+| SEO basique (meta, sitemap, robots.txt) | ✅ Live |
+| Google Search Console vérifié | ✅ Live |
+| Hébergement Vercel (CDN mondial) | ✅ Live |
 
-#### 1. Fondation Digitale ✅ FAIT
-- [x] Site web moderne créé
-- [x] Design premium (Bronze/Navy)
-- [x] Responsive mobile parfait
-- [x] Multilingue (FR/EN/AR)
-- [x] Smooth scroll + animations GSAP
-- [x] Bouton WhatsApp flottant
+### Portail Client & Admin — ✅ EN PRODUCTION
 
-#### 2. Optimisations Immédiates ⏳ EN COURS
-- [ ] Section "Notre Équipe" (3 profils)
-- [ ] Refonte "Services" en offres packagées
-- [ ] Section "Notre Différence" (tableau comparatif)
-- [ ] Formulaire contact intelligent
-- [ ] SEO basique (meta, sitemap)
+| Module | Description | Statut |
+|--------|------------|--------|
+| **Authentification** | Connexion sécurisée (Firebase Auth), rôles Admin / Client | ✅ Live |
+| **Création clients** | Ajout de clients avec génération auto de UID et identifiants | ✅ Live |
+| **Suivi de projet** | 6 étapes de chantier, barre de progression, pourcentage global | ✅ Live |
+| **Gestion documents** | Upload drag & drop (PDF, DWG, XLSX, DOC), stockage Cloudinary | ✅ Live |
+| **Téléchargement** | Bouton "Télécharger" — téléchargement automatique sur le poste | ✅ Live |
+| **Messagerie** | Chat temps réel Admin ↔ Client avec horodatage | ✅ Live |
+| **Prochaine visite** | Date, heure et lieu affichés sur le dashboard client | ✅ Live |
+| **Galerie Photos** | Organisation par albums (Gros œuvre, Électricité, etc.) avec aperçu | ✅ Live |
+| **Module Financier** | Factures (Payées/Attente), Budget (Prévu vs Réel), Plus-Values Premium | ✅ Live |
+| **Design Premium** | Icônes "Bronze Elegant" (SVG) — Suppression totale des emojis | ✅ Live |
+| **Dashboard client** | Vue complète et épurée du projet pour le client | ✅ Live |
 
-### Actions Marketing
+### Stack Technique
 
-- [ ] Créer Google My Business
-- [ ] Créer page LinkedIn entreprise
-- [ ] Créer profils LinkedIn personnels (3)
-- [ ] Créer Instagram professionnel
-- [ ] Configurer email pro (@ibe-construction.com)
-
-### Livrables Phase 1
-
-- ✅ Site web live : ibe-construction.vercel.app
-- ⏳ Google My Business actif
-- ⏳ Présence sur 2 réseaux sociaux (LinkedIn, Instagram)
-- ⏳ Email professionnel configuré
-
-### Budget Phase 1
-
-| Poste | Coût |
-|-------|------|
-| Hébergement site | 0 DH (Vercel gratuit) |
-| Email pro (Google Workspace) | 50 DH/mois |
-| Outils design (Canva Pro) | 100 DH/mois |
-| **TOTAL MENSUEL** | **150 DH** |
+| Composant | Technologie | Coût |
+|-----------|------------|------|
+| Frontend | HTML5 / CSS3 / JavaScript | 0 DH |
+| Backend & Auth | Firebase (Auth + Firestore) | 0 DH (gratuit) |
+| Stockage fichiers | Cloudinary | 0 DH (gratuit) |
+| Hébergement | Vercel (CDN mondial) | 0 DH (gratuit) |
+| **TOTAL** | | **0 DH/mois** |
 
 ---
 
-## 📅 PHASE 2 : GÉNÉRATION DE LEADS (Mois 2-4)
+## 📅 PHASE 1 : FONDATIONS ADMIN (Mars 2026 — Semaine 1)
+
+### Objectif
+Renforcer les outils internes de l'administrateur
+
+| # | Fonctionnalité | Description | Statut |
+|---|---------------|-------------|-------|
+| 1 | **Historique des Modifications** | Journal détaillé : qui a modifié quoi, quand. Traçabilité complète pour l'admin et le client. | ✅ Live |
+| 2 | **Galerie Photos par Catégories** | Organisation des photos de chantier par dossiers (Gros œuvre, Électricité, Finitions). | ✅ Live |
+| 3 | **Gestion des Sous-Traitants** | Répertoire des artisans : contrats, assurances, spécialités. | ✅ Live |
+
+---
+
+## 📅 PHASE 2 : MODULE FINANCIER (Mars 2026 — Semaines 2-3)
+
+### Objectif
+Digitaliser entièrement la gestion financière des projets
+
+| # | Fonctionnalité | Description | Statut |
+|---|---------------|-------------|-------|
+| 4 | **Gestion des Factures** | Liste des factures émises. Statuts : payée / en attente / en retard. Visible par le client. | ✅ Live |
+| 5 | **Suivi Budget Prévu vs Réel** | Graphique comparatif en temps réel par postes de dépenses. | ✅ Live |
+| 6 | **Calcul de Marge Temps Réel** | Tableau de bord interne (admin uniquement) : rentabilité par projet. | ✅ Live |
+| 7 | **Calculateur de Plus-Values** | Le client choisit une option premium et voit l'impact sur son budget. | ✅ Live |
+
+---
+
+## 📅 PHASE 3 : OUTILS AVANCÉS (Mars-Avril 2026 — Semaine 4+)
+
+### Objectif
+Proposer des outils différenciants qui positionnent IBE en leader tech du BTP
+
+| # | Fonctionnalité | Description | Durée |
+|---|---------------|-------------|-------|
+| 8 | **Planning de Gantt Interactif** | Vue chronologique : dates début/fin par sous-étape, dépendances, jalons. Partagé avec le client. | 4 jours |
+| 9 | **Export Rapports PDF** | Génération auto de comptes-rendus : avancement, photos, budget, étapes suivantes. Envoyable à l'architecte ou au maître d'ouvrage. | 3 jours |
+| 10 | **Annotation de Photos** | Outil collaboratif : cliquer sur une photo pour poser une question ou signaler un détail. Commentaires en temps réel. | 4 jours |
+
+---
+
+## 📅 PHASE 4 : GÉNÉRATION DE LEADS (Avril-Mai 2026)
 
 ### Objectif
 Obtenir les 5 premiers clients
@@ -109,198 +150,123 @@ Obtenir les 5 premiers clients
 
 #### 1. Partenariats Architectes 🔴 PRIORITÉ 1
 - **Action** : Contacter 20 architectes à Casablanca/Rabat
-- **Pitch** : "Package complet études + réalisation + CVC"
+- **Pitch** : "Package complet études + réalisation + CVC + portail client digital"
 - **Offre** : Première étude gratuite (valeur 10k DH)
 - **Objectif** : 2 partenariats signés
 
 #### 2. Promoteurs Immobiliers 🔴 PRIORITÉ 2
 - **Cible** : Petits promoteurs (projets R+3 à R+6)
-- **Pitch** : "Un seul interlocuteur, coordination garantie"
-- **Offre** : Devis gratuit + visite chantier
+- **Pitch** : "Un seul interlocuteur + suivi digital temps réel pour vos clients"
+- **Offre** : Devis gratuit + visite chantier + démo portail client
 - **Objectif** : 3 projets signés
 
 #### 3. Marketing Digital 🟡
-- **Google Ads** : 1000 DH/mois
-  - Mots-clés : "Bureau d'études Casablanca", "Second œuvre", "Installation climatisation"
-- **LinkedIn Ads** : 500 DH/mois
-  - Cibler : Architectes, Promoteurs, Maîtres d'ouvrage
-- **SEO** : 3-4 articles de blog
-  - "Qu'est-ce que le BIM ?"
-  - "Choisir son système CVC"
-  - "Second œuvre : erreurs à éviter"
+- **Google Ads** : 1000 DH/mois (mots-clés : "Bureau d'études Casablanca", "Second œuvre", "CVC")
+- **LinkedIn Ads** : 500 DH/mois (cibles : Architectes, Promoteurs, Maîtres d'ouvrage)
+- **SEO** : 3-4 articles de blog ("Qu'est-ce que le BIM ?", "Choisir son système CVC", etc.)
 
 #### 4. Lead Magnet
 - **Créer** : "Guide BIM pour Promoteurs" (PDF 15 pages)
 - **Téléchargement** : En échange de l'email
 - **Distribution** : LinkedIn, site web, email
 
-### KPIs Phase 2
+### KPIs Phase 4
 
 - 🎯 **50 visiteurs/mois** sur le site
 - 🎯 **10 demandes de contact**
 - 🎯 **3-5 premiers clients** signés
 - 🎯 **2 partenariats** architectes
 
-### Budget Phase 2
+### Budget Phase 4 (Bootstrap)
 
 | Poste | Coût Mensuel |
-|-------|--------------|
-| Google Ads | 1000 DH |
-| LinkedIn Ads | 500 DH |
-| Outils marketing | 150 DH |
+|-------|--------------| 
+| Travail à distance / Coworking | 0 - 500 DH |
+| Google Ads (Test) | 500 DH |
+| LinkedIn Ads (Test) | 300 DH |
+| Outils marketing (Gratuits) | 0 DH |
 | Cartes de visite | 500 DH (une fois) |
-| **TOTAL** | **1650 DH/mois** |
+| **TOTAL** | **~800 DH/mois** |
 
 ---
 
-## 📅 PHASE 3 : PREMIERS PROJETS (Mois 4-8)
+## 📅 PHASE 5 : PREMIERS PROJETS (Juin-Octobre 2026)
 
 ### Objectif
-Livrer les premiers projets et créer des références
+Livrer les premiers projets et créer des références solides
 
 ### Organisation Interne
 
-#### Répartition des Rôles
+**Tarik Ben Moussa (Études)** : Études de structure, Modélisation BIM (Revit), Calculs (Robot), Coordination générale
 
-**Associé 1 (Études)**
-- Études de structure
-- Modélisation BIM (Revit)
-- Calculs (Robot Structural Analysis)
-- Coordination générale projets
+**Fahd (Second Œuvre)** : Gestion de chantier, Achats matériaux, Suivi artisans, Réception travaux
 
-**Fahd (Second Œuvre)**
-- Gestion de chantier
-- Achats matériaux
-- Suivi artisans
-- Réception travaux
-
-**Ahmed (CVC)**
-- Études fluides
-- Installation climatisation
-- Mise en service
-- Maintenance
-
-#### Outils de Gestion
-
-- **Trello/Asana** : Suivi projets
-- **Google Drive** : Plans, devis, documents
-- **WhatsApp Business** : Communication clients
-- **Facturation** : Logiciel comptable (Sage, Zoho)
+**Ahmed (CVC)** : Études fluides, Installation climatisation, Mise en service, Maintenance
 
 ### Actions Marketing
 
-#### 1. Portfolio Projets
 - Photographier TOUS les chantiers (avant/pendant/après)
-- Créer 1 page par projet sur le site
+- Créer 1 page portfolio par projet sur le site
 - Témoignages vidéo clients (30s)
+- Plaquette commerciale PDF 8 pages FR/EN/AR
 
-#### 2. Plaquette Commerciale
-- PDF 8 pages FR/EN/AR
-- Présentation équipe + services + projets
-- Téléchargeable sur le site
+### KPIs Phase 5
 
-#### 3. Événements
-- Participer à 1 salon BTP (Batimat Maroc, etc.)
-- Stand simple (budget 5000-10000 DH)
-
-### KPIs Phase 3
-
-- 🎯 **5 projets livrés**
-- 🎯 **3 projets en cours**
-- 🎯 **3 témoignages clients** (dont 1 vidéo)
-- 🎯 **Portfolio de 15-20 photos**
-- 🎯 **100 visiteurs/mois** sur le site
-- 🎯 **CA > 500k DH**
-
-### Budget Phase 3
-
-| Poste | Coût |
-|-------|------|
-| Marketing digital | 1650 DH/mois |
-| Plaquettes impression | 1000 DH |
-| Salon BTP | 7500 DH (une fois) |
-| **TOTAL 4 MOIS** | **15 600 DH** |
+- 🎯 **2-3 projets livrés ou en cours**
+- 🎯 **2 témoignages clients**
+- 🎯 **50 visiteurs/mois** sur le site
+- 🎯 **CA > 150k DH** (Validation du flux)
 
 ---
 
-## 📅 PHASE 4 : STRUCTURATION (Mois 8-12)
+## 📅 PHASE 6 : STRUCTURATION (Mois 8-12)
 
 ### Objectif
 Structurer l'entreprise et préparer la croissance
 
 ### Juridique & Administratif
 
-#### 1. Statut Juridique
-- **Forme** : SARL ou SAS à 3 associés
-- **Répartition parts** : 33/33/33 (ou selon apports)
-- **Capital social** : 100 000 DH minimum
-- **Siège social** : À définir (domiciliation ou bureau)
+- **Statut** : Auto-entrepreneur ou SARL (dès que le CA dépasse 300k DH)
+- **Local** : Bureau partagé ou petit local (uniquement si CA > 500k DH)
+- **Assurances** : RC Décennale (indispensable dès le premier contrat de réalisation)
 
-#### 2. Comptabilité
-- Recruter expert-comptable
-- Logiciel de facturation professionnel
-- Gestion TVA
+### Recrutement (si CA le permet)
 
-#### 3. Assurances
-- **RC Décennale** : Obligatoire
-- **RC Professionnelle** : Recommandée
-- **Assurance véhicule** : Si achat
+| Poste | Salaire |
+|-------|---------|
+| Conducteur de travaux | 6000 DH/mois |
+| Dessinateur BIM | 5000 DH/mois |
+| Technicien CVC | 4500 DH/mois |
 
-### Croissance
+### KPIs Phase 6
 
-#### 1. Recrutement (si CA le permet)
-- **1 Conducteur de travaux** (aide Fahd) - 6000 DH/mois
-- **1 Dessinateur BIM** (aide Associé 1) - 5000 DH/mois
-- **1 Technicien CVC** (aide Ahmed) - 4500 DH/mois
-
-#### 2. Investissements
-- **Véhicule utilitaire** : 150 000 DH (ou LOA)
-- **Outillage professionnel** : 30 000 DH
-- **Bureaux** : 5000 DH/mois (si budget)
-
-### KPIs Phase 4
-
-- 🎯 **15-20 projets livrés** (cumulé)
-- 🎯 **3 employés** recrutés
-- 🎯 **500 visiteurs/mois** sur le site
-- 🎯 **CA > 1M DH**
-- 🎯 **Bureau physique** (optionnel)
+- 🎯 **5-8 projets livrés** (cumulé)
+- 🎯 **1er employé ou stagiaire** recruté
+- 🎯 **Location d'un bureau fixe**
+- 🎯 **CA > 1M DH - 1.5M DH**
 
 ---
 
-## 📅 PHASE 5 : EXPANSION (Année 2)
+## 📅 PHASE 7 : EXPANSION (Année 2 — 2027)
 
 ### Objectif
 Devenir un acteur reconnu du BTP au Maroc
 
 ### Actions Stratégiques
 
-#### 1. Développement Commercial
 - Ouvrir agence à Rabat ou Marrakech
 - Recruter 1 commercial dédié
 - Participer à 3-4 salons/an
-
-#### 2. Certifications
-- **ISO 9001** : Qualité
-- **Qualibat** : Si applicable
-- **Certification BIM** : Autodesk
-
-#### 3. Diversification
-- Créer filiale spécialisée BIM
-- Proposer formation BIM
+- Certifications : ISO 9001, Certification BIM Autodesk
 - Développer activité maintenance CVC
-
-#### 4. International
 - Exporter vers Afrique subsaharienne
-- Partenariats avec bureaux d'études français
 
 ### KPIs Année 2
 
-- 🎯 **50+ projets/an**
-- 🎯 **10+ employés**
-- 🎯 **CA > 5M DH**
-- 🎯 **Présence dans 2-3 villes**
-- 🎯 **1 certification obtenue**
+- 🎯 **15-20 projets/an**
+- 🎯 **3-5 employés**
+- 🎯 **CA > 3.5M DH**
+- 🎯 **Structure physique établie**
 
 ---
 
@@ -320,15 +286,13 @@ Devenir un acteur reconnu du BTP au Maroc
 
 ### Projection CA Année 1
 
-| Trimestre | Nb Projets | CA Moyen/Projet | CA Total | Marge 25% |
+| Trimestre | Nb Projets | CA Moyen/Projet | CA Total | Marge 30% |
 |-----------|------------|-----------------|----------|-----------|
-| **Q1** | 2 | 200k DH | 400k DH | 100k DH |
-| **Q2** | 4 | 250k DH | 1M DH | 250k DH |
-| **Q3** | 6 | 300k DH | 1.8M DH | 450k DH |
-| **Q4** | 8 | 300k DH | 2.4M DH | 600k DH |
-| **TOTAL** | **20** | - | **5.6M DH** | **1.4M DH** |
-
-**Répartition marge à 3 : ~467k DH/associé/an**
+| **Q1** | 1 | 150k DH | 150k DH | 45k DH |
+| **Q2** | 2 | 200k DH | 400k DH | 120k DH |
+| **Q3** | 2 | 250k DH | 500k DH | 150k DH |
+| **Q4** | 3 | 300k DH | 900k DH | 270k DH |
+| **TOTAL** | **8** | - | **1.95M DH** | **585k DH** |
 
 ---
 
@@ -336,188 +300,44 @@ Devenir un acteur reconnu du BTP au Maroc
 
 ### OFFRE 1 : "CLÉS EN MAIN RÉSIDENTIEL"
 
-**Inclus :**
-- ✅ Études structure complètes (plans, calculs, note de calcul)
-- ✅ Réalisation second œuvre (cloisons, faux plafonds, peinture, carrelage)
-- ✅ Installation CVC (climatisation, ventilation)
-- ✅ Coordination générale
-- ✅ Suivi de chantier
+- ✅ Études structure complètes
+- ✅ Second œuvre (cloisons, faux plafonds, peinture, carrelage)
+- ✅ Installation CVC
+- ✅ **Portail client digital avec suivi temps réel**
 
-**Cible :** Promoteurs, Particuliers (villas)  
-**Prix indicatif :** 1200-1500 DH/m²  
-**Délai :** 6-12 mois selon taille
+**Cible :** Promoteurs, Particuliers · **Prix :** 1200-1500 DH/m² · **Délai :** 6-12 mois
 
 ---
 
 ### OFFRE 2 : "MÉDICAL PREMIUM"
 
-**Inclus :**
 - ✅ Études structure + fluides médicaux
 - ✅ Finitions sanitaires (normes strictes)
 - ✅ CVC spécialisé (salles blanches, filtration)
-- ✅ Conformité normes sanitaires
-- ✅ Réception avec autorités
+- ✅ **Portail client + suivi budget en temps réel**
 
-**Cible :** Cliniques, Cabinets dentaires, Laboratoires  
-**Prix indicatif :** 1800-2200 DH/m²  
-**Délai :** 8-14 mois
+**Cible :** Cliniques, Cabinets, Laboratoires · **Prix :** 1800-2200 DH/m² · **Délai :** 8-14 mois
 
 ---
 
 ### OFFRE 3 : "BUREAUX & COMMERCES"
 
-**Inclus :**
 - ✅ Aménagement intérieur (open space, bureaux fermés)
 - ✅ Climatisation bureaux (VRV, split)
-- ✅ Conformité structure (charges, acoustique)
 - ✅ Finitions premium
+- ✅ **Portail client + export rapports PDF automatisé**
 
-**Cible :** Entreprises, Franchises, Showrooms  
-**Prix indicatif :** 1000-1400 DH/m²  
-**Délai :** 4-8 mois
-
----
-
-## 📅 CALENDRIER DÉTAILLÉ - 6 PROCHAINS MOIS
-
-### MOIS 1 (Janvier 2026) ✅ EN COURS
-
-**Semaine 1-2**
-- [x] Créer le site web
-- [x] Optimiser mobile + animations
-
-**Semaine 3**
-- [ ] Ajouter section "Notre Équipe"
-- [ ] Refonte section "Services" en offres
-
-**Semaine 4**
-- [ ] Créer Google My Business
-- [ ] Lancer réseaux sociaux
+**Cible :** Entreprises, Franchises, Showrooms · **Prix :** 1000-1400 DH/m² · **Délai :** 4-8 mois
 
 ---
 
-### MOIS 2 (Février 2026)
+## 🎯 VISION 3 ANS
 
-**Semaine 1**
-- [ ] Préparer liste 20 architectes
-- [ ] Créer plaquette PDF
-
-**Semaine 2**
-- [ ] Contacter 10 premiers architectes
-- [ ] Lancer Google Ads (1000 DH)
-
-**Semaine 3**
-- [ ] Créer lead magnet (Guide BIM)
-- [ ] Publier 2 articles blog
-
-**Semaine 4**
-- [ ] Relancer architectes
-- [ ] Analyser premiers résultats
-
----
-
-### MOIS 3 (Mars 2026)
-
-**Semaine 1-2**
-- [ ] Signer premier projet
-- [ ] Démarrer chantier
-
-**Semaine 3**
-- [ ] Contacter 10 nouveaux architectes
-- [ ] Optimiser site selon analytics
-
-**Semaine 4**
-- [ ] Préparer participation salon BTP
-- [ ] Créer supports marketing
-
----
-
-### MOIS 4 (Avril 2026)
-
-**Semaine 1-2**
-- [ ] Livrer premier projet
-- [ ] Photographier + témoignage
-
-**Semaine 3**
-- [ ] Mettre à jour site avec projet
-- [ ] Participer à salon BTP
-
-**Semaine 4**
-- [ ] Analyser leads salon
-- [ ] Signer 2e et 3e projets
-
----
-
-### MOIS 5 (Mai 2026)
-
-**Semaine 1-2**
-- [ ] Lancer 2e et 3e chantiers
-- [ ] Créer études de cas
-
-**Semaine 3**
-- [ ] Publier 3 nouveaux articles blog
-- [ ] Optimiser SEO
-
-**Semaine 4**
-- [ ] Analyser résultats 5 mois
-- [ ] Ajuster stratégie
-
----
-
-### MOIS 6 (Juin 2026)
-
-**Semaine 1-2**
-- [ ] Livrer 2e et 3e projets
-- [ ] Collecter témoignages
-
-**Semaine 3-4**
-- [ ] Évaluer besoin recrutement
-- [ ] Préparer Phase 4 (structuration)
-
----
-
-## 🎯 MÉTRIQUES DE SUCCÈS
-
-### Fin Mois 3
-- ✅ 3 clients signés
-- ✅ 100 visiteurs/mois sur le site
-- ✅ 1 partenariat architecte
-
-### Fin Mois 6
-- ✅ 5 projets signés (dont 2 livrés)
-- ✅ 300 visiteurs/mois
-- ✅ CA > 500k DH
-
-### Fin Année 1
-- ✅ 20 projets livrés
-- ✅ 1000 visiteurs/mois
-- ✅ 1-3 employés
-- ✅ CA > 5M DH
-- ✅ Bureau physique
-
----
-
-## 💡 FACTEURS CLÉS DE SUCCÈS
-
-### 1. Coordination Interne
-- Réunions hebdomadaires à 3
-- Outils de gestion partagés
-- Communication transparente
-
-### 2. Qualité Avant Quantité
-- Privilégier la satisfaction client
-- Soigner chaque détail
-- Demander systématiquement des témoignages
-
-### 3. Marketing Constant
-- Publier régulièrement sur réseaux sociaux
-- Entretenir le réseau
-- Participer aux événements
-
-### 4. Innovation
-- Rester à jour sur les technologies BIM
-- Former l'équipe continuellement
-- Proposer des solutions modernes
+| Année | Objectif | Projets | CA | Employés |
+|-------|---------|---------|-----|----------|
+| **2026** | Bootstrap & Validation | 8 | 2M DH | 3 associés |
+| **2027** | Structuration & Bureau | 20 | 5M DH | 3 associés + 3 |
+| **2028** | Croissance & Équipe | 40 | 12M DH | 8-10 salariés |
 
 ---
 
@@ -525,68 +345,27 @@ Devenir un acteur reconnu du BTP au Maroc
 
 | Risque | Probabilité | Impact | Mitigation |
 |--------|-------------|--------|------------|
-| **Manque de clients** | Moyenne | Élevé | Marketing agressif, partenariats |
+| **Manque de clients** | Moyenne | Élevé | Marketing agressif, partenariats, portail comme argument commercial |
 | **Problèmes de trésorerie** | Moyenne | Élevé | Acomptes 30%, paiements échelonnés |
 | **Conflits associés** | Faible | Élevé | Pacte d'associés clair |
-| **Concurrence** | Élevée | Moyen | Différenciation par la qualité |
-| **Retards chantiers** | Moyenne | Moyen | Marges de sécurité dans planning |
+| **Concurrence** | Élevée | Moyen | Différenciation par la qualité + tech |
+| **Retards chantiers** | Moyenne | Moyen | Marges de sécurité + Gantt interactif |
+| **Perte de données** | Faible | Élevé | Firebase + Cloudinary (redondance cloud) |
 
 ---
 
-## 📞 CONTACTS UTILES
+## 💡 FACTEURS CLÉS DE SUCCÈS
 
-### Organismes
-- **CRI** : Centre Régional d'Investissement (création entreprise)
-- **CNSS** : Caisse Nationale de Sécurité Sociale
-- **Ordre des Ingénieurs** : Inscription obligatoire
-
-### Partenaires Potentiels
-- Architectes (liste à constituer)
-- Fournisseurs matériaux (à négocier)
-- Sous-traitants (gros œuvre, électricité, plomberie)
+1. **Coordination interne** : Réunions hebdomadaires à 3, outils partagés
+2. **Qualité avant quantité** : Satisfaction client, témoignages systématiques
+3. **Marketing constant** : Publications régulières sur réseaux sociaux
+4. **Innovation technologique** : Portail client = avantage concurrentiel majeur
+5. **Formation continue** : BIM, nouvelles technologies, management
 
 ---
 
-## 📚 RESSOURCES
+*Ce document est un guide stratégique évolutif. Il doit être révisé et ajusté tous les 3 mois.*
 
-### Outils Recommandés
-- **Design** : Canva Pro, Adobe Creative Cloud
-- **Gestion** : Trello, Asana, Monday
-- **Comptabilité** : Sage, Zoho Books
-- **Communication** : WhatsApp Business, Slack
-
-### Formations
-- **BIM** : Autodesk University, LinkedIn Learning
-- **Gestion** : Coursera, Udemy
-- **Marketing** : Google Digital Garage
-
----
-
-## 🎯 VISION 3 ANS
-
-### Année 1 (2026)
-- Lancement et premiers clients
-- 20 projets livrés
-- CA 5M DH
-
-### Année 2 (2027)
-- Structuration et croissance
-- 50 projets/an
-- CA 15M DH
-- 10 employés
-
-### Année 3 (2028)
-- Expansion et diversification
-- 100 projets/an
-- CA 30M DH
-- 20 employés
-- Présence dans 3 villes
-
----
-
-**Document créé le** : 21 Janvier 2026  
-**Prochaine révision** : 21 Avril 2026 (Fin Phase 2)
-
----
-
-*Ce document est un guide stratégique évolutif. Il doit être révisé et ajusté tous les 3 mois en fonction des résultats obtenus et des opportunités du marché.*
+**Prochaine révision prévue** : 27 Mai 2026  
+**Document préparé par** : Équipe technique IBE Construction  
+**Confidentiel — Usage interne uniquement**
