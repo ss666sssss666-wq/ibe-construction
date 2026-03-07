@@ -1249,6 +1249,31 @@
                                 du projet</label>
                             <div id="stepsEditor"></div>
                         </div>
+
+                        <!-- NEW: Planning Temporel (Gantt) -->
+                        <div style="margin-bottom:20px">
+                            <label
+                                style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--copper);display:block;margin-bottom:12px">📅
+                                Planning Temporel (Gantt)</label>
+                            <div id="planningEditor"
+                                style="background:var(--gray-50);padding:16px;border-radius:12px;border:1.5px solid var(--gray-200)">
+                                <div
+                                    style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px;margin-bottom:10px;padding:0 8px">
+                                    <div
+                                        style="font-size:10px;font-weight:700;color:var(--gray-500);text-transform:uppercase">
+                                        Phase</div>
+                                    <div
+                                        style="font-size:10px;font-weight:700;color:var(--gray-500);text-transform:uppercase">
+                                        Début</div>
+                                    <div
+                                        style="font-size:10px;font-weight:700;color:var(--gray-500);text-transform:uppercase">
+                                        Fin</div>
+                                </div>
+                                <div id="planningPhasesList" style="display:flex;flex-direction:column;gap:8px">
+                                    <!-- Injected by JS -->
+                                </div>
+                            </div>
+                        </div>
                         <div style="margin-bottom:20px">
                             <label
                                 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-500);display:block;margin-bottom:8px">Documents
@@ -2138,6 +2163,27 @@
     </div>`;
             });
 
+            // NEW: Render Planning Phases
+            const planningPhases = proj.planning || {
+                'etude': { label: '📝 Études & BIM', start: '', end: '' },
+                'gros_oeuvre': { label: '🏗️ Gros Œuvre', start: '', end: '' },
+                'electricite': { label: '⚡ Électricité & Plomb.', start: '', end: '' },
+                'finitions': { label: '✨ Finitions & Déco', start: '', end: '' },
+                'cvc': { label: '❄️ CVC & Fluides', start: '', end: '' }
+            };
+            const planningList = document.getElementById('planningPhasesList');
+            planningList.innerHTML = '';
+            Object.entries(planningPhases).forEach(([id, phase]) => {
+                planningList.innerHTML += `
+					<div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px;align-items:center;background:#fff;padding:8px 12px;border-radius:8px;border:1px solid var(--gray-200)">
+						<div style="font-size:13px;font-weight:600;color:var(--navy)">${phase.label}</div>
+						<input type="date" id="plan-start-${id}" value="${phase.start || ''}" style="padding:6px;border:1px solid var(--gray-300);border-radius:6px;font-size:12px">
+						<input type="date" id="plan-end-${id}" value="${phase.end || ''}" style="padding:6px;border:1px solid var(--gray-300);border-radius:6px;font-size:12px">
+						<input type="hidden" id="plan-label-${id}" value="${phase.label}">
+					</div>
+				`;
+            });
+
             const v = proj.prochaine_visite || {};
             // visitDateInput is type=date, needs YYYY-MM-DD format
             document.getElementById('visitDateInput').value = v.dateRaw || '';
@@ -2180,10 +2226,23 @@
 
             // Documents are now stored in a separate Firestore subcollection
             // documents/{uid}/files — NOT in the project document.
+
+            // NEW: Collect Planning Data
+            const planning = {};
+            const phases = ['etude', 'gros_oeuvre', 'electricite', 'finitions', 'cvc'];
+            phases.forEach(id => {
+                planning[id] = {
+                    label: document.getElementById('plan-label-' + id).value,
+                    start: document.getElementById('plan-start-' + id).value,
+                    end: document.getElementById('plan-end-' + id).value
+                };
+            });
+
             const data = {
                 avancement: updatedPct,
                 contrat_ht: contratHt,
                 etapes,
+                planning, // Added planning
                 prochaine_visite: {
                     dateRaw,
                     date: dateDisplay,

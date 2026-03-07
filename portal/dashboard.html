@@ -1254,6 +1254,148 @@
         .empty-state small {
             font-size: 12px
         }
+
+        /* ── GANTT CHART (Premium) ── */
+        .gantt-section {
+            margin-bottom: 24px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(26, 47, 75, 0.05);
+        }
+
+        .gantt-container {
+            position: relative;
+            padding: 20px 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .gantt-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .gantt-grid {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 15px;
+            min-width: 600px;
+        }
+
+        .gantt-timeline-header {
+            grid-column: 2;
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 15px;
+        }
+
+        .gantt-month {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            letter-spacing: 1px;
+        }
+
+        .gantt-row {
+            display: contents;
+        }
+
+        .gantt-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            height: 32px;
+        }
+
+        .gantt-track {
+            position: relative;
+            height: 32px;
+            background: rgba(26, 47, 75, 0.03);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .gantt-bar {
+            position: absolute;
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--navy), var(--navy-light));
+            box-shadow: 0 4px 12px rgba(26, 47, 75, 0.15);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gantt-bar:hover {
+            transform: scaleY(1.1);
+            z-index: 10;
+        }
+
+        .gantt-bar.active {
+            background: linear-gradient(90deg, var(--copper), var(--copper-dark));
+            box-shadow: 0 4px 15px rgba(204, 148, 97, 0.3);
+        }
+
+        .gantt-today-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--copper);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .gantt-today-line::after {
+            content: 'AUJOURD\'HUI';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            font-weight: 900;
+            color: var(--copper);
+            white-space: nowrap;
+        }
+
+        .gantt-today-dot {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: var(--copper);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(204, 148, 97, 0.2);
+            animation: pulse-gantt 2s infinite;
+        }
+
+        @keyframes pulse-gantt {
+            0% {
+                box-shadow: 0 0 0 0px rgba(204, 148, 97, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 0 10px rgba(204, 148, 97, 0);
+            }
+        }
     </style>
 </head>
 
@@ -1365,6 +1507,25 @@
                     </svg>
                     Étapes du chantier
                 </div>
+
+                <!-- NEW: Gantt Chart -->
+                <div class="gantt-section" id="ganttSection" style="display:none">
+                    <div class="gantt-container">
+                        <div class="gantt-grid" id="ganttGrid">
+                            <div class="gantt-timeline-header" id="ganttHeader">
+                                <!-- Months injected here -->
+                            </div>
+                            <!-- Rows injected here -->
+                            <div id="ganttRows"></div>
+
+                            <!-- Today Indicator -->
+                            <div class="gantt-today-line" id="ganttTodayLine">
+                                <div class="gantt-today-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card" style="padding:18px 16px">
                     <div class="steps-list" id="stepsList"></div>
                 </div>
@@ -1631,6 +1792,9 @@
 
     </div><!-- /app -->
 
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
@@ -1728,6 +1892,12 @@
             // Steps
             renderSteps(project.etapes || []);
 
+            // Gantt
+            if (project.planning) {
+                document.getElementById('ganttSection').style.display = 'block';
+                renderGantt(project.planning);
+            }
+
             // Info grid
             const infoGrid = document.getElementById('infoGrid');
             infoGrid.innerHTML = [
@@ -1755,6 +1925,85 @@
             // Show app
             document.getElementById('loadingScreen').classList.add('hide');
             document.getElementById('appShell').style.display = 'flex';
+        }
+
+        // ── GANTT CHART LOGIC ──
+        function renderGantt(planning) {
+            const rows = document.getElementById('ganttRows');
+            const header = document.getElementById('ganttHeader');
+            rows.innerHTML = '';
+            header.innerHTML = '';
+
+            const phases = Object.entries(planning).filter(([id, p]) => p.start && p.end);
+            if (!phases.length) {
+                document.getElementById('ganttSection').style.display = 'none';
+                return;
+            }
+
+            // Find min/max dates
+            const allDates = phases.flatMap(([id, p]) => [new Date(p.start), new Date(p.end)]);
+            const minDate = new Date(Math.min(...allDates));
+            const maxDate = new Date(Math.max(...allDates));
+
+            // Padding
+            minDate.setMonth(minDate.getMonth() - 1);
+            maxDate.setMonth(maxDate.getMonth() + 2);
+
+            const totalDays = (maxDate - minDate) / (1000 * 60 * 60 * 24);
+
+            // Render Header (Months)
+            let curr = new Date(minDate);
+            while (curr < maxDate) {
+                const monthLabel = curr.toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' });
+                header.innerHTML += `<div class="gantt-month">${monthLabel}</div>`;
+                curr.setMonth(curr.getMonth() + 1);
+            }
+
+            // Render Rows
+            phases.forEach(([id, p], index) => {
+                const start = new Date(p.start);
+                const end = new Date(p.end);
+                const left = ((start - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+                const width = ((end - start) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+
+                // Determine progress (mocked for now or based on steps if possible)
+                // For now let's use a simple active state if it's currently in range
+                const now = new Date();
+                const isActive = now >= start && now <= end;
+
+                rows.innerHTML += `
+					<div class="gantt-row">
+						<div class="gantt-label">${p.label}</div>
+						<div class="gantt-track">
+							<div class="gantt-bar ${isActive ? 'active' : ''}" 
+								 id="gantt-bar-${id}"
+								 style="left: ${left}%; width: ${width}%; opacity: 0; transform: scaleX(0); transform-origin: left">
+								${p.label}
+							</div>
+						</div>
+					</div>
+				`;
+
+                // Animate bar
+                gsap.to(`#gantt-bar-${id}`, {
+                    opacity: 1,
+                    scaleX: 1,
+                    duration: 1,
+                    delay: 0.2 + (index * 0.1),
+                    ease: "power2.out"
+                });
+            });
+
+            // Position "Today" line
+            const today = new Date();
+            if (today >= minDate && today <= maxDate) {
+                const todayPos = ((today - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+                const todayLine = document.getElementById('ganttTodayLine');
+                todayLine.style.left = `calc(100px + 15px + ${todayPos}%)`;
+                todayLine.style.display = 'block';
+            } else {
+                document.getElementById('ganttTodayLine').style.display = 'none';
+            }
         }
 
         // ── STEPS ──
