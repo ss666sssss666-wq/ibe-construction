@@ -944,6 +944,129 @@
                 grid-template-columns: 1fr 1fr
             }
         }
+
+        /* ── GANTT CHART (Admin Edition) ── */
+        .gantt-section {
+            margin-bottom: 24px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(26, 47, 75, 0.05);
+            padding: 20px;
+        }
+
+        .gantt-container {
+            position: relative;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .gantt-grid {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 15px;
+            min-width: 800px;
+        }
+
+        .gantt-timeline-header {
+            grid-column: 2;
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 15px;
+        }
+
+        .gantt-month {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            letter-spacing: 1px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .gantt-row {
+            display: contents;
+        }
+
+        .gantt-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            height: 36px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .gantt-track {
+            position: relative;
+            height: 36px;
+            background: rgba(26, 47, 75, 0.02);
+            border-radius: 4px;
+            margin-bottom: 4px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .gantt-bar {
+            position: absolute;
+            height: 24px;
+            top: 6px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--navy), var(--navy-light));
+            box-shadow: 0 4px 10px rgba(26, 47, 75, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gantt-bar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(26, 47, 75, 0.15);
+            filter: brightness(1.1);
+        }
+
+        .gantt-bar.phase-etude {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .gantt-bar.phase-gros_oeuvre {
+            background: linear-gradient(90deg, #1e293b, #334155);
+        }
+
+        .gantt-bar.phase-electricite {
+            background: linear-gradient(90deg, #eab308, #facc15);
+        }
+
+        .gantt-bar.phase-finitions {
+            background: linear-gradient(90deg, #cc9461, #e0b184);
+        }
+
+        .gantt-bar.phase-cvc {
+            background: linear-gradient(90deg, #06b6d4, #22d3ee);
+        }
+
+        .gantt-today-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--copper);
+            z-index: 5;
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -994,6 +1117,15 @@
                         <polyline points="9 22 9 12 15 12 15 22" />
                     </svg>
                     Projets
+                </button>
+                <button class="nav-item" onclick="showSection('planning')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    Planning Global
                 </button>
                 <button class="nav-item" onclick="showSection('messages')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
@@ -1661,6 +1793,32 @@
             </div>
         </div>
 
+        <!-- ═══ PLANNING GLOBAL ═══ -->
+        <div id="sec-planning" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📅 Planning Global des Chantiers</div>
+                    <div id="planningStats" style="font-size:12px;color:var(--gray-500)">Visualisez la chronologie de
+                        tous vos projets en cours.</div>
+                </div>
+
+                <div class="gantt-section" style="margin-top:20px">
+                    <div class="gantt-container">
+                        <div class="gantt-grid" id="adminGanttGrid">
+                            <div class="gantt-timeline-header" id="adminGanttHeader">
+                                <!-- Months injected here -->
+                            </div>
+                            <div id="adminGanttRows" style="display:contents">
+                                <!-- Rows injected here -->
+                            </div>
+
+                            <div class="gantt-today-line" id="adminGanttTodayLine" style="display:none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- ═══ MESSAGES ═══ -->
         <div id="sec-messages" class="section">
             <div style="display:grid;grid-template-columns:280px 1fr;gap:20px;min-height:500px">
@@ -1833,6 +1991,7 @@
             historique: 'Historique', subcontractors: 'Sous-Traitants',
             invoices: 'Factures', budget: 'Budget', marge: 'Marge & Rentabilité',
             plusvalues: 'Plus-Values Premium',
+            planning: 'Planning Global des Chantiers',
             newclient: 'Nouveau client'
         };
 
@@ -1845,6 +2004,7 @@
             });
             document.getElementById('topbarTitle').textContent = SECTION_TITLES[id] || id;
 
+            if (id === 'planning') renderAdminGantt();
             if (id === 'gallery') loadGallery();
             if (id === 'historique') loadHistoryLog();
             if (id === 'subcontractors') loadSubcontractors();
@@ -1852,6 +2012,94 @@
             if (id === 'budget') prepareBudgetSection();
             if (id === 'marge') loadMarginData();
             if (id === 'plusvalues') preparePVSection();
+        }
+
+        // ── GLOBAL GANTT LOGIC ──
+        function renderAdminGantt() {
+            const rows = document.getElementById('adminGanttRows');
+            const header = document.getElementById('adminGanttHeader');
+            rows.innerHTML = '';
+            header.innerHTML = '';
+
+            const projectsWithPlanning = Object.entries(allProjects).filter(([uid, p]) => p.planning);
+
+            if (!projectsWithPlanning.length) {
+                rows.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-400)">Aucun projet avec planning défini.</div>';
+                return;
+            }
+
+            // Find global min/max dates
+            let allDates = [];
+            projectsWithPlanning.forEach(([uid, p]) => {
+                Object.values(p.planning).forEach(phase => {
+                    if (phase.start) allDates.push(new Date(phase.start));
+                    if (phase.end) allDates.push(new Date(phase.end));
+                });
+            });
+
+            if (!allDates.length) {
+                rows.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-400)">Aucune date définie dans les plannings.</div>';
+                return;
+            }
+
+            const minDate = new Date(Math.min(...allDates));
+            const maxDate = new Date(Math.max(...allDates));
+            minDate.setMonth(minDate.getMonth() - 1);
+            maxDate.setMonth(maxDate.getMonth() + 2);
+
+            const totalDays = (maxDate - minDate) / (1000 * 60 * 60 * 24);
+
+            // Header (Months)
+            let curr = new Date(minDate);
+            while (curr < maxDate) {
+                const monthLabel = curr.toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' });
+                header.innerHTML += `<div class="gantt-month">${monthLabel}</div>`;
+                curr.setMonth(curr.getMonth() + 1);
+            }
+
+            // Rows
+            projectsWithPlanning.forEach(([uid, p]) => {
+                const client = allClients.find(c => c.uid === uid) || { nom: 'Inconnu' };
+
+                // Label row for Project
+                rows.innerHTML += `
+					<div class="gantt-row">
+						<div class="gantt-label" style="background:var(--gray-50);grid-column:1/-1;justify-content:flex-start;padding-left:10px;border-top:1px solid var(--gray-200);height:30px;font-size:11px;color:var(--copper)">
+							🏙️ ${p.titre || 'Projet'} — <strong>${client.nom}</strong>
+						</div>
+					</div>
+				`;
+
+                // Phase rows
+                Object.entries(p.planning).forEach(([phaseId, phase]) => {
+                    if (!phase.start || !phase.end) return;
+
+                    const start = new Date(phase.start);
+                    const end = new Date(phase.end);
+                    const left = ((start - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+                    const width = ((end - start) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+
+                    rows.innerHTML += `
+						<div class="gantt-row">
+							<div class="gantt-label" style="padding-left:20px;font-size:10px;color:var(--gray-500)">${phase.label}</div>
+							<div class="gantt-track">
+								<div class="gantt-bar phase-${phaseId}" style="left:${left}%; width:${width}%" onclick="editProject('${uid}')">
+									${phase.label}
+								</div>
+							</div>
+						</div>
+					`;
+                });
+            });
+
+            // Today Line
+            const today = new Date();
+            if (today >= minDate && today <= maxDate) {
+                const todayPos = ((today - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+                const line = document.getElementById('adminGanttTodayLine');
+                line.style.left = `calc(150px + 15px + ${todayPos}%)`;
+                line.style.display = 'block';
+            }
         }
 
         // ── Overview ────────────────────────────────────────────────
