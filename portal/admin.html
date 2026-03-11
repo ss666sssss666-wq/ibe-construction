@@ -8,1066 +8,28 @@
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <style>
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box
-        }
-
-        :root {
-            --navy: #1a2f4b;
-            --navy-light: #243d5f;
-            --copper: #cc9461;
-            --copper-dark: #b07d4e;
-            --copper-light: rgba(204, 148, 97, .12);
-            --white: #fff;
-            --bg: #f0f4f8;
-            --gray-100: #f8fafc;
-            --gray-200: #eef2f7;
-            --gray-300: #e2e8f0;
-            --gray-500: #64748b;
-            --gray-700: #334155;
-            --success: #10b981;
-            --danger: #ef4444;
-            --shadow-sm: 0 2px 8px rgba(27, 47, 75, .08);
-            --shadow: 0 8px 32px rgba(27, 47, 75, .12);
-            --radius: 14px;
-            --sidebar: 240px;
-        }
-
-        .bronze-icon {
-            color: var(--copper);
-            width: 20px;
-            height: 20px;
-            stroke-width: 2px;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            min-height: 100vh;
-            color: var(--navy);
-            display: flex
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: var(--sidebar);
-            background: var(--navy);
-            min-height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            z-index: 100
-        }
-
-        .sidebar-logo {
-            padding: 20px 20px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, .08)
-        }
-
-        .sidebar-logo img {
-            height: 42px;
-            width: auto;
-            object-fit: contain
-        }
-
-        .sidebar-badge {
-            display: inline-block;
-            background: #92400e;
-            color: #fef3c7;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            padding: 3px 8px;
-            border-radius: 10px;
-            margin-top: 6px;
-            text-transform: uppercase
-        }
-
-        .sidebar-nav {
-            flex: 1;
-            padding: 16px 12px;
-            overflow-y: auto
-        }
-
-        .nav-section {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, .3);
-            padding: 0 8px;
-            margin: 16px 0 6px
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            color: rgba(255, 255, 255, .65);
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all .2s;
-            margin-bottom: 2px;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-            font-family: 'Inter', sans-serif
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, .07);
-            color: #fff
-        }
-
-        .nav-item.active {
-            background: rgba(204, 148, 97, .15);
-            color: var(--copper)
-        }
-
-        .nav-item svg {
-            flex-shrink: 0;
-            opacity: .8
-        }
-
-        .sidebar-bottom {
-            padding: 16px 12px;
-            border-top: 1px solid rgba(255, 255, 255, .08)
-        }
-
-        .btn-logout-side {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            color: rgba(255, 255, 255, .5);
-            font-size: 13px;
-            cursor: pointer;
-            transition: color .2s;
-            border: none;
-            background: none;
-            width: 100%;
-            font-family: 'Inter', sans-serif
-        }
-
-        .btn-logout-side:hover {
-            color: #fff
-        }
-
-        /* MAIN */
-        .main {
-            margin-left: var(--sidebar);
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-width: 0
-        }
-
-        .topbar {
-            background: var(--white);
-            border-bottom: 1px solid var(--gray-200);
-            padding: 0 28px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 50
-        }
-
-        .topbar-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--navy)
-        }
-
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 12px
-        }
-
-        .admin-chip {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--gray-100);
-            border: 1px solid var(--gray-200);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--gray-700)
-        }
-
-        .content {
-            padding: 28px;
-            flex: 1
-        }
-
-        /* SECTION */
-        .section {
-            display: none
-        }
-
-        .section.active {
-            display: block
-        }
-
-        /* STATS */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px
-        }
-
-        .stat-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            border: 1px solid var(--gray-200);
-            box-shadow: var(--shadow-sm)
-        }
-
-        .stat-value {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--navy);
-            line-height: 1
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: var(--gray-500);
-            margin-top: 4px
-        }
-
-        .stat-icon {
-            font-size: 24px;
-            margin-bottom: 8px
-        }
-
-        /* CARDS */
-        .card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 24px;
-            border: 1px solid var(--gray-200);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 20px
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px
-        }
-
-        .card-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--navy)
-        }
-
-        /* TABLE */
-        .table {
-            width: 100%;
-            border-collapse: collapse
-        }
-
-        .table th {
-            text-align: left;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .5px;
-            text-transform: uppercase;
-            color: var(--gray-500);
-            padding: 0 12px 12px
-        }
-
-        .table td {
-            padding: 12px;
-            border-top: 1px solid var(--gray-200);
-            font-size: 13px;
-            color: var(--gray-700);
-            vertical-align: middle
-        }
-
-        .table tr:hover td {
-            background: var(--gray-100)
-        }
-
-        .table td:first-child,
-        .table th:first-child {
-            padding-left: 0
-        }
-
-        /* BADGES */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700
-        }
-
-        .badge.green {
-            background: rgba(16, 185, 129, .1);
-            color: #059669
-        }
-
-        .badge.blue {
-            background: rgba(59, 130, 246, .1);
-            color: #2563eb
-        }
-
-        .badge.orange {
-            background: var(--copper-light);
-            color: var(--copper-dark)
-        }
-
-        /* BUTTONS */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            font-family: 'Inter', sans-serif;
-            transition: all .2s
-        }
-
-        .btn-navy {
-            background: var(--navy);
-            color: #fff
-        }
-
-        .btn-navy:hover {
-            background: var(--navy-light)
-        }
-
-        .btn-copper {
-            background: var(--copper);
-            color: #fff
-        }
-
-        .btn-copper:hover {
-            background: var(--copper-dark)
-        }
-
-        .btn-ghost {
-            background: var(--gray-100);
-            color: var(--gray-700);
-            border: 1px solid var(--gray-200)
-        }
-
-        .btn-ghost:hover {
-            background: var(--gray-200)
-        }
-
-        .btn-danger {
-            background: #fff1f1;
-            color: var(--danger);
-            border: 1px solid #fecaca
-        }
-
-        .btn-danger:hover {
-            background: var(--danger);
-            color: #fff
-        }
-
-        /* FORM */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px
-        }
-
-        .form-group-a {
-            display: flex;
-            flex-direction: column;
-            gap: 5px
-        }
-
-        .form-group-a label {
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-            color: var(--gray-500)
-        }
-
-        .form-group-a input,
-        .form-group-a select,
-        .form-group-a textarea {
-            padding: 10px 12px;
-            border: 1.5px solid var(--gray-300);
-            border-radius: 8px;
-            font-size: 13px;
-            font-family: 'Inter', sans-serif;
-            color: var(--navy);
-            outline: none;
-            transition: border-color .2s;
-            background: var(--white)
-        }
-
-        .form-group-a input:focus,
-        .form-group-a select:focus,
-        .form-group-a textarea:focus {
-            border-color: var(--copper)
-        }
-
-        .form-group-a textarea {
-            resize: vertical;
-            min-height: 80px
-        }
-
-        .form-full {
-            grid-column: span 2
-        }
-
-        /* PROGRESS EDIT */
-        .progress-edit {
-            display: flex;
-            align-items: center;
-            gap: 12px
-        }
-
-        .progress-edit input[type=range] {
-            flex: 1;
-            accent-color: var(--copper)
-        }
-
-        .progress-val {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--copper);
-            min-width: 48px
-        }
-
-        /* STEPS EDIT */
-        .step-edit-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            border-radius: 8px;
-            background: var(--gray-100);
-            margin-bottom: 6px
-        }
-
-        .step-edit-item input[type=checkbox] {
-            accent-color: var(--success);
-            width: 16px;
-            height: 16px;
-            cursor: pointer
-        }
-
-        .step-edit-name {
-            flex: 1;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--navy)
-        }
-
-        .step-edit-date {
-            width: 130px;
-            padding: 5px 8px;
-            border: 1.5px solid var(--gray-300);
-            border-radius: 6px;
-            font-size: 12px;
-            font-family: 'Inter', sans-serif;
-            outline: none
-        }
-
-        .step-edit-date:focus {
-            border-color: var(--copper)
-        }
-
-        /* MESSAGES ADMIN */
-        .msg-thread {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 280px;
-            overflow-y: auto;
-            padding-right: 4px;
-            margin-bottom: 14px
-        }
-
-        .msg-thread::-webkit-scrollbar {
-            width: 4px
-        }
-
-        .msg-thread::-webkit-scrollbar-thumb {
-            background: var(--gray-300);
-            border-radius: 99px
-        }
-
-        .msg-a {
-            max-width: 80%
-        }
-
-        .msg-a.admin {
-            align-self: flex-end
-        }
-
-        .msg-a-meta {
-            font-size: 10px;
-            color: var(--gray-500);
-            margin-bottom: 3px
-        }
-
-        .msg-a.admin .msg-a-meta {
-            text-align: right
-        }
-
-        .msg-a-bubble {
-            padding: 9px 13px;
-            border-radius: 10px;
-            font-size: 13px;
-            line-height: 1.5;
-            color: var(--navy)
-        }
-
-        .msg-a:not(.admin) .msg-a-bubble {
-            background: var(--gray-100);
-            border-bottom-left-radius: 4px
-        }
-
-        .msg-a.admin .msg-a-bubble {
-            background: linear-gradient(135deg, var(--navy), var(--navy-light));
-            color: #fff;
-            border-bottom-right-radius: 4px
-        }
-
-        /* EMPTY */
-        .empty {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--gray-500);
-            font-size: 13px
-        }
-
-        .empty-icon {
-            font-size: 36px;
-            margin-bottom: 8px
-        }
-
-        /* ALERTS */
-        .alert {
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            margin-bottom: 16px
-        }
-
-        .alert-success {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #15803d
-        }
-
-        .alert-err {
-            background: #fff1f1;
-            border: 1px solid #fecaca;
-            color: #b91c1c
-        }
-
-        /* LOADING */
-        .loading-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--navy);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            transition: opacity .4s
-        }
-
-        .loading-screen.hide {
-            opacity: 0;
-            pointer-events: none
-        }
-
-        /* TOOL MODAL */
-        .tool-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .5);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px
-        }
-
-        .tool-modal.active {
-            display: flex
-        }
-
-        .tool-modal-card {
-            background: #fff;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 450px;
-            padding: 32px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
-            text-align: center
-        }
-
-        .loading-screen.hide {
-            opacity: 0;
-            pointer-events: none
-        }
-
-        @keyframes spinBig {
-            to {
-                transform: rotate(360deg)
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        flup: {
+                            bg: '#F4F7F6',
+                            green: '#10B981',
+                            greenLight: '#D1FAE5',
+                            dark: '#1F2937',
+                            gray: '#6B7280',
+                            border: '#E5E7EB'
+                        }
+                    }
+                }
             }
         }
-
-        .loading-spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(255, 255, 255, .15);
-            border-top-color: var(--copper);
-            border-radius: 50%;
-            animation: spinBig .8s linear infinite;
-            margin-bottom: 16px
-        }
-
-        .loading-text {
-            color: rgba(255, 255, 255, .6);
-            font-size: 14px
-        }
-
-        /* MODAL */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, .5);
-            z-index: 200;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px
-        }
-
-        .modal-overlay.open {
-            display: flex
-        }
-
-        .modal {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 32px;
-            width: 100%;
-            max-width: 580px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--navy);
-            margin-bottom: 20px
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: var(--gray-100);
-            border: none;
-            border-radius: 8px;
-            padding: 6px;
-            cursor: pointer;
-            color: var(--gray-500)
-        }
-
-        .modal-close:hover {
-            color: var(--navy)
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        .spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255, 255, 255, .3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin .7s linear infinite
-        }
-
-        /* HISTORY LOG */
-        .log-row {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--gray-200);
-            transition: background .15s
-        }
-
-        .log-row:hover {
-            background: var(--gray-50)
-        }
-
-        .log-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-top: 5px;
-            flex-shrink: 0
-        }
-
-        .log-action {
-            font-weight: 700;
-            font-size: 13px;
-            color: var(--navy);
-            margin-bottom: 2px
-        }
-
-        .log-detail {
-            font-size: 12px;
-            color: var(--gray-500);
-            line-height: 1.4
-        }
-
-        .log-time {
-            font-size: 11px;
-            color: var(--gray-400);
-            white-space: nowrap;
-            margin-left: auto;
-            flex-shrink: 0
-        }
-
-        .filter-bar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-            flex-wrap: wrap
-        }
-
-        .filter-bar select,
-        .filter-bar input {
-            padding: 9px 12px;
-            border: 1.5px solid var(--gray-300);
-            border-radius: 8px;
-            font-size: 13px;
-            font-family: inherit;
-            outline: none;
-            background: var(--white)
-        }
-
-        .filter-bar select:focus,
-        .filter-bar input:focus {
-            border-color: var(--copper)
-        }
-
-        /* SUBCONTRACTORS */
-        .spec-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 99px;
-            font-size: 11px;
-            font-weight: 700
-        }
-
-        .spec-badge.maconnerie {
-            background: #fef3c7;
-            color: #92400e
-        }
-
-        .spec-badge.electricite {
-            background: #dbeafe;
-            color: #1e40af
-        }
-
-        .spec-badge.plomberie {
-            background: #e0e7ff;
-            color: #3730a3
-        }
-
-        .spec-badge.peinture {
-            background: #fce7f3;
-            color: #9d174d
-        }
-
-        .spec-badge.carrelage {
-            background: #ccfbf1;
-            color: #065f46
-        }
-
-        .spec-badge.cvc {
-            background: #fee2e2;
-            color: #991b1b
-        }
-
-        .spec-badge.menuiserie {
-            background: #fef9c3;
-            color: #854d0e
-        }
-
-        .spec-badge.etancheite {
-            background: #e0f2fe;
-            color: #075985
-        }
-
-        .spec-badge.autre {
-            background: var(--gray-100);
-            color: var(--gray-600)
-        }
-
-        /* FINANCE STYLES */
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 99px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase
-        }
-
-        .status-badge.payee {
-            background: #dcfce7;
-            color: #166534
-        }
-
-        .status-badge.attente {
-            background: #fef9c3;
-            color: #854d0e
-        }
-
-        .status-badge.retard {
-            background: #fee2e2;
-            color: #991b1b
-        }
-
-        .budget-bar-container {
-            height: 24px;
-            background: var(--gray-100);
-            border-radius: 6px;
-            overflow: hidden;
-            display: flex;
-            margin-bottom: 8px;
-            position: relative
-        }
-
-        .budget-bar-real {
-            height: 100%;
-            background: var(--navy);
-            transition: width .5s ease
-        }
-
-        .budget-bar-over {
-            height: 100%;
-            background: var(--danger);
-            transition: width .5s ease
-        }
-
-        .budget-marker {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--copper);
-            z-index: 2
-        }
-
-        .marge-card {
-            border-left: 4px solid var(--copper);
-            padding: 16px;
-            background: var(--gray-50);
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center
-        }
-
-        .marge-value {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--navy)
-        }
-
-        .spec-badge.etancheite {
-            background: #e0f2fe;
-            color: #075985
-        }
-
-        .spec-badge.autre {
-            background: var(--gray-100);
-            color: var(--gray-600)
-        }
-
-        @media(max-width:900px) {
-            .sidebar {
-                transform: translateX(-100%)
-            }
-
-            .main {
-                margin-left: 0
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr 1fr
-            }
-        }
-
-        /* ── GANTT CHART (Admin Edition) ── */
-        .gantt-section {
-            margin-bottom: 24px;
-            overflow: hidden;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(26, 47, 75, 0.05);
-            padding: 20px;
-        }
-
-        .gantt-container {
-            position: relative;
-            overflow-x: auto;
-            scrollbar-width: thin;
-        }
-
-        .gantt-grid {
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            gap: 15px;
-            min-width: 800px;
-        }
-
-        .gantt-timeline-header {
-            grid-column: 2;
-            display: flex;
-            justify-content: space-between;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--gray-200);
-            margin-bottom: 15px;
-        }
-
-        .gantt-month {
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: var(--gray-400);
-            letter-spacing: 1px;
-            flex: 1;
-            text-align: center;
-        }
-
-        .gantt-row {
-            display: contents;
-        }
-
-        .gantt-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--navy);
-            display: flex;
-            align-items: center;
-            height: 36px;
-            border-bottom: 1px solid var(--gray-100);
-        }
-
-        .gantt-track {
-            position: relative;
-            height: 36px;
-            background: rgba(26, 47, 75, 0.02);
-            border-radius: 4px;
-            margin-bottom: 4px;
-            border-bottom: 1px solid var(--gray-100);
-        }
-
-        .gantt-bar {
-            position: absolute;
-            height: 24px;
-            top: 6px;
-            border-radius: 6px;
-            background: linear-gradient(90deg, var(--navy), var(--navy-light));
-            box-shadow: 0 4px 10px rgba(26, 47, 75, 0.1);
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            color: #fff;
-            font-size: 9px;
-            font-weight: 700;
-            overflow: hidden;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .gantt-bar:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(26, 47, 75, 0.15);
-            filter: brightness(1.1);
-        }
-
-        .gantt-bar.phase-etude {
-            background: linear-gradient(90deg, #3b82f6, #60a5fa);
-        }
-
-        .gantt-bar.phase-gros_oeuvre {
-            background: linear-gradient(90deg, #1e293b, #334155);
-        }
-
-        .gantt-bar.phase-electricite {
-            background: linear-gradient(90deg, #eab308, #facc15);
-        }
-
-        .gantt-bar.phase-finitions {
-            background: linear-gradient(90deg, #cc9461, #e0b184);
-        }
-
-        .gantt-bar.phase-cvc {
-            background: linear-gradient(90deg, #06b6d4, #22d3ee);
-        }
-
-        .gantt-today-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--copper);
-            z-index: 5;
-            pointer-events: none;
-        }
-    </style>
+    </script>
+    <link rel="stylesheet" href="admin-premium.css">
 </head>
 
 <body>
@@ -1090,9 +52,10 @@
                 </svg>
                 Administration IBE
             </div>
-            <nav class="sidebar-nav">
-                <div class="nav-section">Tableau de bord</div>
-                <button class="nav-item active" onclick="showSection('overview')">
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">Tableau de bord</div>
+            <button class="nav-item active" onclick="showSection('overview')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
                         <rect x="3" y="3" width="7" height="7" />
                         <rect x="14" y="3" width="7" height="7" />
@@ -1219,41 +182,16 @@
 
     <!-- MAIN -->
     <div class="main">
-        <div class="topbar">
-            <div class="topbar-title" id="topbarTitle">Vue d'ensemble</div>
-            <div class="topbar-right">
-                <button class="btn btn-ghost" onclick="openRepairModal()"
-                    style="font-size:12px;color:var(--danger);margin-right:8px">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round"
-                        style="width:14px;height:14px;margin-right:4px;display:inline-block;vertical-align:middle">
-                        <path
-                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
-                        </path>
-                    </svg>
-                    Réparer un UID
-                </button>
-                <button class="btn btn-ghost" onclick="seedTestData()"
-                    style="font-size:12px;color:var(--copper);margin-right:8px">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round"
-                        style="width:14px;height:14px;margin-right:4px;display:inline-block;vertical-align:middle">
-                        <polygon
-                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                        </polygon>
-                    </svg>
-                    Générer données de test
-                </button>
-                <a href="login.html" target="_blank" class="btn btn-ghost" style="font-size:12px">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                        <polyline points="15 3 21 3 21 9" />
-                        <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                    Portail client
-                </a>
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1 class="topbar-title" id="topbarTitle">Dashboard</h1>
+                <p style="font-size: 12px; color: var(--gray-400); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px;">Plateforme IBE Construction</p>
             </div>
-        </div>
+             <div class="topbar-right">
+                 <button class="btn btn-ghost" onclick="seedTestData()" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Générer Data</button>
+                 <div title="Vôtre profil Administrateur actif : IBE Construction" style="width: 40px; height: 40px; border-radius: 12px; background: #fff; border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: center; color: var(--success); font-weight: 900; font-size: 14px; font-style: italic; cursor: help;">IBE</div>
+            </div>
+        </header>
 
         <div class="content">
 
@@ -1355,7 +293,7 @@
             <!-- ═══ PROJECTS ═══ -->
             <div id="sec-projects" class="section">
                 <div class="card" id="projectEditorCard">
-                    <div class="card-header">
+                    <div style="margin-bottom:24px;">
                         <div class="card-title">Modifier un projet</div>
                     </div>
                     <div class="form-group-a" style="margin-bottom:16px">
@@ -1808,10 +746,18 @@
         <!-- ═══ PLANNING GLOBAL ═══ -->
         <div id="sec-planning" class="section">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="margin-bottom: 12px;">
                     <div class="card-title">📅 Planning Global des Chantiers</div>
                     <div id="planningStats" style="font-size:12px;color:var(--gray-500)">Visualisez la chronologie de
                         tous vos projets en cours.</div>
+                </div>
+
+                <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px; font-size:12px; font-weight:600; padding: 12px 16px; background: var(--gray-50); border-radius: 12px; border: 1px solid var(--gray-200);">
+                    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;border-radius:3px;background:var(--info)"></span>📝 Études & BIM</div>
+                    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;border-radius:3px;background:var(--copper)"></span>🏗️ Gros Œuvre</div>
+                    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;border-radius:3px;background:var(--warn)"></span>⚡ Électricité & Plomb.</div>
+                    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;border-radius:3px;background:#8b5cf6"></span>✨ Finitions & Déco</div>
+                    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;border-radius:3px;background:#06b6d4"></span>❄️ CVC & Fluides</div>
                 </div>
 
                 <div class="gantt-section" style="margin-top:20px">
@@ -1855,6 +801,108 @@
                         <button class="btn btn-navy" onclick="sendAdminMsg()">Envoyer</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ═══ PROSPECTION (LEAD GENERATOR) ═══ -->
+        <div id="sec-prospection-tab" class="section">
+            <div class="card">
+                <div class="card-header" style="display:flex; justify-content: space-between; align-items: center;">
+                    <div class="card-title">🎯 LeadHunter - Prospection Automatisée</div>
+                    <button class="btn btn-copper" onclick="exportLeadsExcel()" id="exportLeadsBtn" style="display: none;">
+                        ⬇️ Exporter Excel
+                    </button>
+                </div>
+                
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px; margin-bottom:20px;">
+                    <div class="form-grid">
+                        <div class="form-group-a">
+                            <label>Pays Cible</label>
+                            <select id="lead-country">
+                                <option value="Morocco">Maroc</option>
+                                <option value="France">France</option>
+                                <option value="Belgium">Belgique</option>
+                                <option value="Switzerland">Suisse</option>
+                                <option value="Canada">Canada</option>
+                                <option value="UAE">Émirats Arabes Unis</option>
+                                <option value="Saudi Arabia">Arabie Saoudite</option>
+                                <option value="Qatar">Qatar</option>
+                                <option value="Senegal">Sénégal</option>
+                                <option value="Ivory Coast">Côte d'Ivoire</option>
+                            </select>
+                        </div>
+                        <div class="form-group-a form-full">
+                            <label>Mots-clés (optionnel)</label>
+                            <input type="text" id="lead-keyword" placeholder="Ex: Architecte, Promoteur immobilier, Charpente métallique...">
+                            <small style="color:var(--gray-500);font-size:11px;margin-top:4px;display:block">
+                                Laissez vide pour utiliser le mode "Sniper" par défaut (Charpente Métallique). Séparez plusieurs mots-clés par des virgules.
+                            </small>
+                        </div>
+                        <div class="form-group-a">
+                            <label>Quantité voulue : <span id="lead-limit-val" style="color:var(--copper);font-weight:700;">10</span></label>
+                            <input type="range" id="lead-limit" min="5" max="50" step="5" value="10" 
+                                oninput="document.getElementById('lead-limit-val').textContent = this.value"
+                                style="width:100%; margin-top:8px;">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top:20px;">
+                        <button class="btn btn-navy" id="searchLeadsBtn" onclick="searchLeads()" style="width:100%; padding:12px; font-size:15px; font-weight:600;">
+                            🚀 Lancer la Chasse aux Prospects
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Area -->
+                <div id="leadsResultsArea" style="display: none;">
+                    <h3 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--gray-200);">
+                        Résultats de la recherche <span id="leadsCount" style="color:var(--gray-500); font-weight:500;"></span>
+                    </h3>
+                    
+                    <div style="overflow-x:auto; border:1px solid var(--gray-200); border-radius:10px;">
+                        <table class="data-table" style="width:100%; font-size:13px; text-align:left; border-collapse:collapse;">
+                            <thead>
+                                <tr style="background:var(--gray-50); border-bottom:1px solid var(--gray-200);">
+                                    <th style="padding:12px 16px; font-weight:600; color:var(--gray-600);">Entreprise</th>
+                                    <th style="padding:12px 16px; font-weight:600; color:var(--gray-600);">Secteur</th>
+                                    <th style="padding:12px 16px; font-weight:600; color:var(--gray-600);">Contact</th>
+                                    <th style="padding:12px 16px; font-weight:600; color:var(--gray-600);">Statut</th>
+                                    <th style="padding:12px 16px; font-weight:600; color:var(--gray-600); text-align:right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leadsTableBody">
+                                <!-- JS Populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- History Area (Recent leads) -->
+                <div id="leadsHistoryArea" style="margin-top:40px;">
+                    <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--gray-200);">
+                        <h3 style="font-size:14px; font-weight:700; color:var(--navy);">
+                            Historique Récent
+                        </h3>
+                        <button class="btn btn-ghost" onclick="loadLeadsHistory()" style="font-size:12px; padding:4px 8px;">🔄 Rafraîchir</button>
+                    </div>
+                    
+                    <div style="overflow-x:auto; border:1px solid var(--gray-200); border-radius:10px;">
+                         <table class="data-table" style="width:100%; font-size:13px; text-align:left; border-collapse:collapse;">
+                            <thead>
+                                <tr style="background:var(--gray-50); border-bottom:1px solid var(--gray-200);">
+                                    <th style="padding:12px 16px; font-weight:600; color:var(--gray-600);">Entreprise</th>
+                                    <th style="padding:12px 16px; font-weight:600; color:var(--gray-600);">Mots-clés / Secteur</th>
+                                    <th style="padding:12px 16px; font-weight:600; color:var(--gray-600);">Contact</th>
+                                    <th style="padding:12px 16px; font-weight:600; color:var(--gray-600); text-align:right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leadsHistoryBody">
+                                <!-- JS Populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
@@ -2091,11 +1139,18 @@
                     const left = ((start - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
                     const width = ((end - start) / (1000 * 60 * 60 * 24) / totalDays) * 100;
 
+					let bgColor = 'var(--navy)';
+					if(phaseId === 'etude') bgColor = 'var(--info)';
+					if(phaseId === 'gros_oeuvre') bgColor = 'var(--copper)';
+					if(phaseId === 'electricite') bgColor = 'var(--warn)';
+					if(phaseId === 'finitions') bgColor = '#8b5cf6';
+					if(phaseId === 'cvc') bgColor = '#06b6d4';
+
                     rows.innerHTML += `
 						<div class="gantt-row">
 							<div class="gantt-label" style="padding-left:20px;font-size:10px;color:var(--gray-500)">${phase.label}</div>
 							<div class="gantt-track">
-								<div class="gantt-bar phase-${phaseId}" style="left:${left}%; width:${width}%" onclick="editProject('${uid}')">
+								<div class="gantt-bar phase-${phaseId}" style="left:${left}%; width:${width}%; background:${bgColor};" onclick="editProject('${uid}')" title="${client.nom} — ${p.titre || 'Projet'}\n${phase.label}\nDu ${start.toLocaleDateString('fr-FR')} au ${end.toLocaleDateString('fr-FR')}">
 									${phase.label}
 								</div>
 							</div>
@@ -2477,7 +1532,7 @@
                 stepsEditor.innerHTML += `<div class="step-edit-item">
       <input type="checkbox" id="step-${i}" ${e.done ? 'checked' : ''}>
       <span class="step-edit-name">${e.nom}</span>
-      <input type="text" class="step-edit-date" id="stepdate-${i}" value="${e.date || ''}">
+      <input type="date" class="step-edit-date" id="stepdate-${i}" value="${e.date || ''}" title="Sélectionnez une date">
     </div>`;
             });
 
@@ -3558,9 +2613,10 @@
         }
     </script>
     <!-- REPAIR MODAL -->
-    <div id="repairModal" class="tool-modal">
-        <div class="tool-modal-card">
-            <h3 style="margin-bottom:8px">🔧 Réparation d'UID</h3>
+    <div id="repairModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeRepairModal()">✕</button>
+            <div class="modal-title">🔧 Réparation d'UID</div>
             <p style="font-size:12px;color:var(--gray-500);margin-bottom:16px;line-height:1.6">
                 Entrez le <strong>nom</strong>, <strong>email</strong> ou <strong>ancien ID Firestore</strong> du
                 client,
@@ -3743,6 +2799,159 @@
         </div>
     </div>
 
+    <!-- ── LeadHunter (Prospection) Logic ───────────────────── -->
+    <script>
+        let currentLeads = [];
+        let leadsHistory = [];
+
+        async function searchLeads() {
+            const btn = document.getElementById('searchLeadsBtn');
+            const resultsArea = document.getElementById('leadsResultsArea');
+            const tbody = document.getElementById('leadsTableBody');
+            
+            const country = document.getElementById('lead-country').value;
+            const keywords = document.getElementById('lead-keyword').value.trim();
+            const limit = document.getElementById('lead-limit').value;
+
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Recherche en cours (cela peut prendre jusqu\'à 1 minute)...';
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; color:var(--gray-500);">Recherche en cours. Veuillez patienter...</td></tr>';
+            resultsArea.style.display = 'block';
+
+            try {
+                // Ensure the python backend is running on port 8001 locally
+                const res = await fetch('http://127.0.0.1:8001/api/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ country, limit: parseInt(limit), keywords: keywords || undefined })
+                });
+
+                if (!res.ok) throw new Error("Erreur de connexion avec le serveur LeadHunter local.");
+                
+                const data = await res.json();
+                currentLeads = data;
+                
+                document.getElementById('leadsCount').textContent = `(${data.length} trouvés)`;
+                document.getElementById('exportLeadsBtn').style.display = data.length ? 'block' : 'none';
+                
+                renderLeadsTable(data, 'leadsTableBody');
+                loadLeadsHistory(); // Refresh history
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:red;">❌ Erreur: ${err.message}. Vérifiez que le script Python tourne sur le port 8001.</td></tr>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '🚀 Lancer la Chasse aux Prospects';
+            }
+        }
+
+        async function loadLeadsHistory() {
+            try {
+                const res = await fetch('http://127.0.0.1:8001/api/history');
+                if (!res.ok) return;
+                const data = await res.json();
+                leadsHistory = data;
+                renderLeadsTable(data, 'leadsHistoryBody', true);
+            } catch (e) {
+                console.warn("Could not load leads history:", e);
+            }
+        }
+
+        function renderLeadsTable(leads, tbodyId, isHistory = false) {
+            const tbody = document.getElementById(tbodyId);
+            tbody.innerHTML = '';
+            
+            if (!leads || leads.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px; color:var(--gray-500);">Aucun prospect trouvé.</td></tr>';
+                return;
+            }
+
+            leads.forEach(lead => {
+                let statusBadge = '';
+                if (lead.ai_score > 80) statusBadge = '<span style="background:#fefce8;color:#a16207;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:600;">🔥 CHAUD</span>';
+                else statusBadge = '<span style="background:#f1f5f9;color:#475569;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:600;">⚠️ À QUALIFIER</span>';
+
+                const contactInfo = `
+                    <div style="font-size:12px;">
+                        ${lead.email ? `✉️ ${lead.email}<br>` : ''}
+                        ${lead.phone ? `📞 ${lead.phone}` : ''}
+                        ${!lead.email && !lead.phone ? '<span style="color:var(--gray-400)">Non trouvé</span>' : ''}
+                    </div>
+                `;
+                
+                const emailSubject = encodeURIComponent("Prise de contact - IBE Construction");
+                const emailBody = encodeURIComponent(`Bonjour,\n\nNous vous contactons concernant...\n\nCordialement,\nIBE Construction`);
+                const mailtoLink = lead.email ? `mailto:${lead.email}?subject=${emailSubject}&body=${emailBody}` : '#';
+
+                const actions = `
+                    <div style="display:flex;gap:4px;justify-content:flex-end;">
+                        ${lead.email ? `<a href="${mailtoLink}" target="_blank" class="btn btn-ghost" style="padding:4px 8px;font-size:11px;" title="Envoyer Email">✉️</a>` : ''}
+                        <button onclick="copyLeadData('${lead.email || ''}', '${lead.phone || ''}')" class="btn btn-ghost" style="padding:4px 8px;font-size:11px;" title="Copier les contacts">📋</button>
+                        ${lead.url ? `<a href="${lead.url}" target="_blank" class="btn btn-navy" style="padding:4px 8px;font-size:11px;" title="Visiter Site">🔗</a>` : ''}
+                        ${isHistory ? `<button onclick="deleteLeadHistory(${lead.id})" class="btn" style="padding:4px 8px;font-size:11px;color:red;background:transparent;" title="Supprimer de l'historique">🗑️</button>` : ''}
+                    </div>
+                `;
+
+                tbody.innerHTML += `
+                    <tr style="border-bottom:1px solid var(--gray-100);">
+                        <td style="padding:12px 16px;">
+                            <strong style="color:var(--navy);font-size:13px;">${lead.company_name}</strong>
+                           ${!isHistory ? `<div style="font-size:11px;color:var(--gray-500);text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:200px;">${lead.title}</div>` : ''}
+                        </td>
+                        <td style="padding:12px 16px;font-size:12px;color:var(--gray-600);">${lead.industry}</td>
+                        <td style="padding:12px 16px;">${contactInfo}</td>
+                        ${!isHistory ? `<td style="padding:12px 16px;">${statusBadge}</td>` : ''}
+                        <td style="padding:12px 16px;">${actions}</td>
+                    </tr>
+                `;
+            });
+        }
+        
+        async function deleteLeadHistory(id) {
+            if(!confirm("Supprimer ce prospect de l'historique ?")) return;
+            try {
+                await fetch(`http://127.0.0.1:8001/api/history/${id}`, { method: 'DELETE' });
+                loadLeadsHistory();
+            } catch(e) { console.error(e); }
+        }
+
+        function copyLeadData(email, phone) {
+            let txt = '';
+            if (email) txt += email + '\n';
+            if (phone) txt += phone;
+            if (txt) {
+                navigator.clipboard.writeText(txt);
+                // Mini toast
+                const t = document.createElement('div');
+                t.textContent = 'Contacts copiés !';
+                t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#10b981;color:white;padding:8px 16px;border-radius:4px;font-size:12px;z-index:9999;';
+                document.body.appendChild(t);
+                setTimeout(() => t.remove(), 2000);
+            }
+        }
+
+        function exportLeadsExcel() {
+            if (!currentLeads.length) return;
+            
+            const ws_data = currentLeads.map(l => ({
+                "Entreprise": l.company_name,
+                "Email": l.email,
+                "Téléphone": l.phone,
+                "Secteur / Mots-clés": l.industry,
+                "Site Web": l.url,
+                "Pays": l.country_detected,
+                "Raison AI": l.ai_reasoning
+            }));
+
+            const ws = XLSX.utils.json_to_sheet(ws_data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Prospection");
+            XLSX.writeFile(wb, "IBE_Prospection_Leads.xlsx");
+        }
+
+        // Call load history once on load
+        setTimeout(loadLeadsHistory, 2000);
+
+    </script>
 </body>
 
 </html>

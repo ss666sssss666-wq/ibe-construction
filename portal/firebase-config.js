@@ -5,13 +5,13 @@
 // ============================================================
 
 const firebaseConfig = {
-    apiKey: "AIzaSyArm2Cy3dT-XV6a6v8viMN9OT9X0XjzGQ0",
-    authDomain: "ibe-construction-portal.firebaseapp.com",
-    projectId: "ibe-construction-portal",
-    storageBucket: "ibe-construction-portal.firebasestorage.app",
-    messagingSenderId: "804752130676",
-    appId: "1:804752130676:web:d4150fdb27feccc57a4721",
-    measurementId: "G-07ZHF4XGK0"
+  apiKey: "AIzaSyArm2Cy3dT-XV6a6v8viMN9OT9X0XjzGQ0",
+  authDomain: "ibe-construction-portal.firebaseapp.com",
+  projectId: "ibe-construction-portal",
+  storageBucket: "ibe-construction-portal.firebasestorage.app",
+  messagingSenderId: "804752130676",
+  appId: "1:804752130676:web:d4150fdb27feccc57a4721",
+  measurementId: "G-07ZHF4XGK0",
 };
 
 // Initialisation Firebase (compat SDK — fonctionne sans bundler)
@@ -29,8 +29,8 @@ const db = firebase.firestore();
 //    → aucun contenu de fichier dans Firestore
 // ============================================================
 
-const CLOUDINARY_CLOUD_NAME = 'dvko6pc6f';
-const CLOUDINARY_UPLOAD_PRESET = 'ibe-docs';
+const CLOUDINARY_CLOUD_NAME = "dvko6pc6f";
+const CLOUDINARY_UPLOAD_PRESET = "ibe-docs";
 
 // ── Upload Cloudinary + sauvegarde métadonnées ────────────────
 /**
@@ -44,73 +44,88 @@ const CLOUDINARY_UPLOAD_PRESET = 'ibe-docs';
  * Returns: { url, nom, docId }
  */
 async function ibeUploadDocument(uid, file, onProgress, category = null) {
-    const ext = file.name.split('.').pop().toLowerCase();
-    // NEW: Forcer les PDF en 'raw' pour éviter les erreurs de distribution 401
-    // Cloudinary restreint souvent l'affichage des PDF en tant qu'images (resource_type: image)
-    const resourceType = ext === 'pdf' ? 'raw' : 'auto';
-    const apiUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
-    const cloudinaryResult = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        const formData = new FormData();
+  const ext = file.name.split(".").pop().toLowerCase();
+  // NEW: Forcer les PDF en 'raw' pour éviter les erreurs de distribution 401
+  // Cloudinary restreint souvent l'affichage des PDF en tant qu'images (resource_type: image)
+  const resourceType = ext === "pdf" ? "raw" : "auto";
+  const apiUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
+  const cloudinaryResult = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
 
-        formData.append('file', file);
-        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-        formData.append('folder', `ibe-documents/${uid}`);
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+    formData.append("folder", `ibe-documents/${uid}`);
 
-        const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
-        const safeName = Date.now() + '_' + nameWithoutExt.replace(/[^a-zA-Z0-9_-]/g, '_');
-        formData.append('public_id', safeName);
-        // On retire 'access_mode' pour éviter que Cloudinary demande une signature (401) sur un preset unsigned
+    const nameWithoutExt =
+      file.name.substring(0, file.name.lastIndexOf(".")) || file.name;
+    const safeName =
+      Date.now() + "_" + nameWithoutExt.replace(/[^a-zA-Z0-9_-]/g, "_");
+    formData.append("public_id", safeName);
+    // On retire 'access_mode' pour éviter que Cloudinary demande une signature (401) sur un preset unsigned
 
-        xhr.upload.addEventListener('progress', (e) => {
-            if (e.lengthComputable && onProgress) {
-                onProgress(Math.round((e.loaded / e.total) * 100));
-            }
-        });
-
-        xhr.addEventListener('load', () => {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                try {
-                    const data = JSON.parse(xhr.responseText);
-                    resolve({ url: data.secure_url, publicId: data.public_id });
-                } catch (e) {
-                    reject(new Error('Réponse Cloudinary invalide.'));
-                }
-            } else {
-                let msg = 'Erreur upload Cloudinary.';
-                try { msg = JSON.parse(xhr.responseText).error?.message || msg; } catch (_) { }
-                console.error('Cloudinary upload error:', xhr.status, xhr.responseText);
-                reject(new Error(msg));
-            }
-        });
-
-        xhr.addEventListener('error', () => reject(new Error('Erreur réseau.')));
-        xhr.addEventListener('timeout', () => reject(new Error('Timeout — fichier trop volumineux ?')));
-        xhr.timeout = 120000;
-        xhr.open('POST', apiUrl);
-        xhr.send(formData);
+    xhr.upload.addEventListener("progress", (e) => {
+      if (e.lengthComputable && onProgress) {
+        onProgress(Math.round((e.loaded / e.total) * 100));
+      }
     });
 
-    // 2. Enregistrement des métadonnées UNIQUEMENT dans Firestore
-    //    Aucun contenu de fichier — juste le pointeur vers Cloudinary
-    const meta = {
-        nom: file.name,
-        type: ext.toUpperCase(),
-        taille: file.size < 1024 * 1024
-            ? Math.round(file.size / 1024) + ' Ko'
-            : (file.size / 1024 / 1024).toFixed(1) + ' Mo',
-        date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }),
-        url: cloudinaryResult.url,
-        publicId: cloudinaryResult.publicId,
-        uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
+    xhr.addEventListener("load", () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const data = JSON.parse(xhr.responseText);
+          resolve({ url: data.secure_url, publicId: data.public_id });
+        } catch (e) {
+          reject(new Error("Réponse Cloudinary invalide."));
+        }
+      } else {
+        let msg = "Erreur upload Cloudinary.";
+        try {
+          msg = JSON.parse(xhr.responseText).error?.message || msg;
+        } catch (_) {}
+        console.error("Cloudinary upload error:", xhr.status, xhr.responseText);
+        reject(new Error(msg));
+      }
+    });
 
-    if (category) {
-        meta.category = category;
-    }
+    xhr.addEventListener("error", () => reject(new Error("Erreur réseau.")));
+    xhr.addEventListener("timeout", () =>
+      reject(new Error("Timeout — fichier trop volumineux ?")),
+    );
+    xhr.timeout = 120000;
+    xhr.open("POST", apiUrl);
+    xhr.send(formData);
+  });
 
-    const docRef = await db.collection('documents').doc(uid).collection('files').add(meta);
-    return { url: cloudinaryResult.url, nom: file.name, docId: docRef.id };
+  // 2. Enregistrement des métadonnées UNIQUEMENT dans Firestore
+  //    Aucun contenu de fichier — juste le pointeur vers Cloudinary
+  const meta = {
+    nom: file.name,
+    type: ext.toUpperCase(),
+    taille:
+      file.size < 1024 * 1024
+        ? Math.round(file.size / 1024) + " Ko"
+        : (file.size / 1024 / 1024).toFixed(1) + " Mo",
+    date: new Date().toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }),
+    url: cloudinaryResult.url,
+    publicId: cloudinaryResult.publicId,
+    uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  };
+
+  if (category) {
+    meta.category = category;
+  }
+
+  const docRef = await db
+    .collection("documents")
+    .doc(uid)
+    .collection("files")
+    .add(meta);
+  return { url: cloudinaryResult.url, nom: file.name, docId: docRef.id };
 }
 
 // ── Listeners temps réel des documents ───────────────────────
@@ -119,21 +134,28 @@ async function ibeUploadDocument(uid, file, onProgress, category = null) {
  * Le callback reçoit un tableau de { docId, nom, type, taille, date, url }
  */
 function ibeListenDocuments(uid, callback) {
-    return db.collection('documents').doc(uid).collection('files')
-        .orderBy('uploadedAt', 'desc')
-        .onSnapshot(snap => {
-            const docs = snap.docs.map(d => ({ docId: d.id, ...d.data() }));
-            callback(docs);
-        });
+  return db
+    .collection("documents")
+    .doc(uid)
+    .collection("files")
+    .orderBy("uploadedAt", "desc")
+    .onSnapshot((snap) => {
+      const docs = snap.docs.map((d) => ({ docId: d.id, ...d.data() }));
+      callback(docs);
+    });
 }
 
 /**
  * Récupération unique des documents d'un client.
  */
 async function ibeGetDocuments(uid) {
-    const snap = await db.collection('documents').doc(uid).collection('files')
-        .orderBy('uploadedAt', 'desc').get();
-    return snap.docs.map(d => ({ docId: d.id, ...d.data() }));
+  const snap = await db
+    .collection("documents")
+    .doc(uid)
+    .collection("files")
+    .orderBy("uploadedAt", "desc")
+    .get();
+  return snap.docs.map((d) => ({ docId: d.id, ...d.data() }));
 }
 
 /**
@@ -141,7 +163,12 @@ async function ibeGetDocuments(uid) {
  * Le fichier Cloudinary reste (suppression Cloudinary nécessite l'API secret côté serveur).
  */
 async function ibeDeleteDocument(uid, docId) {
-    return db.collection('documents').doc(uid).collection('files').doc(docId).delete();
+  return db
+    .collection("documents")
+    .doc(uid)
+    .collection("files")
+    .doc(docId)
+    .delete();
 }
 
 // ── Fix URL Cloudinary pour visualisation ────────────────────
@@ -155,109 +182,128 @@ async function ibeDeleteDocument(uid, docId) {
  * Le navigateur ouvre les PDFs nativement via Content-Type: application/pdf.
  */
 function cloudinaryFixUrl(url, filename, forceDownload = false) {
-    if (!url) return '';
-    let fixed = url
-        .replace('/upload/fl_attachment/', '/upload/')
-        .replace('/upload/fl_inline/', '/upload/');
+  if (!url) return "";
+  let fixed = url
+    .replace("/upload/fl_attachment/", "/upload/")
+    .replace("/upload/fl_inline/", "/upload/");
 
-    const ext = ((filename || url).split('.').pop().split('?')[0] || '').toLowerCase();
-    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'ico'];
-    // PDF retiré de la liste des images — il doit être traité comme raw
+  const ext = (
+    (filename || url).split(".").pop().split("?")[0] || ""
+  ).toLowerCase();
+  const imageExts = [
+    "jpg",
+    "jpeg",
+    "png",
+    "gif",
+    "webp",
+    "svg",
+    "bmp",
+    "tiff",
+    "ico",
+  ];
+  // PDF retiré de la liste des images — il doit être traité comme raw
 
-    // Si c'est un PDF ou un autre fichier binaire → /raw/upload/
-    if (ext === 'pdf' || (ext && !imageExts.includes(ext))) {
-        fixed = fixed.replace('/image/upload/', '/raw/upload/');
-        // PAS de fl_attachment pour les ressources raw (ça cause 401)
-        // Le navigateur téléchargera automatiquement les fichiers raw
-    } else {
-        // Vraies images
-        fixed = fixed.replace('/raw/upload/', '/image/upload/');
-        // fl_attachment uniquement pour les images (si téléchargement demandé)
-        if (forceDownload) {
-            fixed = fixed.replace('/upload/', '/upload/fl_attachment/');
-        }
+  // Si c'est un PDF ou un autre fichier binaire → /raw/upload/
+  if (ext === "pdf" || (ext && !imageExts.includes(ext))) {
+    fixed = fixed.replace("/image/upload/", "/raw/upload/");
+    // PAS de fl_attachment pour les ressources raw (ça cause 401)
+    // Le navigateur téléchargera automatiquement les fichiers raw
+  } else {
+    // Vraies images
+    fixed = fixed.replace("/raw/upload/", "/image/upload/");
+    // fl_attachment uniquement pour les images (si téléchargement demandé)
+    if (forceDownload) {
+      fixed = fixed.replace("/upload/", "/upload/fl_attachment/");
     }
-    return fixed;
+  }
+  return fixed;
 }
 
 // ── Helpers Auth ─────────────────────────────────────────────
 
 async function ibeLogin(email, password) {
-    return auth.signInWithEmailAndPassword(email, password);
+  return auth.signInWithEmailAndPassword(email, password);
 }
 
 async function ibeLogout() {
-    return auth.signOut();
+  return auth.signOut();
 }
 
 function ibeOnAuthChanged(callback) {
-    return auth.onAuthStateChanged(callback);
+  return auth.onAuthStateChanged(callback);
 }
 
 // ── Helpers Firestore (utilisateurs & projets) ───────────────
 
 async function ibeGetProfile(uid) {
-    const snap = await db.collection('users').doc(uid).get();
-    return snap.exists ? snap.data() : null;
+  const snap = await db.collection("users").doc(uid).get();
+  return snap.exists ? snap.data() : null;
 }
 
 async function ibeGetProject(uid) {
-    const snap = await db.collection('projects').doc(uid).get();
-    return snap.exists ? snap.data() : null;
+  const snap = await db.collection("projects").doc(uid).get();
+  return snap.exists ? snap.data() : null;
 }
 
 function ibeListenMessages(uid, callback) {
-    return db.collection('messages').doc(uid)
-        .collection('thread')
-        .orderBy('ts')
-        .onSnapshot(snap => {
-            const msgs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            callback(msgs);
-        });
+  return db
+    .collection("messages")
+    .doc(uid)
+    .collection("thread")
+    .orderBy("ts")
+    .onSnapshot((snap) => {
+      const msgs = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      callback(msgs);
+    });
 }
 
 async function ibeSendMessage(uid, text, senderName, isAdmin) {
-    return db.collection('messages').doc(uid)
-        .collection('thread')
-        .add({
-            de: senderName,
-            texte: text,
-            moi: !isAdmin,
-            isAdmin: !!isAdmin,
-            ts: firebase.firestore.FieldValue.serverTimestamp(),
-            heure: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-        });
+  return db
+    .collection("messages")
+    .doc(uid)
+    .collection("thread")
+    .add({
+      de: senderName,
+      texte: text,
+      moi: !isAdmin,
+      isAdmin: !!isAdmin,
+      ts: firebase.firestore.FieldValue.serverTimestamp(),
+      heure: new Date().toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    });
 }
 
 // ── Admin helpers ────────────────────────────────────────────
 
 async function ibeIsAdmin(uid) {
-    const user = auth.currentUser;
-    if (user && user.email === 'admin@ibe-construction.com') return true;
-    const snap = await db.collection('admins').doc(uid).get();
-    return snap.exists;
+  const user = auth.currentUser;
+  if (user && user.email === "admin@ibe-construction.com") return true;
+  const snap = await db.collection("admins").doc(uid).get();
+  return snap.exists;
 }
 
 async function ibeGetAllClients() {
-    const snap = await db.collection('users').get();
-    return snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+  const snap = await db.collection("users").get();
+  return snap.docs.map((d) => ({ uid: d.id, ...d.data() }));
 }
 
 async function ibeGetAllProjects() {
-    const snap = await db.collection('projects').get();
-    const projects = {};
-    snap.docs.forEach(d => projects[d.id] = d.data());
-    return projects;
+  const snap = await db.collection("projects").get();
+  const projects = {};
+  snap.docs.forEach((d) => (projects[d.id] = d.data()));
+  return projects;
 }
 
 async function ibeUpdateProject(uid, data) {
-    return db.collection('projects').doc(uid).set(data, { merge: true });
+  return db.collection("projects").doc(uid).set(data, { merge: true });
 }
 
 async function ibeCreateClient(email, password, profileData, projectData) {
-    const { uid } = profileData;
-    await db.collection('users').doc(uid).set(profileData);
-    await db.collection('projects').doc(uid).set(projectData);
+  const { uid } = profileData;
+  await db.collection("users").doc(uid).set(profileData);
+  await db.collection("projects").doc(uid).set(projectData);
 }
 
 // ── Historique des Modifications (Audit Log) ─────────────────
@@ -267,16 +313,23 @@ async function ibeCreateClient(email, password, profileData, projectData) {
  * Collection Firestore : activity_log
  */
 async function ibeLogActivity(action, details, clientUid = null) {
-    const user = auth.currentUser;
-    return db.collection('activity_log').add({
-        action,
-        details,
-        clientUid: clientUid || null,
-        adminEmail: user ? user.email : 'système',
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        heure: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
-        date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
-    });
+  const user = auth.currentUser;
+  return db.collection("activity_log").add({
+    action,
+    details,
+    clientUid: clientUid || null,
+    adminEmail: user ? user.email : "système",
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    heure: new Date().toLocaleTimeString("fr-FR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    date: new Date().toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }),
+  });
 }
 
 /**
@@ -284,91 +337,231 @@ async function ibeLogActivity(action, details, clientUid = null) {
  * @param {number} limit — nombre max d'entrées (défaut 50)
  */
 async function ibeGetActivityLog(limit = 50) {
-    const snap = await db.collection('activity_log')
-        .orderBy('timestamp', 'desc')
-        .limit(limit)
-        .get();
-    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const snap = await db
+    .collection("activity_log")
+    .orderBy("timestamp", "desc")
+    .limit(limit)
+    .get();
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
 // ── Gestion des Sous-Traitants ───────────────────────────────
 
 async function ibeAddSubcontractor(data) {
-    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-    return db.collection('subcontractors').add(data);
+  data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  return db.collection("subcontractors").add(data);
 }
 
 async function ibeGetSubcontractors() {
-    const snap = await db.collection('subcontractors').orderBy('createdAt', 'desc').get();
-    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const snap = await db
+    .collection("subcontractors")
+    .orderBy("createdAt", "desc")
+    .get();
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
 async function ibeUpdateSubcontractor(id, data) {
-    return db.collection('subcontractors').doc(id).update(data);
+  return db.collection("subcontractors").doc(id).update(data);
 }
 
 async function ibeDeleteSubcontractor(id) {
-    return db.collection('subcontractors').doc(id).delete();
+  return db.collection("subcontractors").doc(id).delete();
 }
 
 // ── Gestion des Factures ─────────────────────────────────────
 
 async function ibeAddInvoice(uid, data) {
-    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-    return db.collection('invoices').doc(uid).collection('items').add(data);
+  data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  return db.collection("invoices").doc(uid).collection("items").add(data);
 }
 
 function ibeListenInvoices(uid, callback) {
-    return db.collection('invoices').doc(uid).collection('items')
-        .orderBy('createdAt', 'desc')
-        .onSnapshot(snap => {
-            const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            callback(items);
-        });
+  return db
+    .collection("invoices")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .onSnapshot((snap) => {
+      const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      callback(items);
+    });
 }
 
 async function ibeGetInvoices(uid) {
-    const snap = await db.collection('invoices').doc(uid).collection('items')
-        .orderBy('createdAt', 'desc').get();
-    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const snap = await db
+    .collection("invoices")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .get();
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
 async function ibeUpdateInvoice(uid, invoiceId, data) {
-    return db.collection('invoices').doc(uid).collection('items').doc(invoiceId).update(data);
+  return db
+    .collection("invoices")
+    .doc(uid)
+    .collection("items")
+    .doc(invoiceId)
+    .update(data);
 }
 
 async function ibeDeleteInvoice(uid, invoiceId) {
-    return db.collection('invoices').doc(uid).collection('items').doc(invoiceId).delete();
+  return db
+    .collection("invoices")
+    .doc(uid)
+    .collection("items")
+    .doc(invoiceId)
+    .delete();
 }
 
 // ── Suivi Budget ─────────────────────────────────────────────
 
 async function ibeGetBudget(uid) {
-    const snap = await db.collection('budgets').doc(uid).get();
-    return snap.exists ? snap.data() : null;
+  const snap = await db.collection("budgets").doc(uid).get();
+  return snap.exists ? snap.data() : null;
 }
 
 async function ibeUpdateBudget(uid, data) {
-    return db.collection('budgets').doc(uid).set(data, { merge: true });
+  return db.collection("budgets").doc(uid).set(data, { merge: true });
 }
 
 // ── Calculateur de Plus-Values ────────────────────────────────
 
 async function ibeAddPlusValue(uid, data) {
-    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-    return db.collection('plus_values').doc(uid).collection('items').add(data);
+  data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  return db.collection("plus_values").doc(uid).collection("items").add(data);
 }
 
 async function ibeGetPlusValues(uid) {
-    const snap = await db.collection('plus_values').doc(uid).collection('items')
-        .orderBy('createdAt', 'desc').get();
-    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const snap = await db
+    .collection("plus_values")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .get();
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
 async function ibeDeletePlusValue(uid, pvId) {
-    return db.collection('plus_values').doc(uid).collection('items').doc(pvId).delete();
+  return db
+    .collection("plus_values")
+    .doc(uid)
+    .collection("items")
+    .doc(pvId)
+    .delete();
 }
 
 async function ibeUpdatePlusValue(uid, pvId, data) {
-    return db.collection('plus_values').doc(uid).collection('items').doc(pvId).update(data);
+  return db
+    .collection("plus_values")
+    .doc(uid)
+    .collection("items")
+    .doc(pvId)
+    .update(data);
+}
+
+// ── Notifications In-App ─────────────────────────────────────
+
+async function ibeAddNotification(uid, data) {
+  data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  data.read = false;
+  data.date = new Date().toLocaleDateString("fr-FR", {
+    day: "numeric", month: "short", year: "numeric",
+  });
+  data.heure = new Date().toLocaleTimeString("fr-FR", {
+    hour: "2-digit", minute: "2-digit",
+  });
+  return db.collection("notifications").doc(uid).collection("items").add(data);
+}
+
+function ibeListenNotifications(uid, callback) {
+  return db.collection("notifications").doc(uid).collection("items")
+    .orderBy("createdAt", "desc").limit(30)
+    .onSnapshot((snap) => {
+      callback(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+    });
+}
+
+async function ibeMarkNotificationRead(uid, notifId) {
+  return db.collection("notifications").doc(uid).collection("items").doc(notifId).update({ read: true });
+}
+
+async function ibeMarkAllNotificationsRead(uid) {
+  const snap = await db.collection("notifications").doc(uid).collection("items").where("read", "==", false).get();
+  const batch = db.batch();
+  snap.docs.forEach((d) => batch.update(d.ref, { read: true }));
+  return batch.commit();
+}
+
+// ── Feedback Satisfaction (Étoiles) ──────────────────────────
+
+async function ibeSubmitFeedback(uid, data) {
+  data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  data.date = new Date().toLocaleDateString("fr-FR", {
+    day: "numeric", month: "short", year: "numeric",
+  });
+  return db.collection("feedbacks").doc(uid).collection("items").add(data);
+}
+
+async function ibeGetFeedbacks(uid) {
+  const snap = await db.collection("feedbacks").doc(uid).collection("items")
+    .orderBy("createdAt", "desc").get();
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+// ── Rapports d'Inspection ────────────────────────────────────
+
+async function ibeAddInspection(uid, data) {
+  data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  data.date = new Date().toLocaleDateString("fr-FR", {
+    day: "numeric", month: "short", year: "numeric",
+  });
+  return db.collection("inspections").doc(uid).collection("items").add(data);
+}
+
+async function ibeGetInspections(uid) {
+  const snap = await db.collection("inspections").doc(uid).collection("items")
+    .orderBy("createdAt", "desc").get();
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+async function ibeUpdateInspection(uid, inspId, data) {
+  return db.collection("inspections").doc(uid).collection("items").doc(inspId).update(data);
+}
+
+// ── Appels d'Offres (Tenders) ────────────────────────────────
+
+async function ibeAddTender(data) {
+  data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  data.status = data.status || "open";
+  return db.collection("tenders").add(data);
+}
+
+async function ibeGetTenders() {
+  const snap = await db.collection("tenders").orderBy("createdAt", "desc").get();
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+async function ibeUpdateTender(id, data) {
+  return db.collection("tenders").doc(id).update(data);
+}
+
+async function ibeDeleteTender(id) {
+  return db.collection("tenders").doc(id).delete();
+}
+
+async function ibeAddTenderOffer(tenderId, data) {
+  data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  return db.collection("tenders").doc(tenderId).collection("offers").add(data);
+}
+
+async function ibeGetTenderOffers(tenderId) {
+  const snap = await db.collection("tenders").doc(tenderId).collection("offers")
+    .orderBy("createdAt", "desc").get();
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+async function ibeDeleteTenderOffer(tenderId, offerId) {
+  return db.collection("tenders").doc(tenderId).collection("offers").doc(offerId).delete();
 }

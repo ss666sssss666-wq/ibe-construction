@@ -1,0 +1,11 @@
+{
+  "name": "ibe-construction",
+  "version": "1.0.0",
+  "description": "IBE Construction 4.0",
+  "scripts": {
+    "format": "prettier --write \"**/*.{html,css,js,json,md}\" --ignore-path .gitignore"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}

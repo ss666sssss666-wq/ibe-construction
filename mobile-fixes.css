@@ -6,957 +6,968 @@
 /* Base: empêche le défilement horizontal */
 html,
 body {
-    overflow-x: hidden;
-    max-width: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* ============================================
    TABLETTES PAYSAGE (1025px – 1280px)
    ============================================ */
 @media (max-width: 1280px) and (min-width: 1025px) {
-    .container {
-        padding: 0 40px;
-    }
+  .container {
+    padding: 0 40px;
+  }
 
-    .hero-title {
-        font-size: clamp(48px, 6vw, 64px);
-    }
+  .hero-title {
+    font-size: clamp(48px, 6vw, 64px);
+  }
 
-    .services-grid,
-    .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
+  .services-grid,
+  .tech-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
 }
 
 /* ============================================
    TABLETTES PORTRAIT (769px – 1024px)
    ============================================ */
 @media (max-width: 1024px) and (min-width: 769px) {
-    :root {
-        --section-padding: 100px;
-    }
+  :root {
+    --section-padding: 100px;
+  }
 
-    .container {
-        padding: 0 32px;
-    }
+  .container {
+    padding: 0 32px;
+  }
 
-    .hero {
-        padding: 160px 32px 80px;
-    }
+  .hero {
+    padding: 160px 32px 80px;
+  }
 
-    .hero-content {
-        grid-template-columns: 1fr;
-        gap: 50px;
-        text-align: center;
-    }
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    text-align: center;
+  }
 
-    .hero-title {
-        font-size: clamp(42px, 5.5vw, 56px);
-    }
+  .hero-title {
+    font-size: clamp(42px, 5.5vw, 56px);
+  }
 
-    .hero-cta-group {
-        flex-direction: column;
-        align-items: center;
-        gap: 14px;
-    }
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
 
-    .cta-btn {
-        width: 100%;
-        max-width: 340px;
-        text-align: center;
-        justify-content: center;
-    }
+  .cta-btn {
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    justify-content: center;
+  }
 
-    .services-grid,
-    .tech-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
-    }
+  .services-grid,
+  .tech-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
 
-    .dna-content {
-        grid-template-columns: 1fr;
-        gap: 50px;
-    }
+  .dna-content {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
 
-    .contact-content {
-        grid-template-columns: 1fr;
-        gap: 60px;
-    }
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
 
-    .hamburger {
-        display: flex;
-    }
+  .hamburger {
+    display: flex;
+  }
 
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        height: 100vh;
-        flex-direction: column;
-        background: linear-gradient(135deg, #CC9461 0%, #B8845A 100%);
-        width: 400px;
-        max-width: 50%;
-        padding: 80px 50px 40px;
-        box-shadow: -10px 0 50px rgba(0, 0, 0, .3);
-        transition: right .5s cubic-bezier(.77, 0, .175, 1);
-        align-items: center;
-        z-index: 1000;
-        text-align: center;
-        justify-content: flex-start;
-    }
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    flex-direction: column;
+    background: linear-gradient(135deg, #cc9461 0%, #b8845a 100%);
+    width: 400px;
+    max-width: 50%;
+    padding: 80px 50px 40px;
+    box-shadow: -10px 0 50px rgba(0, 0, 0, 0.3);
+    transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    align-items: center;
+    z-index: 1000;
+    text-align: center;
+    justify-content: flex-start;
+  }
 
-    .why-ibe {
-        background-attachment: scroll !important;
-        background-position: center !important;
-        background-size: cover !important;
-    }
+  .why-ibe {
+    background-attachment: scroll !important;
+    background-position: center !important;
+    background-size: cover !important;
+  }
 }
 
 /* ============================================
    TOUS MOBILES ≤ 768px
    ============================================ */
 @media (max-width: 768px) {
-
-    /* NAVBAR */
-    .nav-container {
-        padding: 12px 16px;
-        gap: 8px;
-    }
-
-    .logo-image {
-        height: 44px;
-    }
-
-    .hamburger {
-        display: flex !important;
-    }
-
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        height: 100vh;
-        flex-direction: column;
-        background: linear-gradient(135deg, #CC9461 0%, #B8845A 100%);
-        width: 80%;
-        max-width: 320px;
-        padding: 80px 30px 40px;
-        box-shadow: -10px 0 50px rgba(0, 0, 0, .3);
-        transition: right .5s cubic-bezier(.77, 0, .175, 1);
-        align-items: center;
-        z-index: 1000;
-        text-align: center;
-        justify-content: flex-start;
-    }
-
-    /* Bouton Espace Client: icône seulement */
-    .nav-portal-btn {
-        padding: 8px 10px !important;
-        font-size: 11px !important;
-    }
-
-    .nav-portal-btn .btn-text {
-        display: none;
-    }
-
-    /* Langue: compact */
-    .lang-switcher {
-        font-size: 12px !important;
-        padding: 6px 8px !important;
-    }
-
-    /* HERO */
-    .hero {
-        padding: 130px 20px 60px;
-        min-height: 90vh;
-        text-align: center;
-    }
-
-    .hero-content {
-        grid-template-columns: 1fr;
-        gap: 28px;
-        text-align: center;
-    }
-
-    .hero-title {
-        font-size: clamp(36px, 9vw, 52px);
-        line-height: 1.1;
-    }
-
-    .hero-subtitle {
-        font-size: clamp(17px, 4.5vw, 24px);
-    }
-
-    .hero-description {
-        font-size: 15px;
-        max-width: 100%;
-    }
-
-    .hero-cta-group {
-        display: flex !important;
-        flex-direction: column;
-        align-items: center;
-        gap: 14px;
-    }
-
-    .cta-btn {
-        width: 100%;
-        max-width: 320px;
-        text-align: center;
-        justify-content: center;
-        padding: 14px 24px;
-    }
-
-    /* SECTION TITLES */
-    .section-title {
-        font-size: clamp(28px, 7.5vw, 40px);
-    }
-
-    .section-intro {
-        font-size: 14px;
-    }
-
-    /* WHY IBE */
-    .why-ibe {
-        background-attachment: scroll !important;
-        background-position: center !important;
-        background-size: cover !important;
-    }
-
-    .why-ibe .section-title {
-        font-size: clamp(28px, 8vw, 40px);
-        line-height: 1.2;
-    }
-
-    .why-grid {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 14px;
-    }
-
-    .why-item {
-        padding: 18px 12px;
-    }
-
-    .why-icon {
-        width: 38px;
-        height: 38px;
-    }
-
-    .why-item h3 {
-        font-size: 13px;
-    }
-
-    .why-item p {
-        font-size: 12px;
-    }
-
-    /* TABLEAU COMPARATIF */
-    .comparison-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        border-radius: 12px;
-    }
-
-    .comparison-table {
-        min-width: 340px;
-        border-radius: 12px;
-    }
-
-    .comparison-header {
-        font-size: 12px;
-    }
-
-    .comparison-header .header-cell {
-        padding: 0 10px;
-    }
-
-    .comparison-row {
-        font-size: 12px;
-    }
-
-    .comparison-cell {
-        padding: 12px 10px;
-    }
-
-    .comparison-cell.label-cell {
-        font-size: 12px;
-    }
-
-    .comparison-value {
-        font-size: 12px;
-    }
-
-    .comparison-text {
-        font-size: 11px;
-    }
-
-    .comparison-icon {
-        width: 18px;
-        height: 18px;
-    }
-
-    /* SERVICES & TECH */
-    .services-grid,
-    .tech-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-
-    .service-card,
-    .tech-feature {
-        padding: 26px 20px;
-    }
-
-    .service-card h3,
-    .tech-feature h3 {
-        font-size: 18px;
-    }
-
-    .service-card p,
-    .tech-feature p {
-        font-size: 14px;
-    }
-
-    /* DNA */
-    .dna-content {
-        grid-template-columns: 1fr;
-        gap: 36px;
-    }
-
-    .dna-image-wrapper {
-        max-height: 300px;
-        overflow: hidden;
-        border-radius: 14px;
-    }
-
-    .dna-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .dna-pillars {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-
-    .dna-pillar h3 {
-        font-size: 17px;
-    }
-
-    .dna-pillar p {
-        font-size: 14px;
-    }
-
-    /* VISION STARTUP */
-    .vision-card {
-        padding: 30px 18px !important;
-    }
-
-    .vision-title {
-        font-size: clamp(20px, 6vw, 30px) !important;
-    }
-
-    .vision-text {
-        font-size: 14px !important;
-    }
-
-    .vision-stats {
-        flex-direction: column;
-        gap: 18px;
-        align-items: center;
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-number {
-        font-size: clamp(28px, 8vw, 38px) !important;
-    }
-
-    .stat-label {
-        font-size: 12px;
-    }
-
-    /* CONTACT */
-    .contact-content {
-        grid-template-columns: 1fr;
-        gap: 36px;
-    }
-
-    .contact-left,
-    .contact-right {
-        width: 100%;
-    }
-
-    .contact-intro {
-        font-size: 15px;
-    }
-
-    .info-item {
-        gap: 12px;
-    }
-
-    .info-icon {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-    }
-
-    .info-text h4 {
-        font-size: 15px;
-    }
-
-    .info-text p,
-    .info-text a {
-        font-size: 14px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        font-size: 15px;
-        padding: 13px 14px;
-    }
-
-    .contact .cta-btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-        gap: 14px;
-        text-align: center;
-    }
-
-    .footer-logo .logo-image {
-        height: 68px;
-    }
-
-    /* CALCULATEUR */
-    .calculator-modal {
-        padding: 0;
-    }
-
-    .calculator-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: 100dvh !important;
-        border-radius: 0 !important;
-        overflow-y: auto;
-    }
-
-    .calculator-body {
-        padding: 18px 14px;
-    }
-
-    .step-title {
-        font-size: 20px !important;
-    }
-
-    .step-subtitle {
-        font-size: 13px !important;
-    }
-
-    .project-type-grid {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 10px;
-    }
-
-    .project-type-card {
-        padding: 14px 8px !important;
-    }
-
-    .project-type-icon svg {
-        width: 40px;
-        height: 40px;
-    }
-
-    .project-type-name {
-        font-size: 12px !important;
-    }
-
-    .service-list {
-        gap: 10px;
-    }
-
-    .service-checkbox {
-        padding: 12px 10px;
-    }
-
-    .service-name {
-        font-size: 14px;
-    }
-
-    .service-desc {
-        font-size: 12px;
-    }
-
-    .finish-level-grid {
-        grid-template-columns: 1fr !important;
-        gap: 8px;
-    }
-
-    .calculator-nav {
-        flex-direction: row !important;
-        gap: 10px;
-        padding: 14px;
-    }
-
-    .calc-btn {
-        padding: 12px 18px !important;
-        font-size: 14px !important;
-    }
-
-    .result-display {
-        padding: 18px 14px !important;
-    }
-
-    .price-result {
-        font-size: clamp(22px, 7vw, 34px) !important;
-    }
-
-    .standing-grid {
-        grid-template-columns: 1fr !important;
-        gap: 8px;
-    }
-
-    /* CHATBOT */
-    .chatbot-widget {
-        bottom: 14px !important;
-        right: 14px !important;
-    }
-
-    .chatbot-container {
-        width: calc(100vw - 28px) !important;
-        max-width: 360px !important;
-        height: 58vh !important;
-        bottom: 68px !important;
-        right: 0 !important;
-    }
-
-    /* WHATSAPP */
-    .floating-cta {
-        bottom: 20px !important;
-        left: 14px !important;
-        width: 50px !important;
-        height: 50px !important;
-    }
+  /* NAVBAR */
+  .nav-container {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .logo-image {
+    height: 48px; /* Slightly taller but controlled */
+    max-width: 140px;
+  }
+
+  .hamburger {
+    display: flex !important;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    flex-direction: column;
+    background: linear-gradient(135deg, #cc9461 0%, #b8845a 100%);
+    width: 80%;
+    max-width: 320px;
+    padding: 80px 30px 40px;
+    box-shadow: -10px 0 50px rgba(0, 0, 0, 0.3);
+    transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    align-items: center;
+    z-index: 1000;
+    text-align: center;
+    justify-content: flex-start;
+  }
+
+  /* Bouton Espace Client: compact sur mobile */
+  .portal-btn {
+    padding: 8px 12px !important;
+    font-size: 11px !important;
+    gap: 4px;
+  }
+
+  .portal-btn span {
+    display: block; /* Ensure text is visible or hidden as desired. The user screenshot SHOWS text though. */
+  }
+
+  /* Si on veut masquer le texte sur très petits écrans, on utilisera une autre media query */
+  @media (max-width: 380px) {
+    .portal-btn span {
+      display: none;
+    }
+    .portal-btn {
+      padding: 8px !important;
+    }
+  }
+
+  /* Langue: compact */
+  .lang-switcher {
+    font-size: 12px !important;
+    padding: 6px 8px !important;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 130px 20px 60px;
+    min-height: 90vh;
+    text-align: center;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 9vw, 52px);
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(17px, 4.5vw, 24px);
+  }
+
+  .hero-description {
+    font-size: 15px;
+    max-width: 100%;
+  }
+
+  .hero-cta-group {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .cta-btn {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    justify-content: center;
+    padding: 14px 24px;
+  }
+
+  /* SECTION TITLES */
+  .section-title {
+    font-size: clamp(28px, 7.5vw, 40px);
+  }
+
+  .section-intro {
+    font-size: 14px;
+  }
+
+  /* WHY IBE */
+  .why-ibe {
+    background-attachment: scroll !important;
+    background-position: center !important;
+    background-size: cover !important;
+  }
+
+  .why-ibe .section-title {
+    font-size: clamp(28px, 8vw, 40px);
+    line-height: 1.2;
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 14px;
+  }
+
+  .why-item {
+    padding: 18px 12px;
+  }
+
+  .why-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .why-item h3 {
+    font-size: 13px;
+  }
+
+  .why-item p {
+    font-size: 12px;
+  }
+
+  /* TABLEAU COMPARATIF */
+  .comparison-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+  }
+
+  .comparison-table {
+    min-width: 340px;
+    border-radius: 12px;
+  }
+
+  .comparison-header {
+    font-size: 12px;
+  }
+
+  .comparison-header .header-cell {
+    padding: 0 10px;
+  }
+
+  .comparison-row {
+    font-size: 12px;
+  }
+
+  .comparison-cell {
+    padding: 12px 10px;
+  }
+
+  .comparison-cell.label-cell {
+    font-size: 12px;
+  }
+
+  .comparison-value {
+    font-size: 12px;
+  }
+
+  .comparison-text {
+    font-size: 11px;
+  }
+
+  .comparison-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* SERVICES & TECH */
+  .services-grid,
+  .tech-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .service-card,
+  .tech-feature {
+    padding: 26px 20px;
+  }
+
+  .service-card h3,
+  .tech-feature h3 {
+    font-size: 18px;
+  }
+
+  .service-card p,
+  .tech-feature p {
+    font-size: 14px;
+  }
+
+  /* DNA */
+  .dna-content {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .dna-image-wrapper {
+    max-height: 300px;
+    overflow: hidden;
+    border-radius: 14px;
+  }
+
+  .dna-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .dna-pillars {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .dna-pillar h3 {
+    font-size: 17px;
+  }
+
+  .dna-pillar p {
+    font-size: 14px;
+  }
+
+  /* VISION STARTUP */
+  .vision-card {
+    padding: 30px 18px !important;
+  }
+
+  .vision-title {
+    font-size: clamp(20px, 6vw, 30px) !important;
+  }
+
+  .vision-text {
+    font-size: 14px !important;
+  }
+
+  .vision-stats {
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: clamp(28px, 8vw, 38px) !important;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  /* CONTACT */
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .contact-left,
+  .contact-right {
+    width: 100%;
+  }
+
+  .contact-intro {
+    font-size: 15px;
+  }
+
+  .info-item {
+    gap: 12px;
+  }
+
+  .info-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+  }
+
+  .info-text h4 {
+    font-size: 15px;
+  }
+
+  .info-text p,
+  .info-text a {
+    font-size: 14px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 15px;
+    padding: 13px 14px;
+  }
+
+  .contact .cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .footer-logo .logo-image {
+    height: 68px;
+  }
+
+  /* CALCULATEUR */
+  .calculator-modal {
+    padding: 0;
+  }
+
+  .calculator-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
+    overflow-y: auto;
+  }
+
+  .calculator-body {
+    padding: 18px 14px;
+  }
+
+  .step-title {
+    font-size: 20px !important;
+  }
+
+  .step-subtitle {
+    font-size: 13px !important;
+  }
+
+  .project-type-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px;
+  }
+
+  .project-type-card {
+    padding: 14px 8px !important;
+  }
+
+  .project-type-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .project-type-name {
+    font-size: 12px !important;
+  }
+
+  .service-list {
+    gap: 10px;
+  }
+
+  .service-checkbox {
+    padding: 12px 10px;
+  }
+
+  .service-name {
+    font-size: 14px;
+  }
+
+  .service-desc {
+    font-size: 12px;
+  }
+
+  .finish-level-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+  }
+
+  .calculator-nav {
+    flex-direction: row !important;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .calc-btn {
+    padding: 12px 18px !important;
+    font-size: 14px !important;
+  }
+
+  .result-display {
+    padding: 18px 14px !important;
+  }
+
+  .price-result {
+    font-size: clamp(22px, 7vw, 34px) !important;
+  }
+
+  .standing-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+  }
+
+  /* CHATBOT - Move to right on mobile to avoid left overlap if needed */
+  .ibe-chatbot {
+    left: auto !important;
+    right: 14px !important;
+    bottom: 14px !important;
+  }
+  
+  .chatbot-container {
+    right: 0px !important;
+    left: auto !important;
+  }
+
+  /* WHATSAPP - Keep on left as it was in mobile-fixes or move to right if preferred. 
+     Currently mobile-fixes has it on left. I'll stick to one side for each. */
+  .floating-cta {
+    bottom: 14px !important;
+    left: 14px !important;
+    right: auto !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
 }
 
 /* ============================================
    MOBILES 376px – 480px (iPhone 12/13/14)
    ============================================ */
 @media (max-width: 480px) and (min-width: 376px) {
-    :root {
-        --section-padding: 70px;
-    }
+  :root {
+    --section-padding: 70px;
+  }
 
-    .container {
-        padding: 0 18px;
-    }
+  .container {
+    padding: 0 18px;
+  }
 
-    .hero {
-        padding: 120px 18px 50px;
-    }
+  .hero {
+    padding: 120px 18px 50px;
+  }
 
-    .hero-title {
-        font-size: clamp(34px, 10vw, 46px);
-    }
+  .hero-title {
+    font-size: clamp(34px, 10vw, 46px);
+  }
 
-    .hero-subtitle {
-        font-size: clamp(16px, 4.5vw, 21px);
-    }
+  .hero-subtitle {
+    font-size: clamp(16px, 4.5vw, 21px);
+  }
 
-    .hero-description {
-        font-size: 14px;
-        line-height: 1.7;
-    }
+  .hero-description {
+    font-size: 14px;
+    line-height: 1.7;
+  }
 
-    .section-title {
-        font-size: clamp(26px, 8vw, 36px);
-    }
+  .section-title {
+    font-size: clamp(26px, 8vw, 36px);
+  }
 
-    .why-ibe .section-title {
-        font-size: clamp(26px, 9vw, 36px);
-    }
+  .why-ibe .section-title {
+    font-size: clamp(26px, 9vw, 36px);
+  }
 
-    .nav-portal-btn {
-        display: none !important;
-    }
+  .nav-portal-btn {
+    display: none !important;
+  }
 
-    .service-card,
-    .tech-feature {
-        padding: 22px 16px;
-    }
+  .service-card,
+  .tech-feature {
+    padding: 22px 16px;
+  }
 
-    .service-card h3,
-    .tech-feature h3 {
-        font-size: 17px;
-    }
+  .service-card h3,
+  .tech-feature h3 {
+    font-size: 17px;
+  }
 
-    .service-card p,
-    .tech-feature p {
-        font-size: 13px;
-    }
+  .service-card p,
+  .tech-feature p {
+    font-size: 13px;
+  }
 
-    .dna-image-wrapper {
-        max-height: 260px;
-    }
+  .dna-image-wrapper {
+    max-height: 260px;
+  }
 
-    .stat-number {
-        font-size: clamp(24px, 9vw, 34px) !important;
-    }
+  .stat-number {
+    font-size: clamp(24px, 9vw, 34px) !important;
+  }
 }
 
 /* ============================================
    MOBILES COMPACTS 321px – 375px (iPhone SE)
    ============================================ */
 @media (max-width: 375px) and (min-width: 321px) {
-    :root {
-        --section-padding: 60px;
-    }
+  :root {
+    --section-padding: 60px;
+  }
 
-    .container {
-        padding: 0 15px;
-    }
+  .container {
+    padding: 0 15px;
+  }
 
-    .nav-container {
-        padding: 10px 15px;
-    }
+  .nav-container {
+    padding: 10px 15px;
+  }
 
-    .logo-image {
-        height: 40px;
-    }
+  .logo-image {
+    height: 40px;
+  }
 
-    .hero {
-        padding: 110px 15px 44px;
-    }
+  .hero {
+    padding: 110px 15px 44px;
+  }
 
-    .hero-title {
-        font-size: clamp(29px, 11vw, 40px);
-    }
+  .hero-title {
+    font-size: clamp(29px, 11vw, 40px);
+  }
 
-    .hero-subtitle {
-        font-size: clamp(14px, 5vw, 18px);
-    }
+  .hero-subtitle {
+    font-size: clamp(14px, 5vw, 18px);
+  }
 
-    .hero-description {
-        font-size: 13.5px;
-        line-height: 1.65;
-    }
+  .hero-description {
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
 
-    .cta-btn {
-        padding: 12px 18px;
-        font-size: 13.5px;
-    }
+  .cta-btn {
+    padding: 12px 18px;
+    font-size: 13.5px;
+  }
 
-    .section-title {
-        font-size: clamp(23px, 9vw, 32px);
-    }
+  .section-title {
+    font-size: clamp(23px, 9vw, 32px);
+  }
 
-    .why-ibe .section-title {
-        font-size: clamp(23px, 10vw, 32px);
-    }
+  .why-ibe .section-title {
+    font-size: clamp(23px, 10vw, 32px);
+  }
 
-    .nav-portal-btn {
-        display: none !important;
-    }
+  .nav-portal-btn {
+    display: none !important;
+  }
 
-    .why-grid {
-        grid-template-columns: 1fr !important;
-    }
+  .why-grid {
+    grid-template-columns: 1fr !important;
+  }
 
-    .service-card,
-    .tech-feature {
-        padding: 20px 15px;
-    }
+  .service-card,
+  .tech-feature {
+    padding: 20px 15px;
+  }
 
-    .service-card h3,
-    .tech-feature h3 {
-        font-size: 16px;
-    }
+  .service-card h3,
+  .tech-feature h3 {
+    font-size: 16px;
+  }
 
-    .service-card p,
-    .tech-feature p {
-        font-size: 13px;
-    }
+  .service-card p,
+  .tech-feature p {
+    font-size: 13px;
+  }
 
-    .dna-image-wrapper {
-        max-height: 220px;
-    }
+  .dna-image-wrapper {
+    max-height: 220px;
+  }
 
-    .dna-pillar h3 {
-        font-size: 15px;
-    }
+  .dna-pillar h3 {
+    font-size: 15px;
+  }
 
-    .dna-pillar p {
-        font-size: 13px;
-    }
+  .dna-pillar p {
+    font-size: 13px;
+  }
 
-    .vision-card {
-        padding: 22px 13px !important;
-    }
+  .vision-card {
+    padding: 22px 13px !important;
+  }
 
-    .vision-title {
-        font-size: clamp(19px, 7vw, 26px) !important;
-    }
+  .vision-title {
+    font-size: clamp(19px, 7vw, 26px) !important;
+  }
 
-    .vision-text {
-        font-size: 13px !important;
-    }
+  .vision-text {
+    font-size: 13px !important;
+  }
 
-    .stat-number {
-        font-size: clamp(22px, 10vw, 30px) !important;
-    }
+  .stat-number {
+    font-size: clamp(22px, 10vw, 30px) !important;
+  }
 
-    .contact-intro {
-        font-size: 14px;
-    }
+  .contact-intro {
+    font-size: 14px;
+  }
 
-    .info-text h4 {
-        font-size: 14px;
-    }
+  .info-text h4 {
+    font-size: 14px;
+  }
 
-    .info-text p {
-        font-size: 13px;
-    }
+  .info-text p {
+    font-size: 13px;
+  }
 
-    .nav-links {
-        width: 90%;
-        max-width: 285px;
-        padding: 68px 22px 28px;
-    }
+  .nav-links {
+    width: 90%;
+    max-width: 285px;
+    padding: 68px 22px 28px;
+  }
 
-    .nav-links a {
-        font-size: 17px;
-        padding: 11px 0;
-    }
+  .nav-links a {
+    font-size: 17px;
+    padding: 11px 0;
+  }
 }
 
 /* ============================================
    TRÈS PETITS MOBILES ≤ 320px
    ============================================ */
 @media (max-width: 320px) {
-    :root {
-        --section-padding: 50px;
-    }
+  :root {
+    --section-padding: 50px;
+  }
 
-    .container {
-        padding: 0 13px;
-    }
+  .container {
+    padding: 0 13px;
+  }
 
-    .nav-container {
-        padding: 10px 13px;
-    }
+  .nav-container {
+    padding: 10px 13px;
+  }
 
-    .logo-image {
-        height: 36px;
-    }
+  .logo-image {
+    height: 36px;
+  }
 
-    .hero {
-        padding: 100px 13px 38px;
-    }
+  .hero {
+    padding: 100px 13px 38px;
+  }
 
-    .hero-title {
-        font-size: clamp(25px, 12vw, 36px);
-    }
+  .hero-title {
+    font-size: clamp(25px, 12vw, 36px);
+  }
 
-    .hero-subtitle {
-        font-size: clamp(13px, 5.5vw, 16px);
-    }
+  .hero-subtitle {
+    font-size: clamp(13px, 5.5vw, 16px);
+  }
 
-    .hero-description {
-        font-size: 13px;
-        line-height: 1.6;
-    }
+  .hero-description {
+    font-size: 13px;
+    line-height: 1.6;
+  }
 
-    .cta-btn {
-        padding: 12px 16px;
-        font-size: 13px;
-    }
+  .cta-btn {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
 
-    .section-title {
-        font-size: clamp(21px, 10vw, 28px);
-    }
+  .section-title {
+    font-size: clamp(21px, 10vw, 28px);
+  }
 
-    .section-intro {
-        font-size: 12px;
-    }
+  .section-intro {
+    font-size: 12px;
+  }
 
-    .nav-portal-btn {
-        display: none !important;
-    }
+  .nav-portal-btn {
+    display: none !important;
+  }
 
-    .why-grid {
-        grid-template-columns: 1fr !important;
-    }
+  .why-grid {
+    grid-template-columns: 1fr !important;
+  }
 
-    .service-card,
-    .tech-feature {
-        padding: 18px 13px;
-    }
+  .service-card,
+  .tech-feature {
+    padding: 18px 13px;
+  }
 
-    .service-card h3,
-    .tech-feature h3 {
-        font-size: 15px;
-    }
+  .service-card h3,
+  .tech-feature h3 {
+    font-size: 15px;
+  }
 
-    .service-card p,
-    .tech-feature p {
-        font-size: 12px;
-    }
+  .service-card p,
+  .tech-feature p {
+    font-size: 12px;
+  }
 
-    .dna-image-wrapper {
-        max-height: 190px;
-    }
+  .dna-image-wrapper {
+    max-height: 190px;
+  }
 
-    .dna-pillar h3 {
-        font-size: 15px;
-    }
+  .dna-pillar h3 {
+    font-size: 15px;
+  }
 
-    .dna-pillar p {
-        font-size: 12px;
-    }
+  .dna-pillar p {
+    font-size: 12px;
+  }
 
-    .vision-card {
-        padding: 18px 11px !important;
-    }
+  .vision-card {
+    padding: 18px 11px !important;
+  }
 
-    .stat-number {
-        font-size: clamp(20px, 11vw, 26px) !important;
-    }
+  .stat-number {
+    font-size: clamp(20px, 11vw, 26px) !important;
+  }
 
-    .contact-intro {
-        font-size: 13px;
-    }
+  .contact-intro {
+    font-size: 13px;
+  }
 
-    .info-text h4 {
-        font-size: 13px;
-    }
+  .info-text h4 {
+    font-size: 13px;
+  }
 
-    .info-text p {
-        font-size: 12px;
-    }
+  .info-text p {
+    font-size: 12px;
+  }
 
-    .form-group input,
-    .form-group textarea {
-        font-size: 13.5px;
-    }
+  .form-group input,
+  .form-group textarea {
+    font-size: 13.5px;
+  }
 
-    .nav-links {
-        width: 95%;
-        max-width: 265px;
-        padding: 62px 16px 26px;
-    }
+  .nav-links {
+    width: 95%;
+    max-width: 265px;
+    padding: 62px 16px 26px;
+  }
 
-    .nav-links a {
-        font-size: 15px;
-        padding: 10px 0;
-    }
+  .nav-links a {
+    font-size: 15px;
+    padding: 10px 0;
+  }
 
-    .footer-logo .logo-image {
-        height: 58px;
-    }
+  .footer-logo .logo-image {
+    height: 58px;
+  }
 }
 
 /* ============================================
    PAYSAGE (landscape) tous mobiles
    ============================================ */
 @media (max-height: 500px) and (orientation: landscape) {
-    .hero {
-        padding: 88px 20px 28px;
-        min-height: auto;
-    }
+  .hero {
+    padding: 88px 20px 28px;
+    min-height: auto;
+  }
 
-    .hero-title {
-        font-size: clamp(24px, 8vw, 36px);
-    }
+  .hero-title {
+    font-size: clamp(24px, 8vw, 36px);
+  }
 
-    .hero-subtitle {
-        font-size: clamp(13px, 3.5vw, 16px);
-    }
+  .hero-subtitle {
+    font-size: clamp(13px, 3.5vw, 16px);
+  }
 
-    .hero-description {
-        font-size: 13px;
-        margin-bottom: 14px;
-    }
+  .hero-description {
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
 
-    .nav-links {
-        padding: 52px 26px 22px;
-        overflow-y: auto;
-    }
+  .nav-links {
+    padding: 52px 26px 22px;
+    overflow-y: auto;
+  }
 
-    .nav-links li {
-        margin-bottom: 9px;
-    }
+  .nav-links li {
+    margin-bottom: 9px;
+  }
 
-    .nav-links a {
-        padding: 8px 0;
-        font-size: 15px;
-    }
+  .nav-links a {
+    padding: 8px 0;
+    font-size: 15px;
+  }
 
-    :root {
-        --section-padding: 48px;
-    }
+  :root {
+    --section-padding: 48px;
+  }
 }
 
 /* ============================================
    SAFARI iOS fixes
    ============================================ */
 @supports (-webkit-touch-callout: none) {
-    .hero {
-        min-height: -webkit-fill-available;
-    }
+  .hero {
+    min-height: -webkit-fill-available;
+  }
 
-    .nav-links {
-        height: -webkit-fill-available;
-    }
+  .nav-links {
+    height: -webkit-fill-available;
+  }
 
-    .hero,
-    .nav-links {
-        height: 100dvh;
-    }
+  .hero,
+  .nav-links {
+    height: 100dvh;
+  }
 }
 
 /* ============================================
    Fix: background-attachment mobile
    ============================================ */
 @media (max-width: 1024px) {
-    .why-ibe {
-        background-attachment: scroll !important;
-        background-position: center !important;
-        background-size: cover !important;
-    }
+  .why-ibe {
+    background-attachment: scroll !important;
+    background-position: center !important;
+    background-size: cover !important;
+  }
 }
 
 /* ============================================
    Accessibilité
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-    }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @media (prefers-contrast: high) {
-    .nav-links {
-        background: linear-gradient(135deg, #B8845A 0%, #A67550 100%);
-    }
+  .nav-links {
+    background: linear-gradient(135deg, #b8845a 0%, #a67550 100%);
+  }
 
-    .hamburger.active span {
-        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, .8));
-    }
+  .hamburger.active span {
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.8));
+  }
 
-    .menu-title {
-        color: #fff;
-    }
+  .menu-title {
+    color: #fff;
+  }
 }

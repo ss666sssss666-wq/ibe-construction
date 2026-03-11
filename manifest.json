@@ -1,0 +1,21 @@
+{
+  "name": "IBE Construction",
+  "short_name": "IBE",
+  "description": "L'Ingénierie Nouvelle Génération & BIM",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1B263B",
+  "icons": [
+    {
+      "src": "/images/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

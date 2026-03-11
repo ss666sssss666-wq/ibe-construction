@@ -1,598 +1,641 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Roadmap IBE Construction 2026-2027</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --bronze: #b6905a;
-            --navy: #0f172a;
-            --light-gray: #f8fafc;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-        }
+      :root {
+        --bronze: #b6905a;
+        --navy: #0f172a;
+        --light-gray: #f8fafc;
+        --text-dark: #1e293b;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Outfit", sans-serif;
+        color: var(--text-dark);
+        line-height: 1.6;
+        background-color: #fff;
+        padding-bottom: 50px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px;
+      }
+
+      header {
+        border-bottom: 4px solid var(--bronze);
+        padding-bottom: 30px;
+        margin-bottom: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+
+      .logo-area h1 {
+        color: var(--navy);
+        font-size: 32px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 5px;
+      }
+
+      .logo-area span {
+        color: var(--bronze);
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+      }
+
+      .header-info {
+        text-align: right;
+        color: var(--text-muted);
+        font-size: 13px;
+      }
+
+      h2 {
+        color: var(--navy);
+        font-size: 24px;
+        margin: 40px 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      h2::before {
+        content: "";
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-color: var(--bronze);
+        border-radius: 2px;
+      }
+
+      h3 {
+        color: var(--bronze);
+        font-size: 18px;
+        margin: 25px 0 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+
+      .hero-box {
+        background-color: var(--navy);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+      }
+
+      .hero-box h4 {
+        color: var(--bronze);
+        font-size: 14px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      .hero-box p {
+        font-size: 18px;
+        font-weight: 300;
+        margin-bottom: 0;
+        font-style: italic;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+        background: white;
+        border: 1px solid var(--border);
+      }
+
+      th {
+        background-color: var(--navy);
+        color: white;
+        text-align: left;
+        padding: 12px 15px;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      td {
+        padding: 12px 15px;
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+      }
+
+      tr:nth-child(even) {
+        background-color: var(--light-gray);
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .phase-box {
+        border-left: 4px solid var(--bronze);
+        padding: 0 0 0 20px;
+        margin-bottom: 40px;
+      }
+
+      .phase-header {
+        background-color: var(--light-gray);
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .phase-header h3 {
+        margin: 0;
+        color: var(--navy);
+      }
+
+      .phase-header span {
+        color: var(--text-muted);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .kpi-card {
+        background: var(--light-gray);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 3px solid var(--navy);
+      }
+
+      .kpi-card strong {
+        display: block;
+        color: var(--navy);
+        margin-bottom: 5px;
+      }
+
+      .footer-note {
+        margin-top: 60px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        padding-top: 20px;
+      }
+
+      .btn-print {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: var(--bronze);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(182, 144, 90, 0.3);
+        transition: all 0.3s ease;
+        z-index: 100;
+      }
+
+      .btn-print:hover {
+        transform: translateY(-2px);
+        background-color: #9e7b4b;
+      }
+
+      @media print {
+        .btn-print {
+          display: none;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            color: var(--text-dark);
-            line-height: 1.6;
-            background-color: #fff;
-            padding-bottom: 50px;
+          background-color: white;
         }
 
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px;
-        }
-
-        header {
-            border-bottom: 4px solid var(--bronze);
-            padding-bottom: 30px;
-            margin-bottom: 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .logo-area h1 {
-            color: var(--navy);
-            font-size: 32px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        .logo-area span {
-            color: var(--bronze);
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        .header-info {
-            text-align: right;
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-
-        h2 {
-            color: var(--navy);
-            font-size: 24px;
-            margin: 40px 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h2::before {
-            content: '';
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background-color: var(--bronze);
-            border-radius: 2px;
-        }
-
-        h3 {
-            color: var(--bronze);
-            font-size: 18px;
-            margin: 25px 0 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        p {
-            margin-bottom: 15px;
+          padding: 0;
         }
 
         .hero-box {
-            background-color: var(--navy);
-            color: white;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+          box-shadow: none;
+          border: 1px solid var(--navy);
         }
 
-        .hero-box h4 {
-            color: var(--bronze);
-            font-size: 14px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+        h2 {
+          page-break-before: always;
         }
 
-        .hero-box p {
-            font-size: 18px;
-            font-weight: 300;
-            margin-bottom: 0;
-            font-style: italic;
+        h2:first-of-type {
+          page-break-before: auto;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-            background: white;
-            border: 1px solid var(--border);
-        }
-
-        th {
-            background-color: var(--navy);
-            color: white;
-            text-align: left;
-            padding: 12px 15px;
-            font-size: 13px;
-            text-transform: uppercase;
-        }
-
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--border);
-            font-size: 14px;
-        }
-
-        tr:nth-child(even) {
-            background-color: var(--light-gray);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            background-color: #dcfce7;
-            color: #166534;
-        }
-
-        .phase-box {
-            border-left: 4px solid var(--bronze);
-            padding: 0 0 0 20px;
-            margin-bottom: 40px;
-        }
-
-        .phase-header {
-            background-color: var(--light-gray);
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .phase-header h3 {
-            margin: 0;
-            color: var(--navy);
-        }
-
-        .phase-header span {
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .kpi-card {
-            background: var(--light-gray);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid var(--navy);
-        }
-
-        .kpi-card strong {
-            display: block;
-            color: var(--navy);
-            margin-bottom: 5px;
-        }
-
-        .footer-note {
-            margin-top: 60px;
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border);
-            padding-top: 20px;
-        }
-
-        .btn-print {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: var(--bronze);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(182, 144, 90, 0.3);
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        .btn-print:hover {
-            transform: translateY(-2px);
-            background-color: #9e7b4b;
-        }
-
-        @media print {
-            .btn-print {
-                display: none;
-            }
-
-            body {
-                background-color: white;
-            }
-
-            .container {
-                padding: 0;
-            }
-
-            .hero-box {
-                box-shadow: none;
-                border: 1px solid var(--navy);
-            }
-
-            h2 {
-                page-break-before: always;
-            }
-
-            h2:first-of-type {
-                page-break-before: auto;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <button class="btn-print" onclick="window.print()">Exporter en PDF</button>
 
     <div class="container">
-        <header>
-            <div class="logo-area">
-                <h1>IBE Construction</h1>
-                <span>Plan Stratégique 2026-2027</span>
-            </div>
-            <div class="header-info">
-                Version 2.0<br>
-                Mise à jour : 7 Mars 2026
-            </div>
-        </header>
-
-        <div class="hero-box">
-            <h4>Vision 2026</h4>
-            <p>"De l'étude à la livraison, une seule équipe, une seule vision."</p>
+      <header>
+        <div class="logo-area">
+          <h1>IBE Construction</h1>
+          <span>Plan Stratégique 2026-2027</span>
         </div>
+        <div class="header-info">
+          Version 2.0<br />
+          Mise à jour : 7 Mars 2026
+        </div>
+      </header>
 
-        <h2>Équipe Fondatrice</h2>
-        <p>IBE Construction repose sur l'expertise complémentaire de trois associés directeurs, offrant une maîtrise
-            technique totale sur l'ensemble de la chaîne de valeur du bâtiment.</p>
+      <div class="hero-box">
+        <h4>Vision 2026</h4>
+        <p>"De l'étude à la livraison, une seule équipe, une seule vision."</p>
+      </div>
 
+      <h2>Équipe Fondatrice</h2>
+      <p>
+        IBE Construction repose sur l'expertise complémentaire de trois associés
+        directeurs, offrant une maîtrise technique totale sur l'ensemble de la
+        chaîne de valeur du bâtiment.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Associé</th>
+            <th>Rôle</th>
+            <th>Expertise Clé</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tarik Ben Moussa</strong></td>
+            <td>Directeur Études & BIM</td>
+            <td>Ingénierie, Revit, Eurocodes</td>
+          </tr>
+          <tr>
+            <td><strong>Directeur Fahd</strong></td>
+            <td>Directeur Second Œuvre</td>
+            <td>Gestion de chantier, Finitions</td>
+          </tr>
+          <tr>
+            <td><strong>Directeur Ahmed</strong></td>
+            <td>Directeur CVC & Fluides</td>
+            <td>CVC, HVAC, Énergie</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Différenciation Stratégique</h2>
+      <div class="phase-box">
+        <p>
+          Pourquoi IBE Construction redéfinit les standards du marché local :
+        </p>
         <table>
-            <thead>
-                <tr>
-                    <th>Associé</th>
-                    <th>Rôle</th>
-                    <th>Expertise Clé</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Tarik Ben Moussa</strong></td>
-                    <td>Directeur Études & BIM</td>
-                    <td>Ingénierie, Revit, Eurocodes</td>
-                </tr>
-                <tr>
-                    <td><strong>Directeur Fahd</strong></td>
-                    <td>Directeur Second Œuvre</td>
-                    <td>Gestion de chantier, Finitions</td>
-                </tr>
-                <tr>
-                    <td><strong>Directeur Ahmed</strong></td>
-                    <td>Directeur CVC & Fluides</td>
-                    <td>CVC, HVAC, Énergie</td>
-                </tr>
-            </tbody>
+          <thead>
+            <tr>
+              <th>Critère</th>
+              <th>Concurrent Classique</th>
+              <th>IBE Construction</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Interlocuteurs</strong></td>
+              <td>3+ entreprises (conflits)</td>
+              <td>
+                <span
+                  class="status-badge"
+                  style="background: #dcfce7; color: #166534"
+                  >1 seule équipe</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Délais</strong></td>
+              <td>⚠️ Dépendances multiples</td>
+              <td>✅ Maîtrisés (Coordination native)</td>
+            </tr>
+            <tr>
+              <td><strong>Prix</strong></td>
+              <td>$$$ (3 marges cumulées)</td>
+              <td>$$ (1 seule marge optimisée)</td>
+            </tr>
+            <tr>
+              <td><strong>Suivi digital</strong></td>
+              <td>❌ Aucun (Opaque)</td>
+              <td><span class="status-badge">Portail Temps Réel</span></td>
+            </tr>
+          </tbody>
         </table>
+      </div>
 
-        <h2>Différenciation Stratégique</h2>
-        <div class="phase-box">
-            <p>Pourquoi IBE Construction redéfinit les standards du marché local :</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Critère</th>
-                        <th>Concurrent Classique</th>
-                        <th>IBE Construction</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Interlocuteurs</strong></td>
-                        <td>3+ entreprises (conflits)</td>
-                        <td><span class="status-badge" style="background:#dcfce7; color:#166534">1 seule équipe</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Délais</strong></td>
-                        <td>⚠️ Dépendances multiples</td>
-                        <td>✅ Maîtrisés (Coordination native)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Prix</strong></td>
-                        <td>$$$ (3 marges cumulées)</td>
-                        <td>$$ (1 seule marge optimisée)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Suivi digital</strong></td>
-                        <td>❌ Aucun (Opaque)</td>
-                        <td><span class="status-badge">Portail Temps Réel</span></td>
-                    </tr>
-                </tbody>
-            </table>
+      <h2>Bilan Technologique — État Actuel</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Composant</th>
+            <th>Description</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Site Web Vitrine</td>
+            <td>Plateforme immersive FR/EN/AR avec chatbot IA</td>
+            <td><span class="status-badge">Live</span></td>
+          </tr>
+          <tr>
+            <td>Portail Client</td>
+            <td>Suivi en temps réel des 6 étapes de chantier</td>
+            <td><span class="status-badge">Live</span></td>
+          </tr>
+          <tr>
+            <td>Gestion Documents</td>
+            <td>Stockage Cloudinary sécurisé (Plans, PDF, DWG)</td>
+            <td><span class="status-badge">Live</span></td>
+          </tr>
+          <tr>
+            <td>Messagerie Directe</td>
+            <td>Système de chat temps réel Admin-Client</td>
+            <td><span class="status-badge">Live</span></td>
+          </tr>
+          <tr>
+            <td>Module Financier</td>
+            <td>Factures, Budget Prévu/Réel, Plus-Values Premium</td>
+            <td><span class="status-badge">Live</span></td>
+          </tr>
+          <tr>
+            <td>Galerie & Icons</td>
+            <td>Albums photos & Design SVG Bronze (Zéro Emoji)</td>
+            <td><span class="status-badge">Live</span></td>
+          </tr>
+          <tr>
+            <td>Authentification</td>
+            <td>Infrastructure Firebase hautement sécurisée</td>
+            <td><span class="status-badge">Live</span></td>
+          </tr>
+          <tr>
+            <td>Historique Log</td>
+            <td>Journal de traçabilité complet (Admin & Client)</td>
+            <td><span class="status-badge">Live</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Roadmap Prioritaire (Mars - Avril 2026)</h2>
+
+      <div class="phase-header">
+        <h3>Phase 1 : Bootstrap & Prospection</h3>
+        <span>Mars - Juin 2026</span>
+      </div>
+      <div class="phase-box">
+        <p>Lancement agile sans frais fixes (travail à distance/coworking).</p>
+        <ul>
+          <li>
+            <strong>Prospection Architectes</strong> : Signature des 2 premiers
+            partenariats.
+          </li>
+          <li>
+            <strong>Validation Portail</strong> : Test du portail sur les
+            premiers petits contrats.
+          </li>
+          <li><strong>Historique des Modifications</strong> : ✅ Terminé</li>
+          <li><strong>Marge en Temps Réel</strong> : ✅ Terminé</li>
+        </ul>
+      </div>
+
+      <div class="phase-header">
+        <h3>Phase 2 : Module Financier & Consolidation</h3>
+        <span>Juillet - Décembre 2026</span>
+      </div>
+      <div class="phase-box">
+        <p>Digitalisation des flux et préparation du premier local physique.</p>
+        <ul>
+          <li>
+            <strong>Suivi Budget</strong> : Comparaison Prévu vs Réel activée
+            pour le client.
+          </li>
+          <li>
+            <strong>Premier Local</strong> : Acquisition d'un petit bureau ou
+            coworking fixe (si CA > 500k).
+          </li>
+          <li>
+            <strong>Recrutement</strong> : Intégration du premier stagiaire ou
+            conducteur de travaux junior.
+          </li>
+        </ul>
+      </div>
+
+      <div class="phase-header">
+        <h3>Phase 3 : Croissance & Expansion</h3>
+        <span>Année 2027</span>
+      </div>
+      <div class="phase-box">
+        <p>Passage à l'échelle et structuration officielle de l'entreprise.</p>
+        <ul>
+          <li>
+            <strong>Structuration SARL</strong> : Formalisation juridique
+            complète et recrutement équipe cœur.
+          </li>
+          <li>
+            <strong>Gantt Interactif</strong> : Déploiement du planning
+            dynamique sur tous les chantiers.
+          </li>
+          <li>
+            <strong>Régionalisation</strong> : Premières interventions hors
+            Casablanca (Rabat/Marrakech).
+          </li>
+        </ul>
+      </div>
+
+      <h2>Offres Commerciales</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <strong>Clés en main Résidentiel</strong>
+          Études + Second Œuvre + CVC + Portail Digital. (1200-1500 DH/m²)
         </div>
-
-        <h2>Bilan Technologique — État Actuel</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Composant</th>
-                    <th>Description</th>
-                    <th>Statut</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Site Web Vitrine</td>
-                    <td>Plateforme immersive FR/EN/AR avec chatbot IA</td>
-                    <td><span class="status-badge">Live</span></td>
-                </tr>
-                <tr>
-                    <td>Portail Client</td>
-                    <td>Suivi en temps réel des 6 étapes de chantier</td>
-                    <td><span class="status-badge">Live</span></td>
-                </tr>
-                <tr>
-                    <td>Gestion Documents</td>
-                    <td>Stockage Cloudinary sécurisé (Plans, PDF, DWG)</td>
-                    <td><span class="status-badge">Live</span></td>
-                </tr>
-                <tr>
-                    <td>Messagerie Directe</td>
-                    <td>Système de chat temps réel Admin-Client</td>
-                    <td><span class="status-badge">Live</span></td>
-                </tr>
-                <tr>
-                    <td>Module Financier</td>
-                    <td>Factures, Budget Prévu/Réel, Plus-Values Premium</td>
-                    <td><span class="status-badge">Live</span></td>
-                </tr>
-                <tr>
-                    <td>Galerie & Icons</td>
-                    <td>Albums photos & Design SVG Bronze (Zéro Emoji)</td>
-                    <td><span class="status-badge">Live</span></td>
-                </tr>
-                <tr>
-                    <td>Authentification</td>
-                    <td>Infrastructure Firebase hautement sécurisée</td>
-                    <td><span class="status-badge">Live</span></td>
-                </tr>
-                <tr>
-                    <td>Historique Log</td>
-                    <td>Journal de traçabilité complet (Admin & Client)</td>
-                    <td><span class="status-badge">Live</span></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>Roadmap Prioritaire (Mars - Avril 2026)</h2>
-
-        <div class="phase-header">
-            <h3>Phase 1 : Bootstrap & Prospection</h3>
-            <span>Mars - Juin 2026</span>
+        <div class="kpi-card">
+          <strong>Médical Premium</strong>
+          Fluides médicaux + Salles blanches + CVC spécialisé + Suivi temps
+          réel.
         </div>
-        <div class="phase-box">
-            <p>Lancement agile sans frais fixes (travail à distance/coworking).</p>
-            <ul>
-                <li><strong>Prospection Architectes</strong> : Signature des 2 premiers partenariats.</li>
-                <li><strong>Validation Portail</strong> : Test du portail sur les premiers petits contrats.</li>
-                <li><strong>Historique des Modifications</strong> : ✅ Terminé</li>
-                <li><strong>Marge en Temps Réel</strong> : ✅ Terminé</li>
-            </ul>
+        <div class="kpi-card">
+          <strong>Bureaux & Commerces</strong>
+          Aménagement intérieur + Maintenance CVC + Export rapports PDF
+          automatisés.
         </div>
+      </div>
 
-        <div class="phase-header">
-            <h3>Phase 2 : Module Financier & Consolidation</h3>
-            <span>Juillet - Décembre 2026</span>
+      <h2>Modèle Économique : Projet Type</h2>
+      <p>Exemple de rentabilité sur une Villa R+1 (200m²) :</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Poste</th>
+            <th>Coût (DH)</th>
+            <th>Prix Client (DH)</th>
+            <th>Marge</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Études & BIM</td>
+            <td>5 000</td>
+            <td>20 000</td>
+            <td>15 000</td>
+          </tr>
+          <tr>
+            <td>Second Œuvre & CVC</td>
+            <td>180 000</td>
+            <td>240 000</td>
+            <td>60 000</td>
+          </tr>
+          <tr style="background: var(--light-gray); font-weight: 700">
+            <td>TOTAL</td>
+            <td>185 000</td>
+            <td>260 000</td>
+            <td>75 000 (28%)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Stratégie d'Acquisition (Phase 4)</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <strong>Partenariats Architectes</strong>
+          Ciblage de 20 cabinets premium à Casablanca & Rabat. Offre d'étude
+          gratuite.
         </div>
-        <div class="phase-box">
-            <p>Digitalisation des flux et préparation du premier local physique.</p>
-            <ul>
-                <li><strong>Suivi Budget</strong> : Comparaison Prévu vs Réel activée pour le client.</li>
-                <li><strong>Premier Local</strong> : Acquisition d'un petit bureau ou coworking fixe (si CA > 500k).
-                </li>
-                <li><strong>Recrutement</strong> : Intégration du premier stagiaire ou conducteur de travaux junior.
-                </li>
-            </ul>
+        <div class="kpi-card">
+          <strong>Promoteurs Immobiliers</strong>
+          Ciblage projets R+4 à R+8. Argument clé : Transparence et suivi
+          digital.
         </div>
-
-        <div class="phase-header">
-            <h3>Phase 3 : Croissance & Expansion</h3>
-            <span>Année 2027</span>
+        <div class="kpi-card">
+          <strong>Marketing Digital</strong>
+          Google Ads & LinkedIn Ads (Budget mensuel : 1650 DH).
         </div>
-        <div class="phase-box">
-            <p>Passage à l'échelle et structuration officielle de l'entreprise.</p>
-            <ul>
-                <li><strong>Structuration SARL</strong> : Formalisation juridique complète et recrutement équipe cœur.
-                </li>
-                <li><strong>Gantt Interactif</strong> : Déploiement du planning dynamique sur tous les chantiers.</li>
-                <li><strong>Régionalisation</strong> : Premières interventions hors Casablanca (Rabat/Marrakech).</li>
-            </ul>
+        <div class="kpi-card">
+          <strong>SEO & Lead Magnets</strong>
+          Guide BIM propriétaire pour capturer des prospects qualifiés.
         </div>
+      </div>
 
-        <h2>Offres Commerciales</h2>
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <strong>Clés en main Résidentiel</strong>
-                Études + Second Œuvre + CVC + Portail Digital. (1200-1500 DH/m²)
-            </div>
-            <div class="kpi-card">
-                <strong>Médical Premium</strong>
-                Fluides médicaux + Salles blanches + CVC spécialisé + Suivi temps réel.
-            </div>
-            <div class="kpi-card">
-                <strong>Bureaux & Commerces</strong>
-                Aménagement intérieur + Maintenance CVC + Export rapports PDF automatisés.
-            </div>
-        </div>
+      <h2>Vision 3 Ans — Projections</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Année</th>
+            <th>Objectif Stratégique</th>
+            <th>CA Prévisionnel</th>
+            <th>Effectifs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026</td>
+            <td>Bootstrap & Validation (8 rapports/projets)</td>
+            <td>2 000 000 DH</td>
+            <td>3 Associés</td>
+          </tr>
+          <tr>
+            <td>2027</td>
+            <td>Structuration & Bureau (20 projets)</td>
+            <td>5 000 000 DH</td>
+            <td>Associés + 3</td>
+          </tr>
+          <tr>
+            <td>2028</td>
+            <td>Croissance & Équipe (40 projets)</td>
+            <td>12 000 000 DH</td>
+            <td>8-10 salariés</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <h2>Modèle Économique : Projet Type</h2>
-        <p>Exemple de rentabilité sur une Villa R+1 (200m²) :</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Poste</th>
-                    <th>Coût (DH)</th>
-                    <th>Prix Client (DH)</th>
-                    <th>Marge</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Études & BIM</td>
-                    <td>5 000</td>
-                    <td>20 000</td>
-                    <td>15 000</td>
-                </tr>
-                <tr>
-                    <td>Second Œuvre & CVC</td>
-                    <td>180 000</td>
-                    <td>240 000</td>
-                    <td>60 000</td>
-                </tr>
-                <tr style="background:var(--light-gray); font-weight:700">
-                    <td>TOTAL</td>
-                    <td>185 000</td>
-                    <td>260 000</td>
-                    <td>75 000 (28%)</td>
-                </tr>
-            </tbody>
-        </table>
+      <h2>Analyse des Risques & Mitigation</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Risque</th>
+            <th>Impact</th>
+            <th>Stratégie de Mitigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Manque de clients</strong></td>
+            <td>Élevé</td>
+            <td>Marketing ciblé, partenariats archi, démo portail.</td>
+          </tr>
+          <tr>
+            <td><strong>Trésorerie</strong></td>
+            <td>Élevé</td>
+            <td>Acomptes 30%, paiements échelonnés par jalons.</td>
+          </tr>
+          <tr>
+            <td><strong>Retards chantiers</strong></td>
+            <td>Moyen</td>
+            <td>Gantt interactif + Marges de sécurité techniques.</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <h2>Stratégie d'Acquisition (Phase 4)</h2>
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <strong>Partenariats Architectes</strong>
-                Ciblage de 20 cabinets premium à Casablanca & Rabat. Offre d'étude gratuite.
-            </div>
-            <div class="kpi-card">
-                <strong>Promoteurs Immobiliers</strong>
-                Ciblage projets R+4 à R+8. Argument clé : Transparence et suivi digital.
-            </div>
-            <div class="kpi-card">
-                <strong>Marketing Digital</strong>
-                Google Ads & LinkedIn Ads (Budget mensuel : 1650 DH).
-            </div>
-            <div class="kpi-card">
-                <strong>SEO & Lead Magnets</strong>
-                Guide BIM propriétaire pour capturer des prospects qualifiés.
-            </div>
-        </div>
+      <h2>Facteurs Clés de Succès</h2>
+      <div class="phase-box">
+        <ul>
+          <li>
+            <strong>Coordination interne</strong> : 3 associés, 3 expertises, 1
+            vision.
+          </li>
+          <li>
+            <strong>Qualité Technique</strong> : BIM & Calculs Eurocodes dès la
+            conception.
+          </li>
+          <li>
+            <strong>Innovation</strong> : Le Portail Client comme avantage
+            concurrentiel majeur.
+          </li>
+        </ul>
+      </div>
 
-        <h2>Vision 3 Ans — Projections</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Année</th>
-                    <th>Objectif Stratégique</th>
-                    <th>CA Prévisionnel</th>
-                    <th>Effectifs</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>2026</td>
-                    <td>Bootstrap & Validation (8 rapports/projets)</td>
-                    <td>2 000 000 DH</td>
-                    <td>3 Associés</td>
-                </tr>
-                <tr>
-                    <td>2027</td>
-                    <td>Structuration & Bureau (20 projets)</td>
-                    <td>5 000 000 DH</td>
-                    <td>Associés + 3</td>
-                </tr>
-                <tr>
-                    <td>2028</td>
-                    <td>Croissance & Équipe (40 projets)</td>
-                    <td>12 000 000 DH</td>
-                    <td>8-10 salariés</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>Analyse des Risques & Mitigation</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Risque</th>
-                    <th>Impact</th>
-                    <th>Stratégie de Mitigation</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Manque de clients</strong></td>
-                    <td>Élevé</td>
-                    <td>Marketing ciblé, partenariats archi, démo portail.</td>
-                </tr>
-                <tr>
-                    <td><strong>Trésorerie</strong></td>
-                    <td>Élevé</td>
-                    <td>Acomptes 30%, paiements échelonnés par jalons.</td>
-                </tr>
-                <tr>
-                    <td><strong>Retards chantiers</strong></td>
-                    <td>Moyen</td>
-                    <td>Gantt interactif + Marges de sécurité techniques.</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>Facteurs Clés de Succès</h2>
-        <div class="phase-box">
-            <ul>
-                <li><strong>Coordination interne</strong> : 3 associés, 3 expertises, 1 vision.</li>
-                <li><strong>Qualité Technique</strong> : BIM & Calculs Eurocodes dès la conception.</li>
-                <li><strong>Innovation</strong> : Le Portail Client comme avantage concurrentiel majeur.</li>
-            </ul>
-        </div>
-
-        <div class="footer-note">
-            Document Stratégique Confidentiel — IBE Construction © 2026<br>
-            "De l'étude à la livraison, une seule équipe, une seule vision."
-        </div>
+      <div class="footer-note">
+        Document Stratégique Confidentiel — IBE Construction © 2026<br />
+        "De l'étude à la livraison, une seule équipe, une seule vision."
+      </div>
     </div>
-
-</body>
-
+  </body>
 </html>

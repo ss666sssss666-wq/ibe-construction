@@ -29,11 +29,11 @@
 1. Ouvrez le fichier **`chatbot-ai.js`** dans votre éditeur de code
 2. Cherchez la ligne **12** :
    ```javascript
-   this.apiKey = 'YOUR_GEMINI_API_KEY_HERE';
+   this.apiKey = "YOUR_GEMINI_API_KEY_HERE";
    ```
 3. Remplacez `YOUR_GEMINI_API_KEY_HERE` par votre vraie clé API :
    ```javascript
-   this.apiKey = 'AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+   this.apiKey = "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
    ```
 4. **Sauvegardez** le fichier
 
@@ -73,11 +73,11 @@
 
 ## 📊 Limites Gratuites
 
-| Métrique | Limite Gratuite | Votre Usage Estimé |
-|----------|-----------------|-------------------|
-| Requêtes/jour | 1500 | ~300 (20%) |
-| Requêtes/minute | 15 | ~2-3 |
-| Tokens/jour | 1M | ~50K (5%) |
+| Métrique        | Limite Gratuite | Votre Usage Estimé |
+| --------------- | --------------- | ------------------ |
+| Requêtes/jour   | 1500            | ~300 (20%)         |
+| Requêtes/minute | 15              | ~2-3               |
+| Tokens/jour     | 1M              | ~50K (5%)          |
 
 **Conclusion** : Vous êtes **largement en dessous** des limites ! 🎉
 
@@ -120,21 +120,28 @@ Cela empêche l'utilisation de votre clé sur d'autres sites.
 ### Modifier le message de bienvenue
 
 Dans `chatbot-ai.js`, ligne ~235 :
+
 ```javascript
-this.addBotMessage("Bonjour ! 👋 Je suis l'assistant IA d'IBE Construction.\n\nComment puis-je vous aider aujourd'hui ?");
+this.addBotMessage(
+  "Bonjour ! 👋 Je suis l'assistant IA d'IBE Construction.\n\nComment puis-je vous aider aujourd'hui ?",
+);
 ```
 
 ### Modifier les boutons de réponse rapide
 
 Dans `chatbot-ai.js`, ligne ~95 :
+
 ```html
-<button class="quick-reply" data-message="Quels sont vos services ?">🏗️ Services</button>
+<button class="quick-reply" data-message="Quels sont vos services ?">
+  🏗️ Services
+</button>
 <button class="quick-reply" data-message="Je veux un devis">💰 Devis</button>
 ```
 
 ### Changer les couleurs
 
 Dans `chatbot.css` :
+
 - Bronze : `#cc9461`
 - Bleu : `#1a2f4b`
 
@@ -178,6 +185,7 @@ Videz le cache de votre navigateur (Ctrl+Shift+R)
 ### Améliorer les réponses
 
 Modifiez le **System Prompt** dans `chatbot-ai.js` (ligne ~25) pour :
+
 - Ajouter plus d'informations sur vos services
 - Changer le ton (plus formel/informel)
 - Ajouter des cas d'usage spécifiques
@@ -187,12 +195,14 @@ Modifiez le **System Prompt** dans `chatbot-ai.js` (ligne ~25) pour :
 ## 🚀 Déploiement
 
 ### En local (test)
+
 ```bash
 python -m http.server 8000
 # Ouvrez http://localhost:8000
 ```
 
 ### Sur Vercel (production)
+
 ```bash
 vercel --prod
 ```

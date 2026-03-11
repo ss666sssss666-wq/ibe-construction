@@ -5,11 +5,13 @@ A high-end, minimalist corporate website for IBE CONSTRUCTION, a premier structu
 ## Design Features
 
 ### Visual Identity
+
 - **Primary Color**: Deep Navy Blue (#1B263B)
 - **Accent Color**: Copper Orange (#D9480F)
 - **Typography**: Inter font family with multiple weights
 
 ### Aesthetic
+
 - Minimalist "Antigravity" style
 - Fluid scroll animations
 - Generous whitespace

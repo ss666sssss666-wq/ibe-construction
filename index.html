@@ -1,1118 +1,2057 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IBE Construction : L'Ingénierie Nouvelle Génération & BIM</title>
-    <meta name="description"
-        content="IBE Construction - Startup technologique en ingénierie structure et construction 4.0. Expertise BIM, Robot Structural d'Analyse et gestion de projets complexes.">
-    <meta name="keywords"
-        content="IBE, IBE Maroc, Entreprise Construction, Bureau d'Études, Menuiserie, Climatisation, Chantier, Gestion de Chantier, Projet BTP, Villa, Immeuble, Gros Œuvres, Seconds Œuvres, Finitions, Construction Maroc, Mohammedia">
-    <meta name="author" content="IBE Maroc">
-    <link rel="canonical" href="https://www.ibe-construction.com/">
+    <meta
+      name="description"
+      content="IBE Construction - Expertise intégrée en ingénierie structure, BIM et gestion de projets complexes. De l'étude à la réalisation."
+    />
+    <meta
+      name="keywords"
+      content="IBE, IBE Maroc, Entreprise Construction, Bureau d'Études, Menuiserie, Climatisation, Chantier, Gestion de Chantier, Projet BTP, Villa, Immeuble, Gros Œuvres, Seconds Œuvres, Finitions, Construction Maroc, Mohammedia"
+    />
+    <meta name="author" content="IBE Maroc" />
+    <link rel="canonical" href="https://www.ibe-construction.com/" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.ibe-construction.com/">
-    <meta property="og:title" content="IBE Maroc : L'Excellence en Ingénierie & Construction">
-    <meta property="og:description"
-        content="IBE Maroc : Partenaire de référence pour vos projets complexes. Ingénierie de pointe, BIM et expertise chantier.">
-    <meta property="og:image" content="https://www.ibe-construction.com/images/hero-new-1.png">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.ibe-construction.com/" />
+    <meta
+      property="og:title"
+      content="IBE Maroc : L'Excellence en Ingénierie & Construction"
+    />
+    <meta
+      property="og:description"
+      content="IBE Maroc : Partenaire de référence pour vos projets complexes. Ingénierie de pointe, BIM et expertise chantier."
+    />
+    <meta
+      property="og:image"
+      content="https://www.ibe-construction.com/images/hero-new-1.png"
+    />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.ibe-construction.com/">
-    <meta property="twitter:title" content="IBE Maroc : L'Excellence en Ingénierie & Construction">
-    <meta property="twitter:description"
-        content="IBE Maroc - Bureau d'études et construction. Expertise BIM, Structure et Fluides.">
-    <meta property="twitter:image" content="https://www.ibe-construction.com/images/hero-new-1.png">
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.ibe-construction.com/" />
+    <meta
+      property="twitter:title"
+      content="IBE Maroc : L'Excellence en Ingénierie & Construction"
+    />
+    <meta
+      property="twitter:description"
+      content="IBE Maroc - Bureau d'études et construction. Expertise BIM, Structure et Fluides."
+    />
+    <meta
+      property="twitter:image"
+      content="https://www.ibe-construction.com/images/hero-new-1.png"
+    />
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="mobile-fixes.css">
-    <link rel="stylesheet" href="calculator.css">
-    <link rel="stylesheet" href="chatbot.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Cairo:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <script src="translations.js"></script>
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="mobile-fixes.css" />
+    <link rel="stylesheet" href="calculator.css" />
+    <link rel="stylesheet" href="chatbot.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#1B263B" />
 
     <!-- Schema.org Markup -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ConstructionBusiness",
-      "name": "IBE Maroc",
-      "image": "https://www.ibe-construction.com/images/logo.png",
-      "@id": "https://www.ibe-construction.com/",
-      "url": "https://www.ibe-construction.com/",
-      "telephone": "+212663176838",
-      "email": "ibebuilds@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "69 boulevard Hassan II",
-        "addressLocality": "Mohammedia",
-        "postalCode": "28800",
-        "addressCountry": "MA"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 33.6833,
-        "longitude": -7.3833
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "opens": "09:00",
-        "closes": "18:00"
-      },
-      "sameAs": [
-        "https://www.instagram.com/ibe.construction"
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "ConstructionBusiness",
+        "name": "IBE Maroc",
+        "image": "https://www.ibe-construction.com/images/logo.png",
+        "@id": "https://www.ibe-construction.com/",
+        "url": "https://www.ibe-construction.com/",
+        "telephone": "+212663176838",
+        "email": "ibe@ibe-construction.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "69 boulevard Hassan II",
+          "addressLocality": "Mohammedia",
+          "postalCode": "28800",
+          "addressCountry": "MA"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 33.6833,
+          "longitude": -7.3833
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        "sameAs": ["https://www.instagram.com/ibe.construction"]
+      }
     </script>
 
     <!-- TODO: Ajouter GTM et Meta Pixel avec vos vrais IDs avant la mise en production -->
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Custom Architectural Cursor -->
     <div class="custom-cursor"></div>
     <div class="custom-cursor-outline"></div>
 
     <!-- Door Opening Loader -->
     <div id="loader" class="loader">
-        <div class="loader-panel left"></div>
-        <div class="loader-panel right"></div>
-        <div class="loader-content">
-            <div class="loader-logo-text">IBE CONSTRUCTION</div>
-        </div>
+      <div class="loader-panel left"></div>
+      <div class="loader-panel right"></div>
+      <div class="loader-content">
+        <div class="loader-logo-text">IBE CONSTRUCTION</div>
+      </div>
     </div>
-
-
 
     <!-- Navigation with Glassmorphism -->
     <nav class="nav-glass">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="images/logo.png" alt="IBE Construction" class="logo-image">
-            </div>
-            <ul class="nav-links">
-                <div class="menu-title" data-i18n="menu_label">MENU</div>
-                <li><a href="#services" data-i18n="nav_services">Services</a></li>
-                <li><a href="#expertise" data-i18n="nav_expertise">Expertise</a></li>
-                <li><a href="#projets" data-i18n="nav_projects">Projets</a></li>
-                <li><a href="#contact" class="cta-btn" data-i18n="nav_contact">Nous Contacter</a></li>
-            </ul>
-
-            <div class="nav-actions">
-                <div class="lang-selector">
-                    <div class="lang-current">
-                        <span id="active-lang">FR</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </div>
-                    <ul class="lang-dropdown">
-                        <li data-lang="fr">Français</li>
-                        <li data-lang="en">English</li>
-                        <li data-lang="ar">العربية</li>
-                    </ul>
-                </div>
-
-                <!-- Client Portal Button -->
-                <a href="portal/login.html" class="portal-btn" id="portalLoginBtn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                    <span data-i18n="nav_portal">Espace Client</span>
-                </a>
-
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
+      <div class="nav-container">
+        <div class="logo">
+          <img
+            src="images/logo.png"
+            alt="IBE Construction"
+            class="logo-image"
+          />
         </div>
+        <ul class="nav-links">
+          <div class="menu-title" data-i18n="menu_label">MENU</div>
+          <li><a href="#services" data-i18n="nav_services">Services</a></li>
+          <li><a href="#expertise" data-i18n="nav_expertise">Expertise</a></li>
+          <li><a href="#projets" data-i18n="nav_projects">Projets</a></li>
+          <li>
+            <a href="#contact" class="cta-btn" data-i18n="nav_contact"
+              >Nous Contacter</a
+            >
+          </li>
+        </ul>
+
+        <div class="nav-actions">
+          <div class="lang-selector">
+            <div class="lang-current">
+              <span id="active-lang">FR</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </div>
+            <ul class="lang-dropdown">
+              <li data-lang="fr">Français</li>
+              <li data-lang="en">English</li>
+              <li data-lang="ar">العربية</li>
+            </ul>
+          </div>
+
+          <!-- Client Portal Button -->
+          <a href="portal/login.html" class="portal-btn" id="portalLoginBtn">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              width="16"
+              height="16"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <span data-i18n="nav_portal">Espace Client</span>
+          </a>
+
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="grid-overlay"></div>
+      <div class="grid-overlay"></div>
 
-        <!-- Infinite Scrolling Background (New Implementation) -->
-        <div class="hero-bg-wrapper">
-            <div class="hero-bg-slider">
-                <div class="slide-track">
-                    <!-- Set 1 -->
-                    <div class="slide"><img src="images/hero-new-1.png" alt="Architecture 1"></div>
-                    <div class="slide"><img src="images/hero-new-2.png" alt="Architecture 2"></div>
-                    <div class="slide"><img src="images/hero-new-3.png" alt="Architecture 3"></div>
-                    <div class="slide"><img src="images/hero-new-4.png" alt="Architecture 4"></div>
-                    <!-- Set 2 (Duplicate for infinite scroll) -->
-                    <div class="slide"><img src="images/hero-new-1.png" alt="Architecture 1"></div>
-                    <div class="slide"><img src="images/hero-new-2.png" alt="Architecture 2"></div>
-                    <div class="slide"><img src="images/hero-new-3.png" alt="Architecture 3"></div>
-                    <div class="slide"><img src="images/hero-new-4.png" alt="Architecture 4"></div>
-                </div>
+      <!-- Infinite Scrolling Background (New Implementation) -->
+      <div class="hero-bg-wrapper">
+        <div class="hero-bg-slider">
+          <div class="slide-track">
+            <!-- Set 1 -->
+            <div class="slide">
+              <img src="images/hero-new-1.png" alt="Architecture 1" />
             </div>
-            <!-- White Gradient Fades -->
-            <div class="bg-fade-overlay"></div>
-            <div class="bg-fade-bottom"></div>
-        </div>
-
-        <div class="hero-content">
-            <div class="hero-left">
-                <h1 class="hero-title" data-i18n="hero_title">
-                    CONCEVOIR<br>
-                    <span class="hero-highlight">L'AVENIR</span>
-                </h1>
-                <p class="hero-subtitle" data-i18n="hero_subtitle">Bâtir l'Excellence</p>
-                <p class="hero-description" data-i18n="hero_desc">
-                    Partenaire de référence pour vos projets complexes. Nous allions ingénierie de pointe,
-                    rigueur d'exécution et expertise BIM pour transformer votre vision en réalité durable.
-                </p>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <a href="#contact" class="cta-btn primary" data-i18n="hero_cta">Demander une étude technique</a>
-                    <button class="cta-btn" id="openCalculator" data-i18n="hero_calculator">Estimez votre
-                        projet</button>
-                </div>
+            <div class="slide">
+              <img src="images/hero-new-2.png" alt="Architecture 2" />
             </div>
-            <div class="hero-right">
-                <div class="crane-animation">
-                    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <pattern id="grid-fine" width="40" height="40" patternUnits="userSpaceOnUse">
-                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(204, 148, 97, 0.1)"
-                                    stroke-width="0.5" />
-                            </pattern>
-                        </defs>
-
-                        <!-- Background Grid -->
-                        <rect width="400" height="400" fill="url(#grid-fine)" />
-
-                        <!-- Ground Line -->
-                        <line x1="0" y1="350" x2="400" y2="350" stroke="#1a2f4b" stroke-width="2" />
-
-                        <!-- House under construction -->
-                        <g class="house-wireframe" transform="translate(50, 150)">
-                            <line x1="0" y1="200" x2="160" y2="200" stroke="#1a2f4b" stroke-width="2" />
-                            <line x1="0" y1="200" x2="0" y2="100" stroke="#1a2f4b" stroke-width="2" />
-                            <line x1="160" y1="200" x2="160" y2="100" stroke="#1a2f4b" stroke-width="2" />
-                            <line x1="0" y1="100" x2="160" y2="100" stroke="#1a2f4b" stroke-width="2" />
-                            <line x1="80" y1="200" x2="80" y2="100" stroke="#cc9461" stroke-width="1" opacity="0.5" />
-                            <line x1="0" y1="150" x2="160" y2="150" stroke="#cc9461" stroke-width="1" opacity="0.5" />
-                            <line x1="0" y1="100" x2="0" y2="0" stroke="#1a2f4b" stroke-width="2" />
-                            <line x1="160" y1="100" x2="160" y2="40" stroke="#1a2f4b" stroke-width="2" />
-                            <polyline points="0,0 80,-40 160,0" stroke="#cc9461" stroke-width="1.5" fill="none"
-                                class="roof-outline" />
-                        </g>
-
-                        <!-- Tower Crane -->
-                        <g transform="translate(220, 50)">
-                            <line x1="0" y1="300" x2="0" y2="0" stroke="#1a2f4b" stroke-width="3" />
-                            <line x1="30" y1="300" x2="30" y2="0" stroke="#1a2f4b" stroke-width="3" />
-                            <path
-                                d="M0 300 L30 270 M0 270 L30 240 M0 240 L30 210 M0 210 L30 180 M0 180 L30 150 M0 150 L30 120 M0 120 L30 90 M0 90 L30 60 M0 60 L30 30 M0 30 L30 0"
-                                stroke="#1a2f4b" stroke-width="1" opacity="0.6" />
-                            <rect x="-10" y="20" width="40" height="30" fill="#cc9461" opacity="0.9" />
-                            <g class="crane-arm-wrapper">
-                                <line x1="15" y1="15" x2="80" y2="15" stroke="#1a2f4b" stroke-width="4" />
-                                <rect x="60" y="5" width="20" height="20" fill="#1a2f4b" />
-                                <line x1="15" y1="15" x2="-180" y2="15" stroke="#1a2f4b" stroke-width="3" />
-                                <line x1="15" y1="0" x2="-180" y2="15" stroke="#1a2f4b" stroke-width="1"
-                                    opacity="0.5" />
-                                <g class="crane-trolley" transform="translate(-140, 15)">
-                                    <rect x="-5" y="-2" width="10" height="6" fill="#cc9461" />
-                                    <g class="crane-cable-group">
-                                        <line x1="0" y1="0" x2="0" y2="60" stroke="#cc9461" stroke-width="1.5" />
-                                        <rect x="-10" y="60" width="20" height="15" fill="#cc9461" stroke="#1a2f4b"
-                                            stroke-width="1" />
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-                </div>
+            <div class="slide">
+              <img src="images/hero-new-3.png" alt="Architecture 3" />
             </div>
+            <div class="slide">
+              <img src="images/hero-new-4.png" alt="Architecture 4" />
+            </div>
+            <!-- Set 2 (Duplicate for infinite scroll) -->
+            <div class="slide">
+              <img src="images/hero-new-1.png" alt="Architecture 1" />
+            </div>
+            <div class="slide">
+              <img src="images/hero-new-2.png" alt="Architecture 2" />
+            </div>
+            <div class="slide">
+              <img src="images/hero-new-3.png" alt="Architecture 3" />
+            </div>
+            <div class="slide">
+              <img src="images/hero-new-4.png" alt="Architecture 4" />
+            </div>
+          </div>
         </div>
-        <div class="scroll-indicator">
-            <span data-i18n="hero_discover">DÉCOUVRIR</span>
-            <div class="scroll-arrow"></div>
+        <!-- White Gradient Fades -->
+        <div class="bg-fade-overlay"></div>
+        <div class="bg-fade-bottom"></div>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 class="hero-title" data-i18n="hero_title">
+            CONCEVOIR<br />
+            <span class="hero-highlight">L'AVENIR</span>
+          </h1>
+          <p class="hero-subtitle" data-i18n="hero_subtitle">
+            Bâtir l'Excellence
+          </p>
+          <p class="hero-description" data-i18n="hero_desc">
+            Partenaire de référence pour vos projets complexes. Nous allions
+            ingénierie de pointe, rigueur d'exécution et expertise BIM pour
+            transformer votre vision en réalité durable.
+          </p>
+          <div style="display: flex; gap: 15px; flex-wrap: wrap">
+            <a href="#contact" class="cta-btn primary" data-i18n="hero_cta"
+              >Demander une étude technique</a
+            >
+            <button
+              class="cta-btn"
+              id="openCalculator"
+              data-i18n="hero_calculator"
+            >
+              Estimez votre projet
+            </button>
+          </div>
         </div>
+        <div class="hero-right">
+          <div class="crane-animation">
+            <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern
+                  id="grid-fine"
+                  width="40"
+                  height="40"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <path
+                    d="M 40 0 L 0 0 0 40"
+                    fill="none"
+                    stroke="rgba(204, 148, 97, 0.1)"
+                    stroke-width="0.5"
+                  />
+                </pattern>
+              </defs>
+
+              <!-- Background Grid -->
+              <rect width="400" height="400" fill="url(#grid-fine)" />
+
+              <!-- Ground Line -->
+              <line
+                x1="0"
+                y1="350"
+                x2="400"
+                y2="350"
+                stroke="#1a2f4b"
+                stroke-width="2"
+              />
+
+              <!-- House under construction -->
+              <g class="house-wireframe" transform="translate(50, 150)">
+                <line
+                  x1="0"
+                  y1="200"
+                  x2="160"
+                  y2="200"
+                  stroke="#1a2f4b"
+                  stroke-width="2"
+                />
+                <line
+                  x1="0"
+                  y1="200"
+                  x2="0"
+                  y2="100"
+                  stroke="#1a2f4b"
+                  stroke-width="2"
+                />
+                <line
+                  x1="160"
+                  y1="200"
+                  x2="160"
+                  y2="100"
+                  stroke="#1a2f4b"
+                  stroke-width="2"
+                />
+                <line
+                  x1="0"
+                  y1="100"
+                  x2="160"
+                  y2="100"
+                  stroke="#1a2f4b"
+                  stroke-width="2"
+                />
+                <line
+                  x1="80"
+                  y1="200"
+                  x2="80"
+                  y2="100"
+                  stroke="#cc9461"
+                  stroke-width="1"
+                  opacity="0.5"
+                />
+                <line
+                  x1="0"
+                  y1="150"
+                  x2="160"
+                  y2="150"
+                  stroke="#cc9461"
+                  stroke-width="1"
+                  opacity="0.5"
+                />
+                <line
+                  x1="0"
+                  y1="100"
+                  x2="0"
+                  y2="0"
+                  stroke="#1a2f4b"
+                  stroke-width="2"
+                />
+                <line
+                  x1="160"
+                  y1="100"
+                  x2="160"
+                  y2="40"
+                  stroke="#1a2f4b"
+                  stroke-width="2"
+                />
+                <polyline
+                  points="0,0 80,-40 160,0"
+                  stroke="#cc9461"
+                  stroke-width="1.5"
+                  fill="none"
+                  class="roof-outline"
+                />
+              </g>
+
+              <!-- Tower Crane -->
+              <g transform="translate(220, 50)">
+                <line
+                  x1="0"
+                  y1="300"
+                  x2="0"
+                  y2="0"
+                  stroke="#1a2f4b"
+                  stroke-width="3"
+                />
+                <line
+                  x1="30"
+                  y1="300"
+                  x2="30"
+                  y2="0"
+                  stroke="#1a2f4b"
+                  stroke-width="3"
+                />
+                <path
+                  d="M0 300 L30 270 M0 270 L30 240 M0 240 L30 210 M0 210 L30 180 M0 180 L30 150 M0 150 L30 120 M0 120 L30 90 M0 90 L30 60 M0 60 L30 30 M0 30 L30 0"
+                  stroke="#1a2f4b"
+                  stroke-width="1"
+                  opacity="0.6"
+                />
+                <rect
+                  x="-10"
+                  y="20"
+                  width="40"
+                  height="30"
+                  fill="#cc9461"
+                  opacity="0.9"
+                />
+                <g class="crane-arm-wrapper">
+                  <line
+                    x1="15"
+                    y1="15"
+                    x2="80"
+                    y2="15"
+                    stroke="#1a2f4b"
+                    stroke-width="4"
+                  />
+                  <rect x="60" y="5" width="20" height="20" fill="#1a2f4b" />
+                  <line
+                    x1="15"
+                    y1="15"
+                    x2="-180"
+                    y2="15"
+                    stroke="#1a2f4b"
+                    stroke-width="3"
+                  />
+                  <line
+                    x1="15"
+                    y1="0"
+                    x2="-180"
+                    y2="15"
+                    stroke="#1a2f4b"
+                    stroke-width="1"
+                    opacity="0.5"
+                  />
+                  <g class="crane-trolley" transform="translate(-140, 15)">
+                    <rect x="-5" y="-2" width="10" height="6" fill="#cc9461" />
+                    <g class="crane-cable-group">
+                      <line
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="60"
+                        stroke="#cc9461"
+                        stroke-width="1.5"
+                      />
+                      <rect
+                        x="-10"
+                        y="60"
+                        width="20"
+                        height="15"
+                        fill="#cc9461"
+                        stroke="#1a2f4b"
+                        stroke-width="1"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <span data-i18n="hero_discover">DÉCOUVRIR</span>
+        <div class="scroll-arrow"></div>
+      </div>
     </section>
 
     <!-- Why IBE Section -->
     <section class="why-ibe">
-        <div class="container">
-            <h2 class="section-title" data-i18n="why_ibe_title">Votre Projet Mérite Mieux</h2>
-            <p class="section-intro" data-i18n="why_ibe_intro">De l'étude à la réalisation : une solution complète, une
-                seule équipe.</p>
+      <div class="container">
+        <h2 class="section-title" data-i18n="why_ibe_title">
+          Votre Projet Mérite Mieux
+        </h2>
+        <p class="section-intro" data-i18n="why_ibe_intro">
+          De l'étude à la réalisation : une solution complète, une seule équipe.
+        </p>
 
-            <div class="comparison-table">
-                <div class="comparison-header">
-                    <div class="comparison-cell header-cell"></div>
-                    <div class="comparison-cell header-cell" data-i18n="comparison_competitors">Concurrents</div>
-                    <div class="comparison-cell header-cell highlight" data-i18n="comparison_ibe">IBE Construction</div>
-                </div>
-
-                <div class="comparison-row">
-                    <div class="comparison-cell label-cell" data-i18n="why_ibe_response">Délai de réponse</div>
-                    <div class="comparison-cell">
-                        <span class="comparison-value negative" data-i18n="comparison_response_slow">1-2 semaines</span>
-                    </div>
-                    <div class="comparison-cell highlight">
-                        <span class="comparison-value positive" data-i18n="comparison_response_fast">24-48h</span>
-                    </div>
-                </div>
-
-                <div class="comparison-row">
-                    <div class="comparison-cell label-cell" data-i18n="why_ibe_interlocutors">Interlocuteurs</div>
-                    <div class="comparison-cell">
-                        <span class="comparison-value negative" data-i18n="comparison_interlocutors_many">3+
-                            entreprises</span>
-                    </div>
-                    <div class="comparison-cell highlight">
-                        <span class="comparison-value positive" data-i18n="comparison_interlocutors_one">1 équipe
-                            intégrée</span>
-                    </div>
-                </div>
-
-                <div class="comparison-row">
-                    <div class="comparison-cell label-cell" data-i18n="why_ibe_flexibility">Flexibilité</div>
-                    <div class="comparison-cell">
-                        <svg class="comparison-icon negative" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10" opacity="0.2" />
-                            <line x1="8" y1="8" x2="16" y2="16" />
-                            <line x1="16" y1="8" x2="8" y2="16" />
-                        </svg>
-                        <span class="comparison-text" data-i18n="comparison_flexibility_rigid">Processus rigides</span>
-                    </div>
-                    <div class="comparison-cell highlight">
-                        <svg class="comparison-icon positive" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10" opacity="0.2" />
-                            <polyline points="7,12 10,15 17,8" />
-                        </svg>
-                        <span class="comparison-text" data-i18n="comparison_flexibility_agile">Sur-mesure agile</span>
-                    </div>
-                </div>
-
-                <div class="comparison-row">
-                    <div class="comparison-cell label-cell" data-i18n="why_ibe_bim">Technologie BIM</div>
-                    <div class="comparison-cell">
-                        <svg class="comparison-icon warning" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 2 L22 20 L2 20 Z" opacity="0.2" />
-                            <path d="M12 2 L22 20 L2 20 Z" />
-                            <line x1="12" y1="9" x2="12" y2="13" />
-                            <circle cx="12" cy="17" r="0.5" fill="currentColor" />
-                        </svg>
-                        <span class="comparison-text" data-i18n="comparison_bim_transition">En transition</span>
-                    </div>
-                    <div class="comparison-cell highlight">
-                        <svg class="comparison-icon positive" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10" opacity="0.2" />
-                            <polyline points="7,12 10,15 17,8" />
-                        </svg>
-                        <span class="comparison-text" data-i18n="comparison_bim_native">100% natif</span>
-                    </div>
-                </div>
-
-                <div class="comparison-row">
-                    <div class="comparison-cell label-cell" data-i18n="why_ibe_contact">Contact direct</div>
-                    <div class="comparison-cell">
-                        <span class="comparison-value negative" data-i18n="comparison_contact_sales">Commercial</span>
-                    </div>
-                    <div class="comparison-cell highlight">
-                        <span class="comparison-value positive" data-i18n="comparison_contact_engineer">Ingénieur</span>
-                    </div>
-                </div>
-
-                <div class="comparison-row">
-                    <div class="comparison-cell label-cell" data-i18n="why_ibe_price">Tarification</div>
-                    <div class="comparison-cell">
-                        <span class="comparison-value negative" data-i18n="comparison_price_high">$$$</span>
-                        <span class="comparison-text small" data-i18n="comparison_price_high_detail">3 marges
-                            cumulées</span>
-                    </div>
-                    <div class="comparison-cell highlight">
-                        <span class="comparison-value positive" data-i18n="comparison_price_low">$$</span>
-                        <span class="comparison-text small" data-i18n="comparison_price_low_detail">1 seule marge</span>
-                    </div>
-                </div>
+        <div class="comparison-table">
+          <div class="comparison-header">
+            <div class="comparison-cell header-cell"></div>
+            <div
+              class="comparison-cell header-cell"
+              data-i18n="comparison_competitors"
+            >
+              Concurrents
             </div>
-
-            <div class="why-ibe-cta">
-                <a href="#contact" class="cta-btn" data-i18n="why_ibe_cta">Demander une étude gratuite</a>
-                <p class="cta-disclaimer" data-i18n="why_ibe_disclaimer">* Soumise à conditions</p>
+            <div
+              class="comparison-cell header-cell highlight"
+              data-i18n="comparison_ibe"
+            >
+              IBE Construction
             </div>
+          </div>
+
+          <div class="comparison-row">
+            <div
+              class="comparison-cell label-cell"
+              data-i18n="why_ibe_response"
+            >
+              Délai de réponse
+            </div>
+            <div class="comparison-cell">
+              <span
+                class="comparison-value negative"
+                data-i18n="comparison_response_slow"
+                >1-2 semaines</span
+              >
+            </div>
+            <div class="comparison-cell highlight">
+              <span
+                class="comparison-value positive"
+                data-i18n="comparison_response_fast"
+                >24-48h</span
+              >
+            </div>
+          </div>
+
+          <div class="comparison-row">
+            <div
+              class="comparison-cell label-cell"
+              data-i18n="why_ibe_interlocutors"
+            >
+              Interlocuteurs
+            </div>
+            <div class="comparison-cell">
+              <span
+                class="comparison-value negative"
+                data-i18n="comparison_interlocutors_many"
+                >3+ entreprises</span
+              >
+            </div>
+            <div class="comparison-cell highlight">
+              <span
+                class="comparison-value positive"
+                data-i18n="comparison_interlocutors_one"
+                >1 équipe intégrée</span
+              >
+            </div>
+          </div>
+
+          <div class="comparison-row">
+            <div
+              class="comparison-cell label-cell"
+              data-i18n="why_ibe_flexibility"
+            >
+              Flexibilité
+            </div>
+            <div class="comparison-cell">
+              <svg
+                class="comparison-icon negative"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" opacity="0.2" />
+                <line x1="8" y1="8" x2="16" y2="16" />
+                <line x1="16" y1="8" x2="8" y2="16" />
+              </svg>
+              <span
+                class="comparison-text"
+                data-i18n="comparison_flexibility_rigid"
+                >Processus rigides</span
+              >
+            </div>
+            <div class="comparison-cell highlight">
+              <svg
+                class="comparison-icon positive"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" opacity="0.2" />
+                <polyline points="7,12 10,15 17,8" />
+              </svg>
+              <span
+                class="comparison-text"
+                data-i18n="comparison_flexibility_agile"
+                >Sur-mesure agile</span
+              >
+            </div>
+          </div>
+
+          <div class="comparison-row">
+            <div class="comparison-cell label-cell" data-i18n="why_ibe_bim">
+              Technologie BIM
+            </div>
+            <div class="comparison-cell">
+              <svg
+                class="comparison-icon warning"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M12 2 L22 20 L2 20 Z" opacity="0.2" />
+                <path d="M12 2 L22 20 L2 20 Z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <circle cx="12" cy="17" r="0.5" fill="currentColor" />
+              </svg>
+              <span
+                class="comparison-text"
+                data-i18n="comparison_bim_transition"
+                >En transition</span
+              >
+            </div>
+            <div class="comparison-cell highlight">
+              <svg
+                class="comparison-icon positive"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" opacity="0.2" />
+                <polyline points="7,12 10,15 17,8" />
+              </svg>
+              <span class="comparison-text" data-i18n="comparison_bim_native"
+                >100% natif</span
+              >
+            </div>
+          </div>
+
+          <div class="comparison-row">
+            <div class="comparison-cell label-cell" data-i18n="why_ibe_contact">
+              Contact direct
+            </div>
+            <div class="comparison-cell">
+              <span
+                class="comparison-value negative"
+                data-i18n="comparison_contact_sales"
+                >Commercial</span
+              >
+            </div>
+            <div class="comparison-cell highlight">
+              <span
+                class="comparison-value positive"
+                data-i18n="comparison_contact_engineer"
+                >Ingénieur</span
+              >
+            </div>
+          </div>
+
+          <div class="comparison-row">
+            <div class="comparison-cell label-cell" data-i18n="why_ibe_price">
+              Tarification
+            </div>
+            <div class="comparison-cell">
+              <span
+                class="comparison-value negative"
+                data-i18n="comparison_price_high"
+                >$$$</span
+              >
+              <span
+                class="comparison-text small"
+                data-i18n="comparison_price_high_detail"
+                >3 marges cumulées</span
+              >
+            </div>
+            <div class="comparison-cell highlight">
+              <span
+                class="comparison-value positive"
+                data-i18n="comparison_price_low"
+                >$$</span
+              >
+              <span
+                class="comparison-text small"
+                data-i18n="comparison_price_low_detail"
+                >1 seule marge</span
+              >
+            </div>
+          </div>
         </div>
+
+        <div class="why-ibe-cta">
+          <a href="#contact" class="cta-btn" data-i18n="why_ibe_cta"
+            >Demander une étude gratuite</a
+          >
+          <p class="cta-disclaimer" data-i18n="why_ibe_disclaimer">
+            * Soumise à conditions
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- Expertise Pillars: The Total Solution Grid -->
     <section class="services" id="services">
-        <div class="container">
-            <h2 class="section-title" data-i18n="section_services_title">Pôles d'Expertise</h2>
-            <p class="section-intro" data-i18n="section_services_intro">Une approche globale et maîtrisée pour garantir
-                la performance de vos ouvrages.</p>
-            <div class="services-grid">
-                <div class="service-card" data-aos="fade-up" data-delay="0">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <!-- Structural Frame/Beam Symbol -->
-                            <path d="M12 52 L52 52 M12 12 L52 12" stroke-opacity="0.3" />
-                            <path d="M16 12 L16 52 M48 12 L48 52" stroke-width="2" />
-                            <path d="M16 32 L48 32 M32 12 L32 52" />
-                            <circle cx="16" cy="12" r="2" fill="#cc9461" stroke="none" />
-                            <circle cx="48" cy="12" r="2" fill="#cc9461" stroke="none" />
-                            <circle cx="16" cy="52" r="2" fill="#cc9461" stroke="none" />
-                            <circle cx="48" cy="52" r="2" fill="#cc9461" stroke="none" />
-                            <path d="M16 12 L48 52 M48 12 L16 52" stroke="#cc9461" stroke-opacity="0.4"
-                                stroke-dasharray="2 2" />
-                        </svg>
-                    </div>
-                    <h3 data-i18n="service_1_title">Bureau d'Études Structure</h3>
-                    <p class="expertise-subtitle" data-i18n="service_1_sub">Ingénierie & Calcul BIM</p>
-                    <p data-i18n="service_1_desc">Conception structurelle de haute précision avec <strong>Robot
-                            Structural Analysis</strong> et
-                        intégration <strong>BIM/Revit</strong>. Solutions optimisées en béton armé et charpente
-                        métallique.</p>
-                    <ul class="tech-tags">
-                        <li>Robot Structural Analysis</li>
-                        <li>Revit Structure</li>
-                        <li>Advance Steel</li>
-                    </ul>
-                </div>
-
-                <div class="service-card" data-aos="fade-up" data-delay="200">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <!-- Building/Construction Symbol -->
-                            <path d="M8 56 L56 56" stroke-width="2" />
-                            <path d="M16 56 L16 20 L48 20 L48 56" />
-                            <path d="M16 28 L48 28 M16 36 L48 36 M16 44 L48 44" stroke-opacity="0.4" />
-                            <path d="M32 20 L32 56" stroke-opacity="0.4" />
-                            <rect x="24" y="12" width="16" height="8" stroke="#cc9461" />
-                            <path d="M20 12 L44 12" stroke="#cc9461" stroke-dasharray="2 2" />
-                            <circle cx="32" cy="12" r="1.5" fill="#cc9461" stroke="none" />
-                        </svg>
-                    </div>
-                    <h3 data-i18n="service_2_title">Réalisation & Gros Œuvre</h3>
-                    <p class="expertise-subtitle" data-i18n="service_2_sub">Exécution & Conduite de Travaux</p>
-                    <p data-i18n="service_2_desc">Mise en œuvre de qualité supérieure avec gestion de chantier
-                        rigoureuse. Du terrassement aux
-                        finitions, nous garantissons respect des délais et conformité technique.</p>
-                    <ul class="tech-tags">
-                        <li>Gestion de Chantier</li>
-                        <li>Coordination OPC</li>
-                        <li>Contrôle Qualité</li>
-                    </ul>
-                </div>
-
-                <div class="service-card" data-aos="fade-up" data-delay="400">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <!-- HVAC/Fluids Symbol -->
-                            <circle cx="32" cy="32" r="20" stroke-opacity="0.2" />
-                            <path d="M32 12 C 40 12, 48 20, 48 32 C 48 44, 40 52, 32 52" stroke="#cc9461" />
-                            <path d="M32 12 C 24 12, 16 20, 16 32 C 16 44, 24 52, 32 52" stroke="#cc9461"
-                                stroke-dasharray="4 2" />
-                            <path d="M32 12 L32 52 M12 32 L52 32" stroke-opacity="0.3" />
-                            <circle cx="32" cy="32" r="4" fill="#cc9461" stroke="none" />
-                            <path d="M48 32 L58 32 M6 32 L16 32" stroke-width="2" />
-                        </svg>
-                    </div>
-                    <h3 data-i18n="service_3_title">Génie Climatique & Fluides</h3>
-                    <p class="expertise-subtitle" data-i18n="service_3_sub">CVC, HVAC & Tuyauterie Industrielle</p>
-                    <p data-i18n="service_3_desc">Études et installation complète des systèmes CVC/HVAC, plomberie et
-                        réseaux industriels.
-                        Modélisation <strong>Plant 3D</strong> et coordination BIM pour une intégration parfaite.</p>
-                    <ul class="tech-tags">
-                        <li>AutoCAD Plant 3D</li>
-                        <li>Revit MEP</li>
-                        <li>Calculs Thermiques</li>
-                    </ul>
-                </div>
+      <div class="container">
+        <h2 class="section-title" data-i18n="section_services_title">
+          Pôles d'Expertise
+        </h2>
+        <p class="section-intro" data-i18n="section_services_intro">
+          Une approche globale et maîtrisée pour garantir la performance de vos
+          ouvrages.
+        </p>
+        <div class="services-grid">
+          <div class="service-card" data-aos="fade-up" data-delay="0">
+            <div class="service-icon">
+              <svg
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <!-- Structural Frame/Beam Symbol -->
+                <path d="M12 52 L52 52 M12 12 L52 12" stroke-opacity="0.3" />
+                <path d="M16 12 L16 52 M48 12 L48 52" stroke-width="2" />
+                <path d="M16 32 L48 32 M32 12 L32 52" />
+                <circle cx="16" cy="12" r="2" fill="#cc9461" stroke="none" />
+                <circle cx="48" cy="12" r="2" fill="#cc9461" stroke="none" />
+                <circle cx="16" cy="52" r="2" fill="#cc9461" stroke="none" />
+                <circle cx="48" cy="52" r="2" fill="#cc9461" stroke="none" />
+                <path
+                  d="M16 12 L48 52 M48 12 L16 52"
+                  stroke="#cc9461"
+                  stroke-opacity="0.4"
+                  stroke-dasharray="2 2"
+                />
+              </svg>
             </div>
+            <h3 data-i18n="service_1_title">Bureau d'Études Structure</h3>
+            <p class="expertise-subtitle" data-i18n="service_1_sub">
+              Ingénierie & Calcul BIM
+            </p>
+            <p data-i18n="service_1_desc">
+              Conception structurelle de haute précision avec
+              <strong>Robot Structural Analysis</strong> et intégration
+              <strong>BIM/Revit</strong>. Solutions optimisées en béton armé et
+              charpente métallique.
+            </p>
+            <ul class="tech-tags">
+              <li>Robot Structural Analysis</li>
+              <li>Revit Structure</li>
+              <li>Advance Steel</li>
+            </ul>
+          </div>
+
+          <div class="service-card" data-aos="fade-up" data-delay="200">
+            <div class="service-icon">
+              <svg
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <!-- Building/Construction Symbol -->
+                <path d="M8 56 L56 56" stroke-width="2" />
+                <path d="M16 56 L16 20 L48 20 L48 56" />
+                <path
+                  d="M16 28 L48 28 M16 36 L48 36 M16 44 L48 44"
+                  stroke-opacity="0.4"
+                />
+                <path d="M32 20 L32 56" stroke-opacity="0.4" />
+                <rect x="24" y="12" width="16" height="8" stroke="#cc9461" />
+                <path
+                  d="M20 12 L44 12"
+                  stroke="#cc9461"
+                  stroke-dasharray="2 2"
+                />
+                <circle cx="32" cy="12" r="1.5" fill="#cc9461" stroke="none" />
+              </svg>
+            </div>
+            <h3 data-i18n="service_2_title">Réalisation & Gros Œuvre</h3>
+            <p class="expertise-subtitle" data-i18n="service_2_sub">
+              Exécution & Conduite de Travaux
+            </p>
+            <p data-i18n="service_2_desc">
+              Mise en œuvre de qualité supérieure avec gestion de chantier
+              rigoureuse. Du terrassement aux finitions, nous garantissons
+              respect des délais et conformité technique.
+            </p>
+            <ul class="tech-tags">
+              <li>Gestion de Chantier</li>
+              <li>Coordination OPC</li>
+              <li>Contrôle Qualité</li>
+            </ul>
+          </div>
+
+          <div class="service-card" data-aos="fade-up" data-delay="400">
+            <div class="service-icon">
+              <svg
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <!-- HVAC/Fluids Symbol -->
+                <circle cx="32" cy="32" r="20" stroke-opacity="0.2" />
+                <path
+                  d="M32 12 C 40 12, 48 20, 48 32 C 48 44, 40 52, 32 52"
+                  stroke="#cc9461"
+                />
+                <path
+                  d="M32 12 C 24 12, 16 20, 16 32 C 16 44, 24 52, 32 52"
+                  stroke="#cc9461"
+                  stroke-dasharray="4 2"
+                />
+                <path d="M32 12 L32 52 M12 32 L52 32" stroke-opacity="0.3" />
+                <circle cx="32" cy="32" r="4" fill="#cc9461" stroke="none" />
+                <path d="M48 32 L58 32 M6 32 L16 32" stroke-width="2" />
+              </svg>
+            </div>
+            <h3 data-i18n="service_3_title">Génie Climatique & Fluides</h3>
+            <p class="expertise-subtitle" data-i18n="service_3_sub">
+              CVC, HVAC & Tuyauterie Industrielle
+            </p>
+            <p data-i18n="service_3_desc">
+              Études et installation complète des systèmes CVC/HVAC, plomberie
+              et réseaux industriels. Modélisation <strong>Plant 3D</strong> et
+              coordination BIM pour une intégration parfaite.
+            </p>
+            <ul class="tech-tags">
+              <li>AutoCAD Plant 3D</li>
+              <li>Revit MEP</li>
+              <li>Calculs Thermiques</li>
+            </ul>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Engineering DNA Section (Activated) -->
     <!-- Engineering DNA Section (Redesigned) -->
     <section class="engineering-dna">
-        <div class="blueprint-grid"></div>
-        <div class="container">
-            <div class="dna-content">
-                <div class="dna-text-card glass-panel" data-aos="fade-right">
-                    <h2 class="section-title dna-title" data-i18n="dna_title">Notre ADN : <br><span
-                            class="highlight">L'Ingénierie Nouvelle
-                            Génération</span></h2>
-                    <p class="dna-description" data-i18n="dna_description">
-                        Plus qu'un bureau d'études, IBE est un hub d'expertise intégrée. Nous fusionnons la rigueur du
-                        calcul de structure, la maîtrise du gros œuvre et l'intelligence des fluides dans un workflow
-                        <span class="stat-number" data-target="100" data-suffix="%">100%</span> digital.
-                    </p>
+      <div class="blueprint-grid"></div>
+      <div class="container">
+        <div class="dna-content">
+          <div class="dna-text-card glass-panel" data-aos="fade-right">
+            <h2 class="section-title dna-title" data-i18n="dna_title">
+              Notre ADN : <br /><span class="highlight"
+                >L'Ingénierie Nouvelle Génération</span
+              >
+            </h2>
+            <p class="dna-description" data-i18n="dna_description">
+              Plus qu'un bureau d'études, IBE est un hub d'expertise intégrée.
+              Nous fusionnons la rigueur du calcul de structure, la maîtrise du
+              gros œuvre et l'intelligence des fluides dans un workflow
+              <span class="stat-number" data-target="100" data-suffix="%"
+                >100%</span
+              >
+              digital.
+            </p>
 
-                    <div class="dna-pillars">
-                        <div class="dna-pillar">
-                            <div class="pillar-number stat-number" data-target="1">01</div>
-                            <div class="pillar-content">
-                                <h3 data-i18n="dna_pillar_1_title">Expertise Technique Intégrée</h3>
-                                <p data-i18n="dna_pillar_1_desc">Une coordination unique entre Structure, Travaux et
-                                    Fluides pour une vision globale
-                                    de l'ouvrage.</p>
-                            </div>
-                        </div>
-                        <div class="dna-pillar">
-                            <div class="pillar-number stat-number" data-target="2">02</div>
-                            <div class="pillar-content">
-                                <h3 data-i18n="dna_pillar_2_title">Rigueur & Conformité</h3>
-                                <p data-i18n="dna_pillar_2_desc"><span class="stat-number" data-target="100"
-                                        data-suffix="%">100%</span> de nos projets sont conçus selon les normes
-                                    Eurocodes et RPS, garantissant une
-                                    sécurité absolue.</p>
-                            </div>
-                        </div>
-                        <div class="dna-pillar">
-                            <div class="pillar-number stat-number" data-target="3">03</div>
-                            <div class="pillar-content">
-                                <h3 data-i18n="dna_pillar_3_title">BIM Management Natif</h3>
-                                <p data-i18n="dna_pillar_3_desc">Processus entièrement digitalisé via Revit et Robot
-                                    pour une détection de conflits
-                                    proactive et zéro erreur de chantier.</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="dna-pillars">
+              <div class="dna-pillar">
+                <div class="pillar-number stat-number" data-target="1">01</div>
+                <div class="pillar-content">
+                  <h3 data-i18n="dna_pillar_1_title">
+                    Expertise Technique Intégrée
+                  </h3>
+                  <p data-i18n="dna_pillar_1_desc">
+                    Une coordination unique entre Structure, Travaux et Fluides
+                    pour une vision globale de l'ouvrage.
+                  </p>
                 </div>
-
-                <div class="dna-visual" data-aos="fade-left">
-                    <div class="dna-image-wrapper">
-                        <img src="images/dna-v2.jpg" alt="Ingénieurs IBE sur site" class="dna-image">
-                    </div>
+              </div>
+              <div class="dna-pillar">
+                <div class="pillar-number stat-number" data-target="2">02</div>
+                <div class="pillar-content">
+                  <h3 data-i18n="dna_pillar_2_title">Rigueur & Conformité</h3>
+                  <p data-i18n="dna_pillar_2_desc">
+                    <span class="stat-number" data-target="100" data-suffix="%"
+                      >100%</span
+                    >
+                    de nos projets sont conçus selon les normes Eurocodes et
+                    RPS, garantissant une sécurité absolue.
+                  </p>
                 </div>
+              </div>
+              <div class="dna-pillar">
+                <div class="pillar-number stat-number" data-target="3">03</div>
+                <div class="pillar-content">
+                  <h3 data-i18n="dna_pillar_3_title">BIM Management Natif</h3>
+                  <p data-i18n="dna_pillar_3_desc">
+                    Processus entièrement digitalisé via Revit et Robot pour une
+                    détection de conflits proactive et zéro erreur de chantier.
+                  </p>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <div class="dna-visual" data-aos="fade-left">
+            <div class="dna-image-wrapper">
+              <img
+                src="images/dna-v2.jpg"
+                alt="Ingénieurs IBE sur site"
+                class="dna-image"
+              />
+            </div>
+          </div>
         </div>
+      </div>
     </section>
-
-
-
 
     <!-- Technical Edge Section -->
     <section class="technical-edge" id="expertise">
-        <div class="container">
-            <h2 class="section-title" data-i18n="tech_edge_title">Avantage Technologique</h2>
-            <div class="tech-grid">
-                <div class="tech-feature" data-aos="fade-up" data-delay="0">
-                    <div class="tech-icon">
-                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <!-- BIM/Digital Cube Symbol -->
-                            <path d="M32 8 L56 20 L56 44 L32 56 L8 44 L8 20 Z" />
-                            <path d="M32 8 V 56 M8 20 L32 32 L56 20" stroke-opacity="0.5" />
-                            <rect x="24" y="24" width="16" height="16" fill="#cc9461" fill-opacity="0.1"
-                                stroke="#cc9461" />
-                            <circle cx="32" cy="32" r="3" fill="#cc9461" stroke="none" />
-                        </svg>
-                    </div>
-                    <h3 data-i18n="tech_1_title">Workflow Full BIM</h3>
-                    <p data-i18n="tech_1_desc">Modélisation 3D collaborative centralisant toutes les données du projet
-                        pour une coordination
-                        sans
-                        faille entre architectes et ingénieurs.</p>
-                </div>
-
-                <div class="tech-feature" data-aos="fade-up" data-delay="200">
-                    <div class="tech-icon">
-                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <!-- Clash Detection Symbol -->
-                            <circle cx="24" cy="32" r="16" stroke-opacity="0.5" />
-                            <circle cx="40" cy="32" r="16" stroke-opacity="0.5" />
-                            <path d="M28 28 L36 36 M36 28 L28 36" stroke="#cc9461" stroke-width="2.5" />
-                            <rect x="20" y="20" width="24" height="24" stroke="#cc9461" stroke-dasharray="2 2" />
-                        </svg>
-                    </div>
-                    <h3 data-i18n="tech_2_title">Précision & Clash Detection</h3>
-                    <p data-i18n="tech_2_desc">Anticipation des conflits géométriques avant le chantier grâce aux
-                        simulations Navisworks,
-                        réduisant les aléas de <span class="stat-number" data-target="90" data-suffix="%">90%</span>.
-                    </p>
-                </div>
-
-                <div class="tech-feature" data-aos="fade-up" data-delay="400">
-                    <div class="tech-icon">
-                        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <!-- Structural Optimization Symbol -->
-                            <path d="M12 48 L24 24 L36 40 L44 12 L52 48" stroke="#cc9461" />
-                            <circle cx="12" cy="48" r="2" fill="currentColor" />
-                            <circle cx="24" cy="24" r="2" fill="currentColor" />
-                            <circle cx="44" cy="12" r="2" fill="#cc9461" stroke="none" />
-                            <path d="M8 52 L56 52" stroke-opacity="0.3" />
-                            <path d="M32 52 V 42" stroke-dasharray="2 2" />
-                        </svg>
-                    </div>
-                    <h3 data-i18n="tech_3_title">Optimisation Structurelle</h3>
-                    <p data-i18n="tech_3_desc">Analyse par éléments finis pour rationaliser la consommation de matériaux
-                        sans compromis sur la
-                        sécurité ou la durabilité.</p>
-                </div>
+      <div class="container">
+        <h2 class="section-title" data-i18n="tech_edge_title">
+          Avantage Technologique
+        </h2>
+        <div class="tech-grid">
+          <div class="tech-feature" data-aos="fade-up" data-delay="0">
+            <div class="tech-icon">
+              <svg
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <!-- BIM/Digital Cube Symbol -->
+                <path d="M32 8 L56 20 L56 44 L32 56 L8 44 L8 20 Z" />
+                <path d="M32 8 V 56 M8 20 L32 32 L56 20" stroke-opacity="0.5" />
+                <rect
+                  x="24"
+                  y="24"
+                  width="16"
+                  height="16"
+                  fill="#cc9461"
+                  fill-opacity="0.1"
+                  stroke="#cc9461"
+                />
+                <circle cx="32" cy="32" r="3" fill="#cc9461" stroke="none" />
+              </svg>
             </div>
+            <h3 data-i18n="tech_1_title">Workflow Full BIM</h3>
+            <p data-i18n="tech_1_desc">
+              Modélisation 3D collaborative centralisant toutes les données du
+              projet pour une coordination sans faille entre architectes et
+              ingénieurs.
+            </p>
+          </div>
+
+          <div class="tech-feature" data-aos="fade-up" data-delay="200">
+            <div class="tech-icon">
+              <svg
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <!-- Clash Detection Symbol -->
+                <circle cx="24" cy="32" r="16" stroke-opacity="0.5" />
+                <circle cx="40" cy="32" r="16" stroke-opacity="0.5" />
+                <path
+                  d="M28 28 L36 36 M36 28 L28 36"
+                  stroke="#cc9461"
+                  stroke-width="2.5"
+                />
+                <rect
+                  x="20"
+                  y="20"
+                  width="24"
+                  height="24"
+                  stroke="#cc9461"
+                  stroke-dasharray="2 2"
+                />
+              </svg>
+            </div>
+            <h3 data-i18n="tech_2_title">Précision & Clash Detection</h3>
+            <p data-i18n="tech_2_desc">
+              Anticipation des conflits géométriques avant le chantier grâce aux
+              simulations Navisworks, réduisant les aléas de
+              <span class="stat-number" data-target="90" data-suffix="%"
+                >90%</span
+              >.
+            </p>
+          </div>
+
+          <div class="tech-feature" data-aos="fade-up" data-delay="400">
+            <div class="tech-icon">
+              <svg
+                viewBox="0 0 64 64"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <!-- Structural Optimization Symbol -->
+                <path d="M12 48 L24 24 L36 40 L44 12 L52 48" stroke="#cc9461" />
+                <circle cx="12" cy="48" r="2" fill="currentColor" />
+                <circle cx="24" cy="24" r="2" fill="currentColor" />
+                <circle cx="44" cy="12" r="2" fill="#cc9461" stroke="none" />
+                <path d="M8 52 L56 52" stroke-opacity="0.3" />
+                <path d="M32 52 V 42" stroke-dasharray="2 2" />
+              </svg>
+            </div>
+            <h3 data-i18n="tech_3_title">Optimisation Structurelle</h3>
+            <p data-i18n="tech_3_desc">
+              Analyse par éléments finis pour rationaliser la consommation de
+              matériaux sans compromis sur la sécurité ou la durabilité.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Startup Vision: The Future of Construction -->
     <section class="startup-vision">
-        <div class="vision-container">
-            <div class="vision-image-layer">
-                <img src="images/vision-startup.png" alt="IBE Vision Startup" class="vision-img">
-                <div class="vision-overlay-glow"></div>
-            </div>
-            <div class="vision-content-layer">
-                <div class="container">
-                    <div class="vision-card glass-panel" data-aos="fade-up">
-                        <span class="vision-badge" data-i18n="vision_badge">INNOVATION HUB</span>
-                        <h2 class="vision-title" data-i18n="vision_title">Plus qu'une Entreprise, <br><span
-                                class="highlight">Un Système d'Exploitation pour le Bâtiment</span></h2>
-                        <p class="vision-text" data-i18n="vision_desc">
-                            Nous ne nous contentons pas de construire. Nous digitalisons l'acte de bâtir.
-                            En fusionnant l'IA, le BIM et l'ingénierie de précision, IBE transforme chaque chantier en
-                            un flux de données optimisé.
-                            C'est notre vision de la <strong>Construction 4.0</strong>.
-                        </p>
-                        <div class="vision-stats">
-                            <div class="stat-item">
-                                <span class="stat-number" data-target="100" data-suffix="%">0%</span>
-                                <span class="stat-label" data-i18n="stat_bim">Digital Native</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number" data-target="30" data-prefix="-" data-suffix="%">0%</span>
-                                <span class="stat-label" data-i18n="stat_waste">Déchets de Chantier</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number" data-target="24" data-suffix="/7">0/7</span>
-                                <span class="stat-label" data-i18n="stat_support">Suivi Data en temps réel</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="vision-container">
+        <div class="vision-image-layer">
+          <img
+            src="images/vision-background.jpg"
+            alt="IBE Vision Startup"
+            class="vision-img"
+          />
+          <div class="vision-overlay-glow"></div>
         </div>
+        <div class="vision-content-layer">
+          <div class="container">
+            <div class="vision-flex">
+              <div class="vision-card glass-panel" data-aos="fade-right">
+                <span class="vision-badge" data-i18n="vision_badge"
+                  >NOTRE VISION</span
+                >
+                <h2 class="vision-title" data-i18n="vision_title">
+                  Une Vision Moderne du Bâtiment
+                </h2>
+                <p class="vision-text" data-i18n="vision_desc">
+                  Nous digitalisons l'acte de bâtir. En fusionnant l'ingénierie
+                  de précision et la maîtrise du terrain, IBE transforme chaque
+                  chantier en un succès prévisible et optimisé.
+                </p>
+                <div class="vision-stats">
+                  <div class="stat-item">
+                    <span class="stat-number" data-target="100" data-suffix="%"
+                      >0%</span
+                    >
+                    <span class="stat-label" data-i18n="stat_bim"
+                      >Digital Native</span
+                    >
+                  </div>
+                  <div class="stat-item">
+                    <span
+                      class="stat-number"
+                      data-target="30"
+                      data-prefix="-"
+                      data-suffix="%"
+                      >0%</span
+                    >
+                    <span class="stat-label" data-i18n="stat_waste"
+                      >Déchets de Chantier</span
+                    >
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-number" data-target="24" data-suffix="/7"
+                      >0/7</span
+                    >
+                    <span class="stat-label" data-i18n="stat_support"
+                      >Suivi Data en temps réel</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="vision-diagram-container" data-aos="fade-left">
+                <div class="radar-chart-wrapper">
+                  <svg class="radar-svg" viewBox="0 0 400 400">
+                    <!-- Grid Polygons -->
+                    <polygon class="radar-grid" points="200,50 342,154 300,320 100,320 58,154" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <polygon class="radar-grid" points="200,100 295,169 267,280 133,280 105,169" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <polygon class="radar-grid" points="200,150 247,185 233,240 167,240 153,185" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    
+                    <!-- Axes -->
+                    <line class="radar-axis" x1="200" y1="200" x2="200" y2="50" />
+                    <line class="radar-axis" x1="200" y1="200" x2="342" y2="154" />
+                    <line class="radar-axis" x1="200" y1="200" x2="300" y2="320" />
+                    <line class="radar-axis" x1="200" y1="200" x2="100" y2="320" />
+                    <line class="radar-axis" x1="200" y1="200" x2="58" y2="154" />
+
+                    <!-- Performance Area -->
+                    <polygon class="radar-area" points="200,200 200,200 200,200 200,200 200,200"></polygon>
+
+                    <!-- Labels -->
+                    <text x="200" y="35" class="radar-label">TRANSPARENCE</text>
+                    <text x="350" y="145" class="radar-label text-right">RÉACTIVITÉ</text>
+                    <text x="310" y="340" class="radar-label text-right">OPTIMISATION</text>
+                    <text x="90" y="340" class="radar-label text-left">PRÉCISION</text>
+                    <text x="50" y="145" class="radar-label text-left">ACCOMPAGNEMENT</text>
+
+                    <!-- Center Point -->
+                    <circle cx="200" cy="200" r="4" fill="var(--copper-accent)" />
+                  </svg>
+                </div>
+
+                <!-- Performance Bars -->
+                <div class="vision-performance-bars">
+                  <div class="perf-bar-item">
+                    <div class="perf-bar-header">
+                      <span>Transparence Totale</span>
+                      <span class="perf-value">100%</span>
+                    </div>
+                    <div class="perf-bar-track">
+                      <div class="perf-bar-fill" data-width="100%"></div>
+                    </div>
+                  </div>
+                  <div class="perf-bar-item">
+                    <div class="perf-bar-header">
+                      <span>Réactivité Data</span>
+                      <span class="perf-value">95%</span>
+                    </div>
+                    <div class="perf-bar-track">
+                      <div class="perf-bar-fill" data-width="95%"></div>
+                    </div>
+                  </div>
+                  <div class="perf-bar-item">
+                    <div class="perf-bar-header">
+                      <span>Optimisation des Coûts</span>
+                      <span class="perf-value">90%</span>
+                    </div>
+                    <div class="perf-bar-track">
+                      <div class="perf-bar-fill" data-width="90%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
+
+    <!-- App Showcase Section -->
+    <section class="app-showcase" id="app-showcase">
+      <div class="container">
+        <div class="showcase-flex">
+          <div class="showcase-content" data-aos="fade-right">
+            <span class="vision-badge" data-i18n="platform_showcase_badge">NOUVEL OUTIL</span>
+            <h2 class="section-title" data-i18n="platform_showcase_title" style="text-align: left; margin-bottom: 30px;">
+              Prenez le Contrôle Absolu de Vos Chantiers
+            </h2>
+            <p class="showcase-intro" data-i18n="platform_showcase_intro">
+              Fini les fichiers Excel éparpillés, les e-mails perdus et les dépassements de budget imprévus. Découvrez l'outil de gestion ultime, conçu spécifiquement pour les exigences du terrain. Avec notre plateforme centralisée IBE, la gestion de chantier devient enfin fluide, transparente et redoutablement efficace.
+            </p>
+            
+            <div class="platform-features">
+              <div class="platform-feature-item">
+                <div class="feature-icon-wrapper"><i class="fas fa-chart-line"></i></div>
+                <div class="feature-details">
+                  <h4 data-i18n="platform_feature_1_title">Vision 360° en Temps Réel</h4>
+                  <p data-i18n="platform_feature_1_desc">Suivez l'avancement exact de chaque projet grâce à notre planning global interactif.</p>
+                </div>
+              </div>
+              <div class="platform-feature-item">
+                <div class="feature-icon-wrapper"><i class="fas fa-calculator"></i></div>
+                <div class="feature-details">
+                  <h4 data-i18n="platform_feature_2_title">Maîtrise Budgétaire Millimétrée</h4>
+                  <p data-i18n="platform_feature_2_desc">Gardez un œil constant sur vos finances. Comparez votre budget prévu et dépenses réelles.</p>
+                </div>
+              </div>
+              <div class="platform-feature-item">
+                <div class="feature-icon-wrapper"><i class="fas fa-link"></i></div>
+                <div class="feature-details">
+                  <h4 data-i18n="platform_feature_3_title">Tout Votre Écosystème Connecté</h4>
+                  <p data-i18n="platform_feature_3_desc">Clients, sous-traitants, messagerie, factures... Tout est centralisé au même endroit.</p>
+                </div>
+              </div>
+              <div class="platform-feature-item">
+                <div class="feature-icon-wrapper"><i class="fas fa-shield-alt"></i></div>
+                <div class="feature-details">
+                  <h4 data-i18n="platform_feature_4_title">Transparence et Réactivité Inédites</h4>
+                  <p data-i18n="platform_feature_4_desc">Offrez à vos équipes et à vos clients une clarté sans précédent.</p>
+                </div>
+              </div>
+            </div>
+
+            <a href="#contact" class="cta-btn primary" style="margin-top: 40px;" data-i18n="platform_cta">
+              Essayer l'application IBE
+            </a>
+          </div>
+
+          <div class="showcase-visual" data-aos="fade-left">
+            <div class="tablet-mockup">
+              <img src="images/showcase-tablet-new.jpg" alt="IBE Platform Tablet" />
+              <div class="mockup-glow"></div>
+            </div>
+            <div class="showcase-photos">
+              <img src="images/showcase-photo-1.jpg" alt="IBE chantier" class="showcase-photo" onclick="openImageModal(this.src)" />
+              <img src="images/showcase-photo-2.jpg" alt="IBE équipe" class="showcase-photo" onclick="openImageModal(this.src)" />
+            </div>
+            <p class="showcase-highlight-text" data-i18n="platform_showcase_highlight">
+              Notre application de suivi numérique transforme la gestion de vos chantiers en une expérience de précision absolue. Conçue pour une transparence totale, elle traque en temps réel la moindre perte financière et optimise drastiquement votre rentabilité. Ne laissez plus vos marges s'évaporer : chaque dépense est scrutée pour garantir que vos projets restent profitables, de l'étude à la livraison finale.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Showcase Section Fixes -->
+    <style>
+      @media (max-width: 768px) {
+        .app-showcase .section-title {
+          font-size: clamp(28px, 8vw, 36px) !important;
+          text-align: center !important;
+          margin-bottom: 25px !important;
+        }
+        .showcase-intro {
+          font-size: 15px !important;
+          text-align: center;
+          margin-bottom: 30px !important;
+        }
+        .showcase-highlight-text {
+          font-size: 16px !important;
+          padding-top: 20px !important;
+          margin-top: 30px !important;
+          line-height: 1.6 !important;
+        }
+        .platform-feature-item {
+          padding: 16px !important;
+          gap: 15px !important;
+        }
+        .feature-details h4 {
+          font-size: 14px !important;
+        }
+        .feature-details p {
+          font-size: 12px !important;
+        }
+        .showcase-photo {
+          aspect-ratio: 1/1 !important;
+        }
+      }
+    </style>
+
+
+    <!-- Image Modal for Showcase -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+      <span class="image-modal-close">&times;</span>
+      <img class="image-modal-content" id="imageModalImg">
+    </div>
 
     <!-- Contact Section -->
     <footer class="contact" id="contact">
-        <div class="container">
-            <div class="contact-content">
-                <div class="contact-left">
-                    <h2 class="section-title" data-i18n="contact_title">Confiez-nous votre projet</h2>
-                    <p class="contact-intro" data-i18n="contact_intro">
-                        Vous avez un projet complexe qui nécessite une expertise pointue ?
-                        Discutons de vos enjeux techniques et financiers. Nos ingénieurs sont à votre écoute.
-                    </p>
+      <div class="container">
+        <div class="contact-content">
+          <div class="contact-left">
+            <h2 class="section-title" data-i18n="contact_title">
+              Confiez-nous votre projet
+            </h2>
+            <p class="contact-intro" data-i18n="contact_intro">
+              Vous avez un projet complexe qui nécessite une expertise pointue ?
+              Discutons de vos enjeux techniques et financiers. Nos ingénieurs
+              sont à votre écoute.
+            </p>
 
-                    <div class="contact-info">
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                    <circle cx="12" cy="10" r="3" />
-                                </svg>
-                            </div>
-                            <div class="info-text">
-                                <h4 data-i18n="address_label">Adresse</h4>
-                                <p>69 boulevard Hassan II , Mohammedia 28800</p>
-                            </div>
-                        </div>
-
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path
-                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                                </svg>
-                            </div>
-                            <div class="info-text">
-                                <h4 data-i18n="phone_label">Téléphone</h4>
-                                <p><a href="tel:+212663176838">+212 663-176838</a></p>
-                            </div>
-                        </div>
-
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path
-                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                    <polyline points="22,6 12,13 2,6" />
-                                </svg>
-                            </div>
-                            <div class="info-text">
-                                <h4 data-i18n="email_label">Email</h4>
-                                <p><a href="mailto:ibebuilds@gmail.com">ibebuilds@gmail.com</a></p>
-                            </div>
-                        </div>
-
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                </svg>
-                            </div>
-                            <div class="info-text">
-                                <h4 data-i18n="insta_label">Instagram</h4>
-                                <p><a href="https://www.instagram.com/ibe.construction/?igsh=dGd1cjNyajk2ZmY%3D#"
-                                        target="_blank">@ibe.construction</a></p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="contact-info">
+              <div class="info-item">
+                <div class="info-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
                 </div>
-
-                <div class="contact-right">
-                    <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/ibebuilds@gmail.com"
-                        method="POST" autocomplete="off">
-                        <!-- FormSubmit Configuration -->
-                        <input type="hidden" name="_subject" value="Nouveau message depuis IBE Construction">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_template" value="table">
-
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" required autocomplete="off">
-                            <label for="name" data-i18n="form_name">Nom complet</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" required autocomplete="off">
-                            <label for="email" data-i18n="form_email">Adresse email</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="tel" id="phone" name="phone" autocomplete="off">
-                            <label for="phone" data-i18n="form_phone">Téléphone (optionnel)</label>
-                        </div>
-
-                        <div class="form-group">
-                            <textarea id="message" name="message" rows="4" required autocomplete="off"></textarea>
-                            <label for="message" data-i18n="form_message">Votre message</label>
-                        </div>
-
-                        <button type="submit" class="cta-btn primary" data-i18n="form_submit">Envoyer le
-                            Message</button>
-                    </form>
+                <div class="info-text">
+                  <h4 data-i18n="address_label">Adresse</h4>
+                  <p>69 boulevard Hassan II , Mohammedia 28800</p>
                 </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                    />
+                  </svg>
+                </div>
+                <div class="info-text">
+                  <h4 data-i18n="phone_label">Téléphone</h4>
+                  <p><a href="tel:+212663176838">+212 663-176838</a></p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                    />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </div>
+                <div class="info-text">
+                  <h4 data-i18n="email_label">Email</h4>
+                  <p>
+                    <a href="mailto:ibe@ibe-construction.com"
+                      >ibe@ibe-construction.com</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect
+                      x="2"
+                      y="2"
+                      width="20"
+                      height="20"
+                      rx="5"
+                      ry="5"
+                    ></rect>
+                    <path
+                      d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                    ></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </div>
+                <div class="info-text">
+                  <h4 data-i18n="insta_label">Instagram</h4>
+                  <p>
+                    <a
+                      href="https://www.instagram.com/ibe.construction/?igsh=dGd1cjNyajk2ZmY%3D#"
+                      target="_blank"
+                      >@ibe.construction</a
+                    >
+                  </p>
+                </div>
+              </div>
             </div>
+          </div>
 
-            <div class="footer-bottom">
-                <div class="footer-logo">
-                    <img src="images/footer-logo-transformed.png" alt="IBE Construction" class="logo-image">
-                </div>
-                <p class="copyright" data-i18n="copyright">© <span id="current-year"></span> IBE Construction. Tous
-                    droits
-                    réservés.</p>
-            </div>
+          <div class="contact-right">
+            <form
+              class="contact-form"
+              id="contactForm"
+              action="https://formsubmit.co/ajax/ibe@ibe-construction.com"
+              method="POST"
+              autocomplete="off"
+            >
+              <!-- FormSubmit Configuration -->
+              <input
+                type="hidden"
+                name="_subject"
+                value="Nouveau message depuis IBE Construction"
+              />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  autocomplete="off"
+                />
+                <label for="name" data-i18n="form_name">Nom complet</label>
+              </div>
+
+              <div class="form-group">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  autocomplete="off"
+                />
+                <label for="email" data-i18n="form_email">Adresse email</label>
+              </div>
+
+              <div class="form-group">
+                <input type="tel" id="phone" name="phone" autocomplete="off" />
+                <label for="phone" data-i18n="form_phone"
+                  >Téléphone (optionnel)</label
+                >
+              </div>
+
+              <div class="form-group">
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  required
+                  autocomplete="off"
+                ></textarea>
+                <label for="message" data-i18n="form_message"
+                  >Votre message</label
+                >
+              </div>
+
+              <button
+                type="submit"
+                class="cta-btn primary"
+                data-i18n="form_submit"
+              >
+                Envoyer le Message
+              </button>
+            </form>
+          </div>
         </div>
+
+        <div class="footer-bottom">
+          <div class="footer-logo">
+            <img
+              src="images/footer-logo-transformed.png"
+              alt="IBE Construction"
+              class="logo-image"
+            />
+          </div>
+          <p class="copyright" data-i18n="copyright">
+            © <span id="current-year"></span> IBE Construction. Tous droits
+            réservés.
+          </p>
+        </div>
+      </div>
     </footer>
 
     <!-- Modals for Portfolio Items -->
     <!-- Industrial Modal -->
     <div class="modal" id="modal-industrial">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <div class="modal-header">
-                <h2>Références Industrielles</h2>
-                <p class="modal-subtitle">L'expertise au service de l'industrie</p>
-            </div>
-            <div class="modal-body">
-                <div class="modal-section">
-                    <h3>Nos Réalisations</h3>
-                    <ul class="project-list">
-                        <li>
-                            <strong>Plateforme Logistique ACME - 15 000 m²</strong>
-                            <p>Conception et réalisation complète de charpente métallique avec système de stockage
-                                automatisé</p>
-                        </li>
-                        <li>
-                            <strong>Hangar Industriel Métallique - 8 000 m²</strong>
-                            <p>Structure métallique avec pont roulant de 20 tonnes, études BIM complètes</p>
-                        </li>
-                        <li>
-                            <strong>Extension Usine Automobile - 12 000 m²</strong>
-                            <p>Charpente métallique et planchers collaborants, coordination multi-lots</p>
-                        </li>
-                        <li>
-                            <strong>Centre de Distribution - 10 000 m²</strong>
-                            <p>Structure métallique optimisée avec quais de chargement intégrés</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="modal-section">
-                    <h3>Expertise Technique</h3>
-                    <div class="tech-badges">
-                        <span class="badge">Charpente Métallique</span>
-                        <span class="badge">Advance Steel</span>
-                        <span class="badge">Robot Structural</span>
-                        <span class="badge">Ponts Roulants</span>
-                        <span class="badge">Planchers Collaborants</span>
-                    </div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+          <h2>Références Industrielles</h2>
+          <p class="modal-subtitle">L'expertise au service de l'industrie</p>
         </div>
+        <div class="modal-body">
+          <div class="modal-section">
+            <h3>Nos Réalisations</h3>
+            <ul class="project-list">
+              <li>
+                <strong>Plateforme Logistique ACME - 15 000 m²</strong>
+                <p>
+                  Conception et réalisation complète de charpente métallique
+                  avec système de stockage automatisé
+                </p>
+              </li>
+              <li>
+                <strong>Hangar Industriel Métallique - 8 000 m²</strong>
+                <p>
+                  Structure métallique avec pont roulant de 20 tonnes, études
+                  BIM complètes
+                </p>
+              </li>
+              <li>
+                <strong>Extension Usine Automobile - 12 000 m²</strong>
+                <p>
+                  Charpente métallique et planchers collaborants, coordination
+                  multi-lots
+                </p>
+              </li>
+              <li>
+                <strong>Centre de Distribution - 10 000 m²</strong>
+                <p>
+                  Structure métallique optimisée avec quais de chargement
+                  intégrés
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Expertise Technique</h3>
+            <div class="tech-badges">
+              <span class="badge">Charpente Métallique</span>
+              <span class="badge">Advance Steel</span>
+              <span class="badge">Robot Structural</span>
+              <span class="badge">Ponts Roulants</span>
+              <span class="badge">Planchers Collaborants</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Residential Modal -->
     <div class="modal" id="modal-residential">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <div class="modal-header">
-                <h2>Références Résidentielles</h2>
-                <p class="modal-subtitle">L'excellence en habitat</p>
-            </div>
-            <div class="modal-body">
-                <div class="modal-section">
-                    <h3>Nos Réalisations</h3>
-                    <ul class="project-list">
-                        <li>
-                            <strong>Résidence Les Jardins - 120 logements</strong>
-                            <p>Immeuble R+6 en béton armé, étude parasismique complète, planification BIM</p>
-                        </li>
-                        <li>
-                            <strong>Complex Résidentiel Marina Bay - 200 unités</strong>
-                            <p>3 bâtiments R+8, structures béton armé avec parking souterrain</p>
-                        </li>
-                        <li>
-                            <strong>Villa Contemporaine de Prestige</strong>
-                            <p>Structure mixte béton/acier, conception parasismique, piscine à débordement</p>
-                        </li>
-                        <li>
-                            <strong>Immeuble Standing Centre-Ville - R+5</strong>
-                            <p>Réhabilitation lourde avec extension verticale, renforcement structurel</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="modal-section">
-                    <h3>Expertise Technique</h3>
-                    <div class="tech-badges">
-                        <span class="badge">Béton Armé</span>
-                        <span class="badge">Revit Structure</span>
-                        <span class="badge">Études Parasismiques</span>
-                        <span class="badge">Dalles Post-Tendues</span>
-                        <span class="badge">Fondations Profondes</span>
-                    </div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+          <h2>Références Résidentielles</h2>
+          <p class="modal-subtitle">L'excellence en habitat</p>
         </div>
+        <div class="modal-body">
+          <div class="modal-section">
+            <h3>Nos Réalisations</h3>
+            <ul class="project-list">
+              <li>
+                <strong>Résidence Les Jardins - 120 logements</strong>
+                <p>
+                  Immeuble R+6 en béton armé, étude parasismique complète,
+                  planification BIM
+                </p>
+              </li>
+              <li>
+                <strong>Complex Résidentiel Marina Bay - 200 unités</strong>
+                <p>
+                  3 bâtiments R+8, structures béton armé avec parking souterrain
+                </p>
+              </li>
+              <li>
+                <strong>Villa Contemporaine de Prestige</strong>
+                <p>
+                  Structure mixte béton/acier, conception parasismique, piscine
+                  à débordement
+                </p>
+              </li>
+              <li>
+                <strong>Immeuble Standing Centre-Ville - R+5</strong>
+                <p>
+                  Réhabilitation lourde avec extension verticale, renforcement
+                  structurel
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Expertise Technique</h3>
+            <div class="tech-badges">
+              <span class="badge">Béton Armé</span>
+              <span class="badge">Revit Structure</span>
+              <span class="badge">Études Parasismiques</span>
+              <span class="badge">Dalles Post-Tendues</span>
+              <span class="badge">Fondations Profondes</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Medical Modal -->
     <div class="modal" id="modal-medical">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <div class="modal-header">
-                <h2>Références Médicales</h2>
-                <p class="modal-subtitle">Précision et conformité sanitaire</p>
-            </div>
-            <div class="modal-body">
-                <div class="modal-section">
-                    <h3>Nos Réalisations</h3>
-                    <ul class="project-list">
-                        <li>
-                            <strong>Hôpital Universitaire - Extension 5 000 m²</strong>
-                            <p>Bloc opératoire haute technologie avec salles blanches et systèmes CVC spécialisés
-                            </p>
-                        </li>
-                        <li>
-                            <strong>Clinique Privée Spécialisée - 3 500 m²</strong>
-                            <p>Structure béton armé R+4 avec unités de soins intensifs et imagerie médicale</p>
-                        </li>
-                        <li>
-                            <strong>Centre de Radiothérapie</strong>
-                            <p>Études structurelles spéciales avec protection radiologique, bunkers en béton lourd
-                            </p>
-                        </li>
-                        <li>
-                            <strong>Laboratoire d'Analyses Médicales - 2 000 m²</strong>
-                            <p>Installation de planchers techniques, coordination fluides médicaux</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="modal-section">
-                    <h3>Expertise Technique</h3>
-                    <div class="tech-badges">
-                        <span class="badge">Salles Blanches</span>
-                        <span class="badge">Revit MEP</span>
-                        <span class="badge">Protection Radiologique</span>
-                        <span class="badge">Fluides Médicaux</span>
-                        <span class="badge">Normes Sanitaires</span>
-                        <span class="badge">CVC Spécialisé</span>
-                    </div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+          <h2>Références Médicales</h2>
+          <p class="modal-subtitle">Précision et conformité sanitaire</p>
         </div>
+        <div class="modal-body">
+          <div class="modal-section">
+            <h3>Nos Réalisations</h3>
+            <ul class="project-list">
+              <li>
+                <strong>Hôpital Universitaire - Extension 5 000 m²</strong>
+                <p>
+                  Bloc opératoire haute technologie avec salles blanches et
+                  systèmes CVC spécialisés
+                </p>
+              </li>
+              <li>
+                <strong>Clinique Privée Spécialisée - 3 500 m²</strong>
+                <p>
+                  Structure béton armé R+4 avec unités de soins intensifs et
+                  imagerie médicale
+                </p>
+              </li>
+              <li>
+                <strong>Centre de Radiothérapie</strong>
+                <p>
+                  Études structurelles spéciales avec protection radiologique,
+                  bunkers en béton lourd
+                </p>
+              </li>
+              <li>
+                <strong>Laboratoire d'Analyses Médicales - 2 000 m²</strong>
+                <p>
+                  Installation de planchers techniques, coordination fluides
+                  médicaux
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Expertise Technique</h3>
+            <div class="tech-badges">
+              <span class="badge">Salles Blanches</span>
+              <span class="badge">Revit MEP</span>
+              <span class="badge">Protection Radiologique</span>
+              <span class="badge">Fluides Médicaux</span>
+              <span class="badge">Normes Sanitaires</span>
+              <span class="badge">CVC Spécialisé</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Cost Calculator Modal -->
     <div class="calculator-modal" id="calculatorModal">
-        <div class="calculator-container">
-            <button class="calculator-close" id="closeCalculator">&times;</button>
+      <div class="calculator-container">
+        <button class="calculator-close" id="closeCalculator">&times;</button>
 
-            <!-- Progress Bar -->
-            <div class="calculator-progress">
-                <div class="progress-steps">
-                    <div class="progress-line" id="progressLine"></div>
-                    <div class="progress-step active" data-step="1">1</div>
-                    <div class="progress-step" data-step="2">2</div>
-                    <div class="progress-step" data-step="3">3</div>
-                    <div class="progress-step" data-step="4">4</div>
-                    <div class="progress-step" data-step="5">5</div>
-                </div>
-            </div>
-
-            <!-- Calculator Body -->
-            <div class="calculator-body">
-                <!-- Step 1: Project Type -->
-                <div class="calculator-step active" data-step="1">
-                    <h2 class="step-title" data-i18n="calc_step1_title">Type de Projet</h2>
-                    <p class="step-subtitle" data-i18n="calc_step1_subtitle">Sélectionnez le type de construction
-                    </p>
-
-                    <div class="project-type-grid">
-                        <div class="project-type-card" data-type="industrial">
-                            <div class="project-type-icon">
-                                <svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#cc9461"
-                                    stroke-width="2.5">
-                                    <path d="M8 52h48M12 52V32l8-8v-8l8-8v28M28 52V24l8-8v36M44 52V32l8-8v28" />
-                                    <circle cx="16" cy="36" r="2" fill="#cc9461" />
-                                    <circle cx="32" cy="28" r="2" fill="#cc9461" />
-                                    <circle cx="48" cy="36" r="2" fill="#cc9461" />
-                                    <path d="M12 12l-4-4M20 16l-4-4M28 16l-4-4" stroke-linecap="round" />
-                                </svg>
-                            </div>
-                            <div class="project-type-name" data-i18n="calc_type_industrial">Industriel</div>
-                        </div>
-                        <div class="project-type-card" data-type="residential">
-                            <div class="project-type-icon">
-                                <svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#cc9461"
-                                    stroke-width="2.5">
-                                    <path d="M32 8L12 24v28h40V24L32 8z" />
-                                    <path d="M20 52V36h24v16" />
-                                    <rect x="24" y="40" width="6" height="8" fill="#cc9461" opacity="0.3" />
-                                    <rect x="34" y="40" width="6" height="8" fill="#cc9461" opacity="0.3" />
-                                    <rect x="24" y="26" width="6" height="6" fill="#cc9461" opacity="0.3" />
-                                    <rect x="34" y="26" width="6" height="6" fill="#cc9461" opacity="0.3" />
-                                </svg>
-                            </div>
-                            <div class="project-type-name" data-i18n="calc_type_residential">Résidentiel</div>
-                        </div>
-                        <div class="project-type-card" data-type="commercial">
-                            <div class="project-type-icon">
-                                <svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#cc9461"
-                                    stroke-width="2.5">
-                                    <rect x="12" y="16" width="40" height="36" rx="2" />
-                                    <path d="M12 16h40M12 24h40M12 32h40M12 40h40" />
-                                    <path d="M20 16v36M28 16v36M36 16v36M44 16v36" />
-                                    <rect x="16" y="18" width="4" height="4" fill="#cc9461" opacity="0.3" />
-                                    <rect x="24" y="18" width="4" height="4" fill="#cc9461" opacity="0.3" />
-                                    <rect x="32" y="18" width="4" height="4" fill="#cc9461" opacity="0.3" />
-                                    <rect x="40" y="18" width="4" height="4" fill="#cc9461" opacity="0.3" />
-                                </svg>
-                            </div>
-                            <div class="project-type-name" data-i18n="calc_type_commercial">Commercial</div>
-                        </div>
-                        <div class="project-type-card" data-type="medical">
-                            <div class="project-type-icon">
-                                <svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#cc9461"
-                                    stroke-width="2.5">
-                                    <rect x="12" y="20" width="40" height="32" rx="2" />
-                                    <path d="M20 20V16a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v4" />
-                                    <path d="M32 28v16M24 36h16" stroke-width="3" stroke-linecap="round" />
-                                    <circle cx="22" cy="28" r="2" fill="#cc9461" />
-                                    <circle cx="42" cy="28" r="2" fill="#cc9461" />
-                                </svg>
-                            </div>
-                            <div class="project-type-name" data-i18n="calc_type_medical">Médical</div>
-                        </div>
-                    </div>
-
-                    <!-- Residential Options Sub-menu -->
-                    <div class="residential-options" id="residentialOptions"
-                        style="display: none; margin-top: 25px; padding-top: 25px; border-top: 1px solid rgba(26, 47, 75, 0.1);">
-                        <p class="step-subtitle" style="margin-bottom: 20px;" data-i18n="calc_res_standing_title">
-                            Choisissez le niveau de standing</p>
-                        <div class="standing-grid">
-                            <div class="standing-card" data-standing="high">
-                                <div class="standing-name" data-i18n="calc_res_high">Haut Standing</div>
-                            </div>
-                            <div class="standing-card selected" data-standing="mid">
-                                <div class="standing-name" data-i18n="calc_res_mid">Moyen Standing</div>
-                            </div>
-                            <div class="standing-card" data-standing="econ">
-                                <div class="standing-name" data-i18n="calc_res_econ">Économique</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 2: Surface -->
-                <div class="calculator-step" data-step="2">
-                    <h2 class="step-title" data-i18n="calc_step2_title">Surface du Projet</h2>
-                    <p class="step-subtitle" data-i18n="calc_step2_subtitle">Indiquez la surface en m²</p>
-
-                    <div class="surface-slider-container">
-                        <div class="surface-value">
-                            <span id="surfaceValue">500</span> <span>m²</span>
-                        </div>
-                        <input type="range" class="surface-slider" id="surfaceSlider" min="50" max="5000" value="500"
-                            step="50">
-                        <div class="surface-range">
-                            <span>50 m²</span>
-                            <span>5000 m²</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 3: Services -->
-                <div class="calculator-step" data-step="3">
-                    <h2 class="step-title" data-i18n="calc_step3_title">Services Requis</h2>
-                    <p class="step-subtitle" data-i18n="calc_step3_subtitle">Sélectionnez les services nécessaires
-                    </p>
-
-                    <div class="service-list">
-                        <label class="service-checkbox">
-                            <input type="checkbox" name="service" value="structure" checked>
-                            <div class="service-checkbox-custom"></div>
-                            <div class="service-info">
-                                <div class="service-name" data-i18n="calc_service_structure">Bureau d'Études
-                                    Structure
-                                </div>
-                                <div class="service-desc" data-i18n="calc_service_structure_desc">Calcul et
-                                    conception
-                                    BIM</div>
-                            </div>
-                        </label>
-                        <label class="service-checkbox">
-                            <input type="checkbox" name="service" value="construction">
-                            <div class="service-checkbox-custom"></div>
-                            <div class="service-info">
-                                <div class="service-name" data-i18n="calc_service_construction">Gros Œuvre</div>
-                                <div class="service-desc" data-i18n="calc_service_construction_desc">Réalisation et
-                                    exécution</div>
-                            </div>
-                        </label>
-                        <label class="service-checkbox">
-                            <input type="checkbox" name="service" value="fluids">
-                            <div class="service-checkbox-custom"></div>
-                            <div class="service-info">
-                                <div class="service-name" data-i18n="calc_service_fluids">Seconds Oeuvres
-                                </div>
-                                <div class="service-desc" data-i18n="calc_service_fluids_desc">Finitions & lots
-                                    techniques
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Step 4: Finish Level -->
-                <div class="calculator-step" data-step="4">
-                    <h2 class="step-title" data-i18n="calc_step4_title">Niveau de Finition</h2>
-                    <p class="step-subtitle" data-i18n="calc_step4_subtitle">Choisissez le niveau de qualité</p>
-
-                    <div class="finish-level-grid">
-                        <div class="finish-level-card selected" data-finish="standard">
-                            <div class="finish-level-name" data-i18n="calc_finish_standard">Standard</div>
-                            <div class="finish-level-multiplier">×1.0</div>
-                        </div>
-                        <div class="finish-level-card" data-finish="premium">
-                            <div class="finish-level-name" data-i18n="calc_finish_premium">Premium</div>
-                            <div class="finish-level-multiplier">×1.3</div>
-                        </div>
-                        <div class="finish-level-card" data-finish="luxe">
-                            <div class="finish-level-name" data-i18n="calc_finish_luxe">Luxe</div>
-                            <div class="finish-level-multiplier">×1.6</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 5: Result & Lead Form -->
-                <div class="calculator-step" data-step="5">
-                    <h2 class="step-title" data-i18n="calc_step5_title">Estimation de Votre Projet</h2>
-
-                    <div class="result-display">
-                        <div class="price-result" id="priceResult">0 MAD</div>
-                        <div class="price-range" id="priceRange">Fourchette: 0 - 0 MAD</div>
-                        <div class="price-disclaimer" data-i18n="calc_disclaimer">
-                            * Estimation indicative. Devis précis après étude technique approfondie.
-                        </div>
-                    </div>
-
-                    <h3 style="margin-bottom: 20px; color: var(--navy-primary);" data-i18n="calc_lead_title">Recevez
-                        votre devis détaillé</h3>
-                    <form class="lead-form" id="calculatorLeadForm">
-                        <div class="form-group-calc">
-                            <input type="text" id="calcName" name="name" required placeholder=" ">
-                            <label for="calcName" data-i18n="form_name">Nom complet</label>
-                        </div>
-                        <div class="form-group-calc">
-                            <input type="email" id="calcEmail" name="email" required placeholder=" ">
-                            <label for="calcEmail" data-i18n="form_email">Adresse email</label>
-                        </div>
-                        <div class="form-group-calc">
-                            <input type="tel" id="calcPhone" name="phone" placeholder=" ">
-                            <label for="calcPhone" data-i18n="form_phone">Téléphone (optionnel)</label>
-                        </div>
-                        <input type="hidden" name="projectType" id="hiddenProjectType">
-                        <input type="hidden" name="surface" id="hiddenSurface">
-                        <input type="hidden" name="services" id="hiddenServices">
-                        <input type="hidden" name="finish" id="hiddenFinish">
-                        <input type="hidden" name="estimatedPrice" id="hiddenPrice">
-                    </form>
-                </div>
-
-                <!-- Navigation Buttons -->
-                <div class="calculator-nav">
-                    <button class="calc-btn calc-btn-secondary" id="prevBtn" style="display: none;"
-                        data-i18n="calc_btn_prev">Précédent</button>
-                    <button class="calc-btn calc-btn-primary" id="nextBtn" data-i18n="calc_btn_next">Suivant</button>
-                </div>
-            </div>
+        <!-- Progress Bar -->
+        <div class="calculator-progress">
+          <div class="progress-steps">
+            <div class="progress-line" id="progressLine"></div>
+            <div class="progress-step active" data-step="1">1</div>
+            <div class="progress-step" data-step="2">2</div>
+            <div class="progress-step" data-step="3">3</div>
+            <div class="progress-step" data-step="4">4</div>
+            <div class="progress-step" data-step="5">5</div>
+          </div>
         </div>
+
+        <!-- Calculator Body -->
+        <div class="calculator-body">
+          <!-- Step 1: Project Type -->
+          <div class="calculator-step active" data-step="1">
+            <h2 class="step-title" data-i18n="calc_step1_title">
+              Type de Projet
+            </h2>
+            <p class="step-subtitle" data-i18n="calc_step1_subtitle">
+              Sélectionnez le type de construction
+            </p>
+
+            <div class="project-type-grid">
+              <div class="project-type-card" data-type="industrial">
+                <div class="project-type-icon">
+                  <svg
+                    viewBox="0 0 64 64"
+                    width="64"
+                    height="64"
+                    fill="none"
+                    stroke="#cc9461"
+                    stroke-width="2.5"
+                  >
+                    <path
+                      d="M8 52h48M12 52V32l8-8v-8l8-8v28M28 52V24l8-8v36M44 52V32l8-8v28"
+                    />
+                    <circle cx="16" cy="36" r="2" fill="#cc9461" />
+                    <circle cx="32" cy="28" r="2" fill="#cc9461" />
+                    <circle cx="48" cy="36" r="2" fill="#cc9461" />
+                    <path
+                      d="M12 12l-4-4M20 16l-4-4M28 16l-4-4"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <div class="project-type-name" data-i18n="calc_type_industrial">
+                  Industriel
+                </div>
+              </div>
+              <div class="project-type-card" data-type="residential">
+                <div class="project-type-icon">
+                  <svg
+                    viewBox="0 0 64 64"
+                    width="64"
+                    height="64"
+                    fill="none"
+                    stroke="#cc9461"
+                    stroke-width="2.5"
+                  >
+                    <path d="M32 8L12 24v28h40V24L32 8z" />
+                    <path d="M20 52V36h24v16" />
+                    <rect
+                      x="24"
+                      y="40"
+                      width="6"
+                      height="8"
+                      fill="#cc9461"
+                      opacity="0.3"
+                    />
+                    <rect
+                      x="34"
+                      y="40"
+                      width="6"
+                      height="8"
+                      fill="#cc9461"
+                      opacity="0.3"
+                    />
+                    <rect
+                      x="24"
+                      y="26"
+                      width="6"
+                      height="6"
+                      fill="#cc9461"
+                      opacity="0.3"
+                    />
+                    <rect
+                      x="34"
+                      y="26"
+                      width="6"
+                      height="6"
+                      fill="#cc9461"
+                      opacity="0.3"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="project-type-name"
+                  data-i18n="calc_type_residential"
+                >
+                  Résidentiel
+                </div>
+              </div>
+              <div class="project-type-card" data-type="commercial">
+                <div class="project-type-icon">
+                  <svg
+                    viewBox="0 0 64 64"
+                    width="64"
+                    height="64"
+                    fill="none"
+                    stroke="#cc9461"
+                    stroke-width="2.5"
+                  >
+                    <rect x="12" y="16" width="40" height="36" rx="2" />
+                    <path d="M12 16h40M12 24h40M12 32h40M12 40h40" />
+                    <path d="M20 16v36M28 16v36M36 16v36M44 16v36" />
+                    <rect
+                      x="16"
+                      y="18"
+                      width="4"
+                      height="4"
+                      fill="#cc9461"
+                      opacity="0.3"
+                    />
+                    <rect
+                      x="24"
+                      y="18"
+                      width="4"
+                      height="4"
+                      fill="#cc9461"
+                      opacity="0.3"
+                    />
+                    <rect
+                      x="32"
+                      y="18"
+                      width="4"
+                      height="4"
+                      fill="#cc9461"
+                      opacity="0.3"
+                    />
+                    <rect
+                      x="40"
+                      y="18"
+                      width="4"
+                      height="4"
+                      fill="#cc9461"
+                      opacity="0.3"
+                    />
+                  </svg>
+                </div>
+                <div class="project-type-name" data-i18n="calc_type_commercial">
+                  Commercial
+                </div>
+              </div>
+              <div class="project-type-card" data-type="medical">
+                <div class="project-type-icon">
+                  <svg
+                    viewBox="0 0 64 64"
+                    width="64"
+                    height="64"
+                    fill="none"
+                    stroke="#cc9461"
+                    stroke-width="2.5"
+                  >
+                    <rect x="12" y="20" width="40" height="32" rx="2" />
+                    <path d="M20 20V16a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v4" />
+                    <path
+                      d="M32 28v16M24 36h16"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                    />
+                    <circle cx="22" cy="28" r="2" fill="#cc9461" />
+                    <circle cx="42" cy="28" r="2" fill="#cc9461" />
+                  </svg>
+                </div>
+                <div class="project-type-name" data-i18n="calc_type_medical">
+                  Médical
+                </div>
+              </div>
+            </div>
+
+            <!-- Residential Options Sub-menu -->
+            <div
+              class="residential-options"
+              id="residentialOptions"
+              style="
+                display: none;
+                margin-top: 25px;
+                padding-top: 25px;
+                border-top: 1px solid rgba(26, 47, 75, 0.1);
+              "
+            >
+              <p
+                class="step-subtitle"
+                style="margin-bottom: 20px"
+                data-i18n="calc_res_standing_title"
+              >
+                Choisissez le niveau de standing
+              </p>
+              <div class="standing-grid">
+                <div class="standing-card" data-standing="high">
+                  <div class="standing-name" data-i18n="calc_res_high">
+                    Haut Standing
+                  </div>
+                </div>
+                <div class="standing-card selected" data-standing="mid">
+                  <div class="standing-name" data-i18n="calc_res_mid">
+                    Moyen Standing
+                  </div>
+                </div>
+                <div class="standing-card" data-standing="econ">
+                  <div class="standing-name" data-i18n="calc_res_econ">
+                    Économique
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Surface -->
+          <div class="calculator-step" data-step="2">
+            <h2 class="step-title" data-i18n="calc_step2_title">
+              Surface du Projet
+            </h2>
+            <p class="step-subtitle" data-i18n="calc_step2_subtitle">
+              Indiquez la surface en m²
+            </p>
+
+            <div class="surface-slider-container">
+              <div class="surface-value">
+                <span id="surfaceValue">500</span> <span>m²</span>
+              </div>
+              <input
+                type="range"
+                class="surface-slider"
+                id="surfaceSlider"
+                min="50"
+                max="5000"
+                value="500"
+                step="50"
+              />
+              <div class="surface-range">
+                <span>50 m²</span>
+                <span>5000 m²</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Services -->
+          <div class="calculator-step" data-step="3">
+            <h2 class="step-title" data-i18n="calc_step3_title">
+              Services Requis
+            </h2>
+            <p class="step-subtitle" data-i18n="calc_step3_subtitle">
+              Sélectionnez les services nécessaires
+            </p>
+
+            <div class="service-list">
+              <label class="service-checkbox">
+                <input
+                  type="checkbox"
+                  name="service"
+                  value="structure"
+                  checked
+                />
+                <div class="service-checkbox-custom"></div>
+                <div class="service-info">
+                  <div class="service-name" data-i18n="calc_service_structure">
+                    Bureau d'Études Structure
+                  </div>
+                  <div
+                    class="service-desc"
+                    data-i18n="calc_service_structure_desc"
+                  >
+                    Calcul et conception BIM
+                  </div>
+                </div>
+              </label>
+              <label class="service-checkbox">
+                <input type="checkbox" name="service" value="construction" />
+                <div class="service-checkbox-custom"></div>
+                <div class="service-info">
+                  <div
+                    class="service-name"
+                    data-i18n="calc_service_construction"
+                  >
+                    Gros Œuvre
+                  </div>
+                  <div
+                    class="service-desc"
+                    data-i18n="calc_service_construction_desc"
+                  >
+                    Réalisation et exécution
+                  </div>
+                </div>
+              </label>
+              <label class="service-checkbox">
+                <input type="checkbox" name="service" value="fluids" />
+                <div class="service-checkbox-custom"></div>
+                <div class="service-info">
+                  <div class="service-name" data-i18n="calc_service_fluids">
+                    Seconds Oeuvres
+                  </div>
+                  <div
+                    class="service-desc"
+                    data-i18n="calc_service_fluids_desc"
+                  >
+                    Finitions & lots techniques
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 4: Finish Level -->
+          <div class="calculator-step" data-step="4">
+            <h2 class="step-title" data-i18n="calc_step4_title">
+              Niveau de Finition
+            </h2>
+            <p class="step-subtitle" data-i18n="calc_step4_subtitle">
+              Choisissez le niveau de qualité
+            </p>
+
+            <div class="finish-level-grid">
+              <div class="finish-level-card selected" data-finish="standard">
+                <div class="finish-level-name" data-i18n="calc_finish_standard">
+                  Standard
+                </div>
+                <div class="finish-level-multiplier">×1.0</div>
+              </div>
+              <div class="finish-level-card" data-finish="premium">
+                <div class="finish-level-name" data-i18n="calc_finish_premium">
+                  Premium
+                </div>
+                <div class="finish-level-multiplier">×1.3</div>
+              </div>
+              <div class="finish-level-card" data-finish="luxe">
+                <div class="finish-level-name" data-i18n="calc_finish_luxe">
+                  Luxe
+                </div>
+                <div class="finish-level-multiplier">×1.6</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5: Result & Lead Form -->
+          <div class="calculator-step" data-step="5">
+            <h2 class="step-title" data-i18n="calc_step5_title">
+              Estimation de Votre Projet
+            </h2>
+
+            <div class="result-display">
+              <div class="price-result" id="priceResult">0 MAD</div>
+              <div class="price-range" id="priceRange">
+                Fourchette: 0 - 0 MAD
+              </div>
+              <div class="price-disclaimer" data-i18n="calc_disclaimer">
+                * Estimation indicative. Devis précis après étude technique
+                approfondie.
+              </div>
+            </div>
+
+            <h3
+              style="margin-bottom: 20px; color: var(--navy-primary)"
+              data-i18n="calc_lead_title"
+            >
+              Recevez votre devis détaillé
+            </h3>
+            <form class="lead-form" id="calculatorLeadForm">
+              <div class="form-group-calc">
+                <input
+                  type="text"
+                  id="calcName"
+                  name="name"
+                  required
+                  placeholder=" "
+                />
+                <label for="calcName" data-i18n="form_name">Nom complet</label>
+              </div>
+              <div class="form-group-calc">
+                <input
+                  type="email"
+                  id="calcEmail"
+                  name="email"
+                  required
+                  placeholder=" "
+                />
+                <label for="calcEmail" data-i18n="form_email"
+                  >Adresse email</label
+                >
+              </div>
+              <div class="form-group-calc">
+                <input type="tel" id="calcPhone" name="phone" placeholder=" " />
+                <label for="calcPhone" data-i18n="form_phone"
+                  >Téléphone (optionnel)</label
+                >
+              </div>
+              <input type="hidden" name="projectType" id="hiddenProjectType" />
+              <input type="hidden" name="surface" id="hiddenSurface" />
+              <input type="hidden" name="services" id="hiddenServices" />
+              <input type="hidden" name="finish" id="hiddenFinish" />
+              <input type="hidden" name="estimatedPrice" id="hiddenPrice" />
+            </form>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="calculator-nav">
+            <button
+              class="calc-btn calc-btn-secondary"
+              id="prevBtn"
+              style="display: none"
+              data-i18n="calc_btn_prev"
+            >
+              Précédent
+            </button>
+            <button
+              class="calc-btn calc-btn-primary"
+              id="nextBtn"
+              data-i18n="calc_btn_next"
+            >
+              Suivant
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Floating Contact Button -->
-    <a href="https://wa.me/212663176838" target="_blank" class="floating-cta" aria-label="Contact WhatsApp">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-        </svg>
+    <a
+      href="https://wa.me/212663176838"
+      target="_blank"
+      class="floating-cta"
+      aria-label="Contact WhatsApp"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+        />
+      </svg>
     </a>
 
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"
+      defer
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"
+      defer
+    ></script>
+    <script
+      src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"
+      defer
+    ></script>
 
     <!-- Calculator Script -->
-    <script src="calculator.js"></script>
+    <script src="calculator.js" defer></script>
 
     <!-- Main Scripts -->
-    <script src="script.js"></script>
-    <script src="translations.js"></script>
+    <script src="script.js" defer></script>
+    <script src="translations.js" defer></script>
 
     <!-- AI Chatbot IBE Construction -->
-    <script src="chatbot-ai.js"></script>
+    <script src="chatbot-ai.js" defer></script>
     <!-- End AI Chatbot -->
-</body>
-
+  </body>
 </html>
