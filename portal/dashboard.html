@@ -432,6 +432,12 @@
                 <div id="clientCeList">
                     <div class="empty-state"><p>Chargement des ordres...</p></div>
                 </div>
+
+                <!-- Observations Section -->
+                <div class="section-title" style="margin-top:8px">👁️ Observations de Chantier</div>
+                <div id="clientObsList">
+                    <div class="empty-state"><p>Chargement des observations...</p></div>
+                </div>
             </div>
 
         </div><!-- /tabs-content -->
@@ -528,7 +534,7 @@
                 }
             });
             isOnMessages = (tab === 'messages');
-            if (tab === 'suivi') loadSuiviData();
+            if (tab === 'suivi') loadSuiviData(currentUser ? currentUser.uid : null);
             
             // Handle Message Bar
             
@@ -1053,6 +1059,90 @@
         function openDoc(url, name) {
             if (!url) return;
             window.open(typeof cloudinaryFixUrl === 'function' ? cloudinaryFixUrl(url, name, true) : url, '_blank');
+        }
+
+        // ── SUIVI (PROCORE) DATA ──
+        let suiviLoaded = false;
+        async function loadSuiviData(uid) {
+            if (!uid) return;
+            if (suiviLoaded) return;
+            suiviLoaded = true;
+
+            try {
+                const [rfis, insps, logs, ces, obs] = await Promise.all([
+                    ibeGetRFIs(uid),
+                    ibeGetInspections(uid),
+                    ibeGetDailyLogs(uid),
+                    ibeGetChangeEvents(uid),
+                    ibeGetObservations(uid)
+                ]);
+                renderSuiviSection('clientRfiList', rfis, renderRFIItem, 'RFI');
+                renderSuiviSection('clientInspList', insps, renderInspItem, 'rapport');
+                renderSuiviSection('clientLogList', logs, renderLogItem, 'journal');
+                renderSuiviSection('clientCeList', ces, renderCEItem, 'ordre');
+                renderSuiviSection('clientObsList', obs, renderObsItem, 'observation');
+
+                // Update cockpit badge
+                const openCount = rfis.filter(r => r.status === 'open' || r.status === 'pending').length
+                    + ces.filter(c => c.status === 'pending').length;
+                const statSuivi = document.getElementById('statSuivi');
+                if (statSuivi) statSuivi.textContent = openCount > 0 ? `${openCount} Action(s)` : 'À jour';
+            } catch(e) {
+                console.error('Suivi load error:', e);
+            }
+        }
+
+        function renderSuiviSection(containerId, items, renderFn, label) {
+            const el = document.getElementById(containerId);
+            if (!el) return;
+            if (!items || !items.length) {
+                el.innerHTML = `<div class="empty-state"><p>Aucun ${label} disponible</p></div>`;
+                return;
+            }
+            el.innerHTML = items.map(renderFn).join('');
+        }
+
+        function statusBadge(status) {
+            const map = {
+                open:     { color: '#2563eb', bg: '#dbeafe', label: 'Ouvert' },
+                pending:  { color: '#d97706', bg: '#fef3c7', label: 'En attente' },
+                closed:   { color: '#16a34a', bg: '#dcfce7', label: 'Clôturé' },
+                approved: { color: '#16a34a', bg: '#dcfce7', label: 'Approuvé' },
+                rejected: { color: '#dc2626', bg: '#fee2e2', label: 'Refusé' }
+            };
+            const s = map[status] || { color: '#6b7280', bg: '#f3f4f6', label: status || '—' };
+            return `<span style="background:${s.bg};color:${s.color};font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">${s.label}</span>`;
+        }
+
+        function suiviCard(icon, title, subtitle, dateStr, status) {
+            return `<div style="background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.07);display:flex;gap:12px;align-items:flex-start">
+                <div style="font-size:22px;line-height:1">${icon}</div>
+                <div style="flex:1;min-width:0">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+                        <div style="font-size:13px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${title}</div>
+                        ${statusBadge(status)}
+                    </div>
+                    ${subtitle ? `<div style="font-size:12px;color:var(--gray-500);margin-top:4px">${subtitle}</div>` : ''}
+                    ${dateStr ? `<div style="font-size:11px;color:var(--gray-400);margin-top:4px">📅 ${dateStr}</div>` : ''}
+                </div>
+            </div>`;
+        }
+
+        function renderRFIItem(r) {
+            return suiviCard('❓', r.title || 'Demande d\'Info', r.description || '', r.date || '', r.status);
+        }
+        function renderInspItem(r) {
+            return suiviCard('✔️', r.title || 'Inspection', r.notes || '', r.date || '', r.status || 'closed');
+        }
+        function renderLogItem(r) {
+            return suiviCard('📋', r.date || 'Journal', r.notes || '', r.date || '', 'closed');
+        }
+        function renderCEItem(r) {
+            const price = r.montant ? `+${Number(r.montant).toLocaleString('fr-MA')} MAD` : '';
+            return suiviCard('📝', r.title || 'Ordre de Changement', (price ? price + (r.description ? ' · ' + r.description : '') : r.description) || '', r.date || '', r.status);
+        }
+        function renderObsItem(r) {
+            return suiviCard('👁️', r.title || 'Observation', r.description || '', r.date || '', r.status);
         }
 
         // ── LOGOUT ──
