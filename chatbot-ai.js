@@ -684,12 +684,19 @@ class IBEChatbot {
 
   toggleChat() {
     this.isOpen = !this.isOpen;
-    const window = document.getElementById("chatbot-window");
+    const chatWindow = document.getElementById("chatbot-window");
     const button = document.getElementById("chatbot-toggle");
+    const isMobile = globalThis.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (this.isOpen) {
-      window.classList.add("active");
+      chatWindow.classList.add("active");
       button.classList.add("active");
+
+      // Lock body scroll on mobile for fullscreen chatbot
+      if (isMobile) {
+        this.scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+        document.body.classList.add("chatbot-open-mobile");
+      }
 
       // Send greeting if first time
       if (this.messages.length === 0) {
@@ -698,8 +705,14 @@ class IBEChatbot {
         );
       }
     } else {
-      window.classList.remove("active");
+      chatWindow.classList.remove("active");
       button.classList.remove("active");
+
+      // Restore body scroll on mobile
+      if (isMobile) {
+        document.body.classList.remove("chatbot-open-mobile");
+        globalThis.scrollTo(0, this.scrollPosition || 0);
+      }
     }
   }
 

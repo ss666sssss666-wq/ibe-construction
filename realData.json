@@ -1,0 +1,37 @@
+{
+  "projets_actifs": {
+    "total": 12,
+    "repartition_phase": {
+      "Etude": 2,
+      "Gros Oeuvre": 5,
+      "Second Oeuvre": 3,
+      "Finitions": 2
+    }
+  },
+  "budget_vs_reel": [
+    { "mois": "Oct", "budget_estime": 300, "depenses_reelles": 280 },
+    { "mois": "Nov", "budget_estime": 450, "depenses_reelles": 460 },
+    { "mois": "Dec", "budget_estime": 200, "depenses_reelles": 190 },
+    { "mois": "Jan", "budget_estime": 500, "depenses_reelles": 480 },
+    { "mois": "Fev", "budget_estime": 350, "depenses_reelles": 360 },
+    { "mois": "Mar", "budget_estime": 600, "depenses_reelles": 550 }
+  ],
+  "observations": {
+    "total": 45,
+    "par_categorie": {
+      "securite": { "ouvertes": 2, "en_cours": 1, "resolues": 12 },
+      "qualite": { "ouvertes": 3, "en_cours": 4, "resolues": 10 },
+      "garantie": { "ouvertes": 1, "en_cours": 0, "resolues": 5 },
+      "environnement": { "ouvertes": 0, "en_cours": 2, "resolues": 5 }
+    }
+  },
+  "inspections": {
+    "total": 24,
+    "statuts": {
+      "reussies": 18,
+      "echouees": 2,
+      "en_attente": 4
+    }
+  },
+  "taux_rentabilite_moyen": 18.5
+}

@@ -1,0 +1,167 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ==========================================
+    // 1. FONCTIONS DE SÉCURITÉ (HELPERS)
+    // ==========================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Vérifie si l'utilisateur est un administrateur
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == "admin@ibe-construction.com" ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // Vérifie si l'utilisateur connecté est le propriétaire actuel
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    // ==========================================
+    // 2. RÈGLES DES COLLECTIONS
+    // ==========================================
+
+    match /admins/{adminId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    match /users/{uid} {
+      allow read: if isAdmin() || isOwner(uid);
+      allow create: if isOwner(uid) || isAdmin();
+      allow update: if isOwner(uid) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /projects/{uid} {
+      allow read: if isAdmin() || isOwner(uid);
+      allow create: if isOwner(uid) || isAdmin();
+      allow update: if isOwner(uid) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /documents/{uid} {
+      // Les fichiers sont physiquement sur Cloudinary, 
+      // on sécurise la sous-collection Firestore des metadatas
+      match /files/{docId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow write: if isAdmin() || isOwner(uid);
+      }
+    }
+
+    match /messages/{uid} {
+      match /thread/{msgId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow create: if (isAdmin() || isOwner(uid)) && request.resource.data.texte is string;
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    match /activity_log/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin();
+    }
+
+    match /subcontractors/{subId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /invoices/{uid} {
+      match /items/{itemId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow write: if isAdmin();
+      }
+    }
+
+    match /budgets/{uid} {
+      allow read: if isAdmin() || isOwner(uid);
+      allow write: if isAdmin();
+    }
+
+    match /plus_values/{uid} {
+      match /items/{pvId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow write: if isAdmin();
+      }
+    }
+
+    match /notifications/{uid} {
+      match /items/{notifId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow create, delete: if isAdmin();
+        // L'utilisateur peut marquer sa notification comme "read"
+        allow update: if isOwner(uid) || isAdmin();
+      }
+    }
+
+    match /feedbacks/{uid} {
+      match /items/{fbId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow create: if isOwner(uid);
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    match /inspections/{uid} {
+      match /items/{inspId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow write: if isAdmin();
+      }
+    }
+
+    match /tenders/{tenderId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+      
+      match /offers/{offerId} {
+        allow read: if isAdmin() || (isAuthenticated() && resource.data.subcontractorId == request.auth.uid);
+        allow create: if isAuthenticated();
+        allow update, delete: if isAdmin() || (isAuthenticated() && resource.data.subcontractorId == request.auth.uid);
+      }
+    }
+
+    match /rfis/{uid} {
+      match /items/{rfiId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow create: if isAdmin() || isOwner(uid);
+        allow update, delete: if isAdmin() || isOwner(uid);
+      }
+    }
+
+    match /observations/{uid} {
+      match /items/{obsId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow write: if isAdmin();
+      }
+    }
+
+    match /daily_logs/{uid} {
+      match /items/{logId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow write: if isAdmin();
+      }
+    }
+
+    match /change_events/{uid} {
+      match /items/{ceId} {
+        allow read: if isAdmin() || isOwner(uid);
+        allow write: if isAdmin();
+      }
+    }
+
+    // ==========================================
+    // 3. RÈGLE PAR DÉFAUT (FALLBACK BLOCK)
+    // ==========================================
+    match /{document=**} {
+      allow read, write: if false; 
+    }
+  }
+}

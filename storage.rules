@@ -1,0 +1,14 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // IBE Construction utilise Cloudinary pour ses fichiers,
+    // mais par précaution on sécurise quand même le Storage interne (Bloqué par défaut sauf admin/auth si utilisé)
+    match /{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (
+        request.auth.token.email == "admin@ibe-construction.com" ||
+        request.auth.uid != null
+      );
+    }
+  }
+}

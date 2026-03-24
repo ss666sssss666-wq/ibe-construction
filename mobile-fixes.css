@@ -47,6 +47,7 @@ body {
 
   .hero {
     padding: 160px 32px 80px;
+    display: block;
   }
 
   .hero-content {
@@ -136,6 +137,10 @@ body {
     display: flex !important;
   }
 
+  .nav-actions {
+    gap: 8px; /* Reduce gap between language selector, portal button and hamburger */
+  }
+
   .nav-links {
     position: fixed;
     top: 0;
@@ -162,11 +167,11 @@ body {
   }
 
   .portal-btn span {
-    display: block; /* Ensure text is visible or hidden as desired. The user screenshot SHOWS text though. */
+    display: none; /* Hide text on mobile to make room for hamburger */
   }
 
   /* Si on veut masquer le texte sur très petits écrans, on utilisera une autre media query */
-  @media (max-width: 380px) {
+  @media (max-width: 480px) {
     .portal-btn span {
       display: none;
     }
@@ -183,9 +188,10 @@ body {
 
   /* HERO */
   .hero {
-    padding: 130px 20px 60px;
+    padding: 220px 20px 60px; /* Increased from 180px to clear header better */
     min-height: 90vh;
     text-align: center;
+    display: block;
   }
 
   .hero-content {
@@ -195,8 +201,9 @@ body {
   }
 
   .hero-title {
-    font-size: clamp(36px, 9vw, 52px);
+    font-size: clamp(32px, 8vw, 48px);
     line-height: 1.1;
+    margin-top: 10px;
   }
 
   .hero-subtitle {
@@ -316,6 +323,10 @@ body {
   .tech-grid {
     grid-template-columns: 1fr;
     gap: 18px;
+  }
+
+  .technical-edge {
+    padding-bottom: 80px;
   }
 
   .service-card,
@@ -538,16 +549,11 @@ body {
     gap: 8px;
   }
 
-  /* CHATBOT - Move to right on mobile to avoid left overlap if needed */
+  /* CHATBOT - Position button on right side on mobile */
   .ibe-chatbot {
-    left: auto !important;
-    right: 14px !important;
-    bottom: 14px !important;
-  }
-  
-  .chatbot-container {
-    right: 0px !important;
-    left: auto !important;
+    left: auto;
+    right: 14px;
+    bottom: 14px;
   }
 
   /* WHATSAPP - Keep on left as it was in mobile-fixes or move to right if preferred. 

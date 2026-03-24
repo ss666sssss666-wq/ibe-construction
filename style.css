@@ -1005,7 +1005,8 @@ body {
    TECHNICAL EDGE SECTION
    ========================================== */
 .technical-edge {
-  padding: var(--section-padding) 0 0;
+  /* Décalé légèrement vers le haut pour mieux centrer sur son background */
+  padding: calc(var(--section-padding) * 0.65) 0 calc(var(--section-padding) * 0.35);
   background: var(--light-gray);
   position: relative;
   overflow: hidden;
@@ -2851,7 +2852,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 700px;
+  min-height: 640px;
 }
 
 .vision-image-layer {
@@ -2904,7 +2905,8 @@ body {
 .vision-card {
   flex: 1;
   max-width: 650px;
-  padding: 60px;
+  /* Slightly more compact vertically so the card stays inside its background */
+  padding: 32px 40px 32px;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -2943,7 +2945,7 @@ body {
   font-size: 18px;
   line-height: 1.8;
   color: var(--dark-gray);
-  margin-bottom: 50px;
+  margin-bottom: 32px;
 }
 
 .vision-stats {
@@ -2951,7 +2953,7 @@ body {
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 40px;
+  padding-top: 28px;
 }
 
 .stat-item {
@@ -2986,7 +2988,7 @@ body {
 
 .radar-chart-wrapper {
   width: 100%;
-  max-width: 450px; /* Limit radar size to stay sharp */
+  max-width: 380px; /* Slightly smaller so card breathes vertically */
   aspect-ratio: 1;
   position: relative;
   filter: drop-shadow(0 0 30px rgba(204, 148, 97, 0.15));

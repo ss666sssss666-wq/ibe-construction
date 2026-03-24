@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Mon Projet — IBE Construction</title>
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -79,6 +79,13 @@
                 </div>
             </div>
             <div class="topbar-right">
+                <button class="notif-bell" id="notifBell" onclick="toggleNotifs()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="bell-badge" id="bellBadge" style="display:none"></span>
+                </button>
                 <button class="btn-admin-fs" id="adminFailSafeBtn" onclick="window.location.href='admin.html'">🛡️
                     Admin</button>
                 <div class="avatar-btn" id="avatarBtn" title="Déconnexion" onclick="doLogout()">?</div>
@@ -140,12 +147,19 @@
                 </div>
 
                 <!-- NEW: Cockpit Stats -->
-                <div class="cockpit-grid" id="cockpitGrid">
+                <div class="cockpit-grid" id="cockpitGrid" style="grid-template-columns: repeat(2, 1fr);">
                     <div class="cockpit-card" onclick="showTab('finance')">
                         <div class="cockpit-icon">💰</div>
                         <div class="cockpit-info">
                             <label>Budget</label>
                             <span id="statBudget">—</span>
+                        </div>
+                    </div>
+                    <div class="cockpit-card" onclick="showTab('suivi')">
+                        <div class="cockpit-icon">📈</div>
+                        <div class="cockpit-info">
+                            <label>Suivi</label>
+                            <span id="statSuivi">Activé</span>
                         </div>
                     </div>
                     <div class="cockpit-card" onclick="showTab('docs')">
@@ -393,6 +407,33 @@
                 </div>
             </div>
 
+            <!-- ═══ ONGLET 6 — SUIVI (PROCORE) ═══ -->
+            <div class="tab-panel" id="panel-suivi">
+                <!-- RFI Section -->
+                <div class="section-title">❓ Mes Demandes d'Info (RFI)</div>
+                <div id="clientRfiList" style="margin-bottom:24px">
+                    <div class="empty-state"><p>Chargement des RFIs...</p></div>
+                </div>
+
+                <!-- Inspections Section -->
+                <div class="section-title">✔️ Mes Inspections</div>
+                <div id="clientInspList" style="margin-bottom:24px">
+                    <div class="empty-state"><p>Chargement des rapports...</p></div>
+                </div>
+
+                <!-- Daily Logs Section -->
+                <div class="section-title">📋 Journal de Chantier</div>
+                <div id="clientLogList" style="margin-bottom:24px">
+                    <div class="empty-state"><p>Chargement du journal...</p></div>
+                </div>
+
+                <!-- Change Orders Section -->
+                <div class="section-title">📝 Ordres de Changement</div>
+                <div id="clientCeList">
+                    <div class="empty-state"><p>Chargement des ordres...</p></div>
+                </div>
+            </div>
+
         </div><!-- /tabs-content -->
 
         <!-- MSG INPUT (only visible on messages tab) -->
@@ -415,6 +456,12 @@
                 </svg>
                 <span>Chantier</span>
             </button>
+            <button class="nav-btn" id="nav-suivi" onclick="showTab('suivi')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 20h.01M6 20h.01M18 20h.01M4 11l8-8 8 8v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-9z" />
+                </svg>
+                <span>Suivi</span>
+            </button>
             <button class="nav-btn" id="nav-finance" onclick="showTab('finance')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <rect x="2" y="5" width="20" height="14" rx="2" />
@@ -435,7 +482,7 @@
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                     <polyline points="14 2 14 8 20 8" />
                 </svg>
-                <span>Documents</span>
+                <span>Docs</span>
             </button>
             <button class="nav-btn" id="nav-messages" onclick="showTab('messages')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -466,21 +513,24 @@
 
         // ── NAVIGATION ──
         async function showTab(tab) {
-            const panels = ['chantier', 'finance', 'photos', 'docs', 'messages'];
+            const panels = ['chantier', 'suivi', 'finance', 'photos', 'docs', 'messages'];
             panels.forEach(t => {
                 const p = document.getElementById('panel-' + t);
                 const n = document.getElementById('nav-' + t);
                 if (t === tab) {
-                    p.classList.add('active');
-                    n.classList.add('active');
+                    if(p) p.classList.add('active');
+                    if(n) n.classList.add('active');
                     // Premium Transition
-                    gsap.fromTo(p, { opacity: 0, y: 15, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' });
+                    if(p) gsap.fromTo(p, { opacity: 0, y: 15, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' });
                 } else {
-                    p.classList.remove('active');
-                    n.classList.remove('active');
+                    if(p) p.classList.remove('active');
+                    if(n) n.classList.remove('active');
                 }
             });
             isOnMessages = (tab === 'messages');
+            if (tab === 'suivi') loadSuiviData();
+            
+            // Handle Message Bar
             
             // Handle Message Bar
             const msgBar = document.getElementById('msgInputBar');
@@ -544,7 +594,16 @@
             document.getElementById('bannerTitle').textContent = project.titre || 'Avancement du chantier';
             const livraison = project.livraison_prevue ? `Livraison prévue : ${project.livraison_prevue}` : '';
             document.getElementById('bannerSub').textContent = livraison;
-            // Circle
+            
+            // Check for unread stuff for the bell
+            updateNotifBell(uid);
+
+            // Fetch summary for Cockpit
+            const rfis_ = await ibeGetRFIs(uid);
+            const openRfis = rfis_.filter(r => r.status === 'open' || r.status === 'pending').length;
+            document.getElementById('statSuivi').textContent = openRfis > 0 ? `${openRfis} Action(s)` : 'À jour';
+
+            loadSuiviData(); // Background loade
             const circumference = 2 * Math.PI * 22;
             const offset = circumference - (pct / 100) * circumference;
             setTimeout(() => {

@@ -138,6 +138,8 @@ body {
 /* ── APP SHELL (RESPONSIVE) ── */
 .app {
     height: 100vh;
+    height: -webkit-fill-available; /* Safari iOS fallback */
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -212,7 +214,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     z-index: 100;
     flex-shrink: 0;
 }
@@ -559,11 +561,11 @@ body {
 .msg-bubble-wrap.me .msg-bubble { background: linear-gradient(135deg, var(--navy), var(--navy-light)); color: #fff; border-bottom-right-radius: 4px; }
 .msg-sender { font-weight: 800; color: var(--copper); }
 
-.msg-input-fixed { position: fixed; bottom: var(--tab-h); left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--gray-200); padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); display: flex; gap: 12px; align-items: center; z-index: 99; }
+.msg-input-fixed { position: fixed; bottom: var(--tab-h); left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--gray-200); padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 12px; align-items: center; z-index: 99; }
 @media (min-width: 1024px) {
     .msg-input-fixed { bottom: 0; left: var(--sidebar-width); max-width: calc(1440px - var(--sidebar-width)); margin: 0 auto; border-radius: 0 0 24px 0; }
 }
-.msg-input-field { flex: 1; padding: 14px 20px; border: 2px solid var(--gray-200); border-radius: 99px; font-size: 15px; font-family: inherit; font-weight: 500; outline: none; color: var(--navy); transition: border-color 0.2s; }
+.msg-input-field { flex: 1; padding: 14px 20px; border: 2px solid var(--gray-200); border-radius: 99px; font-size: 16px; font-family: inherit; font-weight: 500; outline: none; color: var(--navy); transition: border-color 0.2s; }
 .msg-input-field:focus { border-color: var(--copper); }
 .msg-send-btn { width: 52px; height: 52px; background: var(--copper); border: none; border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.2s; box-shadow: 0 4px 12px rgba(204, 148, 97, 0.3); }
 .msg-send-btn:hover { transform: scale(1.05); }
@@ -579,3 +581,70 @@ body {
 .lightbox img { max-width: 100%; max-height: 90vh; border-radius: 16px; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 .lightbox-close { position: absolute; top: 24px; right: 24px; background: rgba(255, 255, 255, 0.1); color: #fff; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
 .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+/* ── SAFARI iOS SPECIFIC ── */
+@supports (-webkit-touch-callout: none) {
+    .app {
+        height: -webkit-fill-available;
+    }
+}
+
+/* ── SMALL PHONE FIXES ── */
+@media (max-width: 380px) {
+    .topbar { padding: 0 14px; }
+    .topbar-info h1 { font-size: 12px; }
+    .topbar-info p { font-size: 18px; }
+    .progress-banner { padding: 18px 16px; margin: 14px 14px 8px; gap: 14px; }
+    .progress-banner-text h2 { font-size: 15px; }
+    .cockpit-grid { margin: 8px 14px 20px; gap: 8px; }
+    .cockpit-card { padding: 12px; border-radius: 16px; }
+    .cockpit-info label { font-size: 9px; }
+    .cockpit-info span { font-size: 13px; }
+    .tabs-content { padding: 0 14px; }
+    .nav-btn span { font-size: 10px; }
+    .nav-btn svg { width: 20px; height: 20px; }
+}
+
+/* ── NOTIFICATION BELL ── */
+.notif-bell {
+    position: relative;
+    width: 44px; height: 44px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gray-500);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.notif-bell:hover { background: var(--gray-100); color: var(--navy); }
+.bell-badge {
+    position: absolute; top: 10px; right: 10px;
+    width: 8px; height: 8px; background: #ef4444;
+    border-radius: 50%; border: 2px solid #fff;
+}
+
+/* ── SUIVI TAB ── */
+#panel-suivi .section-title { margin-top: 24px; }
+
+/* ── CLIENT MODULE CARDS ── */
+.client-rfi-card, .client-insp-card, .client-log-card, .client-ce-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid var(--gray-100);
+    box-shadow: var(--shadow-sm);
+}
+
+.client-rfi-card { border-left: 4px solid var(--warn); }
+.client-insp-card { border-left: 4px solid var(--success); }
+.client-log-card { border-left: 4px solid var(--copper); }
+.client-ce-card { border-left: 4px solid var(--info); }
+
+/* Bottom Nav Fix for 6 items */
+@media (max-width: 1023px) {
+    .bottom-nav { gap: 0; }
+    .nav-btn span { font-size: 9px; }
+    .nav-btn svg { width: 20px; height: 20px; }
+}
