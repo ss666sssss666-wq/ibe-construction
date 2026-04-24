@@ -765,6 +765,7 @@ body {
   gap: 80px;
   width: max-content;
   animation: logoScroll 60s linear infinite;
+  will-change: transform;
 }
 
 .logo-cloud-track:hover {
@@ -799,19 +800,19 @@ body {
 
 @keyframes logoScroll {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @keyframes logoScrollReverse {
   0% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
   100% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 

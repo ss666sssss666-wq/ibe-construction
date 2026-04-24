@@ -586,9 +586,10 @@ body {
     letter-spacing: 2px;
   }
 
-  .logo-cloud-track {
-    gap: 50px;
-    animation-duration: 20s;
+  .logo-cloud-track,
+  .logo-cloud-track-reverse {
+    gap: 40px;
+    animation-duration: 40s;
   }
 
   .logo-cloud-item {
