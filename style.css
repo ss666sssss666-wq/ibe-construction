@@ -852,7 +852,7 @@ body {
    ========================================== */
 .reviews-section {
   padding: 100px 0;
-  background: var(--navy-secondary);
+  background: var(--navy-primary);
   position: relative;
   overflow: hidden;
 }
