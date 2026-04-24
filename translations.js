@@ -13,6 +13,8 @@ const translations = {
     hero_cta: "Demander une étude technique",
     hero_discover: "DÉCOUVRIR",
     trust_title: "Ils nous font confiance",
+    reviews_title: "Ce que disent nos clients",
+    reviews_intro: "La satisfaction de nos partenaires est notre meilleure référence.",
     why_ibe_title: "L'Expérience IBE Construction",
     why_ibe_intro:
       "Une expertise intégrée pour une réalisation maîtrisée.",
@@ -161,6 +163,8 @@ const translations = {
     hero_cta: "Request Technical Study",
     hero_discover: "DISCOVER",
     trust_title: "They trust us",
+    reviews_title: "What our clients say",
+    reviews_intro: "Our partners' satisfaction is our best reference.",
     why_ibe_title: "The IBE Construction Experience",
     why_ibe_intro:
       "Integrated expertise for seamless execution.",
@@ -342,6 +346,8 @@ const translations = {
     hero_cta: "اطلب دراسة تقنية",
     hero_discover: "اكتشف",
     trust_title: "يثقون بنا",
+    reviews_title: "ماذا يقول عملاؤنا",
+    reviews_intro: "رضا شركائنا هو أفضل مرجع لنا.",
     why_ibe_title: "مشروعك يستحق الأفضل",
     why_ibe_intro: "من الدراسة إلى التنفيذ: حل كامل، فريق واحد.",
     why_ibe_response: "وقت الاستجابة",

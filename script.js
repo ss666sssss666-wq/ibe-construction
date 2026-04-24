@@ -620,3 +620,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// ==========================================
+// REVIEW CARDS STACK ANIMATION
+// ==========================================
+(function initReviewStack() {
+  const stack = document.getElementById('reviewStack');
+  if (!stack) return;
+
+  let isInteracting = false;
+  let autoRotateInterval = null;
+
+  function rotateCards() {
+    const cards = Array.from(stack.querySelectorAll('.review-card'));
+    if (cards.length === 0) return;
+
+    const first = cards[0];
+    first.classList.add('card-exit');
+
+    setTimeout(() => {
+      first.classList.remove('card-exit');
+      stack.appendChild(first);
+    }, 400);
+  }
+
+  function startAutoRotate() {
+    if (autoRotateInterval) clearInterval(autoRotateInterval);
+    autoRotateInterval = setInterval(() => {
+      if (!isInteracting) rotateCards();
+    }, 6000);
+  }
+
+  // Click to rotate
+  stack.addEventListener('click', () => {
+    isInteracting = true;
+    rotateCards();
+    setTimeout(() => { isInteracting = false; }, 500);
+  });
+
+  // Pause on hover
+  stack.addEventListener('mouseenter', () => { isInteracting = true; });
+  stack.addEventListener('mouseleave', () => { isInteracting = false; });
+
+  // Start auto-rotation
+  startAutoRotate();
+})();

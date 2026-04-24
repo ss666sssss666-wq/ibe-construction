@@ -598,6 +598,61 @@ body {
   .logo-cloud-item img {
     max-width: 120px;
   }
+
+  /* Reviews Section Mobile */
+  .reviews-section {
+    padding: 60px 0;
+  }
+
+  .reviews-header {
+    margin-bottom: 40px;
+  }
+
+  .reviews-intro {
+    font-size: 0.95rem;
+  }
+
+  .review-cards-stack {
+    height: 320px;
+  }
+
+  .review-card {
+    width: 90vw;
+    height: 280px;
+  }
+
+  .review-card:nth-child(2) {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  .review-card:nth-child(3) {
+    transform: translateY(-16px) scale(1.04);
+  }
+
+  .review-card:nth-child(4) {
+    transform: translateY(-24px) scale(1.06);
+  }
+
+  .review-card:nth-child(5) {
+    transform: translateY(-32px) scale(1.08);
+  }
+
+  .review-card-inner {
+    padding: 20px;
+  }
+
+  .review-text {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .review-author h4 {
+    font-size: 0.95rem;
+  }
+
+  .review-author span {
+    font-size: 0.75rem;
+  }
 }
 
 /* ============================================
