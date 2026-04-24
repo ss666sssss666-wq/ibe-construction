@@ -565,6 +565,39 @@ body {
     width: 50px !important;
     height: 50px !important;
   }
+
+  /* TRUST / LOGO CLOUD */
+  .trust-section {
+    padding: 40px 0 50px;
+  }
+
+  .trust-header {
+    gap: 16px;
+    margin-bottom: 30px;
+    padding: 0 20px;
+  }
+
+  .trust-line {
+    max-width: 60px;
+  }
+
+  .trust-title {
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .logo-cloud-track {
+    gap: 50px;
+    animation-duration: 20s;
+  }
+
+  .logo-cloud-item {
+    height: 35px;
+  }
+
+  .logo-cloud-item img {
+    max-width: 120px;
+  }
 }
 
 /* ============================================

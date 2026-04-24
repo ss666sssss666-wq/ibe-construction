@@ -12,6 +12,7 @@ const translations = {
       "Partenaire de référence pour vos projets complexes. Nous allions ingénierie de pointe, rigueur d'exécution et expertise BIM pour transformer votre vision en réalité durable.",
     hero_cta: "Demander une étude technique",
     hero_discover: "DÉCOUVRIR",
+    trust_title: "Ils nous font confiance",
     why_ibe_title: "L'Expérience IBE Construction",
     why_ibe_intro:
       "Une expertise intégrée pour une réalisation maîtrisée.",
@@ -159,6 +160,7 @@ const translations = {
       "Premier partner for your complex projects. We combine cutting-edge engineering, rigorous execution, and BIM expertise to transform your vision into lasting reality.",
     hero_cta: "Request Technical Study",
     hero_discover: "DISCOVER",
+    trust_title: "They trust us",
     why_ibe_title: "The IBE Construction Experience",
     why_ibe_intro:
       "Integrated expertise for seamless execution.",
@@ -339,6 +341,7 @@ const translations = {
       "شريككم المرجعي لمشاريعكم المعقدة. نجمع بين الهندسة المتطورة، دقة التنفيذ وخبرة الـ BIM لتحويل رؤيتكم إلى واقع مستدام.",
     hero_cta: "اطلب دراسة تقنية",
     hero_discover: "اكتشف",
+    trust_title: "يثقون بنا",
     why_ibe_title: "مشروعك يستحق الأفضل",
     why_ibe_intro: "من الدراسة إلى التنفيذ: حل كامل، فريق واحد.",
     why_ibe_response: "وقت الاستجابة",

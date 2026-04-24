@@ -690,6 +690,161 @@ body {
 }
 
 /* ==========================================
+   TRUST / LOGO CLOUD SECTION
+   ========================================== */
+.trust-section {
+  padding: 60px 0 70px;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.trust-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 50px;
+  padding: 0 40px;
+}
+
+.trust-line {
+  flex: 1;
+  max-width: 200px;
+  height: 1px;
+  background: linear-gradient(
+    to var(--direction, right),
+    transparent,
+    var(--copper-accent),
+    transparent
+  );
+  opacity: 0.4;
+}
+
+.trust-header .trust-line:first-child {
+  --direction: right;
+}
+
+.trust-header .trust-line:last-child {
+  --direction: left;
+}
+
+.trust-title {
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: var(--subheading-weight);
+  color: var(--dark-gray);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.logo-cloud {
+  position: relative;
+  overflow: hidden;
+  /* Gradient fade on edges for seamless look */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.logo-cloud-track {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  width: max-content;
+  animation: logoScroll 60s linear infinite;
+}
+
+.logo-cloud-track:hover {
+  animation-play-state: paused;
+}
+
+.logo-cloud-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 55px;
+  transition: all 0.4s var(--transition-smooth);
+}
+
+.logo-cloud-item img {
+  height: 100%;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.5);
+  transition: all 0.4s var(--transition-smooth);
+  pointer-events: none;
+  user-select: none;
+}
+
+.logo-cloud-item:hover img {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.08);
+}
+
+@keyframes logoScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes logoScrollReverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.logo-cloud-track-reverse {
+  animation: logoScrollReverse 60s linear infinite;
+}
+
+/* Dark variant (before contact/footer) */
+.trust-section-dark {
+  background: var(--navy-primary);
+}
+
+.trust-section-dark .trust-title {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.trust-section-dark .trust-line {
+  background: linear-gradient(
+    to var(--direction, right),
+    transparent,
+    rgba(204, 148, 97, 0.5),
+    transparent
+  );
+}
+
+.trust-section-dark .logo-cloud-item img {
+  filter: grayscale(100%) brightness(2) opacity(0.4);
+}
+
+.trust-section-dark .logo-cloud-item:hover img {
+  filter: grayscale(0%) brightness(1.1) opacity(1);
+}
+
+/* ==========================================
    SERVICES SECTION
    ========================================== */
 .services {
