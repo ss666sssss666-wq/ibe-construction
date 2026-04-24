@@ -14,6 +14,8 @@ const translations = {
     hero_discover: "DÉCOUVRIR",
     trust_title: "Ils nous font confiance",
     reviews_title: "Ce que disent nos clients",
+    reviews_header_title: "TÉMOIGNAGES",
+    leave_review: "Laisser un avis",
     reviews_intro: "La satisfaction de nos partenaires est notre meilleure référence.",
     why_ibe_title: "L'Expérience IBE Construction",
     why_ibe_intro:
@@ -164,6 +166,8 @@ const translations = {
     hero_discover: "DISCOVER",
     trust_title: "They trust us",
     reviews_title: "What our clients say",
+    reviews_header_title: "TESTIMONIALS",
+    leave_review: "Leave a review",
     reviews_intro: "Our partners' satisfaction is our best reference.",
     why_ibe_title: "The IBE Construction Experience",
     why_ibe_intro:
@@ -347,6 +351,8 @@ const translations = {
     hero_discover: "اكتشف",
     trust_title: "يثقون بنا",
     reviews_title: "ماذا يقول عملاؤنا",
+    reviews_header_title: "آراء العملاء",
+    leave_review: "اترك تقييماً",
     reviews_intro: "رضا شركائنا هو أفضل مرجع لنا.",
     why_ibe_title: "مشروعك يستحق الأفضل",
     why_ibe_intro: "من الدراسة إلى التنفيذ: حل كامل، فريق واحد.",
