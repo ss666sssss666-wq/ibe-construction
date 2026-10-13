@@ -111,27 +111,47 @@
   </head>
 
   <body>
-    <!-- Navigation -->
-    <nav class="nav-glass" style="position: fixed; width: 100%; top: 0; z-index: 1000; background: rgba(26, 47, 75, 0.95);">
+
+    <!-- Custom Architectural Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-outline"></div>
+
+    <!-- Navigation with Glassmorphism -->
+    <nav class="nav-glass">
       <div class="nav-container">
         <div class="logo">
           <a href="index.html">
-            <img src="images/logo.png" alt="IBE Construction - Gros Œuvre Casablanca" class="logo-image" style="height: 40px;" />
+            <img src="images/logo.png" alt="IBE Construction" class="logo-image" />
           </a>
         </div>
         <ul class="nav-links">
           <li><a href="index.html">Accueil</a></li>
           <li><a href="entreprise-generale-batiment-casablanca.html">Entreprise TCE</a></li>
-          <li><a href="entreprise-gros-oeuvre-casablanca.html" style="color: #cc9461; font-weight: 700;">Gros Œuvre</a></li>
+          <li><a href="construction-batiment-industriel-maroc.html">Industriel</a></li>
+          <li><a href="entreprise-gros-oeuvre-casablanca.html" class="active">Gros Œuvre</a></li>
           <li><a href="bureau-etudes-ingenierie-bim-casablanca.html">Bureau d'Études</a></li>
+          <li><a href="renovation-amenagement-tce-casablanca.html">Rénovation</a></li>
           <li><a href="construction-cle-en-main-maroc.html">Clé en Main</a></li>
-          <li><a href="index.html#contact" class="cta-btn">Devis Gratuit</a></li>
+          <li><a href="#contact-service" class="cta-btn">Devis Gratuit</a></li>
         </ul>
+
         <div class="nav-actions">
-          <a href="portal/login.html" class="portal-btn">Espace Client</a>
+          <a href="portal/login.html" class="portal-btn" id="portalLoginBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <span>Espace Client</span>
+          </a>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
       </div>
     </nav>
+
 
     <!-- Header Section -->
     <header class="page-header-seo">
@@ -373,5 +393,6 @@
         </p>
       </div>
     </footer>
+      <script src="service-page.js" defer></script>
   </body>
 </html>
