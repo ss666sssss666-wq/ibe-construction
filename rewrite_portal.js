@@ -1,12 +1,14 @@
-const fs = require('fs');
+const fs = require("fs");
 
 function applyFlupToAdmin() {
-    console.log('Applying Flup to admin.html...');
-    let html = fs.readFileSync('./portal/admin.html', 'utf8');
+  console.log("Applying Flup to admin.html...");
+  let html = fs.readFileSync("./portal/admin.html", "utf8");
 
-    // 1. Inject Tailwind and Essential Styles
-    if (!html.includes('cdn.tailwindcss.com')) {
-        html = html.replace('</head>', `
+  // 1. Inject Tailwind and Essential Styles
+  if (!html.includes("cdn.tailwindcss.com")) {
+    html = html.replace(
+      "</head>",
+      `
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -34,12 +36,13 @@ function applyFlupToAdmin() {
         #loadingScreen.hide { opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
         .nav-btn-flup.active-flup { background-color: #D1FAE5; color: #10B981; font-weight: 700; shadow: 0 1px 2px rgba(0,0,0,0.05); }
     </style>
-</head>`);
-    }
+</head>`,
+    );
+  }
 
-    // 2. Overhaul Sidebar (Keep class="sidebar" for JS compatibility)
-    const sidebarRegex = /<aside class="sidebar">[\s\S]*?<\/aside>/;
-    const newSidebar = `
+  // 2. Overhaul Sidebar (Keep class="sidebar" for JS compatibility)
+  const sidebarRegex = /<aside class="sidebar">[\s\S]*?<\/aside>/;
+  const newSidebar = `
     <!-- Functional Sidebar Overlay for Mobile JS -->
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
     
@@ -98,11 +101,12 @@ function applyFlupToAdmin() {
         }
     </script>
     `;
-    html = html.replace(sidebarRegex, newSidebar);
+  html = html.replace(sidebarRegex, newSidebar);
 
-    // 3. Update Topbar
-    const topbarRegex = /<div class="topbar">[\s\S]*?<\/div>(\s*<\/div>)?|<header[^>]*>[\s\S]*?<\/header>/;
-    const newTopbar = `
+  // 3. Update Topbar
+  const topbarRegex =
+    /<div class="topbar">[\s\S]*?<\/div>(\s*<\/div>)?|<header[^>]*>[\s\S]*?<\/header>/;
+  const newTopbar = `
     <header class="h-20 bg-transparent flex items-center justify-between px-8 mb-4">
         <div>
             <h1 class="text-2xl font-black text-flup-dark tracking-tight" id="topbarTitle">Dashboard</h1>
@@ -110,19 +114,21 @@ function applyFlupToAdmin() {
         </div>
         <div class="w-10 h-10 rounded-full border-2 border-white shadow-md bg-emerald-500 flex items-center justify-center text-white font-bold">IBE</div>
     </header>`;
-    html = html.replace(topbarRegex, newTopbar);
+  html = html.replace(topbarRegex, newTopbar);
 
-    fs.writeFileSync('./portal/admin.html', html);
-    console.log('Fixed admin.html with class="sidebar" and IDs');
+  fs.writeFileSync("./portal/admin.html", html);
+  console.log('Fixed admin.html with class="sidebar" and IDs');
 }
 
 function applyFlupToDashboard() {
-    console.log('Applying Flup to dashboard.html...');
-    let html = fs.readFileSync('./portal/dashboard.html', 'utf8');
+  console.log("Applying Flup to dashboard.html...");
+  let html = fs.readFileSync("./portal/dashboard.html", "utf8");
 
-    // 1. Inject Tailwind
-    if (!html.includes('cdn.tailwindcss.com')) {
-        html = html.replace('</head>', `
+  // 1. Inject Tailwind
+  if (!html.includes("cdn.tailwindcss.com")) {
+    html = html.replace(
+      "</head>",
+      `
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -148,17 +154,22 @@ function applyFlupToDashboard() {
         @media (max-width: 1024px) { .app-content { margin-left: 0 !important; } }
         #loadingScreen.hide { opacity: 0; pointer-events: none; }
     </style>
-</head>`);
-    }
+</head>`,
+    );
+  }
 
-    // 2. Add adminFailSafeBtn (Hidden but present for JS)
-    if (!html.includes('id="adminFailSafeBtn"')) {
-        html = html.replace('</body>', '<button id="adminFailSafeBtn" style="display:none"></button></body>');
-    }
+  // 2. Add adminFailSafeBtn (Hidden but present for JS)
+  if (!html.includes('id="adminFailSafeBtn"')) {
+    html = html.replace(
+      "</body>",
+      '<button id="adminFailSafeBtn" style="display:none"></button></body>',
+    );
+  }
 
-    // 3. Update Header (Fix IDs: topbarProjectName, topbarClientName, avatarBtn)
-    const headerRegex = /<header class="h-20 bg-transparent flex items-center justify-between px-8 mb-6">[\s\S]*?<\/header>|<div class="topbar">[\s\S]*?<\/div>(\s*<\/div>)?/;
-    const newHeader = `
+  // 3. Update Header (Fix IDs: topbarProjectName, topbarClientName, avatarBtn)
+  const headerRegex =
+    /<header class="h-20 bg-transparent flex items-center justify-between px-8 mb-6">[\s\S]*?<\/header>|<div class="topbar">[\s\S]*?<\/div>(\s*<\/div>)?/;
+  const newHeader = `
     <header class="h-20 bg-transparent flex items-center justify-between px-8 mb-6">
         <div>
             <h1 class="text-2xl font-black text-flup-dark tracking-tight" id="topbarProjectName">Mon Projet</h1>
@@ -169,11 +180,12 @@ function applyFlupToDashboard() {
             <button onclick="doLogout()" class="text-xs font-bold text-red-500 uppercase tracking-widest hover:underline">Déconnexion</button>
         </div>
     </header>`;
-    html = html.replace(headerRegex, newHeader);
+  html = html.replace(headerRegex, newHeader);
 
-    // 4. Update Progress Banner (Fix IDs: pctLabel, progressBarFill, bannerTitle, bannerSub, progressCircle)
-    const bannerRegex = /<div class="bg-white rounded-\[32px\] p-8 shadow-sm border border-gray-50 mx-6 mb-8 flex flex-col md:flex-row items-center gap-8">[\s\S]*?<\/div>|class="progress-banner"[\s\S]*?<\/div>/;
-    const newBanner = `
+  // 4. Update Progress Banner (Fix IDs: pctLabel, progressBarFill, bannerTitle, bannerSub, progressCircle)
+  const bannerRegex =
+    /<div class="bg-white rounded-\[32px\] p-8 shadow-sm border border-gray-50 mx-6 mb-8 flex flex-col md:flex-row items-center gap-8">[\s\S]*?<\/div>|class="progress-banner"[\s\S]*?<\/div>/;
+  const newBanner = `
     <div class="bg-white rounded-[32px] p-8 shadow-sm border border-gray-50 mx-6 mb-8 flex flex-col md:flex-row items-center gap-8">
         <div class="relative w-24 h-24 flex-shrink-0">
              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
@@ -190,10 +202,10 @@ function applyFlupToDashboard() {
             <p class="text-sm text-gray-400 font-medium mt-3" id="bannerSub">...</p>
         </div>
     </div>`;
-    html = html.replace(bannerRegex, newBanner);
+  html = html.replace(bannerRegex, newBanner);
 
-    fs.writeFileSync('./portal/dashboard.html', html);
-    console.log('Fixed dashboard.html with all required IDs');
+  fs.writeFileSync("./portal/dashboard.html", html);
+  console.log("Fixed dashboard.html with all required IDs");
 }
 
 applyFlupToAdmin();

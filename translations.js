@@ -12,14 +12,14 @@ const translations = {
       "Partenaire de référence pour vos projets complexes. Nous allions ingénierie de pointe, rigueur d'exécution et expertise BIM pour transformer votre vision en réalité durable.",
     hero_cta: "Demander une étude technique",
     hero_discover: "DÉCOUVRIR",
-    trust_title: "Ils nous font confiance",
+    trust_title: "Nos références sectorielles",
     reviews_title: "Ce que disent nos clients",
     reviews_header_title: "TÉMOIGNAGES",
     leave_review: "Laisser un avis",
-    reviews_intro: "La satisfaction de nos partenaires est notre meilleure référence.",
+    reviews_intro:
+      "La satisfaction de nos partenaires est notre meilleure référence.",
     why_ibe_title: "L'Expérience IBE Construction",
-    why_ibe_intro:
-      "Une expertise intégrée pour une réalisation maîtrisée.",
+    why_ibe_intro: "Une expertise intégrée pour une réalisation maîtrisée.",
     why_ibe_response: "Réactivité Data",
     why_ibe_interlocutors: "Interlocuteur Unique",
     why_ibe_flexibility: "Agilité Process",
@@ -62,7 +62,7 @@ const translations = {
     dna_title:
       'Notre Engagement : <br><span class="highlight">L\'Ingénierie de Précision</span>',
     dna_description:
-      'IBE est un hub d\'expertise intégrée. Nous fusionnons le calcul de structure, la maîtrise du gros œuvre et l\'intelligence des fluides dans un workflow rigoureux et digitalisé.',
+      "IBE est un hub d'expertise intégrée. Nous fusionnons le calcul de structure, la maîtrise du gros œuvre et l'intelligence des fluides dans un workflow rigoureux et digitalisé.",
     dna_pillar_1_title: "Expertise Technique Intégrée",
     dna_pillar_1_desc:
       "Une coordination unique entre Structure, Travaux et Fluides pour une vision globale de l'ouvrage.",
@@ -131,7 +131,8 @@ const translations = {
     filter_residential: "Résidentiel",
     filter_medical: "Médical",
     vision_badge: "NOTRE VISION",
-    vision_title: 'Une Vision <span class="highlight">Moderne du Bâtiment</span>',
+    vision_title:
+      'Une Vision <span class="highlight">Moderne du Bâtiment</span>',
     vision_desc:
       "Nous digitalisons l'acte de bâtir. En fusionnant l'ingénierie de précision et la maîtrise du terrain, IBE transforme chaque chantier en un succès prévisible et optimisé.",
     stat_bim: "Digital Native",
@@ -139,17 +140,32 @@ const translations = {
     stat_support: "Suivi Data en temps réel",
     platform_showcase_badge: "NOUVEL OUTIL",
     platform_showcase_title: "Prenez le Contrôle Absolu de Vos Chantiers",
-    platform_showcase_intro: "Fini les fichiers Excel éparpillés, les e-mails perdus et les dépassements de budget imprévus. Découvrez l'outil de gestion ultime, conçu spécifiquement pour les exigences du terrain. Avec notre plateforme centralisée IBE, la gestion de chantier devient enfin fluide, transparente et redoutablement efficace.",
-    platform_showcase_highlight: "Notre application de suivi numérique transforme la gestion de vos chantiers en une expérience de précision absolue. Conçue pour une transparence totale, elle traque en temps réel la moindre perte financière et optimise drastiquement votre rentabilité. Ne laissez plus vos marges s'évaporer : chaque dépense est scrutée pour garantir que vos projets restent profitables, de l'étude à la livraison finale.",
+    platform_showcase_intro:
+      "Fini les fichiers Excel éparpillés, les e-mails perdus et les dépassements de budget imprévus. Découvrez l'outil de gestion ultime, conçu spécifiquement pour les exigences du terrain. Avec notre plateforme centralisée IBE, la gestion de chantier devient enfin fluide, transparente et redoutablement efficace.",
+    platform_showcase_highlight:
+      "Notre application de suivi numérique transforme la gestion de vos chantiers en une expérience de précision absolue. Conçue pour une transparence totale, elle traque en temps réel la moindre perte financière et optimise drastiquement votre rentabilité. Ne laissez plus vos marges s'évaporer : chaque dépense est scrutée pour garantir que vos projets restent profitables, de l'étude à la livraison finale.",
     platform_feature_1_title: "Une Vision 360° en Temps Réel",
-    platform_feature_1_desc: "Suivez l'avancement exact de chaque projet grâce à notre planning global interactif. Du gros œuvre aux finitions, vous savez toujours où vous en êtes.",
+    platform_feature_1_desc:
+      "Suivez l'avancement exact de chaque projet grâce à notre planning global interactif. Du gros œuvre aux finitions, vous savez toujours où vous en êtes.",
     platform_feature_2_title: "Maîtrise Budgétaire Millimétrée",
-    platform_feature_2_desc: "Gardez un œil constant sur vos finances. Comparez votre budget prévu, vos dépenses réelles et votre reste à payer en un seul coup d'œil.",
+    platform_feature_2_desc:
+      "Gardez un œil constant sur vos finances. Comparez votre budget prévu, vos dépenses réelles et votre reste à payer en un seul coup d'œil.",
     platform_feature_3_title: "Tout Votre Écosystème Connecté",
-    platform_feature_3_desc: "Clients, sous-traitants, messagerie, factures et galerie photos... Absolument tout est centralisé au même endroit.",
+    platform_feature_3_desc:
+      "Clients, sous-traitants, messagerie, factures et galerie photos... Absolument tout est centralisé au même endroit.",
     platform_feature_4_title: "Transparence et Réactivité Inédites",
-    platform_feature_4_desc: "Offrez à vos équipes et à vos clients une clarté sans précédent. Fini les malentendus, place à la confiance et à l'action.",
+    platform_feature_4_desc:
+      "Offrez à vos équipes et à vos clients une clarté sans précédent. Fini les malentendus, place à la confiance et à l'action.",
     platform_cta: "Essayer l'application IBE",
+    video_label: "Présentation IBE",
+    video_section_title:
+      'Découvrez<br><span class="video-highlight">Notre Vision</span>',
+    video_section_desc:
+      "En quelques minutes, comprenez pourquoi IBE Construction est le partenaire stratégique de référence pour vos projets d'envergure. Ingénierie, BIM et exécution — une seule équipe, une seule vision.",
+    video_stat_projects: "Projets réalisés",
+    video_stat_bim: "BIM Natif",
+    video_stat_delay: "Délai de réponse",
+    video_badge_text: "Présentation complète",
   },
   en: {
     dir: "ltr",
@@ -164,14 +180,13 @@ const translations = {
       "Premier partner for your complex projects. We combine cutting-edge engineering, rigorous execution, and BIM expertise to transform your vision into lasting reality.",
     hero_cta: "Request Technical Study",
     hero_discover: "DISCOVER",
-    trust_title: "They trust us",
+    trust_title: "Our Sectoral References",
     reviews_title: "What our clients say",
     reviews_header_title: "TESTIMONIALS",
     leave_review: "Leave a review",
     reviews_intro: "Our partners' satisfaction is our best reference.",
     why_ibe_title: "The IBE Construction Experience",
-    why_ibe_intro:
-      "Integrated expertise for seamless execution.",
+    why_ibe_intro: "Integrated expertise for seamless execution.",
     why_ibe_response: "Data Response Time",
     why_ibe_interlocutors: "Single Point of Contact",
     why_ibe_flexibility: "Process Agility",
@@ -214,7 +229,7 @@ const translations = {
     dna_title:
       'Our Commitment: <br><span class="highlight">Precision Engineering</span>',
     dna_description:
-      'IBE is an integrated expertise hub. We merge structural calculus, civil works mastery, and fluid intelligence in a rigorous and digitalized workflow.',
+      "IBE is an integrated expertise hub. We merge structural calculus, civil works mastery, and fluid intelligence in a rigorous and digitalized workflow.",
     dna_pillar_1_title: "Integrated Technical Expertise",
     dna_pillar_1_desc:
       "Unique coordination between Structure, Works, and Fluids for a holistic vision of the build.",
@@ -316,7 +331,8 @@ const translations = {
     calc_btn_next: "Next",
     calc_btn_submit: "Submit",
     vision_badge: "OUR VISION",
-    vision_title: 'A Modern <span class="highlight">Vision of Construction</span>',
+    vision_title:
+      'A Modern <span class="highlight">Vision of Construction</span>',
     vision_desc:
       "We digitalize the act of construction. By merging precision engineering with site mastery, IBE transforms every project into a predictable and optimized success.",
     stat_bim: "Digital Native",
@@ -324,17 +340,32 @@ const translations = {
     stat_support: "Real-time Data Monitoring",
     platform_showcase_badge: "NEW TOOL",
     platform_showcase_title: "Take Absolute Control of Your Sites",
-    platform_showcase_intro: "Forget scattered Excel files, lost emails, and unforeseen budget overruns. Discover the ultimate management tool, designed specifically for field requirements. With our centralized IBE platform, site management finally becomes fluid, transparent, and incredibly efficient.",
-    platform_showcase_highlight: "Our digital tracking application transforms your site management into an experience of absolute precision. Designed for total transparency, it tracks every financial loss in real-time and drastically optimizes your profitability. Stop letting your margins evaporate: every expense is scrutinized to ensure your projects remain profitable, from study to final delivery.",
+    platform_showcase_intro:
+      "Forget scattered Excel files, lost emails, and unforeseen budget overruns. Discover the ultimate management tool, designed specifically for field requirements. With our centralized IBE platform, site management finally becomes fluid, transparent, and incredibly efficient.",
+    platform_showcase_highlight:
+      "Our digital tracking application transforms your site management into an experience of absolute precision. Designed for total transparency, it tracks every financial loss in real-time and drastically optimizes your profitability. Stop letting your margins evaporate: every expense is scrutinized to ensure your projects remain profitable, from study to final delivery.",
     platform_feature_1_title: "360° Real-Time Vision",
-    platform_feature_1_desc: "Track the exact progress of each project through our interactive global planning. From civil works to finishes, you always know where you stand.",
+    platform_feature_1_desc:
+      "Track the exact progress of each project through our interactive global planning. From civil works to finishes, you always know where you stand.",
     platform_feature_2_title: "Pinpoint Budget Mastery",
-    platform_feature_2_desc: "Keep a constant eye on your finances. Compare your planned budget, actual expenses, and remaining balance at a glance.",
+    platform_feature_2_desc:
+      "Keep a constant eye on your finances. Compare your planned budget, actual expenses, and remaining balance at a glance.",
     platform_feature_3_title: "Your Entire Ecosystem Connected",
-    platform_feature_3_desc: "Clients, subcontractors, messaging, invoices, and photo gallery... Absolutely everything is centralized in one place.",
+    platform_feature_3_desc:
+      "Clients, subcontractors, messaging, invoices, and photo gallery... Absolutely everything is centralized in one place.",
     platform_feature_4_title: "Unprecedented Transparency",
-    platform_feature_4_desc: "Offer your teams and clients unprecedented clarity. No more misunderstandings, just trust and action.",
+    platform_feature_4_desc:
+      "Offer your teams and clients unprecedented clarity. No more misunderstandings, just trust and action.",
     platform_cta: "Try the IBE App Today",
+    video_label: "IBE Presentation",
+    video_section_title:
+      'Discover<br><span class="video-highlight">Our Vision</span>',
+    video_section_desc:
+      "In a few minutes, understand why IBE Construction is the leading strategic partner for your major projects. Engineering, BIM, and execution — one team, one vision.",
+    video_stat_projects: "Completed projects",
+    video_stat_bim: "Native BIM",
+    video_stat_delay: "Response time",
+    video_badge_text: "Full presentation",
   },
   ar: {
     dir: "rtl",
@@ -349,7 +380,7 @@ const translations = {
       "شريككم المرجعي لمشاريعكم المعقدة. نجمع بين الهندسة المتطورة، دقة التنفيذ وخبرة الـ BIM لتحويل رؤيتكم إلى واقع مستدام.",
     hero_cta: "اطلب دراسة تقنية",
     hero_discover: "اكتشف",
-    trust_title: "يثقون بنا",
+    trust_title: "مراجعنا القطاعية",
     reviews_title: "ماذا يقول عملاؤنا",
     reviews_header_title: "آراء العملاء",
     leave_review: "اترك تقييماً",
@@ -505,16 +536,30 @@ const translations = {
     stat_support: "متابعة البيانات لحظياً",
     platform_showcase_badge: "أداة جديدة",
     platform_showcase_title: "تحكم مطلق في مواقع البناء الخاصة بك",
-    platform_showcase_intro: "وداعاً لملفات Excel المبعثرة، ورسائل البريد الإلكتروني المفقودة، وتجاوزات الميزانية غير المتوقعة. اكتشف أداة الإدارة المثالية، المصممة خصيصاً لمتطلبات الميدان. مع منصة IBE المركزية الخاصة بنا، تصبح إدارة الموقع أخيراً سلسة وشفافة وفعالة للغاية.",
-    platform_showcase_highlight: "يقوم تطبيق التتبع الرقمي الخاص بنا بتحويل إدارة مواقعك إلى تجربة من الدقة المطلقة. تم تصميمه لتحقيق الشفافية الكاملة، فهو يتتبع كل خسارة مالية في الوقت الفعلي ويحسن ربحيتك بشكل كبير. توقف عن السماح بتبخر هوامش ربحك: يتم فحص كل نفقات لضمان بقاء مشاريعك مربحة، من الدراسة إلى التسليم النهائي.",
+    platform_showcase_intro:
+      "وداعاً لملفات Excel المبعثرة، ورسائل البريد الإلكتروني المفقودة، وتجاوزات الميزانية غير المتوقعة. اكتشف أداة الإدارة المثالية، المصممة خصيصاً لمتطلبات الميدان. مع منصة IBE المركزية الخاصة بنا، تصبح إدارة الموقع أخيراً سلسة وشفافة وفعالة للغاية.",
+    platform_showcase_highlight:
+      "يقوم تطبيق التتبع الرقمي الخاص بنا بتحويل إدارة مواقعك إلى تجربة من الدقة المطلقة. تم تصميمه لتحقيق الشفافية الكاملة، فهو يتتبع كل خسارة مالية في الوقت الفعلي ويحسن ربحيتك بشكل كبير. توقف عن السماح بتبخر هوامش ربحك: يتم فحص كل نفقات لضمان بقاء مشاريعك مربحة، من الدراسة إلى التسليم النهائي.",
     platform_feature_1_title: "رؤية 360 درجة في الوقت الفعلي",
-    platform_feature_1_desc: "تتبع التقدم الدقيق لكل مشروع من خلال التخطيط العالمي التفاعلي الخاص بنا. من الأعمال الكبرى إلى التشطيبات، أنت تعرف دائماً أين تقف.",
+    platform_feature_1_desc:
+      "تتبع التقدم الدقيق لكل مشروع من خلال التخطيط العالمي التفاعلي الخاص بنا. من الأعمال الكبرى إلى التشطيبات، أنت تعرف دائماً أين تقف.",
     platform_feature_2_title: "تحكم مالي دقيق",
-    platform_feature_2_desc: "ابق عينك ثابتة على أموالك. قارن ميزانيتك المخططة ومصاريفك الفعلية والمبالغ المتبقية بلمحة واحدة.",
+    platform_feature_2_desc:
+      "ابق عينك ثابتة على أموالك. قارن ميزانيتك المخططة ومصاريفك الفعلية والمبالغ المتبقية بلمحة واحدة.",
     platform_feature_3_title: "نظامك البيئي بالكامل متصل",
-    platform_feature_3_desc: "العملاء والمقاولون من الباطن والرسائل والفواتير ومعرض الصور... كل شيء مركزي في مكان واحد.",
+    platform_feature_3_desc:
+      "العملاء والمقاولون من الباطن والرسائل والفواتير ومعرض الصور... كل شيء مركزي في مكان واحد.",
     platform_feature_4_title: "شفافية واستجابة غير مسبوقة",
-    platform_feature_4_desc: "امنح فرقك وعملائك وضوحاً لا مثيل له. لا مزيد من سوء التفاهم، بل ثقة وعمل.",
+    platform_feature_4_desc:
+      "امنح فرقك وعملائك وضوحاً لا مثيل له. لا مزيد من سوء التفاهم، بل ثقة وعمل.",
     platform_cta: "جرب تطبيق IBE اليوم",
+    video_label: "عرض تقديمي IBE",
+    video_section_title: 'اكتشف<br><span class="video-highlight">رؤيتنا</span>',
+    video_section_desc:
+      "في غضون دقائق قليلة، تفهم لماذا تعتبر IBE Construction الشريك الاستراتيجي المرجعي لمشاريعكم الكبرى. الهندسة، والـ BIM والتنفيذ — فريق واحد، رؤية واحدة.",
+    video_stat_projects: "مشاريع منجزة",
+    video_stat_bim: "BIM أصلي",
+    video_stat_delay: "مدة الاستجابة",
+    video_badge_text: "عرض كامل",
   },
 };

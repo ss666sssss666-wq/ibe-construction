@@ -192,6 +192,8 @@ body {
     min-height: 90vh;
     text-align: center;
     display: block;
+    will-change: transform;
+    backface-visibility: hidden;
   }
 
   .hero-content {
@@ -590,17 +592,31 @@ body {
   .logo-cloud-track-reverse {
     gap: 40px;
     animation-duration: 40s;
+    animation-play-state: running !important;
+    -webkit-animation-play-state: running !important;
+    transform: translate3d(0, 0, 0) rotate(0.001deg);
+    -webkit-transform: translate3d(0, 0, 0) rotate(0.001deg);
+    will-change: transform;
+    flex-shrink: 0 !important;
+    min-height: 40px;
   }
 
   .logo-cloud-item {
     height: 35px;
+    flex-shrink: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateZ(0);
   }
 
   .logo-cloud-item img {
     max-width: 120px;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    width: auto !important;
+    height: 100% !important;
   }
-
-  
 }
 
 /* ============================================

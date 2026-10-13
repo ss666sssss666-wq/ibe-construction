@@ -1,505 +1,959 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Mon Projet — IBE Construction</title>
-    <link rel="icon" type="image/png" href="../images/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        flup: {
-                            bg: '#F4F7F6',
-                            green: '#10B981',
-                            greenLight: '#D1FAE5',
-                            dark: '#1F2937',
-                            gray: '#6B7280',
-                            border: '#E5E7EB'
-                        }
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#051125",
+                container: "#1b263b",
+                onContainer: "#828da7",
+              },
+              secondary: {
+                DEFAULT: "#80552a",
+                container: "#fec38f",
+                onContainer: "#794f25",
+              },
+              slateGray: "#415a77",
+              background: "#f8f9fa",
+              onBackground: "#191c1d",
+              surface: {
+                container: {
+                  lowest: "#ffffff",
+                  low: "#f3f4f5",
+                  DEFAULT: "#f0f1f2",
+                  high: "#e7e8e9",
+                  highest: "#e1e3e4",
+                },
+              },
+              status: {
+                success: "#2d6a4f",
+                warning: "#e09f3e",
+                error: "#9e2a2b",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "Helvetica Neue", "Arial", "sans-serif"],
+              headline: ["Hanken Grotesk", "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
-    <link rel="stylesheet" href="dashboard-premium.css">
-</head>
+    <link rel="stylesheet" href="dashboard-premium.css" />
+  </head>
 
-<body>
-
+  <body>
     <!-- LOADING -->
     <div class="loading-screen" id="loadingScreen">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Chargement de votre espace…</div>
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Chargement de votre espace…</div>
     </div>
 
     <!-- ERROR -->
     <div class="error-screen" id="errorScreen">
-        <div class="error-card">
-            <div class="error-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" style="width:48px;height:48px;color:var(--copper)">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-            </div>
-            <div class="error-title">Espace pas encore activé</div>
-            <div class="error-desc">Votre compte est créé. Envoyez votre code à l'équipe IBE pour activer votre espace.
-            </div>
-            <div class="uid-box">
-                <div class="uid-code" id="displayUid">…</div>
-                <button class="btn-copy"
-                    onclick="navigator.clipboard.writeText(document.getElementById('displayUid').textContent);this.textContent='Copié ✓'">Copier</button>
-            </div>
-            <p style="font-size:12px;color:var(--gray-500)">Contactez votre chargé de projet IBE avec ce code.</p>
+      <div class="error-card">
+        <div class="error-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 48px; height: 48px; color: var(--copper)"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
         </div>
+        <div class="error-title">Espace pas encore activé</div>
+        <div class="error-desc">
+          Votre compte est créé. Envoyez votre code à l'équipe IBE pour activer
+          votre espace.
+        </div>
+        <div class="uid-box">
+          <div class="uid-code" id="displayUid">…</div>
+          <button
+            class="btn-copy"
+            onclick="
+              navigator.clipboard.writeText(
+                document.getElementById('displayUid').textContent,
+              );
+              this.textContent = 'Copié ✓';
+            "
+          >
+            Copier
+          </button>
+        </div>
+        <p style="font-size: 12px; color: var(--gray-500)">
+          Contactez votre chargé de projet IBE avec ce code.
+        </p>
+      </div>
     </div>
 
     <!-- LIGHTBOX -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-        <img id="lightboxImg" src="" alt="Photo">
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <img id="lightboxImg" src="" alt="Photo" />
     </div>
 
     <!-- APP -->
-    <div class="app" id="appShell" style="display:none">
+    <div class="app" id="appShell" style="display: none">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <a href="../index.html"
+            ><img src="../images/logo.png" alt="IBE" class="topbar-logo"
+          /></a>
+          <div class="topbar-info">
+            <h1
+              id="topbarProjectName"
+              style="
+                font-size: 14px;
+                color: var(--gray-500);
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 2px;
+              "
+            >
+              Mon Projet
+            </h1>
+            <p
+              id="topbarClientName"
+              style="
+                font-size: 22px;
+                font-weight: 900;
+                color: var(--navy);
+                letter-spacing: -0.5px;
+              "
+            >
+              Bonjour, Client
+            </p>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="notif-bell" id="notifBell" onclick="toggleNotifs()">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              width="20"
+              height="20"
+            >
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span
+              class="bell-badge"
+              id="bellBadge"
+              style="display: none"
+            ></span>
+          </button>
 
-        <!-- TOPBAR -->
-        <header class="topbar">
-            <div class="topbar-left">
-                <a href="../index.html"><img src="../images/logo.png" alt="IBE" class="topbar-logo"></a>
-                <div class="topbar-info">
-                    <h1 id="topbarProjectName" style="font-size:14px; color:var(--gray-500); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px;">Mon Projet</h1>
-                    <p id="topbarClientName" style="font-size:22px; font-weight:900; color:var(--navy); letter-spacing:-0.5px;">Bonjour, Client</p>
-                </div>
+          <!-- Floating Notifications Panel -->
+          <div class="notif-dropdown" id="notifDropdown" style="display: none;">
+            <div class="notif-dropdown-header">
+              <h4>Notifications</h4>
+              <button onclick="markAllNotifsAsRead(event)">Tout marquer comme lu</button>
             </div>
-            <div class="topbar-right">
-                <button class="notif-bell" id="notifBell" onclick="toggleNotifs()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span class="bell-badge" id="bellBadge" style="display:none"></span>
+            <div class="notif-dropdown-list" id="notifDropdownList">
+              <div class="notif-empty">Aucune notification</div>
+            </div>
+          </div>
+
+          <button
+            class="btn-admin-fs"
+            id="adminFailSafeBtn"
+            onclick="window.location.href = 'admin.html'"
+          >
+            🛡️ Admin
+          </button>
+          <div
+            class="avatar-btn"
+            id="avatarBtn"
+            title="Déconnexion"
+            onclick="doLogout()"
+          >
+            ?
+          </div>
+        </div>
+      </header>
+
+      <!-- PROGRESS BANNER -->
+      <div class="progress-banner" id="progressBanner">
+        <div class="progress-circle-wrap">
+          <svg
+            class="progress-circle"
+            width="56"
+            height="56"
+            viewBox="0 0 56 56"
+          >
+            <circle
+              cx="28"
+              cy="28"
+              r="22"
+              fill="none"
+              stroke="rgba(255,255,255,.15)"
+              stroke-width="5"
+            />
+            <circle
+              cx="28"
+              cy="28"
+              r="22"
+              fill="none"
+              stroke="#cc9461"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-dasharray="138.2"
+              stroke-dashoffset="138.2"
+              id="progressCircle"
+            />
+          </svg>
+          <div class="pct-label" id="pctLabel">0%</div>
+        </div>
+        <div class="progress-banner-text" style="flex: 1">
+          <h2 id="bannerTitle">Avancement du chantier</h2>
+          <div class="progress-bar-thin">
+            <div
+              class="progress-bar-fill"
+              id="progressBarFill"
+              style="width: 0%"
+            ></div>
+          </div>
+          <p id="bannerSub">Chargement…</p>
+        </div>
+      </div>
+
+      <!-- VISIT BANNER -->
+      <div class="visit-banner" id="visitBanner" onclick="showTab('chantier')">
+        <div class="visit-banner-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="bronze-icon"
+            style="width: 28px; height: 28px; color: #fff"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        <div>
+          <h3 id="visitBannerDate">Prochaine visite</h3>
+          <p id="visitBannerSub">Appuyez pour voir les détails</p>
+        </div>
+        <div class="visit-banner-arrow">›</div>
+      </div>
+
+      <!-- TABS CONTENT -->
+      <div class="tabs-content">
+        <!-- ═══ ONGLET 1 — MON CHANTIER ═══ -->
+        <div class="tab-panel active" id="panel-chantier">
+          <!-- Étapes -->
+          <div class="section-title">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="bronze-icon"
+              style="
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 4px;
+              "
+            >
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Étapes du chantier
+          </div>
+
+          <!-- NEW: Cockpit Stats -->
+          <div
+            class="cockpit-grid"
+            id="cockpitGrid"
+            style="grid-template-columns: repeat(2, 1fr)"
+          >
+            <div class="cockpit-card" onclick="showTab('finance')">
+              <div class="cockpit-icon">💰</div>
+              <div class="cockpit-info">
+                <label>Budget</label>
+                <span id="statBudget">—</span>
+              </div>
+            </div>
+            <div class="cockpit-card" onclick="showTab('suivi')">
+              <div class="cockpit-icon">📈</div>
+              <div class="cockpit-info">
+                <label>Suivi</label>
+                <span id="statSuivi">Activé</span>
+              </div>
+            </div>
+            <div class="cockpit-card" onclick="showTab('docs')">
+              <div class="cockpit-icon">📄</div>
+              <div class="cockpit-info">
+                <label>Documents</label>
+                <span id="statDocs">0</span>
+              </div>
+            </div>
+            <div class="cockpit-card" onclick="showTab('messages')">
+              <div class="cockpit-icon">💬</div>
+              <div class="cockpit-info">
+                <label>Nouveau message</label>
+                <span id="statMsg">Aucun</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Checklist d'Actions Requises -->
+          <div
+            class="checklist-card"
+            id="clientChecklistCard"
+            style="display: none"
+          >
+            <div class="checklist-header">
+              <h3>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  style="width: 18px; height: 18px; color: var(--copper)"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                Actions Requises
+              </h3>
+              <span class="checklist-badge" id="checklistCount">0 tâches</span>
+            </div>
+            <div class="checklist-list" id="checklistList">
+              <!-- Dynamically generated checklist items go here -->
+            </div>
+          </div>
+
+          <!-- NEW: Gantt Chart -->
+          <div class="gantt-section" id="ganttSection" style="display: none">
+            <div class="gantt-container">
+              <div class="gantt-grid" id="ganttGrid">
+                <div class="gantt-timeline-header" id="ganttHeader">
+                  <!-- Months injected here -->
+                </div>
+                <!-- Rows injected here -->
+                <div id="ganttRows" style="display: contents"></div>
+
+                <!-- Today Indicator -->
+                <div class="gantt-today-line" id="ganttTodayLine">
+                  <div class="gantt-today-dot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 18px 16px">
+            <div class="steps-list" id="stepsList"></div>
+          </div>
+
+          <!-- Prochaine visite -->
+          <div
+            class="section-title"
+            id="visitSectionTitle"
+            style="display: none"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="bronze-icon"
+              style="
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 4px;
+              "
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Prochaine visite
+          </div>
+          <div
+            class="visit-detail-card"
+            id="visitDetailCard"
+            style="display: none"
+          >
+            <div class="visit-label">Rendez-vous programmé</div>
+            <div class="visit-date-big" id="visitDate">—</div>
+            <div class="visit-time-big" id="visitTime">—</div>
+            <div class="visit-lieu-row">📍 <span id="visitLieu">—</span></div>
+            <p
+              style="
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.5);
+                margin-top: 12px;
+              "
+            >
+              Votre chargé de projet vous contactera la veille pour confirmer.
+            </p>
+          </div>
+
+          <!-- Infos projet -->
+          <div class="section-title">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="bronze-icon"
+              style="
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 4px;
+              "
+            >
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              ></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            Informations du projet
+          </div>
+          <div class="card">
+            <div class="info-grid" id="infoGrid"></div>
+          </div>
+
+          <!-- Chargé de projet -->
+          <div class="section-title">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="bronze-icon"
+              style="
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 4px;
+              "
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Votre contact IBE
+          </div>
+          <div class="manager-row">
+            <div class="manager-av">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                style="width: 24px; height: 24px; color: #fff"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div style="flex: 1">
+              <div class="manager-name" id="managerName">—</div>
+              <div class="manager-role">Chargé de projet IBE</div>
+              <div
+                style="
+                  display: flex;
+                  gap: 8px;
+                  margin-top: 8px;
+                  flex-wrap: wrap;
+                "
+              >
+                <a
+                  class="manager-tel"
+                  id="managerTel"
+                  href="#"
+                  style="
+                    margin: 0;
+                    padding: 6px 12px;
+                    font-size: 11px;
+                    text-transform: uppercase;
+                  "
+                  >📞 Appeler</a
+                >
+                <button
+                  onclick="openTeamModal()"
+                  class="btn-copy"
+                  style="
+                    margin: 0;
+                    padding: 6px 12px;
+                    font-size: 11px;
+                    text-transform: uppercase;
+                    border-radius: 10px;
+                  "
+                >
+                  👥 Équipe Projet
                 </button>
-                <button class="btn-admin-fs" id="adminFailSafeBtn" onclick="window.location.href='admin.html'">🛡️
-                    Admin</button>
-                <div class="avatar-btn" id="avatarBtn" title="Déconnexion" onclick="doLogout()">?</div>
+              </div>
             </div>
-        </header>
-
-        <!-- PROGRESS BANNER -->
-        <div class="progress-banner" id="progressBanner">
-            <div class="progress-circle-wrap">
-                <svg class="progress-circle" width="56" height="56" viewBox="0 0 56 56">
-                    <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="5" />
-                    <circle cx="28" cy="28" r="22" fill="none" stroke="#cc9461" stroke-width="5" stroke-linecap="round"
-                        stroke-dasharray="138.2" stroke-dashoffset="138.2" id="progressCircle" />
-                </svg>
-                <div class="pct-label" id="pctLabel">0%</div>
-            </div>
-            <div class="progress-banner-text" style="flex:1">
-                <h2 id="bannerTitle">Avancement du chantier</h2>
-                <div class="progress-bar-thin">
-                    <div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div>
-                </div>
-                <p id="bannerSub">Chargement…</p>
-            </div>
+          </div>
         </div>
 
-        <!-- VISIT BANNER -->
-        <div class="visit-banner" id="visitBanner" onclick="showTab('chantier')">
-            <div class="visit-banner-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" class="bronze-icon" style="width:28px;height:28px;color:#fff">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
+        <!-- ═══ ONGLET 2 — FINANCES ═══ -->
+        <div class="tab-panel" id="panel-finance">
+          <!-- Factures -->
+          <div class="section-title">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="bronze-icon"
+              style="
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 4px;
+              "
+            >
+              <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+              <line x1="2" y1="10" x2="22" y2="10"></line>
+            </svg>
+            Mes factures
+          </div>
+          <div class="card" id="invoicesCard">
+            <div class="icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                style="width: 40px; height: 40px; color: var(--gray-300)"
+              >
+                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
+              </svg>
+            </div>
+            <p>Chargement…</p>
+          </div>
+
+          <!-- Budget -->
+          <div class="section-title">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="bronze-icon"
+              style="
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 4px;
+              "
+            >
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            Répartition du budget
+          </div>
+          <div class="card" id="budgetCard">
+            <div class="empty-state">
+              <div class="icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  style="width: 40px; height: 40px; color: var(--gray-300)"
+                >
+                  <line x1="18" y1="20" x2="18" y2="10"></line>
+                  <line x1="12" y1="20" x2="12" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="14"></line>
                 </svg>
+              </div>
+              <p>Chargement…</p>
             </div>
-            <div>
-                <h3 id="visitBannerDate">Prochaine visite</h3>
-                <p id="visitBannerSub">Appuyez pour voir les détails</p>
+          </div>
+
+          <!-- Plus-Values -->
+          <div class="section-title" id="pvSectionTitle">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="bronze-icon"
+              style="
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 4px;
+              "
+            >
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+              ></polygon>
+            </svg>
+            Options Premium
+          </div>
+          <div id="pvCard">
+            <div class="empty-state">
+              <div class="icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  style="width: 40px; height: 40px; color: var(--gray-300)"
+                >
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                  ></polygon>
+                </svg>
+              </div>
+              <p>Chargement…</p>
             </div>
-            <div class="visit-banner-arrow">›</div>
+          </div>
+          <div
+            style="
+              background: var(--copper-light);
+              border-radius: 12px;
+              padding: 12px 14px;
+              margin-bottom: 14px;
+              font-size: 12px;
+              color: var(--copper-dark);
+              display: flex;
+              gap: 10px;
+              align-items: center;
+            "
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="width: 16px; height: 16px; flex-shrink: 0"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span
+              >Contactez votre chargé de projet pour ajouter une option à votre
+              projet.</span
+            >
+          </div>
         </div>
 
-        <!-- TABS CONTENT -->
-        <div class="tabs-content">
-
-            <!-- ═══ ONGLET 1 — MON CHANTIER ═══ -->
-            <div class="tab-panel active" id="panel-chantier">
-
-                <!-- Étapes -->
-                <div class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                        stroke-linejoin="round" class="bronze-icon"
-                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                    Étapes du chantier
-                </div>
-
-                <!-- NEW: Cockpit Stats -->
-                <div class="cockpit-grid" id="cockpitGrid" style="grid-template-columns: repeat(2, 1fr);">
-                    <div class="cockpit-card" onclick="showTab('finance')">
-                        <div class="cockpit-icon">💰</div>
-                        <div class="cockpit-info">
-                            <label>Budget</label>
-                            <span id="statBudget">—</span>
-                        </div>
-                    </div>
-                    <div class="cockpit-card" onclick="showTab('suivi')">
-                        <div class="cockpit-icon">📈</div>
-                        <div class="cockpit-info">
-                            <label>Suivi</label>
-                            <span id="statSuivi">Activé</span>
-                        </div>
-                    </div>
-                    <div class="cockpit-card" onclick="showTab('docs')">
-                        <div class="cockpit-icon">📄</div>
-                        <div class="cockpit-info">
-                            <label>Documents</label>
-                            <span id="statDocs">0</span>
-                        </div>
-                    </div>
-                    <div class="cockpit-card" onclick="showTab('messages')">
-                        <div class="cockpit-icon">💬</div>
-                        <div class="cockpit-info">
-                            <label>Nouveau message</label>
-                            <span id="statMsg">Aucun</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- NEW: Gantt Chart -->
-                <div class="gantt-section" id="ganttSection" style="display:none">
-                    <div class="gantt-container">
-                        <div class="gantt-grid" id="ganttGrid">
-                            <div class="gantt-timeline-header" id="ganttHeader">
-                                <!-- Months injected here -->
-                            </div>
-                            <!-- Rows injected here -->
-                            <div id="ganttRows" style="display:contents"></div>
-
-                            <!-- Today Indicator -->
-                            <div class="gantt-today-line" id="ganttTodayLine">
-                                <div class="gantt-today-dot"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card" style="padding:18px 16px">
-                    <div class="steps-list" id="stepsList"></div>
-                </div>
-
-                <!-- Prochaine visite -->
-                <div class="section-title" id="visitSectionTitle" style="display:none">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                        stroke-linejoin="round" class="bronze-icon"
-                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
-                    Prochaine visite
-                </div>
-                <div class="visit-detail-card" id="visitDetailCard" style="display:none">
-                    <div class="visit-label">Rendez-vous programmé</div>
-                    <div class="visit-date-big" id="visitDate">—</div>
-                    <div class="visit-time-big" id="visitTime">—</div>
-                    <div class="visit-lieu-row">📍 <span id="visitLieu">—</span></div>
-                    <p style="font-size:11px;color:rgba(255,255,255,.5);margin-top:12px">Votre chargé de projet vous
-                        contactera la veille pour confirmer.</p>
-                </div>
-
-                <!-- Infos projet -->
-                <div class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                        stroke-linejoin="round" class="bronze-icon"
-                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                    </svg>
-                    Informations du projet
-                </div>
-                <div class="card">
-                    <div class="info-grid" id="infoGrid"></div>
-                </div>
-
-                <!-- Chargé de projet -->
-                <div class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                        stroke-linejoin="round" class="bronze-icon"
-                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    Votre contact IBE
-                </div>
-                <div class="manager-row">
-                    <div class="manager-av">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;color:#fff">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div style="flex:1">
-                        <div class="manager-name" id="managerName">—</div>
-                        <div class="manager-role">Chargé de projet IBE</div>
-                        <a class="manager-tel" id="managerTel" href="#">📞 Appeler</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- ═══ ONGLET 2 — FINANCES ═══ -->
-            <div class="tab-panel" id="panel-finance">
-
-                <!-- Factures -->
-                <div class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                        stroke-linejoin="round" class="bronze-icon"
-                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
-                        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-                        <line x1="2" y1="10" x2="22" y2="10"></line>
-                    </svg>
-                    Mes factures
-                </div>
-                <div class="card" id="invoicesCard">
-                    <div class="icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
-                            style="width:40px;height:40px;color:var(--gray-300)">
-                            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-                            <line x1="2" y1="10" x2="22" y2="10"></line>
-                        </svg>
-                    </div>
-                    <p>Chargement…</p>
-                </div>
-
-                <!-- Budget -->
-                <div class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                        stroke-linejoin="round" class="bronze-icon"
-                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
-                        <line x1="18" y1="20" x2="18" y2="10"></line>
-                        <line x1="12" y1="20" x2="12" y2="4"></line>
-                        <line x1="6" y1="20" x2="6" y2="14"></line>
-                    </svg>
-                    Répartition du budget
-                </div>
-                <div class="card" id="budgetCard">
-                    <div class="empty-state">
-                        <div class="icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                style="width:40px;height:40px;color:var(--gray-300)">
-                                <line x1="18" y1="20" x2="18" y2="10"></line>
-                                <line x1="12" y1="20" x2="12" y2="4"></line>
-                                <line x1="6" y1="20" x2="6" y2="14"></line>
-                            </svg>
-                        </div>
-                        <p>Chargement…</p>
-                    </div>
-                </div>
-
-                <!-- Plus-Values -->
-                <div class="section-title" id="pvSectionTitle">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                        stroke-linejoin="round" class="bronze-icon"
-                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
-                        <polygon
-                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                        </polygon>
-                    </svg>
-                    Options Premium
-                </div>
-                <div id="pvCard">
-                    <div class="empty-state">
-                        <div class="icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                style="width:40px;height:40px;color:var(--gray-300)">
-                                <polygon
-                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                </polygon>
-                            </svg>
-                        </div>
-                        <p>Chargement…</p>
-                    </div>
-                </div>
-                <div
-                    style="background:var(--copper-light);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--copper-dark);display:flex;gap:10px;align-items:center">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                    </svg>
-                    <span>Contactez votre chargé de projet pour ajouter une option à votre projet.</span>
-                </div>
-
-            </div>
-
-            <!-- ═══ ONGLET 3 — PHOTOS ═══ -->
-            <div class="tab-panel" id="panel-photos">
-                <div class="album-tabs" id="albumTabs"></div>
-                <div class="photo-grid" id="photoGrid">
-                    <div class="gallery-empty" style="grid-column:1/-1">
-                        <div class="gallery-empty-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                style="width:48px;height:48px;color:var(--gray-300)">
-                                <path
-                                    d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
-                                </path>
-                                <circle cx="12" cy="13" r="4"></circle>
-                            </svg>
-                        </div>
-                        <p style="font-size:14px;color:var(--gray-500);font-weight:600">Chargement des photos…</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ ONGLET 4 — DOCUMENTS ═══ -->
-            <div class="tab-panel" id="panel-docs">
-                <div class="section-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                        stroke-linejoin="round" class="bronze-icon"
-                        style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                    </svg>
-                    Mes documents
-                </div>
-                <div id="docsList">
-                    <div class="empty-state">
-                        <div class="icon">📄</div>
-                        <p>Chargement…</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ ONGLET 5 — MESSAGES ═══ -->
-            <div class="tab-panel" id="panel-messages">
-                <div class="msg-container" id="msgContainer">
-                    <div class="msg-empty">
-                        <div class="msg-empty-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                style="width:52px;height:52px;color:var(--gray-300)">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                        </div>
-                        <p>Aucun message pour l'instant</p>
-                        <small>Envoyez un message à votre équipe IBE</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ ONGLET 6 — SUIVI (PROCORE) ═══ -->
-            <div class="tab-panel" id="panel-suivi">
-                <!-- RFI Section -->
-                <div class="section-title">❓ Mes Demandes d'Info (RFI)</div>
-                <div id="clientRfiList" style="margin-bottom:24px">
-                    <div class="empty-state"><p>Chargement des RFIs...</p></div>
-                </div>
-
-                <!-- Inspections Section -->
-                <div class="section-title">✔️ Mes Inspections</div>
-                <div id="clientInspList" style="margin-bottom:24px">
-                    <div class="empty-state"><p>Chargement des rapports...</p></div>
-                </div>
-
-                <!-- Daily Logs Section -->
-                <div class="section-title">📋 Journal de Chantier</div>
-                <div id="clientLogList" style="margin-bottom:24px">
-                    <div class="empty-state"><p>Chargement du journal...</p></div>
-                </div>
-
-                <!-- Change Orders Section -->
-                <div class="section-title">📝 Ordres de Changement</div>
-                <div id="clientCeList">
-                    <div class="empty-state"><p>Chargement des ordres...</p></div>
-                </div>
-
-                <!-- Observations Section -->
-                <div class="section-title" style="margin-top:8px">👁️ Observations de Chantier</div>
-                <div id="clientObsList">
-                    <div class="empty-state"><p>Chargement des observations...</p></div>
-                </div>
-            </div>
-
-        </div><!-- /tabs-content -->
-
-        <!-- MSG INPUT (only visible on messages tab) -->
-        <div class="msg-input-fixed" id="msgInputBar" style="display:none">
-            <input class="msg-input-field" id="msgInput" type="text" placeholder="Écrire un message…"
-                onkeydown="if(event.key==='Enter')sendMsg()">
-            <button class="msg-send-btn" onclick="sendMsg()">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+        <!-- ═══ ONGLET 3 — PHOTOS ═══ -->
+        <div class="tab-panel" id="panel-photos">
+          <div class="album-tabs" id="albumTabs"></div>
+          <div class="photo-grid" id="photoGrid">
+            <div class="gallery-empty" style="grid-column: 1/-1">
+              <div class="gallery-empty-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  style="width: 48px; height: 48px; color: var(--gray-300)"
+                >
+                  <path
+                    d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+                  ></path>
+                  <circle cx="12" cy="13" r="4"></circle>
                 </svg>
-            </button>
+              </div>
+              <p
+                style="
+                  font-size: 14px;
+                  color: var(--gray-500);
+                  font-weight: 600;
+                "
+              >
+                Chargement des photos…
+              </p>
+            </div>
+          </div>
         </div>
 
-        <!-- BOTTOM NAV -->
-        <nav class="bottom-nav">
-            <button class="nav-btn active" id="nav-chantier" onclick="showTab('chantier')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-                <span>Chantier</span>
-            </button>
-            <button class="nav-btn" id="nav-suivi" onclick="showTab('suivi')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M12 20h.01M6 20h.01M18 20h.01M4 11l8-8 8 8v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-9z" />
-                </svg>
-                <span>Suivi</span>
-            </button>
-            <button class="nav-btn" id="nav-finance" onclick="showTab('finance')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <rect x="2" y="5" width="20" height="14" rx="2" />
-                    <line x1="2" y1="10" x2="22" y2="10" />
-                </svg>
-                <span>Finances</span>
-            </button>
-            <button class="nav-btn" id="nav-photos" onclick="showTab('photos')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                    <circle cx="8.5" cy="8.5" r="1.5" />
-                    <polyline points="21 15 16 10 5 21" />
-                </svg>
-                <span>Photos</span>
-            </button>
-            <button class="nav-btn" id="nav-docs" onclick="showTab('docs')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                </svg>
-                <span>Docs</span>
-            </button>
-            <button class="nav-btn" id="nav-messages" onclick="showTab('messages')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-                <span>Messages</span>
-                <span class="nav-badge" id="msgBadge">0</span>
-            </button>
-        </nav>
+        <!-- ═══ ONGLET 4 — DOCUMENTS ═══ -->
+        <div class="tab-panel" id="panel-docs">
+          <div class="section-title">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="bronze-icon"
+              style="
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 4px;
+              "
+            >
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              ></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            Mes documents
+          </div>
+          <div id="docsList">
+            <div class="empty-state">
+              <div class="icon">📄</div>
+              <p>Chargement…</p>
+            </div>
+          </div>
+        </div>
 
-    </div><!-- /app -->
+        <!-- ═══ ONGLET 5 — MESSAGES ═══ -->
+        <div class="tab-panel" id="panel-messages">
+          <div class="msg-container" id="msgContainer">
+            <div class="msg-empty">
+              <div class="msg-empty-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  style="width: 52px; height: 52px; color: var(--gray-300)"
+                >
+                  <path
+                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                  ></path>
+                </svg>
+              </div>
+              <p>Aucun message pour l'instant</p>
+              <small>Envoyez un message à votre équipe IBE</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ ONGLET 6 — SUIVI (PROCORE) ═══ -->
+        <div class="tab-panel" id="panel-suivi">
+          <!-- RFI Section -->
+          <div class="section-title">❓ Mes Demandes d'Info (RFI)</div>
+          <div id="clientRfiList" style="margin-bottom: 24px">
+            <div class="empty-state"><p>Chargement des RFIs...</p></div>
+          </div>
+
+          <!-- Inspections Section -->
+          <div class="section-title">✔️ Mes Inspections</div>
+          <div id="clientInspList" style="margin-bottom: 24px">
+            <div class="empty-state"><p>Chargement des rapports...</p></div>
+          </div>
+
+          <!-- Daily Logs Section -->
+          <div class="section-title">📋 Journal de Chantier</div>
+          <div id="clientLogList" style="margin-bottom: 24px">
+            <div class="empty-state"><p>Chargement du journal...</p></div>
+          </div>
+
+          <!-- Change Orders Section -->
+          <div class="section-title">📝 Ordres de Changement</div>
+          <div id="clientCeList">
+            <div class="empty-state"><p>Chargement des ordres...</p></div>
+          </div>
+
+          <!-- Observations Section -->
+          <div class="section-title" style="margin-top: 8px">
+            👁️ Observations de Chantier
+          </div>
+          <div id="clientObsList">
+            <div class="empty-state"><p>Chargement des observations...</p></div>
+          </div>
+        </div>
+      </div>
+      <!-- /tabs-content -->
+
+      <!-- MSG INPUT (only visible on messages tab) -->
+      <div class="msg-input-fixed" id="msgInputBar" style="display: none">
+        <input
+          class="msg-input-field"
+          id="msgInput"
+          type="text"
+          placeholder="Écrire un message…"
+          onkeydown="if (event.key === 'Enter') sendMsg();"
+        />
+        <button class="msg-send-btn" onclick="sendMsg()">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- BOTTOM NAV -->
+      <nav class="bottom-nav">
+        <button
+          class="nav-btn active"
+          id="nav-chantier"
+          onclick="showTab('chantier')"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          <span>Chantier</span>
+        </button>
+        <button class="nav-btn" id="nav-suivi" onclick="showTab('suivi')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              d="M12 20h.01M6 20h.01M18 20h.01M4 11l8-8 8 8v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-9z"
+            />
+          </svg>
+          <span>Suivi</span>
+        </button>
+        <button class="nav-btn" id="nav-finance" onclick="showTab('finance')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <rect x="2" y="5" width="20" height="14" rx="2" />
+            <line x1="2" y1="10" x2="22" y2="10" />
+          </svg>
+          <span>Finances</span>
+        </button>
+        <button class="nav-btn" id="nav-photos" onclick="showTab('photos')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+          <span>Photos</span>
+        </button>
+        <button class="nav-btn" id="nav-docs" onclick="showTab('docs')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+          </svg>
+          <span>Docs</span>
+        </button>
+        <button class="nav-btn" id="nav-messages" onclick="showTab('messages')">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            />
+          </svg>
+          <span>Messages</span>
+          <span class="nav-badge" id="msgBadge">0</span>
+        </button>
+      </nav>
+    </div>
+    <!-- /app -->
+
+    <!-- TEAM MODAL -->
+    <div
+      class="team-modal-overlay"
+      id="teamModalOverlay"
+      onclick="closeTeamModal(event)"
+    >
+      <div class="team-modal" onclick="event.stopPropagation()">
+        <div class="team-modal-header">
+          <h3 class="team-modal-title">Équipe Technique du Chantier</h3>
+          <button class="team-modal-close" onclick="closeTeamModal(event)">
+            ✕
+          </button>
+        </div>
+        <div class="team-modal-body" id="teamModalBody">
+          <!-- Staff members list will be loaded here -->
+        </div>
+      </div>
+    </div>
 
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -510,232 +964,344 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script>
-        // ── STATE ──
-        let currentUser = null, currentProfile = null;
-        let unsubMessages = null, unsubDocuments = null;
-        let allPhotos = [], allDocs_ = [];
-        let currentAlbum = 'Tous';
-        let isOnMessages = false;
+      // ── STATE ──
+      let currentUser = null,
+        currentProfile = null;
+      let unsubMessages = null,
+        unsubDocuments = null,
+        unsubNotifications = null;
+      let allPhotos = [],
+        allDocs_ = [],
+        clientNotifications = [];
+      let currentAlbum = "Tous";
+      let isOnMessages = false;
 
-        // ── NAVIGATION ──
-        async function showTab(tab) {
-            const panels = ['chantier', 'suivi', 'finance', 'photos', 'docs', 'messages'];
-            panels.forEach(t => {
-                const p = document.getElementById('panel-' + t);
-                const n = document.getElementById('nav-' + t);
-                if (t === tab) {
-                    if(p) p.classList.add('active');
-                    if(n) n.classList.add('active');
-                    // Premium Transition
-                    if(p) gsap.fromTo(p, { opacity: 0, y: 15, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' });
-                } else {
-                    if(p) p.classList.remove('active');
-                    if(n) n.classList.remove('active');
-                }
-            });
-            isOnMessages = (tab === 'messages');
-            if (tab === 'suivi') loadSuiviData(currentUser ? currentUser.uid : null);
-            
-            // Handle Message Bar
-            
-            // Handle Message Bar
-            const msgBar = document.getElementById('msgInputBar');
-            if(isOnMessages) {
-                msgBar.style.display = 'flex';
-                gsap.fromTo(msgBar, { y: 60 }, { y: 0, duration: 0.5, ease: 'back.out(1.7)' });
-                document.getElementById('msgBadge').classList.remove('show');
-                setTimeout(() => { const c = document.getElementById('msgContainer'); if (c) c.scrollTop = c.scrollHeight; }, 100);
-            } else {
-                msgBar.style.display = 'none';
-            }
-        }
+      // Variables de la checklist dynamique
+      let clientInvoices = [],
+        clientPVs = [],
+        clientRFIs = [],
+        clientCEs = [],
+        clientProject = null;
 
-        // ── AUTH ──
-        auth.onAuthStateChanged(async user => {
-            try {
-                if (!user) { window.location.href = 'login.html'; return; }
-                const email = user.email.toLowerCase();
-                const isAdmin = (email === 'admin@ibe-construction.com') || await ibeIsAdmin(user.uid);
-                if (isAdmin) {
-                    document.getElementById('adminFailSafeBtn').style.display = 'block';
-                    window.location.href = 'admin.html'; return;
-                }
-                currentUser = user;
-                await loadDashboard(user.uid);
-            } catch (err) {
-                document.getElementById('loadingScreen').style.display = 'none';
-                const es = document.getElementById('errorScreen');
-                es.style.display = 'flex';
-                document.getElementById('displayUid').textContent = 'Erreur: ' + err.message;
-            }
+      // ── NAVIGATION ──
+      async function showTab(tab) {
+        const panels = [
+          "chantier",
+          "suivi",
+          "finance",
+          "photos",
+          "docs",
+          "messages",
+        ];
+        panels.forEach((t) => {
+          const p = document.getElementById("panel-" + t);
+          const n = document.getElementById("nav-" + t);
+          if (t === tab) {
+            if (p) p.classList.add("active");
+            if (n) n.classList.add("active");
+            // Premium Transition
+            if (p)
+              gsap.fromTo(
+                p,
+                { opacity: 0, y: 15, filter: "blur(10px)" },
+                {
+                  opacity: 1,
+                  y: 0,
+                  filter: "blur(0px)",
+                  duration: 0.6,
+                  ease: "power2.out",
+                },
+              );
+          } else {
+            if (p) p.classList.remove("active");
+            if (n) n.classList.remove("active");
+          }
         });
+        isOnMessages = tab === "messages";
+        if (tab === "suivi")
+          loadSuiviData(currentUser ? currentUser.uid : null);
 
-        // ── LOAD DASHBOARD ──
-        async function loadDashboard(uid) {
-            const [profile, project] = await Promise.all([ibeGetProfile(uid), ibeGetProject(uid)]);
-            if (!profile || !project) {
-                document.getElementById('loadingScreen').style.display = 'none';
-                const es = document.getElementById('errorScreen');
-                es.style.display = 'flex';
-                document.getElementById('displayUid').textContent = uid;
-                return;
-            }
-            currentProfile = profile;
+        // Handle Message Bar
 
-            // Topbar
-            document.getElementById('topbarProjectName').textContent = project.titre || 'Mon Projet';
-            
-            // Extract First Name for greeting
-            const fullName = profile.nom || 'Client';
-            const firstName = fullName.split(' ')[0];
-            document.getElementById('topbarClientName').textContent = 'Bonjour, ' + firstName;
-            
-            const initials = fullName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-            document.getElementById('avatarBtn').textContent = initials;
+        // Handle Message Bar
+        const msgBar = document.getElementById("msgInputBar");
+        if (isOnMessages) {
+          msgBar.style.display = "flex";
+          gsap.fromTo(
+            msgBar,
+            { y: 60 },
+            { y: 0, duration: 0.5, ease: "back.out(1.7)" },
+          );
+          document.getElementById("msgBadge").classList.remove("show");
+          setTimeout(() => {
+            const c = document.getElementById("msgContainer");
+            if (c) c.scrollTop = c.scrollHeight;
+          }, 100);
+        } else {
+          msgBar.style.display = "none";
+        }
+      }
 
-            // Progress banner
-            const pct = project.avancement || 0;
-            document.getElementById('pctLabel').textContent = pct + '%';
-            document.getElementById('progressBarFill').style.width = pct + '%';
-            document.getElementById('bannerTitle').textContent = project.titre || 'Avancement du chantier';
-            const livraison = project.livraison_prevue ? `Livraison prévue : ${project.livraison_prevue}` : '';
-            document.getElementById('bannerSub').textContent = livraison;
-            
-            // Check for unread stuff for the bell
-            updateNotifBell(uid);
+      // ── AUTH ──
+      let isRedirecting = false;
+      auth.onAuthStateChanged(async (user) => {
+        if (isRedirecting) return;
+        try {
+          if (!user) {
+            isRedirecting = true;
+            window.location.href = "login.html";
+            return;
+          }
+          const email = user.email.toLowerCase();
+          const isAdmin =
+            email === "admin@ibe-construction.com" ||
+            (await ibeIsAdmin(user.uid));
+          if (isAdmin) {
+            isRedirecting = true;
+            document.getElementById("adminFailSafeBtn").style.display = "block";
+            window.location.href = "admin.html";
+            return;
+          }
+          currentUser = user;
+          await loadDashboard(user.uid);
+        } catch (err) {
+          document.getElementById("loadingScreen").classList.add("hide");
+          const es = document.getElementById("errorScreen");
+          es.style.display = "flex";
+          document.getElementById("displayUid").textContent =
+            "Erreur: " + err.message;
+        }
+      });
 
-            // Fetch summary for Cockpit
-            const rfis_ = await ibeGetRFIs(uid);
-            const openRfis = rfis_.filter(r => r.status === 'open' || r.status === 'pending').length;
-            document.getElementById('statSuivi').textContent = openRfis > 0 ? `${openRfis} Action(s)` : 'À jour';
+      // ── LOAD DASHBOARD ──
+      async function loadDashboard(uid) {
+        const [profile, project] = await Promise.all([
+          ibeGetProfile(uid),
+          ibeGetProject(uid),
+        ]);
+        if (!profile || !project) {
+          document.getElementById("loadingScreen").classList.add("hide");
+          const es = document.getElementById("errorScreen");
+          es.style.display = "flex";
+          document.getElementById("displayUid").textContent = uid;
+          return;
+        }
+        currentProfile = profile;
+        clientProject = project;
 
-            loadSuiviData(); // Background loade
-            const circumference = 2 * Math.PI * 22;
-            const offset = circumference - (pct / 100) * circumference;
-            setTimeout(() => {
-                const circle = document.getElementById('progressCircle');
-                if (circle) { circle.style.transition = 'stroke-dashoffset 1.2s ease'; circle.style.strokeDashoffset = offset; }
-            }, 300);
+        // Topbar
+        document.getElementById("topbarProjectName").textContent =
+          project.titre || "Mon Projet";
 
-            // Visit banner
-            const v = project.prochaine_visite || {};
-            if (v.date) {
-                document.getElementById('visitBanner').classList.add('show');
-                document.getElementById('visitBannerDate').textContent = v.date + (v.heure ? ' à ' + v.heure : '');
-                document.getElementById('visitBannerSub').textContent = v.lieu || 'Voir les détails';
-                // Visit detail in chantier tab
-                document.getElementById('visitSectionTitle').style.display = 'block';
-                document.getElementById('visitDetailCard').style.display = 'block';
-                document.getElementById('visitDate').textContent = v.date;
-                document.getElementById('visitTime').textContent = v.heure || '—';
-                document.getElementById('visitLieu').textContent = v.lieu || '—';
-            }
+        // Extract First Name for greeting
+        const fullName = profile.nom || "Client";
+        const firstName = fullName.split(" ")[0];
+        document.getElementById("topbarClientName").textContent =
+          "Bonjour, " + firstName;
 
-            // Steps
-            renderSteps(project.etapes || []);
+        const initials = fullName
+          .split(" ")
+          .map((w) => w[0])
+          .join("")
+          .slice(0, 2)
+          .toUpperCase();
+        document.getElementById("avatarBtn").textContent = initials;
 
-            // Gantt
-            if (project.planning) {
-                document.getElementById('ganttSection').style.display = 'block';
-                renderGantt(project.planning);
-            }
+        // Progress banner
+        const pct = project.avancement || 0;
+        document.getElementById("pctLabel").textContent = pct + "%";
+        document.getElementById("progressBarFill").style.width = pct + "%";
+        document.getElementById("bannerTitle").textContent =
+          project.titre || "Avancement du chantier";
+        const livraison = project.livraison_prevue
+          ? `Livraison prévue : ${project.livraison_prevue}`
+          : "";
+        document.getElementById("bannerSub").textContent = livraison;
 
-            // Info grid
-            const infoGrid = document.getElementById('infoGrid');
-            infoGrid.innerHTML = [
-                { label: 'Type', val: project.type },
-                { label: 'Surface', val: project.surface },
-                { label: 'Début', val: project.debut },
-                { label: 'Livraison', val: project.livraison_prevue }
-            ].map(i => `<div class="info-cell"><label>${i.label}</label><span>${i.val || '—'}</span></div>`).join('');
+        // Check for unread stuff for the bell
+        updateNotifBell(uid);
 
-            // Manager
-            document.getElementById('managerName').textContent = profile.charge || 'Équipe IBE';
-            const tel = profile.tel_charge || '';
-            if (tel) {
-                document.getElementById('managerTel').textContent = tel;
-                document.getElementById('managerTel').href = 'tel:' + tel.replace(/\s/g, '');
-            }
+        // Fetch summary for Cockpit
+        const rfis_ = await ibeGetRFIs(uid);
+        const openRfis = rfis_.filter(
+          (r) => r.status === "open" || r.status === "pending",
+        ).length;
+        document.getElementById("statSuivi").textContent =
+          openRfis > 0 ? `${openRfis} Action(s)` : "À jour";
 
-            // Real-time
-            unsubMessages = ibeListenMessages(uid, renderMessages);
-            unsubDocuments = ibeListenDocuments(uid, renderDocsAndPhotos);
+        loadSuiviData(uid); // Background load
+        const circumference = 2 * Math.PI * 22;
+        const offset = circumference - (pct / 100) * circumference;
+        setTimeout(() => {
+          const circle = document.getElementById("progressCircle");
+          if (circle) {
+            circle.style.transition = "stroke-dashoffset 1.2s ease";
+            circle.style.strokeDashoffset = offset;
+          }
+        }, 300);
 
-            // Finance
-            loadFinance(uid);
-
-            // Populate Cockpit
-            document.getElementById('statDocs').textContent = allDocs_.length || 0;
-            const contrat = project.contrat_ht || 0;
-            document.getElementById('statBudget').textContent = contrat ? (contrat / 1000).toFixed(0) + 'k' : '—';
-
-            // Show app
-            document.getElementById('loadingScreen').classList.add('hide');
-            document.getElementById('appShell').style.display = '';
+        // Visit banner
+        const v = project.prochaine_visite || {};
+        if (v.date) {
+          document.getElementById("visitBanner").classList.add("show");
+          document.getElementById("visitBannerDate").textContent =
+            v.date + (v.heure ? " à " + v.heure : "");
+          document.getElementById("visitBannerSub").textContent =
+            v.lieu || "Voir les détails";
+          // Visit detail in chantier tab
+          document.getElementById("visitSectionTitle").style.display = "block";
+          document.getElementById("visitDetailCard").style.display = "block";
+          document.getElementById("visitDate").textContent = v.date;
+          document.getElementById("visitTime").textContent = v.heure || "—";
+          document.getElementById("visitLieu").textContent = v.lieu || "—";
         }
 
-        // ── GANTT CHART LOGIC ──
-        function renderGantt(planning) {
-            const rows = document.getElementById('ganttRows');
-            const header = document.getElementById('ganttHeader');
-            rows.innerHTML = '';
-            header.innerHTML = '';
+        // Steps
+        renderSteps(project.etapes || []);
 
-            const phaseOrder = ['etude', 'gros_oeuvre', 'electricite', 'finitions', 'cvc'];
-            const phases = phaseOrder.map(id => [id, planning[id]]).filter(([id, p]) => p && p.start && p.end);
-            
-            if (!phases.length) {
-                document.getElementById('ganttSection').style.display = 'none';
-                return;
-            }
+        // Gantt
+        if (project.planning) {
+          document.getElementById("ganttSection").style.display = "block";
+          renderGantt(project.planning);
+        }
 
-            // Find min/max dates
-            const allDates = phases.flatMap(([id, p]) => [new Date(p.start), new Date(p.end)]);
-            const minDate = new Date(Math.min(...allDates));
-            const maxDate = new Date(Math.max(...allDates));
+        // Info grid
+        const infoGrid = document.getElementById("infoGrid");
+        infoGrid.innerHTML = [
+          { label: "Type", val: project.type },
+          { label: "Surface", val: project.surface },
+          { label: "Début", val: project.debut },
+          { label: "Livraison", val: project.livraison_prevue },
+        ]
+          .map(
+            (i) =>
+              `<div class="info-cell"><label>${i.label}</label><span>${i.val || "—"}</span></div>`,
+          )
+          .join("");
 
-            // Padding
-            minDate.setMonth(minDate.getMonth() - 1);
-            maxDate.setMonth(maxDate.getMonth() + 2);
+        // Manager
+        document.getElementById("managerName").textContent =
+          profile.charge || "Équipe IBE";
+        const tel = profile.tel_charge || "";
+        if (tel) {
+          document.getElementById("managerTel").textContent = tel;
+          document.getElementById("managerTel").href =
+            "tel:" + tel.replace(/\s/g, "");
+        }
 
-            const totalDays = (maxDate - minDate) / (1000 * 60 * 60 * 24);
+        // Real-time
+        unsubMessages = ibeListenMessages(uid, renderMessages);
+        unsubDocuments = ibeListenDocuments(uid, renderDocsAndPhotos);
 
-            // Render Header (Months)
-            let curr = new Date(minDate);
-            while (curr < maxDate) {
-                const monthLabel = curr.toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' });
-                header.innerHTML += `<div class="gantt-month">${monthLabel}</div>`;
-                curr.setMonth(curr.getMonth() + 1);
-            }
+        // Finance
+        loadFinance(uid);
 
-            // Render Rows
-            phases.forEach(([id, p], index) => {
-                const start = new Date(p.start);
-                const end = new Date(p.end);
-                const left = ((start - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
-                const width = ((end - start) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+        // Populate Cockpit
+        document.getElementById("statDocs").textContent = allDocs_.length || 0;
+        const contrat = project.contrat_ht || 0;
+        document.getElementById("statBudget").textContent = contrat
+          ? (contrat / 1000).toFixed(0) + "k"
+          : "—";
 
-                // Determine progress (mocked for now or based on steps if possible)
-                // For now let's use a simple active state if it's currently in range
-                const now = new Date();
-                const isActive = now >= start && now <= end;
+        // Show app
+        document.getElementById("loadingScreen").classList.add("hide");
+        document.getElementById("appShell").style.display = "";
+      }
 
-                let bgColor = 'var(--navy)';
-                let shadowColor = 'rgba(10, 17, 40, 0.2)';
-                if(id === 'etude') { bgColor = 'linear-gradient(135deg, #3b82f6, #2563eb)'; shadowColor = 'rgba(59, 130, 246, 0.4)'; }
-                if(id === 'gros_oeuvre') { bgColor = 'linear-gradient(135deg, var(--copper), var(--copper-dark))'; shadowColor = 'rgba(212, 175, 55, 0.4)'; }
-                if(id === 'electricite') { bgColor = 'linear-gradient(135deg, #f59e0b, #d97706)'; shadowColor = 'rgba(245, 158, 11, 0.4)'; }
-                if(id === 'finitions') { bgColor = 'linear-gradient(135deg, #8b5cf6, #7c3aed)'; shadowColor = 'rgba(139, 92, 246, 0.4)'; }
-                if(id === 'cvc') { bgColor = 'linear-gradient(135deg, #06b6d4, #0891b2)'; shadowColor = 'rgba(6, 182, 212, 0.4)'; }
+      // ── GANTT CHART LOGIC ──
+      function renderGantt(planning) {
+        const rows = document.getElementById("ganttRows");
+        const header = document.getElementById("ganttHeader");
+        rows.innerHTML = "";
+        header.innerHTML = "";
 
-                // Inject directly into grid instead of nesting in a row div, to fix the grid layout
-                rows.innerHTML += `
+        const phaseOrder = [
+          "etude",
+          "gros_oeuvre",
+          "electricite",
+          "finitions",
+          "cvc",
+        ];
+        const phases = phaseOrder
+          .map((id) => [id, planning[id]])
+          .filter(([id, p]) => p && p.start && p.end);
+
+        if (!phases.length) {
+          document.getElementById("ganttSection").style.display = "none";
+          return;
+        }
+
+        // Find min/max dates
+        const allDates = phases.flatMap(([id, p]) => [
+          new Date(p.start),
+          new Date(p.end),
+        ]);
+        const minDate = new Date(Math.min(...allDates));
+        const maxDate = new Date(Math.max(...allDates));
+
+        // Padding
+        minDate.setMonth(minDate.getMonth() - 1);
+        maxDate.setMonth(maxDate.getMonth() + 2);
+
+        const totalDays = (maxDate - minDate) / (1000 * 60 * 60 * 24);
+
+        // Render Header (Months)
+        let curr = new Date(minDate);
+        while (curr < maxDate) {
+          const monthLabel = curr.toLocaleDateString("fr-FR", {
+            month: "short",
+            year: "2-digit",
+          });
+          header.innerHTML += `<div class="gantt-month">${monthLabel}</div>`;
+          curr.setMonth(curr.getMonth() + 1);
+        }
+
+        // Render Rows
+        phases.forEach(([id, p], index) => {
+          const start = new Date(p.start);
+          const end = new Date(p.end);
+          const left =
+            ((start - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+          const width =
+            ((end - start) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+
+          // Determine progress (mocked for now or based on steps if possible)
+          // For now let's use a simple active state if it's currently in range
+          const now = new Date();
+          const isActive = now >= start && now <= end;
+
+          let bgColor = "var(--navy)";
+          let shadowColor = "rgba(10, 17, 40, 0.2)";
+          if (id === "etude") {
+            bgColor = "linear-gradient(135deg, #3b82f6, #2563eb)";
+            shadowColor = "rgba(59, 130, 246, 0.4)";
+          }
+          if (id === "gros_oeuvre") {
+            bgColor =
+              "linear-gradient(135deg, var(--copper), var(--copper-dark))";
+            shadowColor = "rgba(212, 175, 55, 0.4)";
+          }
+          if (id === "electricite") {
+            bgColor = "linear-gradient(135deg, #f59e0b, #d97706)";
+            shadowColor = "rgba(245, 158, 11, 0.4)";
+          }
+          if (id === "finitions") {
+            bgColor = "linear-gradient(135deg, #8b5cf6, #7c3aed)";
+            shadowColor = "rgba(139, 92, 246, 0.4)";
+          }
+          if (id === "cvc") {
+            bgColor = "linear-gradient(135deg, #06b6d4, #0891b2)";
+            shadowColor = "rgba(6, 182, 212, 0.4)";
+          }
+
+          // Inject directly into grid instead of nesting in a row div, to fix the grid layout
+          rows.innerHTML += `
                     <div class="gantt-row">
                         <div class="gantt-label">${p.label}</div>
                         <div class="gantt-track">
-                            <div class="gantt-bar ${isActive ? 'active' : ''}" 
+                            <div class="gantt-bar ${isActive ? "active" : ""}" 
                                  id="gantt-bar-${id}"
-                                 title="${p.label}: de ${start.toLocaleDateString('fr-FR')} à ${end.toLocaleDateString('fr-FR')}"
+                                 title="${p.label}: de ${start.toLocaleDateString("fr-FR")} à ${end.toLocaleDateString("fr-FR")}"
                                  style="left: ${left}%; width: ${width}%; background: ${bgColor}; box-shadow: 0 4px 12px ${shadowColor}; opacity: 0; transform: scaleX(0); transform-origin: left">
                                 ${p.label}
                             </div>
@@ -743,57 +1309,60 @@
                     </div>
 				`;
 
-                // Animate bar
-                gsap.to(`#gantt-bar-${id}`, {
-                    opacity: 1,
-                    scaleX: 1,
-                    duration: 1,
-                    delay: 0.2 + (index * 0.1),
-                    ease: "power2.out"
-                });
-            });
+          // Animate bar
+          gsap.to(`#gantt-bar-${id}`, {
+            opacity: 1,
+            scaleX: 1,
+            duration: 1,
+            delay: 0.2 + index * 0.1,
+            ease: "power2.out",
+          });
+        });
 
-            // Position "Today" line
-            const today = new Date();
-            if (today >= minDate && today <= maxDate) {
-                const todayPos = ((today - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
-                const todayLine = document.getElementById('ganttTodayLine');
-                todayLine.style.left = `calc(100px + 15px + ${todayPos}%)`;
-                todayLine.style.display = 'block';
-            } else {
-                document.getElementById('ganttTodayLine').style.display = 'none';
-            }
+        // Position "Today" line
+        const today = new Date();
+        if (today >= minDate && today <= maxDate) {
+          const todayPos =
+            ((today - minDate) / (1000 * 60 * 60 * 24) / totalDays) * 100;
+          const todayLine = document.getElementById("ganttTodayLine");
+          todayLine.style.left = `calc(100px + 15px + ${todayPos}%)`;
+          todayLine.style.display = "block";
+        } else {
+          document.getElementById("ganttTodayLine").style.display = "none";
         }
+      }
 
-        // ── STEPS ──
-        function renderSteps(etapes) {
-            const list = document.getElementById('stepsList');
-            const doneCount = etapes.filter(e => e.done).length;
-            list.innerHTML = etapes.map((e, i) => {
-                const done = e.done;
-                const active = !done && i === doneCount;
-                const dotClass = done ? 'done' : active ? 'active' : '';
-                const nameClass = done ? 'done' : active ? 'active' : '';
-                
-                // Detailed Labels based on step name
-                let icon = '🏗️';
-                if(e.nom.toLowerCase().includes('fondation')) icon = '🧱';
-                if(e.nom.toLowerCase().includes('gros')) icon = '🏛️';
-                if(e.nom.toLowerCase().includes('second')) icon = '⚡';
-                if(e.nom.toLowerCase().includes('finition')) icon = '🎨';
-                if(e.nom.toLowerCase().includes('bim')) icon = '📐';
+      // ── STEPS ──
+      function renderSteps(etapes) {
+        const list = document.getElementById("stepsList");
+        const doneCount = etapes.filter((e) => e.done).length;
+        list.innerHTML = etapes
+          .map((e, i) => {
+            const done = e.done;
+            const active = !done && i === doneCount;
+            const dotClass = done ? "done" : active ? "active" : "";
+            const nameClass = done ? "done" : active ? "active" : "";
 
-                const tag = done ? 
-                    '<span class="step-tag done">Terminé</span>' : 
-                    active ? '<span class="step-tag active">En cours</span>' : 
-                    '<span class="step-tag pending">À venir</span>';
-                
-                const isLast = i === etapes.length - 1;
-                return `
-                    <div class="step-item ${active ? 'active-step-row' : ''}">
+            // Detailed Labels based on step name
+            let icon = "🏗️";
+            if (e.nom.toLowerCase().includes("fondation")) icon = "🧱";
+            if (e.nom.toLowerCase().includes("gros")) icon = "🏛️";
+            if (e.nom.toLowerCase().includes("second")) icon = "⚡";
+            if (e.nom.toLowerCase().includes("finition")) icon = "🎨";
+            if (e.nom.toLowerCase().includes("bim")) icon = "📐";
+
+            const tag = done
+              ? '<span class="step-tag done">Terminé</span>'
+              : active
+                ? '<span class="step-tag active">En cours</span>'
+                : '<span class="step-tag pending">À venir</span>';
+
+            const isLast = i === etapes.length - 1;
+            return `
+                    <div class="step-item ${active ? "active-step-row" : ""}">
                         <div class="step-left">
-                            <div class="step-dot ${dotClass}">${done ? '✓' : (active ? '⚡' : i + 1)}</div>
-                            ${!isLast ? `<div class="step-line ${done ? 'done' : ''}"></div>` : ''}
+                            <div class="step-dot ${dotClass}">${done ? "✓" : active ? "⚡" : i + 1}</div>
+                            ${!isLast ? `<div class="step-line ${done ? "done" : ""}"></div>` : ""}
                         </div>
                         <div class="step-content">
                             <div class="step-header-row">
@@ -801,7 +1370,9 @@
                                 ${tag}
                             </div>
                             <div class="step-date-row">
-                                ${e.date ? `
+                                ${
+                                  e.date
+                                    ? `
                                     <div class="step-date">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:middle;margin-right:4px">
                                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -809,34 +1380,47 @@
                                             <line x1="8" y1="2" x2="8" y2="6"></line>
                                             <line x1="3" y1="10" x2="21" y2="10"></line>
                                         </svg>${e.date}
-                                    </div>` : ''}
+                                    </div>`
+                                    : ""
+                                }
                             </div>
                         </div>
                     </div>`;
-            }).join('');
-            
-            // Update Stat Cockpit with next step
-            const nextStep = etapes.find((e, i) => !e.done && i === doneCount);
-            if(nextStep && document.getElementById('statMsg')) {
-                 // Or we could use next step here, but statMsg is for messages. 
-                 // Let's keep statMsg for messages it's more useful.
-            }
-        }
+          })
+          .join("");
 
-        // ── FINANCE ──
-        async function loadFinance(uid) {
-            try {
-                const [invoices, budget, pvs] = await Promise.all([ibeGetInvoices(uid), ibeGetBudget(uid), ibeGetPlusValues(uid)]);
-                renderInvoices(invoices || []);
-                renderBudget(budget || {});
-                renderPlusValues(pvs || []);
-            } catch (e) { console.error('Finance error:', e); }
+        // Update Stat Cockpit with next step
+        const nextStep = etapes.find((e, i) => !e.done && i === doneCount);
+        if (nextStep && document.getElementById("statMsg")) {
+          // Or we could use next step here, but statMsg is for messages.
+          // Let's keep statMsg for messages it's more useful.
         }
+      }
 
-        function renderInvoices(items) {
-            const c = document.getElementById('invoicesCard');
-            if (!items.length) {
-                c.innerHTML = `<div class="empty-state">
+      // ── FINANCE ──
+      async function loadFinance(uid) {
+        try {
+          const [invoices, budget, pvs] = await Promise.all([
+            ibeGetInvoices(uid),
+            ibeGetBudget(uid),
+            ibeGetPlusValues(uid),
+          ]);
+          clientInvoices = invoices || [];
+          clientPVs = pvs || [];
+          if (typeof updateChecklist === "function") updateChecklist();
+
+          renderInvoices(invoices || []);
+          renderBudget(budget || {});
+          renderPlusValues(pvs || []);
+        } catch (e) {
+          console.error("Finance error:", e);
+        }
+      }
+
+      function renderInvoices(items) {
+        const c = document.getElementById("invoicesCard");
+        if (!items.length) {
+          c.innerHTML = `<div class="empty-state">
                     <div class="icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:var(--gray-300)">
                             <rect x="2" y="5" width="20" height="14" rx="2"></rect>
@@ -846,53 +1430,71 @@
                     <p>Aucune facture émise</p>
                     <small>Vos factures apparaîtront ici</small>
                 </div>`;
-                return;
-            }
-            c.innerHTML = items.map(inv => {
-                const overdue = inv.statut === 'attente' && new Date(inv.echeance) < new Date();
-                const cls = inv.statut === 'payee' ? 'payee' : (overdue ? 'retard' : 'attente');
-                const label = inv.statut === 'payee' ? '✅ PAYÉE' : (overdue ? '🔴 EN RETARD' : '🟡 EN ATTENTE');
-                return `<div class="invoice-item">
+          return;
+        }
+        c.innerHTML = items
+          .map((inv) => {
+            const overdue =
+              inv.statut === "attente" && new Date(inv.echeance) < new Date();
+            const cls =
+              inv.statut === "payee" ? "payee" : overdue ? "retard" : "attente";
+            const label =
+              inv.statut === "payee"
+                ? "✅ PAYÉE"
+                : overdue
+                  ? "🔴 EN RETARD"
+                  : "🟡 EN ATTENTE";
+            return `<div class="invoice-item">
         <div>
-          <div class="invoice-num">${inv.num || 'Facture'}</div>
-          <div class="invoice-lib">${inv.libelle || ''}</div>
+          <div class="invoice-num">${inv.num || "Facture"}</div>
+          <div class="invoice-lib">${inv.libelle || ""}</div>
         </div>
         <div style="text-align:right">
-          <div class="invoice-amount">${Number(inv.montant || 0).toLocaleString('fr-MA')} MAD</div>
+          <div class="invoice-amount">${Number(inv.montant || 0).toLocaleString("fr-MA")} MAD</div>
           <span class="status-pill ${cls}">${label}</span>
         </div>
       </div>`;
-            }).join('');
-        }
+          })
+          .join("");
+      }
 
-        function renderBudget(data) {
-            const c = document.getElementById('budgetCard');
-            const cats = [
-                { id: 'structure', label: 'Gros Œuvre' },
-                { id: 'second', label: 'Second Œuvre' },
-                { id: 'finition', label: 'Finitions' },
-                { id: 'equipement', label: 'Équipements' }
-            ];
-            let totalPrevu = 0, totalReel = 0;
-            const rows = cats.map(cat => {
-                const prevu = data[cat.id + '_prevu'] || 0;
-                const reel = data[cat.id + '_reel'] || 0;
-                if (!prevu && !reel) return '';
-                totalPrevu += prevu; totalReel += reel;
-                const pct = prevu > 0 ? Math.min(reel / prevu * 100, 100) : 0;
-                const over = reel > prevu && prevu > 0 ? Math.min((reel - prevu) / prevu * 100, 100) : 0;
-                return `<div class="budget-item">
+      function renderBudget(data) {
+        const c = document.getElementById("budgetCard");
+        const cats = [
+          { id: "structure", label: "Gros Œuvre" },
+          { id: "second", label: "Second Œuvre" },
+          { id: "finition", label: "Finitions" },
+          { id: "equipement", label: "Équipements" },
+        ];
+        let totalPrevu = 0,
+          totalReel = 0;
+        const rows = cats
+          .map((cat) => {
+            const prevu = data[cat.id + "_prevu"] || 0;
+            const reel = data[cat.id + "_reel"] || 0;
+            if (!prevu && !reel) return "";
+            totalPrevu += prevu;
+            totalReel += reel;
+            const pct = prevu > 0 ? Math.min((reel / prevu) * 100, 100) : 0;
+            const over =
+              reel > prevu && prevu > 0
+                ? Math.min(((reel - prevu) / prevu) * 100, 100)
+                : 0;
+            return `<div class="budget-item">
         <div class="budget-row">
           <span class="budget-labels">${cat.label}</span>
-          <span class="budget-amounts">${reel.toLocaleString('fr-MA')} / ${prevu.toLocaleString('fr-MA')} MAD</span>
+          <span class="budget-amounts">${reel.toLocaleString("fr-MA")} / ${prevu.toLocaleString("fr-MA")} MAD</span>
         </div>
         <div class="budget-bar">
           <div class="budget-bar-fill" style="width:${pct}%"></div>
           <div class="budget-bar-over" style="width:${over}%"></div>
         </div>
       </div>`;
-            }).join('');
-            c.innerHTML = rows || `<div class="empty-state">
+          })
+          .join("");
+        c.innerHTML =
+          rows ||
+          `<div class="empty-state">
                 <div class="icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:var(--gray-300)">
                         <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -902,15 +1504,15 @@
                 </div>
                 <p>Aucune donnée budget</p>
             </div>`;
-            if (totalPrevu > 0) {
-                c.innerHTML += `<div class="budget-total-row"><span class="budget-total-label">Total dépensé</span><span class="budget-total-val">${totalReel.toLocaleString('fr-MA')} MAD</span></div>`;
-            }
+        if (totalPrevu > 0) {
+          c.innerHTML += `<div class="budget-total-row"><span class="budget-total-label">Total dépensé</span><span class="budget-total-val">${totalReel.toLocaleString("fr-MA")} MAD</span></div>`;
         }
+      }
 
-        function renderPlusValues(items) {
-            const c = document.getElementById('pvCard');
-            if (!items.length) {
-                c.innerHTML = `<div class="empty-state">
+      function renderPlusValues(items) {
+        const c = document.getElementById("pvCard");
+        if (!items.length) {
+          c.innerHTML = `<div class="empty-state">
                     <div class="icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:var(--gray-300)">
                             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
@@ -919,43 +1521,59 @@
                     <p>Aucune option proposée</p>
                     <small>Les options premium apparaîtront ici</small>
                 </div>`;
-                return;
-            }
-            c.innerHTML = items.map(it => `
+          return;
+        }
+        c.innerHTML = items
+          .map(
+            (it) => `
       <div class="pv-item">
         <div style="flex:1">
           <div class="pv-title">${it.titre}</div>
-          ${it.desc ? `<div class="pv-desc">${it.desc}</div>` : ''}
+          ${it.desc ? `<div class="pv-desc">${it.desc}</div>` : ""}
         </div>
         <div class="pv-right">
-          <div class="pv-price">+ ${Number(it.prix || 0).toLocaleString('fr-MA')} MAD</div>
-          <span class="pv-badge ${it.active ? 'chosen' : 'proposed'}">${it.active ? '✅ CHOISI' : '💡 PROPOSÉ'}</span>
+          <div class="pv-price">+ ${Number(it.prix || 0).toLocaleString("fr-MA")} MAD</div>
+          <span class="pv-badge ${it.active ? "chosen" : "proposed"}">${it.active ? "✅ CHOISI" : "💡 PROPOSÉ"}</span>
         </div>
-      </div>`).join('');
-        }
+      </div>`,
+          )
+          .join("");
+      }
 
-        // ── DOCS & PHOTOS ──
-        function renderDocsAndPhotos(docs) {
-            allDocs_ = docs || [];
-            const imgExts = ['JPG', 'JPEG', 'PNG', 'WEBP', 'GIF', 'BMP'];
-            const photos = allDocs_.filter(d => imgExts.includes((d.type || '').toUpperCase()) && d.category);
-            const techDocs = allDocs_.filter(d => !imgExts.includes((d.type || '').toUpperCase()));
-            allPhotos = photos;
+      // ── DOCS & PHOTOS ──
+      function renderDocsAndPhotos(docs) {
+        allDocs_ = docs || [];
+        const statDocs = document.getElementById("statDocs");
+        if (statDocs) statDocs.textContent = allDocs_.length || 0;
+        const imgExts = ["JPG", "JPEG", "PNG", "WEBP", "GIF", "BMP"];
+        const photos = allDocs_.filter(
+          (d) => imgExts.includes((d.type || "").toUpperCase()) && d.category,
+        );
+        const techDocs = allDocs_.filter(
+          (d) => !imgExts.includes((d.type || "").toUpperCase()),
+        );
+        allPhotos = photos;
 
-            // Build album tabs
-            const albums = ['Tous', ...new Set(photos.map(p => p.category).filter(Boolean))];
-            const tabsEl = document.getElementById('albumTabs');
-            tabsEl.innerHTML = albums.map(a =>
-                `<button class="album-tab ${a === currentAlbum ? 'active' : ''}" onclick="filterPhotos('${a}', this)">${a}</button>`
-            ).join('');
+        // Build album tabs
+        const albums = [
+          "Tous",
+          ...new Set(photos.map((p) => p.category).filter(Boolean)),
+        ];
+        const tabsEl = document.getElementById("albumTabs");
+        tabsEl.innerHTML = albums
+          .map(
+            (a) =>
+              `<button class="album-tab ${a === currentAlbum ? "active" : ""}" onclick="filterPhotos('${a}', this)">${a}</button>`,
+          )
+          .join("");
 
-            // Show photos
-            filterPhotos(currentAlbum, null);
+        // Show photos
+        filterPhotos(currentAlbum, null);
 
-            // Docs list
-            const docsEl = document.getElementById('docsList');
-            if (!techDocs.length) {
-                docsEl.innerHTML = `<div class="empty-state">
+        // Docs list
+        const docsEl = document.getElementById("docsList");
+        if (!techDocs.length) {
+          docsEl.innerHTML = `<div class="empty-state">
                     <div class="icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:var(--gray-300)">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -965,55 +1583,74 @@
                     <p>Aucun document disponible</p>
                     <small>Vos plans et documents apparaîtront ici</small>
                 </div>`;
-            } else {
-                const colors = { PDF: '#dc2626', DWG: '#2563eb', DXF: '#2563eb', XLS: '#16a34a', XLSX: '#16a34a', DOC: '#2563eb', DOCX: '#2563eb' };
-                docsEl.innerHTML = techDocs.map(d => {
-                    const ext = (d.type || 'DOC').toUpperCase();
-                    const color = colors[ext] || '#ca8a04';
-                    return `<div class="doc-item" onclick="openDoc('${d.url}','${d.nom}')">
+        } else {
+          const colors = {
+            PDF: "#dc2626",
+            DWG: "#2563eb",
+            DXF: "#2563eb",
+            XLS: "#16a34a",
+            XLSX: "#16a34a",
+            DOC: "#2563eb",
+            DOCX: "#2563eb",
+          };
+          docsEl.innerHTML = techDocs
+            .map((d) => {
+              const ext = (d.type || "DOC").toUpperCase();
+              const color = colors[ext] || "#ca8a04";
+              return `<div class="doc-item" onclick="openDoc('${d.url}','${d.nom}')">
           <div class="doc-badge" style="background:${color}">${ext}</div>
           <div>
             <div class="doc-name">${d.nom}</div>
-            <div class="doc-meta">${d.date || ''} ${d.category ? '· ' + d.category : ''}</div>
+            <div class="doc-meta">${d.date || ""} ${d.category ? "· " + d.category : ""}</div>
           </div>
           <div class="doc-arrow">›</div>
         </div>`;
-                }).join('');
-            }
+            })
+            .join("");
         }
+      }
 
-        function filterPhotos(album, btnEl) {
-            currentAlbum = album;
-            if (btnEl) {
-                document.querySelectorAll('.album-tab').forEach(t => t.classList.remove('active'));
-                btnEl.classList.add('active');
-            }
-            const filtered = album === 'Tous' ? allPhotos : allPhotos.filter(p => p.category === album);
-            const grid = document.getElementById('photoGrid');
-            if (!filtered.length) {
-                grid.innerHTML = `<div class="gallery-empty" style="grid-column:1/-1">
+      function filterPhotos(album, btnEl) {
+        currentAlbum = album;
+        if (btnEl) {
+          document
+            .querySelectorAll(".album-tab")
+            .forEach((t) => t.classList.remove("active"));
+          btnEl.classList.add("active");
+        }
+        const filtered =
+          album === "Tous"
+            ? allPhotos
+            : allPhotos.filter((p) => p.category === album);
+        const grid = document.getElementById("photoGrid");
+        if (!filtered.length) {
+          grid.innerHTML = `<div class="gallery-empty" style="grid-column:1/-1">
                     <div class="gallery-empty-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:48px;height:48px;color:var(--gray-300)">
                             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                             <circle cx="12" cy="13" r="4"></circle>
                         </svg>
                     </div>
-                    <p style="font-size:14px;color:var(--gray-500);font-weight:600">${album === 'Tous' ? 'Aucune photo de chantier' : 'Aucune photo dans cet album'}</p>
+                    <p style="font-size:14px;color:var(--gray-500);font-weight:600">${album === "Tous" ? "Aucune photo de chantier" : "Aucune photo dans cet album"}</p>
                 </div>`;
-                return;
-            }
-            grid.innerHTML = filtered.map(p => `
+          return;
+        }
+        grid.innerHTML = filtered
+          .map(
+            (p) => `
       <div class="photo-card" onclick="openLightbox('${p.url}')">
         <img src="${p.url}" loading="lazy" alt="${p.nom}">
         <div class="photo-label">${p.category}</div>
-      </div>`).join('');
-        }
+      </div>`,
+          )
+          .join("");
+      }
 
-        // ── MESSAGES ──
-        function renderMessages(msgs) {
-            const c = document.getElementById('msgContainer');
-            if (!msgs || !msgs.length) {
-                c.innerHTML = `<div class="msg-empty">
+      // ── MESSAGES ──
+      function renderMessages(msgs) {
+        const c = document.getElementById("msgContainer");
+        if (!msgs || !msgs.length) {
+          c.innerHTML = `<div class="msg-empty">
                     <div class="msg-empty-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:52px;height:52px;color:var(--gray-300)">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -1022,139 +1659,486 @@
                     <p>Aucun message</p>
                     <small>Envoyez un message à votre équipe IBE</small>
                 </div>`;
-                return;
-            }
-            c.innerHTML = msgs.map(m => `
-      <div class="msg-bubble-wrap ${m.moi ? 'me' : ''}">
-        <div class="msg-meta">${m.moi ? '' : `<span class="msg-sender">${m.de} · </span>`}${m.heure}</div>
+          return;
+        }
+        c.innerHTML = msgs
+          .map(
+            (m) => `
+      <div class="msg-bubble-wrap ${m.moi ? "me" : ""}">
+        <div class="msg-meta">${m.moi ? "" : `<span class="msg-sender">${m.de} · </span>`}${m.heure}</div>
         <div class="msg-bubble">${m.texte}</div>
-      </div>`).join('');
-            c.scrollTop = c.scrollHeight;
-            if (!isOnMessages) {
-                const badge = document.getElementById('msgBadge');
-                badge.classList.add('show');
-            }
+      </div>`,
+          )
+          .join("");
+        c.scrollTop = c.scrollHeight;
+        if (!isOnMessages) {
+          const badge = document.getElementById("msgBadge");
+          badge.classList.add("show");
         }
+      }
 
-        async function sendMsg() {
-            const input = document.getElementById('msgInput');
-            const text = (input.value || '').trim();
-            if (!text || !currentUser) return;
-            input.value = '';
-            await ibeSendMessage(currentUser.uid, text, currentProfile?.nom || 'Client', false);
+      async function sendMsg() {
+        const input = document.getElementById("msgInput");
+        const text = (input.value || "").trim();
+        if (!text || !currentUser) return;
+        input.value = "";
+        await ibeSendMessage(
+          currentUser.uid,
+          text,
+          currentProfile?.nom || "Client",
+          false,
+        );
+      }
+
+      // ── LIGHTBOX ──
+      function openLightbox(url) {
+        document.getElementById("lightboxImg").src = url;
+        document.getElementById("lightbox").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function closeLightbox() {
+        document.getElementById("lightbox").classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      // ── OPEN DOC ──
+      function openDoc(url, name) {
+        if (!url) return;
+        window.open(
+          typeof cloudinaryFixUrl === "function"
+            ? cloudinaryFixUrl(url, name, true)
+            : url,
+          "_blank",
+        );
+      }
+
+      // ── SUIVI (PROCORE) DATA ──
+      let suiviLoaded = false;
+      async function loadSuiviData(uid) {
+        if (!uid) return;
+        if (suiviLoaded) return;
+        suiviLoaded = true;
+
+        try {
+          const [rfis, insps, logs, ces, obs] = await Promise.all([
+            ibeGetRFIs(uid),
+            ibeGetInspections(uid),
+            ibeGetDailyLogs(uid),
+            ibeGetChangeEvents(uid),
+            ibeGetObservations(uid),
+          ]);
+          clientRFIs = rfis || [];
+          clientCEs = ces || [];
+          if (typeof updateChecklist === "function") updateChecklist();
+
+          renderSuiviSection("clientRfiList", rfis, renderRFIItem, "RFI");
+          renderSuiviSection(
+            "clientInspList",
+            insps,
+            renderInspItem,
+            "rapport",
+          );
+          renderSuiviSection("clientLogList", logs, renderLogItem, "journal");
+          renderSuiviSection("clientCeList", ces, renderCEItem, "ordre");
+          renderSuiviSection(
+            "clientObsList",
+            obs,
+            renderObsItem,
+            "observation",
+          );
+
+          // Update cockpit badge
+          const openCount =
+            rfis.filter((r) => r.status === "open" || r.status === "pending")
+              .length + ces.filter((c) => c.status === "pending").length;
+          const statSuivi = document.getElementById("statSuivi");
+          if (statSuivi)
+            statSuivi.textContent =
+              openCount > 0 ? `${openCount} Action(s)` : "À jour";
+        } catch (e) {
+          console.error("Suivi load error:", e);
         }
+      }
 
-        // ── LIGHTBOX ──
-        function openLightbox(url) {
-            document.getElementById('lightboxImg').src = url;
-            document.getElementById('lightbox').classList.add('active');
-            document.body.style.overflow = 'hidden';
+      function renderSuiviSection(containerId, items, renderFn, label) {
+        const el = document.getElementById(containerId);
+        if (!el) return;
+        if (!items || !items.length) {
+          el.innerHTML = `<div class="empty-state"><p>Aucun ${label} disponible</p></div>`;
+          return;
         }
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = '';
-        }
+        el.innerHTML = items.map(renderFn).join("");
+      }
 
-        // ── OPEN DOC ──
-        function openDoc(url, name) {
-            if (!url) return;
-            window.open(typeof cloudinaryFixUrl === 'function' ? cloudinaryFixUrl(url, name, true) : url, '_blank');
-        }
+      function statusBadge(status) {
+        const map = {
+          open: { color: "#2563eb", bg: "#dbeafe", label: "Ouvert" },
+          pending: { color: "#d97706", bg: "#fef3c7", label: "En attente" },
+          closed: { color: "#16a34a", bg: "#dcfce7", label: "Clôturé" },
+          approved: { color: "#16a34a", bg: "#dcfce7", label: "Approuvé" },
+          rejected: { color: "#dc2626", bg: "#fee2e2", label: "Refusé" },
+        };
+        const s = map[status] || {
+          color: "#6b7280",
+          bg: "#f3f4f6",
+          label: status || "—",
+        };
+        return `<span style="background:${s.bg};color:${s.color};font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">${s.label}</span>`;
+      }
 
-        // ── SUIVI (PROCORE) DATA ──
-        let suiviLoaded = false;
-        async function loadSuiviData(uid) {
-            if (!uid) return;
-            if (suiviLoaded) return;
-            suiviLoaded = true;
-
-            try {
-                const [rfis, insps, logs, ces, obs] = await Promise.all([
-                    ibeGetRFIs(uid),
-                    ibeGetInspections(uid),
-                    ibeGetDailyLogs(uid),
-                    ibeGetChangeEvents(uid),
-                    ibeGetObservations(uid)
-                ]);
-                renderSuiviSection('clientRfiList', rfis, renderRFIItem, 'RFI');
-                renderSuiviSection('clientInspList', insps, renderInspItem, 'rapport');
-                renderSuiviSection('clientLogList', logs, renderLogItem, 'journal');
-                renderSuiviSection('clientCeList', ces, renderCEItem, 'ordre');
-                renderSuiviSection('clientObsList', obs, renderObsItem, 'observation');
-
-                // Update cockpit badge
-                const openCount = rfis.filter(r => r.status === 'open' || r.status === 'pending').length
-                    + ces.filter(c => c.status === 'pending').length;
-                const statSuivi = document.getElementById('statSuivi');
-                if (statSuivi) statSuivi.textContent = openCount > 0 ? `${openCount} Action(s)` : 'À jour';
-            } catch(e) {
-                console.error('Suivi load error:', e);
-            }
-        }
-
-        function renderSuiviSection(containerId, items, renderFn, label) {
-            const el = document.getElementById(containerId);
-            if (!el) return;
-            if (!items || !items.length) {
-                el.innerHTML = `<div class="empty-state"><p>Aucun ${label} disponible</p></div>`;
-                return;
-            }
-            el.innerHTML = items.map(renderFn).join('');
-        }
-
-        function statusBadge(status) {
-            const map = {
-                open:     { color: '#2563eb', bg: '#dbeafe', label: 'Ouvert' },
-                pending:  { color: '#d97706', bg: '#fef3c7', label: 'En attente' },
-                closed:   { color: '#16a34a', bg: '#dcfce7', label: 'Clôturé' },
-                approved: { color: '#16a34a', bg: '#dcfce7', label: 'Approuvé' },
-                rejected: { color: '#dc2626', bg: '#fee2e2', label: 'Refusé' }
-            };
-            const s = map[status] || { color: '#6b7280', bg: '#f3f4f6', label: status || '—' };
-            return `<span style="background:${s.bg};color:${s.color};font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">${s.label}</span>`;
-        }
-
-        function suiviCard(icon, title, subtitle, dateStr, status) {
-            return `<div style="background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.07);display:flex;gap:12px;align-items:flex-start">
+      function suiviCard(icon, title, subtitle, dateStr, status) {
+        return `<div style="background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.07);display:flex;gap:12px;align-items:flex-start">
                 <div style="font-size:22px;line-height:1">${icon}</div>
                 <div style="flex:1;min-width:0">
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
                         <div style="font-size:13px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${title}</div>
                         ${statusBadge(status)}
                     </div>
-                    ${subtitle ? `<div style="font-size:12px;color:var(--gray-500);margin-top:4px">${subtitle}</div>` : ''}
-                    ${dateStr ? `<div style="font-size:11px;color:var(--gray-400);margin-top:4px">📅 ${dateStr}</div>` : ''}
+                    ${subtitle ? `<div style="font-size:12px;color:var(--gray-500);margin-top:4px">${subtitle}</div>` : ""}
+                    ${dateStr ? `<div style="font-size:11px;color:var(--gray-400);margin-top:4px">📅 ${dateStr}</div>` : ""}
                 </div>
             </div>`;
-        }
+      }
 
-        function renderRFIItem(r) {
-            return suiviCard('❓', r.title || 'Demande d\'Info', r.description || '', r.date || '', r.status);
-        }
-        function renderInspItem(r) {
-            return suiviCard('✔️', r.title || 'Inspection', r.notes || '', r.date || '', r.status || 'closed');
-        }
-        function renderLogItem(r) {
-            return suiviCard('📋', r.date || 'Journal', r.notes || '', r.date || '', 'closed');
-        }
-        function renderCEItem(r) {
-            const price = r.montant ? `+${Number(r.montant).toLocaleString('fr-MA')} MAD` : '';
-            return suiviCard('📝', r.title || 'Ordre de Changement', (price ? price + (r.description ? ' · ' + r.description : '') : r.description) || '', r.date || '', r.status);
-        }
-        function renderObsItem(r) {
-            return suiviCard('👁️', r.title || 'Observation', r.description || '', r.date || '', r.status);
-        }
+      function renderRFIItem(r) {
+        return suiviCard(
+          "❓",
+          r.title || "Demande d'Info",
+          r.description || "",
+          r.date || "",
+          r.status,
+        );
+      }
+      function renderInspItem(r) {
+        return suiviCard(
+          "✔️",
+          r.title || "Inspection",
+          r.notes || "",
+          r.date || "",
+          r.status || "closed",
+        );
+      }
+      function renderLogItem(r) {
+        return suiviCard(
+          "📋",
+          r.date || "Journal",
+          r.notes || "",
+          r.date || "",
+          "closed",
+        );
+      }
+      function renderCEItem(r) {
+        const price = r.montant
+          ? `+${Number(r.montant).toLocaleString("fr-MA")} MAD`
+          : "";
+        return suiviCard(
+          "📝",
+          r.title || "Ordre de Changement",
+          (price
+            ? price + (r.description ? " · " + r.description : "")
+            : r.description) || "",
+          r.date || "",
+          r.status,
+        );
+      }
+      function renderObsItem(r) {
+        return suiviCard(
+          "👁️",
+          r.title || "Observation",
+          r.description || "",
+          r.date || "",
+          r.status,
+        );
+      }
 
-        // ── LOGOUT ──
-        async function doLogout() {
-            if (confirm('Voulez-vous vous déconnecter ?')) {
-                if (unsubMessages) unsubMessages();
-                if (unsubDocuments) unsubDocuments();
-                await ibeLogout();
-                window.location.href = 'login.html';
+      // ── LOGOUT ──
+      async function doLogout() {
+        if (confirm("Voulez-vous vous déconnecter ?")) {
+          if (unsubMessages) unsubMessages();
+          if (unsubDocuments) unsubDocuments();
+          if (unsubNotifications) unsubNotifications();
+          await ibeLogout();
+          window.location.href = "login.html";
+        }
+      }
+
+      // ── NOTIFICATIONS LOGIC ──
+      function updateNotifBell(uid) {
+        if (unsubNotifications) unsubNotifications();
+        unsubNotifications = ibeListenNotifications(uid, (notifs) => {
+          clientNotifications = notifs || [];
+          const unreadCount = clientNotifications.filter((n) => !n.read).length;
+          const badge = document.getElementById("bellBadge");
+          if (badge) {
+            if (unreadCount > 0) {
+              badge.style.display = "block";
+            } else {
+              badge.style.display = "none";
             }
-        }
-    </script>
-</body>
+          }
+          renderNotificationDropdown();
+        });
+      }
 
+      function toggleNotifs() {
+        const notifDropdown = document.getElementById("notifDropdown");
+        if (!notifDropdown) return;
+        if (notifDropdown.style.display === "none") {
+          notifDropdown.style.display = "flex";
+          renderNotificationDropdown();
+        } else {
+          notifDropdown.style.display = "none";
+        }
+      }
+
+      function renderNotificationDropdown() {
+        const listEl = document.getElementById("notifDropdownList");
+        if (!listEl) return;
+        if (!clientNotifications.length) {
+          listEl.innerHTML = '<div class="notif-empty">Aucune notification</div>';
+          return;
+        }
+        listEl.innerHTML = clientNotifications
+          .map((n) => {
+            return `
+              <div class="notif-item ${n.read ? "" : "unread"}" onclick="markNotifRead('${n.id}', event)">
+                <div class="notif-title">${n.title || "Notification"}</div>
+                <div class="notif-desc">${n.message || ""}</div>
+                <div class="notif-time">${n.date || ""} ${n.heure || ""}</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      async function markNotifRead(id, event) {
+        event.stopPropagation();
+        try {
+          await ibeMarkNotificationRead(currentUser.uid, id);
+        } catch (e) {
+          console.error("Error marking notification read:", e);
+        }
+      }
+
+      async function markAllNotifsAsRead(event) {
+        event.stopPropagation();
+        try {
+          await ibeMarkAllNotificationsRead(currentUser.uid);
+        } catch (e) {
+          console.error("Error marking all notifications read:", e);
+        }
+      }
+
+      document.addEventListener("click", (e) => {
+        const notifDropdown = document.getElementById("notifDropdown");
+        const notifBell = document.getElementById("notifBell");
+        if (notifDropdown && notifDropdown.style.display !== "none") {
+          if (!notifDropdown.contains(e.target) && !notifBell.contains(e.target)) {
+            notifDropdown.style.display = "none";
+          }
+        }
+      });
+
+      // ── CHECKLIST DYNAMIQUE ACTIONS REQUISES ──
+      function updateChecklist() {
+        const checklistCard = document.getElementById("clientChecklistCard");
+        const listEl = document.getElementById("checklistList");
+        const countEl = document.getElementById("checklistCount");
+        if (!checklistCard || !listEl || !countEl) return;
+
+        const tasks = [];
+
+        // 1. Factures en attente
+        if (clientInvoices && clientInvoices.length) {
+          clientInvoices.forEach((inv) => {
+            if (inv.statut === "attente") {
+              const overdue =
+                inv.echeance && new Date(inv.echeance) < new Date();
+              tasks.push({
+                id: "inv-" + (inv.id || inv.num),
+                text:
+                  `Régler la facture ${inv.num || "de chantier"} (${Number(inv.montant || 0).toLocaleString("fr-MA")} MAD)` +
+                  (overdue
+                    ? " <span style='color:var(--danger);font-weight:bold;'>⚠️ RETARD</span>"
+                    : ""),
+                checked: false,
+              });
+            }
+          });
+        }
+
+        // 2. Prochaine visite
+        if (
+          clientProject &&
+          clientProject.prochaine_visite &&
+          clientProject.prochaine_visite.date
+        ) {
+          tasks.push({
+            id: "visit-" + clientProject.prochaine_visite.date,
+            text:
+              `Confirmer le rendez-vous visite du ${clientProject.prochaine_visite.date}` +
+              (clientProject.prochaine_visite.heure
+                ? ` à ${clientProject.prochaine_visite.heure}`
+                : ""),
+            checked: false,
+          });
+        }
+
+        // 3. Ordres de changement en attente
+        if (clientCEs && clientCEs.length) {
+          clientCEs.forEach((ce) => {
+            if (ce.status === "pending") {
+              tasks.push({
+                id: "ce-" + ce.id,
+                text: `Valider l'ordre de changement : ${ce.title || "Plus-value"}`,
+                checked: false,
+              });
+            }
+          });
+        }
+
+        // 4. RFIs ouvertes
+        if (clientRFIs && clientRFIs.length) {
+          clientRFIs.forEach((rfi) => {
+            if (rfi.status === "open" || rfi.status === "pending") {
+              tasks.push({
+                id: "rfi-" + rfi.id,
+                text: `Consulter la demande d'information (RFI) : ${rfi.title || "RFI"}`,
+                checked: false,
+              });
+            }
+          });
+        }
+
+        // Tâches par défaut pour assurer la présence visuelle
+        if (tasks.length === 0) {
+          tasks.push({
+            id: "default-1",
+            text: "Suivre l'avancement technique sur le planning de phase",
+            checked: false,
+          });
+          tasks.push({
+            id: "default-2",
+            text: "Prendre contact avec votre chargé de projet IBE pour toute question",
+            checked: false,
+          });
+        }
+
+        const checkedMap = JSON.parse(
+          localStorage.getItem("ibe_checklist_checked") || "{}",
+        );
+
+        listEl.innerHTML = tasks
+          .map((t) => {
+            const isChecked = !!checkedMap[t.id];
+            return `
+            <div class="checklist-item ${isChecked ? "checked" : ""}" onclick="toggleChecklistItem('${t.id}')">
+              <div class="checklist-checkbox"></div>
+              <div class="checklist-text">${t.text}</div>
+            </div>
+          `;
+          })
+          .join("");
+
+        const activeCount = tasks.filter((t) => !checkedMap[t.id]).length;
+        countEl.textContent = `${activeCount} tâche(s) restante(s)`;
+        checklistCard.style.display = "block";
+      }
+
+      function toggleChecklistItem(id) {
+        const checkedMap = JSON.parse(
+          localStorage.getItem("ibe_checklist_checked") || "{}",
+        );
+        checkedMap[id] = !checkedMap[id];
+        localStorage.setItem(
+          "ibe_checklist_checked",
+          JSON.stringify(checkedMap),
+        );
+        updateChecklist();
+      }
+
+      // ── MODAL ÉQUIPE PROJET ──
+      function openTeamModal() {
+        const modal = document.getElementById("teamModalOverlay");
+        const body = document.getElementById("teamModalBody");
+        if (!modal || !body) return;
+
+        const manager =
+          document.getElementById("managerName").textContent ||
+          "Chargé de projet";
+        const tel =
+          document
+            .getElementById("managerTel")
+            .textContent.replace("📞 Appeler", "")
+            .trim() || "+212 522 00 00 00";
+        const initials =
+          manager
+            .split(" ")
+            .map((w) => w[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase() || "IB";
+
+        const team = [
+          {
+            name: manager,
+            role: "Chargé de projet IBE",
+            initials: initials,
+            status: "active",
+            tel: tel,
+          },
+          {
+            name: "Robert Pascal",
+            role: "Ingénieur Structure",
+            initials: "RP",
+            status: "active",
+            tel: "+212 661 12 34 56",
+          },
+          {
+            name: "Sophie Martin",
+            role: "Responsable HSE",
+            initials: "SM",
+            status: "vacation",
+            tel: "+212 661 98 76 54",
+          },
+          {
+            name: "Anas Alami",
+            role: "Bureau d'études BIM",
+            initials: "AA",
+            status: "active",
+            tel: "+212 662 44 55 66",
+          },
+        ];
+
+        body.innerHTML = team
+          .map(
+            (m) => `
+          <div class="team-member-row">
+            <div class="team-member-avatar">
+              ${m.initials}
+              <span class="team-member-status-pip ${m.status}"></span>
+            </div>
+            <div class="team-member-info">
+              <div class="team-member-name">${m.name}</div>
+              <div class="team-member-role">${m.role}</div>
+            </div>
+            <a class="team-member-tel" href="tel:${m.tel.replace(/\s/g, "")}">Appeler</a>
+          </div>
+        `,
+          )
+          .join("");
+
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeTeamModal(e) {
+        const modal = document.getElementById("teamModalOverlay");
+        if (modal) {
+          modal.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+      }
+    </script>
+  </body>
 </html>

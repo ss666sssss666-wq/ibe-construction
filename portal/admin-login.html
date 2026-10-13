@@ -410,10 +410,15 @@
 
     <script>
       // Si déjà connecté et admin → aller au dashboard admin
+      let isRedirecting = false;
       auth.onAuthStateChanged(async (user) => {
+        if (isRedirecting) return;
         if (user) {
           const isAdmin = await ibeIsAdmin(user.uid);
-          if (isAdmin) window.location.href = "admin.html";
+          if (isAdmin) {
+            isRedirecting = true;
+            window.location.href = "admin.html";
+          }
         }
       });
 

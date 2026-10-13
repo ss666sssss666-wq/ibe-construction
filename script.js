@@ -345,7 +345,7 @@ function initRadarChart() {
     },
     attr: { points: finalPoints },
     duration: 1.5,
-    ease: "power2.out"
+    ease: "power2.out",
   });
 
   // Animate Performance Bars
@@ -549,8 +549,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // FAQ Accordion
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const btn = item.querySelector('.faq-question');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        // Close all
+        faqItems.forEach(i => {
+          i.classList.remove('active');
+          const b = i.querySelector('.faq-question');
+          if (b) b.setAttribute('aria-expanded', 'false');
+        });
+        // Toggle current
+        if (!isActive) {
+          item.classList.add('active');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    }
+  });
+
   // Initial Trigger for counters
   animateCounters();
+
+  // Force logo cloud animation on mobile/Safari
+  const forceLogoAnimation = () => {
+    const tracks = document.querySelectorAll(".logo-cloud-track");
+    tracks.forEach((track) => {
+      // Force running state
+      track.style.animationPlayState = "running";
+      // Force repaint to wake up the browser
+      void track.offsetWidth;
+    });
+  };
+
+  if (document.readyState === "complete") {
+    forceLogoAnimation();
+  } else {
+    window.addEventListener("load", forceLogoAnimation);
+    // Extra insurance: nudge again after a short delay
+    setTimeout(forceLogoAnimation, 1000);
+  }
 });
 
 // ==========================================
@@ -584,40 +625,88 @@ function initLoader() {
 // IMAGE MODAL FOR SHOWCASE PHOTOS
 // ==========================================
 function openImageModal(src) {
-  const modal = document.getElementById('imageModal');
-  const img = document.getElementById('imageModalImg');
-  
+  const modal = document.getElementById("imageModal");
+  const img = document.getElementById("imageModalImg");
+
   if (modal && img) {
     img.src = src;
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
   }
 }
 
 function closeImageModal() {
-  const modal = document.getElementById('imageModal');
+  const modal = document.getElementById("imageModal");
   if (modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = ''; // Restore background scrolling
+    modal.classList.remove("active");
+    document.body.style.overflow = ""; // Restore background scrolling
   }
 }
 
 // Close modal when clicking outside the image
-document.addEventListener('DOMContentLoaded', () => {
-  const imageModal = document.getElementById('imageModal');
+document.addEventListener("DOMContentLoaded", () => {
+  const imageModal = document.getElementById("imageModal");
   if (imageModal) {
-    imageModal.addEventListener('click', (e) => {
+    imageModal.addEventListener("click", (e) => {
       if (e.target === imageModal) {
         closeImageModal();
       }
     });
 
     // Close on escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && imageModal.classList.contains("active")) {
         closeImageModal();
       }
     });
   }
 });
 
+// ==========================================
+// VIDEO MODAL (PRESENTATION IBE via YouTube)
+// ==========================================
+(function initVideoModal() {
+  const modal = document.getElementById("videoModal");
+  const openTrigger = document.getElementById("openVideoModal");
+  const closeBtn = document.getElementById("closeVideoBtn");
+  const backdrop = document.getElementById("closeVideoModal");
+  const modalInner = document.getElementById("videoModalInner");
+  const youtubeId = "fSJtdCfBuhc";
+
+  if (!modal || !openTrigger || !modalInner) return;
+
+  function openVideoModal() {
+    // Inject the YouTube iframe with autoplay and custom parameters
+    modalInner.innerHTML = `
+      <iframe 
+        src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1" 
+        title="IBE Construction Présentation Video" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen
+        class="video-player">
+      </iframe>
+    `;
+    modal.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeVideoModal() {
+    modal.classList.remove("is-open");
+    document.body.style.overflow = "";
+    // Clear iframe to stop video and release memory
+    modalInner.innerHTML = "";
+  }
+
+  openTrigger.addEventListener("click", openVideoModal);
+
+  if (closeBtn) closeBtn.addEventListener("click", closeVideoModal);
+  if (backdrop) backdrop.addEventListener("click", closeVideoModal);
+
+  // Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) {
+      closeVideoModal();
+    }
+  });
+})();

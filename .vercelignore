@@ -1,0 +1,7 @@
+# Exclude large local video files from Vercel deployment
+*.mp4
+video presentation/
+node_modules/
+.git/
+.vercel/
+.env*.local

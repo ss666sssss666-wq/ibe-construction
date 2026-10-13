@@ -1,10 +1,12 @@
-const fs = require('fs');
+const fs = require("fs");
 
-let html = fs.readFileSync('./portal/admin.html', 'utf8');
+let html = fs.readFileSync("./portal/admin.html", "utf8");
 
 // 1. Inject Tailwind and Chart.js in <head>
-if (!html.includes('cdn.tailwindcss.com')) {
-    html = html.replace('</head>', `
+if (!html.includes("cdn.tailwindcss.com")) {
+  html = html.replace(
+    "</head>",
+    `
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -28,11 +30,15 @@ if (!html.includes('cdn.tailwindcss.com')) {
             }
         }
     </script>
-</head>`);
+</head>`,
+  );
 }
 
 // 2. Adjust global body background to match prompt 1 (only if we can find body { background: ... })
-html = html.replace(/body\s*\{[^}]*background:\s*var\(--bg\);/i, 'body { font-family: "Inter", sans-serif; background: #F4F7F6; min-height: 100vh; color: #1F2937; display: flex;');
+html = html.replace(
+  /body\s*\{[^}]*background:\s*var\(--bg\);/i,
+  'body { font-family: "Inter", sans-serif; background: #F4F7F6; min-height: 100vh; color: #1F2937; display: flex;',
+);
 
 // 3. We will replace the entire <aside class="sidebar">...</aside>
 const sidebarRegex = /<aside class="sidebar">[\s\S]*?<\/aside>/;
@@ -158,19 +164,22 @@ const newSidebar = `
 html = html.replace(sidebarRegex, newSidebar);
 
 // 4. Update the main container classes
-html = html.replace(/<div class="main">/, '<div class="main flex-1 ml-64 bg-flup-bg min-h-screen transition-all duration-300 flex flex-col">');
+html = html.replace(
+  /<div class="main">/,
+  '<div class="main flex-1 ml-64 bg-flup-bg min-h-screen transition-all duration-300 flex flex-col">',
+);
 
 // 5. Replace Topbar
 const topbarStart = html.indexOf('<div class="topbar">');
 let contentIdx = html.indexOf('<div class="content">', topbarStart);
 // if not found exactly as <div class="content"> try finding the prefix
 if (contentIdx === -1) {
-    contentIdx = html.indexOf('<div class="content', topbarStart);
+  contentIdx = html.indexOf('<div class="content', topbarStart);
 }
 
-if(topbarStart !== -1 && contentIdx !== -1) {
-    const topbarMatch = html.substring(topbarStart, contentIdx);
-    const newTopbar = `
+if (topbarStart !== -1 && contentIdx !== -1) {
+  const topbarMatch = html.substring(topbarStart, contentIdx);
+  const newTopbar = `
         <!-- NEW FLUP TOPBAR -->
         <header class="h-20 bg-transparent flex items-center justify-between px-8 shrink-0">
             <h1 class="text-2xl font-bold text-flup-dark tracking-tight" id="topbarTitle">Dashboard</h1>
@@ -185,29 +194,44 @@ if(topbarStart !== -1 && contentIdx !== -1) {
             </div>
         </header>
     `;
-    html = html.replace(topbarMatch, newTopbar);
+  html = html.replace(topbarMatch, newTopbar);
 }
 
 // 6. Replace sec-overview entirely with the prompt's layout (KPIs + Charts + Table appended)
-const secOverviewStart = html.indexOf('<div id="sec-overview" class="section active">');
-const secOverviewEnd = html.indexOf('<!-- ═══ CLIENTS ═══ -->');
+const secOverviewStart = html.indexOf(
+  '<div id="sec-overview" class="section active">',
+);
+const secOverviewEnd = html.indexOf("<!-- ═══ CLIENTS ═══ -->");
 
 if (secOverviewStart !== -1 && secOverviewEnd !== -1) {
-    // Keep the "Activité récente" table HTML to append at the bottom
-    const overviewContent = html.substring(secOverviewStart, secOverviewEnd);
-    const tableRegex = /<div class="card">[\s\S]*?<div class="card-title">Activité récente — Clients<\/div>[\s\S]*?<\/table>\s*<\/div>\s*<\/div>/;
-    const tableMatch = overviewContent.match(tableRegex);
-    const recentTableHtml = tableMatch ? tableMatch[0] : '';
-    
-    // Convert current table styling to Tailwind so it blends nicely
-    let tailwindTable = recentTableHtml.replace(/class="card"/, 'class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]"');
-    tailwindTable = tailwindTable.replace('class="card-title"', 'class="text-lg font-bold text-flup-dark mb-4"');
-    tailwindTable = tailwindTable.replace(/class="table"/g, 'class="w-full text-left border-collapse"');
-    tailwindTable = tailwindTable.replace(/<th>/g, '<th class="pb-3 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">');
-    // For td we need CSS, but since we keep the <style> block it should inherit mostly fine, 
-    // we'll just let the original table structure render below.
+  // Keep the "Activité récente" table HTML to append at the bottom
+  const overviewContent = html.substring(secOverviewStart, secOverviewEnd);
+  const tableRegex =
+    /<div class="card">[\s\S]*?<div class="card-title">Activité récente — Clients<\/div>[\s\S]*?<\/table>\s*<\/div>\s*<\/div>/;
+  const tableMatch = overviewContent.match(tableRegex);
+  const recentTableHtml = tableMatch ? tableMatch[0] : "";
 
-    const newOverview = `
+  // Convert current table styling to Tailwind so it blends nicely
+  let tailwindTable = recentTableHtml.replace(
+    /class="card"/,
+    'class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]"',
+  );
+  tailwindTable = tailwindTable.replace(
+    'class="card-title"',
+    'class="text-lg font-bold text-flup-dark mb-4"',
+  );
+  tailwindTable = tailwindTable.replace(
+    /class="table"/g,
+    'class="w-full text-left border-collapse"',
+  );
+  tailwindTable = tailwindTable.replace(
+    /<th>/g,
+    '<th class="pb-3 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">',
+  );
+  // For td we need CSS, but since we keep the <style> block it should inherit mostly fine,
+  // we'll just let the original table structure render below.
+
+  const newOverview = `
     <!-- ═══ OVERVIEW (FLUP DESIGN) ═══ -->
     <div id="sec-overview" class="section active px-8 pb-8">
         
@@ -352,7 +376,10 @@ if (secOverviewStart !== -1 && secOverviewEnd !== -1) {
     </div>
     `;
 
-    html = html.substring(0, secOverviewStart) + newOverview + html.substring(secOverviewEnd);
+  html =
+    html.substring(0, secOverviewStart) +
+    newOverview +
+    html.substring(secOverviewEnd);
 }
 
 // 7. Inject Chart.js initialization code at the very end of the file
@@ -447,9 +474,17 @@ document.addEventListener('DOMContentLoaded', () => {
 html = html.replace(/<\/body>/, chartJsScript);
 
 // 8. Fix missing padding/layout on other sections
-html = html.replace(/class="content"/, 'class="content px-8 pb-8 flex-1 overflow-y-auto"'); // Ensures content is padded and scrolls correctly
+html = html.replace(
+  /class="content"/,
+  'class="content px-8 pb-8 flex-1 overflow-y-auto"',
+); // Ensures content is padded and scrolls correctly
 // Fix card styles globally for tailwind integration
-html = html.replace(/class="card"/g, 'class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] mb-6"');
+html = html.replace(
+  /class="card"/g,
+  'class="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] mb-6"',
+);
 
-fs.writeFileSync('./portal/admin.html', html);
-console.log('Successfully injected Tailwind CSS and Flup Layout into admin.html');
+fs.writeFileSync("./portal/admin.html", html);
+console.log(
+  "Successfully injected Tailwind CSS and Flup Layout into admin.html",
+);

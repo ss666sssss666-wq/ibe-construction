@@ -421,10 +421,23 @@ async function ibeGetAllInvoices() {
   for (const userDoc of usersSnap.docs) {
     const uid = userDoc.id;
     const userName = userDoc.data().nom || uid;
-    const snap = await db.collection("invoices").doc(uid).collection("items").get();
-    snap.docs.forEach((d) => allInv.push({ id: d.id, clientUid: uid, clientName: userName, ...d.data() }));
+    const snap = await db
+      .collection("invoices")
+      .doc(uid)
+      .collection("items")
+      .get();
+    snap.docs.forEach((d) =>
+      allInv.push({
+        id: d.id,
+        clientUid: uid,
+        clientName: userName,
+        ...d.data(),
+      }),
+    );
   }
-  return allInv.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  return allInv.sort(
+    (a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0),
+  );
 }
 
 // ── Suivi Budget ─────────────────────────────────────────────
@@ -441,7 +454,7 @@ async function ibeUpdateBudget(uid, data) {
 async function ibeGetAllBudgets() {
   const snap = await db.collection("budgets").get();
   const all = {};
-  snap.docs.forEach(d => all[d.id] = d.data());
+  snap.docs.forEach((d) => (all[d.id] = d.data()));
   return all;
 }
 
@@ -486,10 +499,23 @@ async function ibeGetAllPlusValues() {
   for (const userDoc of usersSnap.docs) {
     const uid = userDoc.id;
     const userName = userDoc.data().nom || uid;
-    const snap = await db.collection("plus_values").doc(uid).collection("items").get();
-    snap.docs.forEach((d) => allPV.push({ id: d.id, clientUid: uid, clientName: userName, ...d.data() }));
+    const snap = await db
+      .collection("plus_values")
+      .doc(uid)
+      .collection("items")
+      .get();
+    snap.docs.forEach((d) =>
+      allPV.push({
+        id: d.id,
+        clientUid: uid,
+        clientName: userName,
+        ...d.data(),
+      }),
+    );
   }
-  return allPV.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  return allPV.sort(
+    (a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0),
+  );
 }
 
 // ── Notifications In-App ─────────────────────────────────────
@@ -498,28 +524,45 @@ async function ibeAddNotification(uid, data) {
   data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   data.read = false;
   data.date = new Date().toLocaleDateString("fr-FR", {
-    day: "numeric", month: "short", year: "numeric",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   });
   data.heure = new Date().toLocaleTimeString("fr-FR", {
-    hour: "2-digit", minute: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
   });
   return db.collection("notifications").doc(uid).collection("items").add(data);
 }
 
 function ibeListenNotifications(uid, callback) {
-  return db.collection("notifications").doc(uid).collection("items")
-    .orderBy("createdAt", "desc").limit(30)
+  return db
+    .collection("notifications")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .limit(30)
     .onSnapshot((snap) => {
       callback(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
     });
 }
 
 async function ibeMarkNotificationRead(uid, notifId) {
-  return db.collection("notifications").doc(uid).collection("items").doc(notifId).update({ read: true });
+  return db
+    .collection("notifications")
+    .doc(uid)
+    .collection("items")
+    .doc(notifId)
+    .update({ read: true });
 }
 
 async function ibeMarkAllNotificationsRead(uid) {
-  const snap = await db.collection("notifications").doc(uid).collection("items").where("read", "==", false).get();
+  const snap = await db
+    .collection("notifications")
+    .doc(uid)
+    .collection("items")
+    .where("read", "==", false)
+    .get();
   const batch = db.batch();
   snap.docs.forEach((d) => batch.update(d.ref, { read: true }));
   return batch.commit();
@@ -530,14 +573,20 @@ async function ibeMarkAllNotificationsRead(uid) {
 async function ibeSubmitFeedback(uid, data) {
   data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   data.date = new Date().toLocaleDateString("fr-FR", {
-    day: "numeric", month: "short", year: "numeric",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   });
   return db.collection("feedbacks").doc(uid).collection("items").add(data);
 }
 
 async function ibeGetFeedbacks(uid) {
-  const snap = await db.collection("feedbacks").doc(uid).collection("items")
-    .orderBy("createdAt", "desc").get();
+  const snap = await db
+    .collection("feedbacks")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .get();
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
@@ -546,19 +595,30 @@ async function ibeGetFeedbacks(uid) {
 async function ibeAddInspection(uid, data) {
   data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   data.date = new Date().toLocaleDateString("fr-FR", {
-    day: "numeric", month: "short", year: "numeric",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   });
   return db.collection("inspections").doc(uid).collection("items").add(data);
 }
 
 async function ibeGetInspections(uid) {
-  const snap = await db.collection("inspections").doc(uid).collection("items")
-    .orderBy("createdAt", "desc").get();
+  const snap = await db
+    .collection("inspections")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .get();
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
 async function ibeUpdateInspection(uid, inspId, data) {
-  return db.collection("inspections").doc(uid).collection("items").doc(inspId).update(data);
+  return db
+    .collection("inspections")
+    .doc(uid)
+    .collection("items")
+    .doc(inspId)
+    .update(data);
 }
 
 async function ibeGetAllInspections() {
@@ -567,11 +627,24 @@ async function ibeGetAllInspections() {
   for (const userDoc of usersSnap.docs) {
     const uid = userDoc.id;
     const userName = userDoc.data().nom || uid;
-    const snap = await db.collection("inspections").doc(uid).collection("items")
-      .orderBy("createdAt", "desc").get();
-    snap.docs.forEach((d) => allInsps.push({ id: d.id, clientUid: uid, clientName: userName, ...d.data() }));
+    const snap = await db
+      .collection("inspections")
+      .doc(uid)
+      .collection("items")
+      .orderBy("createdAt", "desc")
+      .get();
+    snap.docs.forEach((d) =>
+      allInsps.push({
+        id: d.id,
+        clientUid: uid,
+        clientName: userName,
+        ...d.data(),
+      }),
+    );
   }
-  return allInsps.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  return allInsps.sort(
+    (a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0),
+  );
 }
 
 // ── Appels d'Offres (Tenders) ────────────────────────────────
@@ -583,7 +656,10 @@ async function ibeAddTender(data) {
 }
 
 async function ibeGetTenders() {
-  const snap = await db.collection("tenders").orderBy("createdAt", "desc").get();
+  const snap = await db
+    .collection("tenders")
+    .orderBy("createdAt", "desc")
+    .get();
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
@@ -601,13 +677,22 @@ async function ibeAddTenderOffer(tenderId, data) {
 }
 
 async function ibeGetTenderOffers(tenderId) {
-  const snap = await db.collection("tenders").doc(tenderId).collection("offers")
-    .orderBy("createdAt", "desc").get();
+  const snap = await db
+    .collection("tenders")
+    .doc(tenderId)
+    .collection("offers")
+    .orderBy("createdAt", "desc")
+    .get();
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
 async function ibeDeleteTenderOffer(tenderId, offerId) {
-  return db.collection("tenders").doc(tenderId).collection("offers").doc(offerId).delete();
+  return db
+    .collection("tenders")
+    .doc(tenderId)
+    .collection("offers")
+    .doc(offerId)
+    .delete();
 }
 
 // ── RFI (Demandes d'Information) ─────────────────────────────
@@ -616,14 +701,20 @@ async function ibeAddRFI(uid, data) {
   data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   data.status = data.status || "open";
   data.date = new Date().toLocaleDateString("fr-FR", {
-    day: "numeric", month: "short", year: "numeric",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   });
   return db.collection("rfis").doc(uid).collection("items").add(data);
 }
 
 async function ibeGetRFIs(uid) {
-  const snap = await db.collection("rfis").doc(uid).collection("items")
-    .orderBy("createdAt", "desc").get();
+  const snap = await db
+    .collection("rfis")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .get();
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
@@ -633,15 +724,33 @@ async function ibeGetAllRFIs() {
   for (const userDoc of usersSnap.docs) {
     const uid = userDoc.id;
     const userName = userDoc.data().nom || uid;
-    const snap = await db.collection("rfis").doc(uid).collection("items")
-      .orderBy("createdAt", "desc").get();
-    snap.docs.forEach((d) => allRFIs.push({ id: d.id, clientUid: uid, clientName: userName, ...d.data() }));
+    const snap = await db
+      .collection("rfis")
+      .doc(uid)
+      .collection("items")
+      .orderBy("createdAt", "desc")
+      .get();
+    snap.docs.forEach((d) =>
+      allRFIs.push({
+        id: d.id,
+        clientUid: uid,
+        clientName: userName,
+        ...d.data(),
+      }),
+    );
   }
-  return allRFIs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  return allRFIs.sort(
+    (a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0),
+  );
 }
 
 async function ibeUpdateRFI(uid, rfiId, data) {
-  return db.collection("rfis").doc(uid).collection("items").doc(rfiId).update(data);
+  return db
+    .collection("rfis")
+    .doc(uid)
+    .collection("items")
+    .doc(rfiId)
+    .update(data);
 }
 
 async function ibeDeleteRFI(uid, rfiId) {
@@ -654,14 +763,20 @@ async function ibeAddObservation(uid, data) {
   data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   data.status = data.status || "open";
   data.date = new Date().toLocaleDateString("fr-FR", {
-    day: "numeric", month: "short", year: "numeric",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   });
   return db.collection("observations").doc(uid).collection("items").add(data);
 }
 
 async function ibeGetObservations(uid) {
-  const snap = await db.collection("observations").doc(uid).collection("items")
-    .orderBy("createdAt", "desc").get();
+  const snap = await db
+    .collection("observations")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .get();
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
@@ -671,34 +786,65 @@ async function ibeGetAllObservations() {
   for (const userDoc of usersSnap.docs) {
     const uid = userDoc.id;
     const userName = userDoc.data().nom || uid;
-    const snap = await db.collection("observations").doc(uid).collection("items")
-      .orderBy("createdAt", "desc").get();
-    snap.docs.forEach((d) => allObs.push({ id: d.id, clientUid: uid, clientName: userName, ...d.data() }));
+    const snap = await db
+      .collection("observations")
+      .doc(uid)
+      .collection("items")
+      .orderBy("createdAt", "desc")
+      .get();
+    snap.docs.forEach((d) =>
+      allObs.push({
+        id: d.id,
+        clientUid: uid,
+        clientName: userName,
+        ...d.data(),
+      }),
+    );
   }
-  return allObs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  return allObs.sort(
+    (a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0),
+  );
 }
 
 async function ibeUpdateObservation(uid, obsId, data) {
-  return db.collection("observations").doc(uid).collection("items").doc(obsId).update(data);
+  return db
+    .collection("observations")
+    .doc(uid)
+    .collection("items")
+    .doc(obsId)
+    .update(data);
 }
 
 async function ibeDeleteObservation(uid, obsId) {
-  return db.collection("observations").doc(uid).collection("items").doc(obsId).delete();
+  return db
+    .collection("observations")
+    .doc(uid)
+    .collection("items")
+    .doc(obsId)
+    .delete();
 }
 
 // ── Journal de Chantier (Daily Logs) ─────────────────────────
 
 async function ibeAddDailyLog(uid, data) {
   data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-  data.date = data.date || new Date().toLocaleDateString("fr-FR", {
-    day: "numeric", month: "short", year: "numeric",
-  });
+  data.date =
+    data.date ||
+    new Date().toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
   return db.collection("daily_logs").doc(uid).collection("items").add(data);
 }
 
 async function ibeGetDailyLogs(uid) {
-  const snap = await db.collection("daily_logs").doc(uid).collection("items")
-    .orderBy("createdAt", "desc").get();
+  const snap = await db
+    .collection("daily_logs")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .get();
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
@@ -708,19 +854,42 @@ async function ibeGetAllDailyLogs() {
   for (const userDoc of usersSnap.docs) {
     const uid = userDoc.id;
     const userName = userDoc.data().nom || uid;
-    const snap = await db.collection("daily_logs").doc(uid).collection("items")
-      .orderBy("createdAt", "desc").get();
-    snap.docs.forEach((d) => allLogs.push({ id: d.id, clientUid: uid, clientName: userName, ...d.data() }));
+    const snap = await db
+      .collection("daily_logs")
+      .doc(uid)
+      .collection("items")
+      .orderBy("createdAt", "desc")
+      .get();
+    snap.docs.forEach((d) =>
+      allLogs.push({
+        id: d.id,
+        clientUid: uid,
+        clientName: userName,
+        ...d.data(),
+      }),
+    );
   }
-  return allLogs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  return allLogs.sort(
+    (a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0),
+  );
 }
 
 async function ibeUpdateDailyLog(uid, logId, data) {
-  return db.collection("daily_logs").doc(uid).collection("items").doc(logId).update(data);
+  return db
+    .collection("daily_logs")
+    .doc(uid)
+    .collection("items")
+    .doc(logId)
+    .update(data);
 }
 
 async function ibeDeleteDailyLog(uid, logId) {
-  return db.collection("daily_logs").doc(uid).collection("items").doc(logId).delete();
+  return db
+    .collection("daily_logs")
+    .doc(uid)
+    .collection("items")
+    .doc(logId)
+    .delete();
 }
 
 // ── Ordres de Changement (Change Events) ─────────────────────
@@ -729,14 +898,20 @@ async function ibeAddChangeEvent(uid, data) {
   data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   data.status = data.status || "pending";
   data.date = new Date().toLocaleDateString("fr-FR", {
-    day: "numeric", month: "short", year: "numeric",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   });
   return db.collection("change_events").doc(uid).collection("items").add(data);
 }
 
 async function ibeGetChangeEvents(uid) {
-  const snap = await db.collection("change_events").doc(uid).collection("items")
-    .orderBy("createdAt", "desc").get();
+  const snap = await db
+    .collection("change_events")
+    .doc(uid)
+    .collection("items")
+    .orderBy("createdAt", "desc")
+    .get();
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
@@ -746,17 +921,40 @@ async function ibeGetAllChangeEvents() {
   for (const userDoc of usersSnap.docs) {
     const uid = userDoc.id;
     const userName = userDoc.data().nom || uid;
-    const snap = await db.collection("change_events").doc(uid).collection("items")
-      .orderBy("createdAt", "desc").get();
-    snap.docs.forEach((d) => allCEs.push({ id: d.id, clientUid: uid, clientName: userName, ...d.data() }));
+    const snap = await db
+      .collection("change_events")
+      .doc(uid)
+      .collection("items")
+      .orderBy("createdAt", "desc")
+      .get();
+    snap.docs.forEach((d) =>
+      allCEs.push({
+        id: d.id,
+        clientUid: uid,
+        clientName: userName,
+        ...d.data(),
+      }),
+    );
   }
-  return allCEs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  return allCEs.sort(
+    (a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0),
+  );
 }
 
 async function ibeUpdateChangeEvent(uid, ceId, data) {
-  return db.collection("change_events").doc(uid).collection("items").doc(ceId).update(data);
+  return db
+    .collection("change_events")
+    .doc(uid)
+    .collection("items")
+    .doc(ceId)
+    .update(data);
 }
 
 async function ibeDeleteChangeEvent(uid, ceId) {
-  return db.collection("change_events").doc(uid).collection("items").doc(ceId).delete();
+  return db
+    .collection("change_events")
+    .doc(uid)
+    .collection("items")
+    .doc(ceId)
+    .delete();
 }

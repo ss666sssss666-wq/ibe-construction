@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Page d'accueil -->
   <url>
     <loc>https://www.ibe-construction.com/</loc>
-    <lastmod>2026-01-23</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <!-- 1. Entreprise Générale de Bâtiment Casablanca (TCE) -->
+  <url>
+    <loc>https://www.ibe-construction.com/entreprise-generale-batiment-casablanca.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- 2. Bâtiment Industriel & Hangars Métalliques Maroc -->
+  <url>
+    <loc>https://www.ibe-construction.com/construction-batiment-industriel-maroc.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- 3. Gros Œuvre & Béton Armé Casablanca -->
+  <url>
+    <loc>https://www.ibe-construction.com/entreprise-gros-oeuvre-casablanca.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- 4. Bureau d'Études & Ingénierie BIM Casablanca -->
+  <url>
+    <loc>https://www.ibe-construction.com/bureau-etudes-ingenierie-bim-casablanca.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- 5. Rénovation & Aménagement Intérieur Casablanca -->
+  <url>
+    <loc>https://www.ibe-construction.com/renovation-amenagement-tce-casablanca.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- 6. Construction Clé en Main Maroc -->
+  <url>
+    <loc>https://www.ibe-construction.com/construction-cle-en-main-maroc.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Espace Client -->
+  <url>
+    <loc>https://www.ibe-construction.com/portal/login.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

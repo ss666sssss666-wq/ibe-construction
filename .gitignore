@@ -22,3 +22,8 @@ npm-debug.log*
 .cache/
 .vercel
 .env*.local
+
+# Media & local test files
+*.mp4
+video presentation/
+check_syntax.js
