@@ -84,28 +84,28 @@
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#1B263B" />
 
-    <!-- Schema.org Markup: Organization + LocalBusiness -->
+    <!-- Schema.org Markup: GeneralContractor + EngineeringService -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "ConstructionBusiness",
+        "@type": ["GeneralContractor", "EngineeringService"],
         "name": "IBE Construction",
-        "alternateName": "IBE Maroc",
-        "description": "Bureau d'études structure, BIM et construction à Casablanca et Mohammedia. Expertise intégrée en ingénierie béton armé, gros œuvre et génie climatique HVAC.",
+        "alternateName": "IBE Maroc - Entreprise Générale & Ingénierie Industrielle",
+        "description": "Entreprise Générale de Bâtiment Tous Corps d'État (TCE), Génie Civil Industriel (hangars métalliques, usines, dallages lourds) et Bureau d'Études Structure/BIM intégré (norme parasismique RPS 2011, Revit) à Casablanca et Mohammedia.",
         "image": "https://www.ibe-construction.com/images/logo.png",
         "logo": "https://www.ibe-construction.com/images/logo.png",
         "@id": "https://www.ibe-construction.com/#organization",
         "url": "https://www.ibe-construction.com/",
         "telephone": "+212663176838",
         "email": "ibe@ibe-construction.com",
-        "priceRange": "$$",
+        "priceRange": "$$$",
         "currenciesAccepted": "MAD",
-        "paymentAccepted": "Cash, Bank Transfer",
+        "paymentAccepted": "Bank Transfer, Cheque",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "69 boulevard Hassan II",
           "addressLocality": "Mohammedia",
-          "addressRegion": "Casablanca-Settat",
+          "addressRegion": "Grand Casablanca",
           "postalCode": "28800",
           "addressCountry": "MA"
         },
@@ -116,30 +116,33 @@
         },
         "areaServed": [
           {"@type": "City", "name": "Casablanca"},
+          {"@type": "City", "name": "Nouaceur"},
           {"@type": "City", "name": "Mohammedia"},
-          {"@type": "City", "name": "Rabat"},
-          {"@type": "City", "name": "Marrakech"},
+          {"@type": "City", "name": "Jorf Lasfar"},
+          {"@type": "City", "name": "Berrechid"},
           {"@type": "City", "name": "Tanger"},
+          {"@type": "City", "name": "Kénitra"},
+          {"@type": "City", "name": "Rabat"},
           {"@type": "Country", "name": "Morocco"}
         ],
         "openingHoursSpecification": {
           "@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "18:00"
+          "opens": "08:30",
+          "closes": "18:30"
         },
         "sameAs": ["https://www.instagram.com/ibe.construction"],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
-          "name": "Services IBE Construction",
+          "name": "Services IBE Construction Industrielle & BTP",
           "itemListElement": [
             {
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
-                "name": "Bureau d'Études Structure",
-                "description": "Conception structurelle BIM, calcul béton armé et charpente métallique avec Robot Structural Analysis et Revit Structure.",
-                "url": "https://www.ibe-construction.com/#services",
+                "name": "Bâtiments Industriels & Hangars Métalliques",
+                "description": "Conception et érection de charpentes métalliques grandes portées, ponts roulants, plateformes logistiques et dallages industriels quartz au Maroc.",
+                "url": "https://www.ibe-construction.com/construction-batiment-industriel-maroc.html",
                 "areaServed": {"@type": "Country", "name": "Morocco"},
                 "provider": {"@id": "https://www.ibe-construction.com/#organization"}
               }
@@ -148,9 +151,9 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
-                "name": "Réalisation & Gros Œuvre",
-                "description": "Construction clé en main : terrassement, fondations, élévation, dallage et finitions avec gestion de chantier BIM.",
-                "url": "https://www.ibe-construction.com/#services",
+                "name": "Entreprise Générale Bâtiment Tous Corps d'État (TCE)",
+                "description": "Construction clé en main de la conception à la livraison : terrassement, gros œuvre, second œuvre, CVC/MEP et finitions sans intermédiaire.",
+                "url": "https://www.ibe-construction.com/entreprise-generale-batiment-casablanca.html",
                 "areaServed": {"@type": "Country", "name": "Morocco"},
                 "provider": {"@id": "https://www.ibe-construction.com/#organization"}
               }
@@ -159,9 +162,20 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
-                "name": "Génie Climatique & HVAC",
-                "description": "Études et installation CVC/HVAC, plomberie industrielle et tuyauterie. Modélisation Plant 3D et Revit MEP.",
-                "url": "https://www.ibe-construction.com/#services",
+                "name": "Bureau d'Études Structure & BIM (RPS 2011)",
+                "description": "Calculs parasismiques certifiés sous Robot Structural Analysis (RPS 2011 / Eurocodes) et modélisation BIM Revit tous corps d'état.",
+                "url": "https://www.ibe-construction.com/bureau-etudes-ingenierie-bim-casablanca.html",
+                "areaServed": {"@type": "Country", "name": "Morocco"},
+                "provider": {"@id": "https://www.ibe-construction.com/#organization"}
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Gros Œuvre & Génie Civil Lourd",
+                "description": "Massifs de fondation, radiers industriels, élévation béton armé et blindages mitoyens pour projets d'envergure.",
+                "url": "https://www.ibe-construction.com/entreprise-gros-oeuvre-casablanca.html",
                 "areaServed": {"@type": "Country", "name": "Morocco"},
                 "provider": {"@id": "https://www.ibe-construction.com/#organization"}
               }
